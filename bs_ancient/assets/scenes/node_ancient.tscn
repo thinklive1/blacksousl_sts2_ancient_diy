@@ -1,0 +1,90 @@
+[gd_scene load_steps=5 format=3 uid="uid://4i1v2d2h07n5"]
+
+[ext_resource type="Texture2D" path="res://bs_ancient/assets/images/map/node_bg.png" id="1_xjdov"]
+
+[sub_resource type="Shader" id="Shader_8eo3w"]
+code = "shader_type canvas_item;
+
+group_uniforms Colors;
+uniform vec4 color_a : source_color = vec4(0.18, 0.22, 0.38, 1.0);
+uniform vec4 color_b : source_color = vec4(0.42, 0.28, 0.38, 1.0);
+uniform vec4 color_c : source_color = vec4(0.12, 0.32, 0.36, 1.0);
+
+group_uniforms Timing;
+uniform float cycle_seconds : hint_range(4.0, 120.0, 0.5) = 22.0;
+uniform float phase_offset : hint_range(0.0, 6.283, 0.01) = 1.57;
+
+group_uniforms Layout;
+uniform float vertical_mix : hint_range(0.0, 1.0, 0.01) = 0.22;
+
+void fragment() {
+	float t = TIME / max(cycle_seconds, 0.001);
+	float w_ab = sin(t * TAU) * 0.5 + 0.5;
+	float w_c = sin(t * TAU + phase_offset) * 0.5 + 0.5;
+	vec3 rgb = mix(color_a.rgb, color_b.rgb, w_ab);
+	rgb = mix(rgb, color_c.rgb, w_c);
+
+	float v = clamp(UV.y, 0.0, 1.0);
+	vec3 top_bias = mix(rgb, color_a.rgb, (1.0 - v) * vertical_mix);
+	vec3 bot_bias = mix(top_bias, color_b.rgb, v * vertical_mix);
+	rgb = bot_bias;
+
+	vec4 tex = texture(TEXTURE, UV);
+	vec4 out_c = vec4(rgb, color_a.a * tex.a) * tex * COLOR;
+	COLOR = out_c;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n064g"]
+shader = SubResource("Shader_8eo3w")
+shader_parameter/color_a = Color(0.18, 0.22, 0.38, 1)
+shader_parameter/color_b = Color(0.42, 0.28, 0.38, 1)
+shader_parameter/color_c = Color(0.12, 0.32, 0.36, 1)
+shader_parameter/cycle_seconds = 22.0
+shader_parameter/phase_offset = 1.57
+shader_parameter/vertical_mix = 0.22
+
+[sub_resource type="Gradient" id="Gradient_wmiru"]
+offsets = PackedFloat32Array(0, 0.18, 0.82, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.85, 0.86, 0.94, 1, 0.75, 1, 1, 1, 0)
+
+[node name="TestAncient" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="TimeColorBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_xjdov")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="snow" type="CPUParticles2D" parent="."]
+position = Vector2(960, -40)
+amount = 260
+lifetime = 9.0
+preprocess = 9.0
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(1300, 40)
+direction = Vector2(0, 1)
+spread = 18.0
+gravity = Vector2(8, 55)
+initial_velocity_min = 25.0
+initial_velocity_max = 95.0
+angular_velocity_min = -18.0
+angular_velocity_max = 18.0
+scale_amount_min = 2.0
+scale_amount_max = 6.0
+color = Color(0.92, 0.96, 1, 0.82)
+color_ramp = SubResource("Gradient_wmiru")

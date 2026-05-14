@@ -1,0 +1,12 @@
+{
+    "BS_ANCIENT_CARD_TEST_CARD.title": "测试卡牌",
+    "BS_ANCIENT_CARD_TEST_CARD.description": "造成{Damage:diff()}点伤害。",
+    "BS_ANCIENT_CARD_GERDA_CARD.title": "格尔达",
+    "BS_ANCIENT_CARD_GERDA_CARD.description": "抽到时，获得{UndeadPower:diff()}层[gold]不死[/gold]，然后[gold]消耗[/gold]。",
+    "BS_ANCIENT_CARD_FLORENCE_CARD.title": "院长弗洛伦斯",
+    "BS_ANCIENT_CARD_FLORENCE_CARD.description": "抽到时，获得{RegenPower:diff()}层[gold]再生[/gold]，抽{Cards:diff()}张牌，然后[gold]消耗[/gold]。",
+    "BS_ANCIENT_CARD_GHOST_HUNTER_CARD.title": "幽灵猎人卡纳奇",
+    "BS_ANCIENT_CARD_GHOST_HUNTER_CARD.description": "抽到时，获得{StrengthPower:diff()}点[gold]力量[/gold]，抽{Cards:diff()}张牌，然后[gold]消耗[/gold]。",
+    "BS_ANCIENT_CARD_POWER_OF_REWRITE.title": "改变之权能",
+    "BS_ANCIENT_CARD_POWER_OF_REWRITE.description": "造成{Damage:diff()}点伤害。清除自身所有[red]负面状态[/red]。[gold]消耗[/gold]。"
+}

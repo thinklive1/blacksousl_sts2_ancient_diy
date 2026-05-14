@@ -1,0 +1,5 @@
+{
+    "BS_ANCIENT_POWER_UNDEAD_POWER.title": "不死",
+    "BS_ANCIENT_POWER_UNDEAD_POWER.description": "受到致命伤害时，保留[blue]1[/blue]点生命。每回合结束时失去[blue]1[/blue]层。战斗结束时，每有[blue]1[/blue]层回复[green]{Heal}[/green]点生命。",
+    "BS_ANCIENT_POWER_UNDEAD_POWER.smartDescription": "受到致命伤害时，保留[blue]1[/blue]点生命。每回合结束时失去[blue]1[/blue]层。战斗结束时，每有[blue]1[/blue]层回复[green]{Heal}[/green]点生命。"
+}
