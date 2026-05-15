@@ -11,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
-[RegisterCard(typeof(ColorlessCardPool))]
+[RegisterCard(typeof(EventCardPool))]
 public class GerdaCard : ModCardTemplate
 {
     public override int MaxUpgradeLevel => 0;
@@ -33,7 +33,7 @@ public class GerdaCard : ModCardTemplate
         PortraitPath: "res://bs_ancient/assets/images/cards/GerdaCard.jpg"
     );
 
-    public GerdaCard() : base(-1, CardType.Skill, CardRarity.Common, TargetType.None)
+    public GerdaCard() : base(-1, CardType.Skill, CardRarity.Ancient, TargetType.None)
     {
     }
 

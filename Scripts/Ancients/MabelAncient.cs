@@ -1,0 +1,143 @@
+using Godot;
+using BlackSouls.Scripts.Cards;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Events;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models.Acts;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Runs;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
+using STS2RitsuLib.Utils;
+
+namespace BlackSouls.Scripts;
+
+[RegisterActAncient(typeof(Hive))]
+[RegisterActAncient(typeof(Glory))]
+public class MabelAncient : ModAncientEventTemplate
+{
+    public override Color ButtonColor => new(0f, 0f, 0f, 0.5f);
+
+    public override Color DialogueColor => Colors.Black;
+
+    public override string? CustomBackgroundScenePath => "res://bs_ancient/assets/scenes/mabel_ancient.tscn";
+
+    public override AncientEventPresentationAssetProfile AncientPresentationAssetProfile => new(
+        MapIconPath: "res://bs_ancient/assets/images/map/mabel.png",
+        MapIconOutlinePath: "res://bs_ancient/assets/images/map/mabel_outline.png",
+        RunHistoryIconPath: "res://bs_ancient/assets/images/map/mabel.png",
+        RunHistoryIconOutlinePath: "res://bs_ancient/assets/images/map/mabel_outline.png"
+    );
+
+    private IReadOnlyList<EventOption> CreatePool1(bool isMultiplayer)
+    {
+        List<EventOption> options =
+        [
+            CreateModRelicOption<LittleMermaidFavorRelic>(),
+            CreatePrincessFrogFavorOption(),
+            CreateSnowWhiteFavorOption(),
+            CreateCinderellaFavorOption(),
+        ];
+
+        if (!isMultiplayer)
+        {
+            options.Insert(0, CreateModRelicOption<RapunzelFavorRelic>());
+        }
+
+        return options;
+    }
+
+    private IReadOnlyList<EventOption> CreatePool2(bool isMultiplayer)
+    {
+        return isMultiplayer
+            ? []
+            : [CreateHlanithWineOption()];
+    }
+
+    private IReadOnlyList<EventOption> FullPool1 => [
+        CreateModRelicOption<RapunzelFavorRelic>(),
+        CreateModRelicOption<LittleMermaidFavorRelic>(),
+        CreatePrincessFrogFavorOption(),
+        CreateSnowWhiteFavorOption(),
+        CreateCinderellaFavorOption(),
+    ];
+
+    private IReadOnlyList<EventOption> FullPool2 => [
+        CreateHlanithWineOption(),
+    ];
+
+    private WeightedList<EventOption> Pool3 => new()
+    {
+        { CreateEternalVanityOption(), 1 },
+        { CreateModRelicOption<MysteryOfNightSkyRelic>(), 1 },
+        { CreateModRelicOption<GiftOfChaosRelic>(), 1 },
+    };
+
+    public override IEnumerable<EventOption> AllPossibleOptions => [.. FullPool1, .. FullPool2, .. Pool3];
+
+    protected override IReadOnlyList<EventOption> GenerateInitialOptions()
+    {
+        bool isMultiplayer = Owner?.RunState.Players.Count > 1;
+        IReadOnlyList<EventOption> pool1 = CreatePool1(isMultiplayer);
+        IReadOnlyList<EventOption> pool2 = CreatePool2(isMultiplayer);
+        List<EventOption> options =
+        [
+            Rng.NextItem(pool1)!,
+            Pool3.GetRandom(Rng),
+        ];
+
+        if (pool2.Count > 0)
+        {
+            options.Insert(1, Rng.NextItem(pool2)!);
+        }
+
+        return options;
+    }
+
+    public override bool IsAllowed(IRunState runState)
+    {
+        return runState.CurrentActIndex is 1 or 2;
+    }
+
+    private EventOption CreatePrincessFrogFavorOption()
+    {
+        EventOption option = CreateModRelicOption<PrincessFrogFavorRelic>();
+        option.HoverTips = option.HoverTips
+            .Append(HoverTipFactory.FromPower<WeakPower>())
+            .Append(HoverTipFactory.FromPower<VulnerablePower>())
+            .Append(HoverTipFactory.FromPower<FrailPower>());
+        return option;
+    }
+
+    private EventOption CreateSnowWhiteFavorOption()
+    {
+        EventOption option = CreateModRelicOption<SnowWhiteFavorRelic>();
+        option.HoverTips = option.HoverTips
+            .Append(HoverTipFactory.FromPower<DexterityPower>());
+        return option;
+    }
+
+    private EventOption CreateCinderellaFavorOption()
+    {
+        EventOption option = CreateModRelicOption<CinderellaFavorRelic>();
+        option.HoverTips = option.HoverTips
+            .Append(HoverTipFactory.FromPower<StrengthPower>());
+        return option;
+    }
+
+    private EventOption CreateHlanithWineOption()
+    {
+        EventOption option = CreateModRelicOption<HlanithWineRelic>();
+        option.HoverTips = option.HoverTips
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<HlanithWineCard>());
+        return option;
+    }
+
+    private EventOption CreateEternalVanityOption()
+    {
+        EventOption option = CreateModRelicOption<EternalVanityRelic>();
+        option.HoverTips = option.HoverTips
+            .Append(HoverTipFactory.FromKeyword(CardKeyword.Ethereal));
+        return option;
+    }
+}

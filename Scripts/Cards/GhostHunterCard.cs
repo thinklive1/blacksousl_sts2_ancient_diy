@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
-[RegisterCard(typeof(ColorlessCardPool))]
+[RegisterCard(typeof(EventCardPool))]
 public class GhostHunterCard : ModCardTemplate
 {
     public override int MaxUpgradeLevel => 0;
@@ -29,7 +29,7 @@ public class GhostHunterCard : ModCardTemplate
         PortraitPath: "res://bs_ancient/assets/images/cards/GhostHunterCard.jpg"
     );
 
-    public GhostHunterCard() : base(-1, CardType.Skill, CardRarity.Common, TargetType.None)
+    public GhostHunterCard() : base(-1, CardType.Skill, CardRarity.Ancient, TargetType.None)
     {
     }
 

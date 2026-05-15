@@ -19,6 +19,11 @@ namespace BlackSouls.Scripts;
 [RegisterEnchantment]
 public class ReplayEnchantment : ModEnchantmentTemplate
 {
+    private const int MaxTriggersPerCombat = 3;
+
+    private CombatState? _trackedCombatState;
+    private int _triggersThisCombat;
+
     // 是否在卡牌上显示数值
     public override bool ShowAmount => false;
 
@@ -34,7 +39,7 @@ public class ReplayEnchantment : ModEnchantmentTemplate
 
     // 图标位置。大小1:1就行，原版是64x64
     public override EnchantmentAssetProfile AssetProfile => new(
-        IconPath: "res://icon.svg"
+        IconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png"
     );
 
     // 决定是否可以附魔到某张卡牌上，这里我们让它只能附魔到获得格挡的卡牌上。
@@ -78,6 +83,17 @@ public class ReplayEnchantment : ModEnchantmentTemplate
             return;
         }
 
+        if (!ReferenceEquals(_trackedCombatState, combatState))
+        {
+            _trackedCombatState = combatState;
+            _triggersThisCombat = 0;
+        }
+
+        if (_triggersThisCombat >= MaxTriggersPerCombat)
+        {
+            return;
+        }
+
         Creature? target = null;
         if (Card.TargetType == TargetType.RandomEnemy)
         {
@@ -88,6 +104,7 @@ public class ReplayEnchantment : ModEnchantmentTemplate
             }
         }
 
+        _triggersThisCombat++;
         await CardPileCmd.Add(Card, PileType.Play);
         await CardCmd.AutoPlay(choiceContext, Card, target);
     }

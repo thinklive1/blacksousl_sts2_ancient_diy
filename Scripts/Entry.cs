@@ -1,4 +1,6 @@
 using System.Reflection;
+using BlackSouls.Scripts;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
@@ -16,9 +18,9 @@ public class Entry
     public static void Init()
     {
         // harmony可用，但是最好用ritsu的封装patch（TODO）
-        // var harmony = new Harmony("com.example.testmod");
-        // harmony.PatchAll();
         var assembly = Assembly.GetExecutingAssembly();
+        BsAncientConfig.Load(assembly);
+        new Harmony($"{ModId}.patches").PatchAll(assembly);
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         // 自动注册内容
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);

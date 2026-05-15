@@ -5,7 +5,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
-using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -27,14 +26,13 @@ public class RedQueenDiceRelic : ModRelicTemplate
     private const int DexterityGain = 3;
     private const int CardsPerDraw = 4;
     private const int RewardCards = 5;
-    private const int StrengthBonusDuration = 2;
-
-    private readonly List<TemporaryStrengthBonus> _temporaryStrengthBonuses = [];
+    private const int StrengthBonusTriggers = 2;
 
     private int _roll;
     private int _cardsPlayedThisCombat;
+    private int _strengthBonusTriggersThisCombat;
 
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Ancient;
 
     public override bool ShowCounter => CombatManager.Instance.IsInProgress && _roll > 0;
 
@@ -48,16 +46,16 @@ public class RedQueenDiceRelic : ModRelicTemplate
     ];
 
     public override RelicAssetProfile AssetProfile => new(
-        IconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png",
-        IconOutlinePath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png",
-        BigIconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png"
+        IconPath: "res://bs_ancient/assets/images/relics/RedQueenDiceRelic.png",
+        IconOutlinePath: "res://bs_ancient/assets/images/relics/RedQueenDiceRelic.png",
+        BigIconPath: "res://bs_ancient/assets/images/relics/RedQueenDiceRelic.png"
     );
 
     public override async Task BeforeCombatStart()
     {
-        _roll = Owner.RunState.Rng.Niche.NextInt(1, 7);
+        _roll = Owner.RunState.Rng.Niche.NextInt(1, IsMultiplayerRun() ? 6 : 7);
         _cardsPlayedThisCombat = 0;
-        _temporaryStrengthBonuses.Clear();
+        _strengthBonusTriggersThisCombat = 0;
         InvokeDisplayAmountChanged();
 
         Flash();
@@ -115,9 +113,7 @@ public class RedQueenDiceRelic : ModRelicTemplate
             return;
         }
 
-        await TickTemporaryStrengthBonuses();
-
-        if (!HasEffect(2))
+        if (!HasEffect(2) || _strengthBonusTriggersThisCombat >= StrengthBonusTriggers)
         {
             return;
         }
@@ -130,14 +126,14 @@ public class RedQueenDiceRelic : ModRelicTemplate
 
         Flash();
         await PowerCmd.Apply<StrengthPower>(Owner.Creature, strength, Owner.Creature, null);
-        _temporaryStrengthBonuses.Add(new TemporaryStrengthBonus(strength, StrengthBonusDuration));
+        _strengthBonusTriggersThisCombat++;
     }
 
     public override async Task AfterCombatEnd(CombatRoom _)
     {
         _roll = 0;
         _cardsPlayedThisCombat = 0;
-        _temporaryStrengthBonuses.Clear();
+        _strengthBonusTriggersThisCombat = 0;
         InvokeDisplayAmountChanged();
         await Task.CompletedTask;
     }
@@ -147,26 +143,37 @@ public class RedQueenDiceRelic : ModRelicTemplate
         return _roll == value || _roll == 6;
     }
 
+    private bool IsMultiplayerRun()
+    {
+        return Owner.RunState.Players.Count > 1;
+    }
+
     private async Task ChooseRareCard()
     {
-        List<CardCreationResult> cards = CreateRareCardsFromOriginalCharacters();
+        List<CardModel> cards = CreateRareCardsFromOriginalCharacters();
         if (cards.Count == 0)
         {
             return;
         }
 
-        foreach (CardModel card in await CardSelectCmd.FromSimpleGridForRewards(
-                     context: new BlockingPlayerChoiceContext(),
-                     cards: cards,
-                     player: Owner,
-                     prefs: new CardSelectorPrefs(L10NLookup(Id.Entry + ".selectionScreenPrompt"), 1)))
+        foreach (CardModel card in await CardSelectCmd.FromSimpleGrid(
+                     new BlockingPlayerChoiceContext(),
+                     cards,
+                     Owner,
+                     new CardSelectorPrefs(L10NLookup(Id.Entry + ".selectionScreenPrompt"), 1)))
         {
             CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true));
         }
     }
 
-    private List<CardCreationResult> CreateRareCardsFromOriginalCharacters()
+    private List<CardModel> CreateRareCardsFromOriginalCharacters()
     {
+        CombatState? combatState = Owner.Creature.CombatState;
+        if (combatState == null)
+        {
+            return [];
+        }
+
         List<CardPoolModel> cardPools = [
             ModelDb.Character<Ironclad>().CardPool,
             ModelDb.Character<Silent>().CardPool,
@@ -175,13 +182,25 @@ public class RedQueenDiceRelic : ModRelicTemplate
             ModelDb.Character<Necrobinder>().CardPool
         ];
 
-        List<CardCreationResult> cards = [];
+        List<CardModel> cards = [];
         foreach (CardPoolModel cardPool in cardPools)
         {
-            CardCreationOptions options = CardCreationOptions
-                .ForNonCombatWithUniformOdds([cardPool], card => card.Rarity == CardRarity.Rare)
-                .WithFlags(CardCreationFlags.NoRarityModification | CardCreationFlags.NoCardPoolModifications);
-            cards.AddRange(CardFactory.CreateForReward(Owner, 1, options));
+            List<CardModel> candidates = cardPool
+                .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
+                .Where(card => card.Rarity == CardRarity.Rare && card.CanBeGeneratedInCombat)
+                .ToList();
+            if (candidates.Count == 0)
+            {
+                continue;
+            }
+
+            CardModel? selectedCard = Owner.RunState.Rng.CombatCardGeneration.NextItem(candidates);
+            if (selectedCard == null)
+            {
+                continue;
+            }
+
+            cards.Add(combatState.CreateCard(selectedCard, Owner));
         }
 
         return cards;
@@ -202,32 +221,4 @@ public class RedQueenDiceRelic : ModRelicTemplate
         }
     }
 
-    private async Task TickTemporaryStrengthBonuses()
-    {
-        for (int i = _temporaryStrengthBonuses.Count - 1; i >= 0; i--)
-        {
-            TemporaryStrengthBonus bonus = _temporaryStrengthBonuses[i];
-            bonus.TurnsRemaining--;
-            if (bonus.TurnsRemaining > 0)
-            {
-                _temporaryStrengthBonuses[i] = bonus;
-                continue;
-            }
-
-            _temporaryStrengthBonuses.RemoveAt(i);
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, -bonus.Amount, Owner.Creature, null);
-        }
-    }
-
-    private struct TemporaryStrengthBonus
-    {
-        public TemporaryStrengthBonus(int amount, int turnsRemaining)
-        {
-            Amount = amount;
-            TurnsRemaining = turnsRemaining;
-        }
-
-        public int Amount { get; }
-        public int TurnsRemaining { get; set; }
-    }
 }

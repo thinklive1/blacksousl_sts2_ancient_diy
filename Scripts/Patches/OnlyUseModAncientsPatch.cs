@@ -1,0 +1,77 @@
+using HarmonyLib;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Acts;
+using MegaCrit.Sts2.Core.Random;
+using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Unlocks;
+
+namespace BlackSouls.Scripts;
+
+[HarmonyPatch(typeof(ActModel), nameof(ActModel.GenerateRooms))]
+public static class OnlyUseModAncientsPatch
+{
+    private static readonly AccessTools.FieldRef<ActModel, RoomSet> RoomsRef =
+        AccessTools.FieldRefAccess<ActModel, RoomSet>("_rooms");
+
+    public static void Postfix(ActModel __instance, Rng rng, UnlockState unlockState, bool isMultiplayer)
+    {
+        if (!BsAncientConfig.OnlyUseModAncients)
+        {
+            return;
+        }
+
+        List<AncientEventModel> candidates = __instance switch
+        {
+            Hive => [
+                ModelDb.AncientEvent<NodeAncient>(),
+                ModelDb.AncientEvent<MabelAncient>(),
+            ],
+            Glory => [
+                ModelDb.AncientEvent<PrickettAncient>(),
+                ModelDb.AncientEvent<MabelAncient>(),
+            ],
+            _ => [],
+        };
+
+        if (HasGeneratedMabelEarlier(__instance))
+        {
+            candidates.RemoveAll(ancient => ancient is MabelAncient);
+        }
+
+        if (candidates.Count == 0)
+        {
+            return;
+        }
+
+        AncientEventModel? ancient = rng.NextItem(candidates);
+        if (ancient != null)
+        {
+            RoomsRef(__instance).Ancient = ancient;
+        }
+    }
+
+    private static bool HasGeneratedMabelEarlier(ActModel currentAct)
+    {
+        RunState? runState = RunManager.Instance.DebugOnlyGetState();
+        if (runState == null)
+        {
+            return false;
+        }
+
+        foreach (ActModel act in runState.Acts)
+        {
+            if (ReferenceEquals(act, currentAct))
+            {
+                return false;
+            }
+
+            if (RoomsRef(act).HasAncient && RoomsRef(act).Ancient is MabelAncient)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}

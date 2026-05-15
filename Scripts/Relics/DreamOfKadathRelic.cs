@@ -29,9 +29,9 @@ public class DreamOfKadathRelic : ModRelicTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(UpgradeCount)];
 
     public override RelicAssetProfile AssetProfile => new(
-        IconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png",
-        IconOutlinePath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png",
-        BigIconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png"
+        IconPath: "res://bs_ancient/assets/images/relics/DreamOfKadathRelic.png",
+        IconOutlinePath: "res://bs_ancient/assets/images/relics/DreamOfKadathRelic.png",
+        BigIconPath: "res://bs_ancient/assets/images/relics/DreamOfKadathRelic.png"
     );
 
     public override decimal ModifyRestSiteHealAmount(Creature creature, decimal amount)

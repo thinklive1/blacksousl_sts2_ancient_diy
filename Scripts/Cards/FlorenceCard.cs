@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
-[RegisterCard(typeof(ColorlessCardPool))]
+[RegisterCard(typeof(EventCardPool))]
 public class FlorenceCard : ModCardTemplate
 {
     public override int MaxUpgradeLevel => 0;
@@ -30,7 +30,7 @@ public class FlorenceCard : ModCardTemplate
         PortraitPath: "res://bs_ancient/assets/images/cards/FlorenceCard.jpg"
     );
 
-    public FlorenceCard() : base(-1, CardType.Skill, CardRarity.Common, TargetType.None)
+    public FlorenceCard() : base(-1, CardType.Skill, CardRarity.Ancient, TargetType.None)
     {
     }
 

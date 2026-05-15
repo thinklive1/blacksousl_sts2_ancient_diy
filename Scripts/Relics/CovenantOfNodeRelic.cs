@@ -26,9 +26,9 @@ public class CovenantOfNodeRelic : ModRelicTemplate
     ];
 
     public override RelicAssetProfile AssetProfile => new(
-        IconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png",
-        IconOutlinePath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png",
-        BigIconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png"
+        IconPath: "res://bs_ancient/assets/images/relics/CovenantOfNodeRelic.png",
+        IconOutlinePath: "res://bs_ancient/assets/images/relics/CovenantOfNodeRelic.png",
+        BigIconPath: "res://bs_ancient/assets/images/relics/CovenantOfNodeRelic.png"
     );
 
     public override Task BeforeCombatStart()

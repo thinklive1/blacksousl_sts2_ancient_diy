@@ -15,9 +15,9 @@ public class QuillPenRelic : ModRelicTemplate
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
     public override RelicAssetProfile AssetProfile => new(
-        IconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png",
-        IconOutlinePath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png",
-        BigIconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png"
+        IconPath: "res://bs_ancient/assets/images/relics/QuillPenRelic.png",
+        IconOutlinePath: "res://bs_ancient/assets/images/relics/QuillPenRelic.png",
+        BigIconPath: "res://bs_ancient/assets/images/relics/QuillPenRelic.png"
     );
 
     public override async Task AfterObtained()

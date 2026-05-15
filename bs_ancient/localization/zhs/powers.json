@@ -1,5 +1,8 @@
 {
     "BS_ANCIENT_POWER_UNDEAD_POWER.title": "不死",
-    "BS_ANCIENT_POWER_UNDEAD_POWER.description": "受到致命伤害时，保留[blue]1[/blue]点生命。每回合结束时失去[blue]1[/blue]层。战斗结束时，每有[blue]1[/blue]层回复[green]{Heal}[/green]点生命。",
-    "BS_ANCIENT_POWER_UNDEAD_POWER.smartDescription": "受到致命伤害时，保留[blue]1[/blue]点生命。每回合结束时失去[blue]1[/blue]层。战斗结束时，每有[blue]1[/blue]层回复[green]{Heal}[/green]点生命。"
+    "BS_ANCIENT_POWER_UNDEAD_POWER.description": "受到致命伤害时，保留[blue]1[/blue]点生命。每回合结束时失去[blue]1[/blue]层。战斗结束时，每有[blue]1[/blue]层回复[green]10[/green]点生命。",
+    "BS_ANCIENT_POWER_UNDEAD_POWER.smartDescription": "受到致命伤害时，保留[blue]1[/blue]点生命。每回合结束时失去[blue]1[/blue]层。战斗结束时，每有[blue]1[/blue]层回复[green]10[/green]点生命。",
+    "BS_ANCIENT_POWER_MADNESS_POWER.title": "发狂",
+    "BS_ANCIENT_POWER_MADNESS_POWER.description": "攻击伤害变为[blue]2[/blue]倍。每回合开始时，受到最大生命值[green]50%[/green]的伤害，但不会因此死亡。",
+    "BS_ANCIENT_POWER_MADNESS_POWER.smartDescription": "攻击伤害变为[blue]2[/blue]倍。每回合开始时，受到最大生命值[green]50%[/green]的伤害，但不会因此死亡。"
 }

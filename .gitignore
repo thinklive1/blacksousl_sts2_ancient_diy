@@ -1,3 +1,37 @@
-# Godot 4+ specific ignores
+# Godot 4+ cache and generated files
 .godot/
+.mono/
+*.translation
+
+# Godot exports
 /android/
+/build/
+/exports/
+*.pck
+*.zip
+
+# .NET build output
+bin/
+obj/
+**/bin/
+**/obj/
+
+# IDE / editor state
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs and temporary files
+logs/
+*.log
+*.tmp
+*.temp
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini

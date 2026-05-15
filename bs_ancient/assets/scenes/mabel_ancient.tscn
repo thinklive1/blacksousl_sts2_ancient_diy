@@ -67,7 +67,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_xjdov")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 0
 
 [node name="snow" type="CPUParticles2D" parent="."]
 position = Vector2(960, -40)

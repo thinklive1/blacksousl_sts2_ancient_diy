@@ -12,12 +12,12 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(SharedRelicPool))]
 public class RedQueenAlbumRelic : ModRelicTemplate
 {
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Ancient;
 
     public override RelicAssetProfile AssetProfile => new(
-        IconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png",
-        IconOutlinePath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png",
-        BigIconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png"
+        IconPath: "res://bs_ancient/assets/images/relics/RedQueenAlbumRelic.png",
+        IconOutlinePath: "res://bs_ancient/assets/images/relics/RedQueenAlbumRelic.png",
+        BigIconPath: "res://bs_ancient/assets/images/relics/RedQueenAlbumRelic.png"
     );
 
     public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnqaern2h8631"
-path="res://.godot/imported/mebel_outline.png-0c71185f0e3a978da5c0b76d145f07ea.ctex"
+uid="uid://dnnvke7u2a67c"
+path="res://.godot/imported/CovenantOfPrickettRelic.png-9094b7da9686d12fd0750994b1d0a8a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://bs_ancient/assets/images/map/mebel_outline.png"
-dest_files=["res://.godot/imported/mebel_outline.png-0c71185f0e3a978da5c0b76d145f07ea.ctex"]
+source_file="res://bs_ancient/assets/images/relics/CovenantOfPrickettRelic.png"
+dest_files=["res://.godot/imported/CovenantOfPrickettRelic.png-9094b7da9686d12fd0750994b1d0a8a6.ctex"]
 
 [params]
 
