@@ -69,7 +69,7 @@ public class GiftOfChaosRelic : ModRelicTemplate
 
     public override bool TryModifyRewards(Player player, List<Reward> rewards, AbstractRoom? room)
     {
-        if (player != Owner)
+        if (player != Owner || _allowInitialRewards)
         {
             return false;
         }
@@ -79,7 +79,7 @@ public class GiftOfChaosRelic : ModRelicTemplate
 
     public override bool TryModifyRewardsLate(Player player, List<Reward> rewards, AbstractRoom? room)
     {
-        if (player != Owner)
+        if (player != Owner || _allowInitialRewards)
         {
             return false;
         }

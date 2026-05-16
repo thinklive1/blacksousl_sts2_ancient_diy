@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
+using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -19,14 +20,38 @@ public class EternalVanityRelic : ModRelicTemplate
         BigIconPath: "res://bs_ancient/assets/images/relics/EternalVanityRelic.png"
     );
 
-    public override Task AfterObtained()
+    public override Task AfterCardEnteredCombat(CardModel card)
     {
-        Flash();
-        foreach (CardModel card in PileType.Deck.GetPile(Owner).Cards)
+        if (CanAffect(card))
         {
             CardCmd.ApplyKeyword(card, CardKeyword.Ethereal);
         }
 
         return Task.CompletedTask;
+    }
+
+    public override Task AfterRoomEntered(AbstractRoom room)
+    {
+        if (room is not CombatRoom || Owner.PlayerCombatState is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        Flash();
+        foreach (CardModel card in Owner.PlayerCombatState.AllCards)
+        {
+            if (CanAffect(card))
+            {
+                CardCmd.ApplyKeyword(card, CardKeyword.Ethereal);
+            }
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private bool CanAffect(CardModel card)
+    {
+        return card.Owner == Owner
+            && !card.Keywords.Contains(CardKeyword.Ethereal);
     }
 }

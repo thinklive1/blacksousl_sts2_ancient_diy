@@ -8,9 +8,9 @@
     "BS_ANCIENT_CARD_GHOST_HUNTER_CARD.title": "幽灵猎人卡纳奇",
     "BS_ANCIENT_CARD_GHOST_HUNTER_CARD.description": "抽到时，获得{StrengthPower:diff()}点[gold]力量[/gold]，抽{Cards:diff()}张牌，然后[gold]消耗[/gold]。",
     "BS_ANCIENT_CARD_POWER_OF_REWRITE.title": "改变之权能",
-    "BS_ANCIENT_CARD_POWER_OF_REWRITE.description": "造成{Damage:diff()}点伤害。清除自身所有[red]负面状态[/red]。",
+    "BS_ANCIENT_CARD_POWER_OF_REWRITE.description": "造成{Damage:diff()}点伤害。清除自身所有[red]负面状态[/red]。每清除一个，获得{Block}点[blue]格挡[/blue]。",
     "BS_ANCIENT_CARD_HLANITH_WINE_CARD.title": "海兰里斯酒",
-    "BS_ANCIENT_CARD_HLANITH_WINE_CARD.description": "获得一个额外回合。[gold]虚无[/gold]。[gold]消耗[/gold]。",
+    "BS_ANCIENT_CARD_HLANITH_WINE_CARD.description": "获得一个额外回合。",
     "BS_ANCIENT_CARD_STAGE_END_CARD.title": "舞台落幕",
-    "BS_ANCIENT_CARD_STAGE_END_CARD.description": "补满手牌和当前能量。获得{MadnessPower:diff()}层[gold]发狂[/gold]。之后每打出{Cards:diff()}张牌，强制死亡。"
+    "BS_ANCIENT_CARD_STAGE_END_CARD.description": "补满手牌和当前能量。获得{MadnessPower:diff()}层[gold]发狂[/gold]。本局战斗中打出{Cards:diff()}张牌后，强制死亡(无法被不死豁免)。"
 }

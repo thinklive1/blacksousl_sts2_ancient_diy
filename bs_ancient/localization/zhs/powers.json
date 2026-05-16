@@ -3,6 +3,12 @@
     "BS_ANCIENT_POWER_UNDEAD_POWER.description": "受到致命伤害时，保留[blue]1[/blue]点生命。每回合结束时失去[blue]1[/blue]层。战斗结束时，每有[blue]1[/blue]层回复[green]10[/green]点生命。",
     "BS_ANCIENT_POWER_UNDEAD_POWER.smartDescription": "受到致命伤害时，保留[blue]1[/blue]点生命。每回合结束时失去[blue]1[/blue]层。战斗结束时，每有[blue]1[/blue]层回复[green]10[/green]点生命。",
     "BS_ANCIENT_POWER_MADNESS_POWER.title": "发狂",
-    "BS_ANCIENT_POWER_MADNESS_POWER.description": "攻击伤害变为[blue]2[/blue]倍。每回合开始时，受到最大生命值[green]50%[/green]的伤害，但不会因此死亡。",
-    "BS_ANCIENT_POWER_MADNESS_POWER.smartDescription": "攻击伤害变为[blue]2[/blue]倍。每回合开始时，受到最大生命值[green]50%[/green]的伤害，但不会因此死亡。"
+    "BS_ANCIENT_POWER_MADNESS_POWER.description": "攻击伤害变为[blue]2[/blue]倍。每回合开始时，受到当前生命值[green]50%[/green]的伤害，但不会因此死亡。",
+    "BS_ANCIENT_POWER_MADNESS_POWER.smartDescription": "攻击伤害变为[blue]2[/blue]倍。每回合开始时，受到当前生命值[green]50%[/green]的伤害，但不会因此死亡。",
+    "BS_ANCIENT_POWER_HLANITH_WINE_EXTRA_TURN_POWER.title": "海兰里斯酒",
+    "BS_ANCIENT_POWER_HLANITH_WINE_EXTRA_TURN_POWER.description": "本回合结束后，获得一个额外回合。",
+    "BS_ANCIENT_POWER_HLANITH_WINE_EXTRA_TURN_POWER.smartDescription": "本回合结束后，获得一个额外回合。",
+    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.title": "舞台落幕",
+    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.description": "再打出[blue]8[/blue]张牌后，强制死亡。",
+    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.smartDescription": "再打出[blue]{Amount}[/blue]张牌后，强制死亡。"
 }

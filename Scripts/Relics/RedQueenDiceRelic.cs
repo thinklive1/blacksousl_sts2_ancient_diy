@@ -23,14 +23,15 @@ namespace BlackSouls.Scripts;
 public class RedQueenDiceRelic : ModRelicTemplate
 {
     private const int CardDrawPerTurn = 1;
+    private const int StrengthGain = 2;
+    private const int StrengthDoubleTurn = 2;
     private const int DexterityGain = 3;
     private const int CardsPerDraw = 4;
     private const int RewardCards = 5;
-    private const int StrengthBonusTriggers = 2;
 
     private int _roll;
     private int _cardsPlayedThisCombat;
-    private int _strengthBonusTriggersThisCombat;
+    private int _ownerTurnsEndedThisCombat;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
@@ -40,6 +41,8 @@ public class RedQueenDiceRelic : ModRelicTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar("CardDrawPerTurn", CardDrawPerTurn),
+        new PowerVar<StrengthPower>(StrengthGain),
+        new DynamicVar("StrengthDoubleTurn", StrengthDoubleTurn),
         new PowerVar<DexterityPower>(DexterityGain),
         new CardsVar("CardsPerDraw", CardsPerDraw),
         new CardsVar("RewardCards", RewardCards)
@@ -55,10 +58,15 @@ public class RedQueenDiceRelic : ModRelicTemplate
     {
         _roll = Owner.RunState.Rng.Niche.NextInt(1, IsMultiplayerRun() ? 6 : 7);
         _cardsPlayedThisCombat = 0;
-        _strengthBonusTriggersThisCombat = 0;
+        _ownerTurnsEndedThisCombat = 0;
         InvokeDisplayAmountChanged();
 
         Flash();
+
+        if (HasEffect(2))
+        {
+            await PowerCmd.Apply<StrengthPower>(Owner.Creature, StrengthGain, Owner.Creature, null);
+        }
 
         if (HasEffect(3))
         {
@@ -113,7 +121,13 @@ public class RedQueenDiceRelic : ModRelicTemplate
             return;
         }
 
-        if (!HasEffect(2) || _strengthBonusTriggersThisCombat >= StrengthBonusTriggers)
+        if (!HasEffect(2))
+        {
+            return;
+        }
+
+        _ownerTurnsEndedThisCombat++;
+        if (_ownerTurnsEndedThisCombat != StrengthDoubleTurn)
         {
             return;
         }
@@ -126,14 +140,13 @@ public class RedQueenDiceRelic : ModRelicTemplate
 
         Flash();
         await PowerCmd.Apply<StrengthPower>(Owner.Creature, strength, Owner.Creature, null);
-        _strengthBonusTriggersThisCombat++;
     }
 
     public override async Task AfterCombatEnd(CombatRoom _)
     {
         _roll = 0;
         _cardsPlayedThisCombat = 0;
-        _strengthBonusTriggersThisCombat = 0;
+        _ownerTurnsEndedThisCombat = 0;
         InvokeDisplayAmountChanged();
         await Task.CompletedTask;
     }

@@ -16,8 +16,7 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(SharedRelicPool))]
 public class CovenantOfPrickettRelic : ModRelicTemplate
 {
-    private const int GoldBonusPercent = 50;
-    private const int CombatInterval = 3;
+    private const int CombatInterval = 2;
     private const int CardRewardOptions = 3;
 
     private int _combatsSeen;
@@ -36,7 +35,6 @@ public class CovenantOfPrickettRelic : ModRelicTemplate
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("GoldBonusPercent", GoldBonusPercent),
         new DynamicVar("Combats", CombatInterval),
         new CardsVar(CardRewardOptions)
     ];
@@ -59,8 +57,13 @@ public class CovenantOfPrickettRelic : ModRelicTemplate
         }
     }
 
-    public override Task AfterCombatEnd(CombatRoom _)
+    public override Task AfterCombatEnd(CombatRoom room)
     {
+        if (room.RoomType == RoomType.Boss)
+        {
+            return Task.CompletedTask;
+        }
+
         CombatsSeen++;
         return Task.CompletedTask;
     }
@@ -72,15 +75,13 @@ public class CovenantOfPrickettRelic : ModRelicTemplate
             return false;
         }
 
-        bool modified = AddGoldBonusRewards(player, rewards);
-
         if (ShouldAddRareCardReward(room))
         {
             rewards.Add(new CardReward(CreateRareCardOptions(player), CardRewardOptions, player));
-            modified = true;
+            return true;
         }
 
-        return modified;
+        return false;
     }
 
     public override Task AfterModifyingRewards()
@@ -89,33 +90,11 @@ public class CovenantOfPrickettRelic : ModRelicTemplate
         return Task.CompletedTask;
     }
 
-    private static bool AddGoldBonusRewards(Player player, List<Reward> rewards)
-    {
-        bool modified = false;
-        foreach (GoldReward goldReward in rewards.OfType<GoldReward>().ToList())
-        {
-            if (goldReward.Amount <= 0)
-            {
-                continue;
-            }
-
-            int bonusGold = (int)Math.Ceiling(goldReward.Amount * GoldBonusPercent / 100m);
-            if (bonusGold <= 0)
-            {
-                continue;
-            }
-
-            rewards.Add(new GoldReward(bonusGold, player));
-            modified = true;
-        }
-
-        return modified;
-    }
-
     private bool ShouldAddRareCardReward(AbstractRoom? room)
     {
         return room != null
             && room.RoomType.IsCombatRoom()
+            && room.RoomType != RoomType.Boss
             && CombatsSeen > 0
             && CombatsSeen % DynamicVars["Combats"].IntValue == 0;
     }

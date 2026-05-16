@@ -5,7 +5,7 @@ namespace BlackSouls.Scripts;
 
 public static class BsAncientConfig
 {
-    private const string ConfigFileName = "bs_ancient_config.json";
+    private const string ConfigFileName = "bs_ancient_config.cfg";
 
     public static bool OnlyUseModAncients = true;
 

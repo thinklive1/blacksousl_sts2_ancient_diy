@@ -1,5 +1,5 @@
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -38,14 +38,13 @@ public class LittleMermaidFavorRelic : ModRelicTemplate
         );
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override decimal ModifyMaxEnergy(Player player, decimal amount)
     {
-        if (side != Owner.Creature.Side)
+        if (player != Owner)
         {
-            return;
+            return amount;
         }
 
-        Flash();
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+        return amount + DynamicVars.Energy.BaseValue;
     }
 }

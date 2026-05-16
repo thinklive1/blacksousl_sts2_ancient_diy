@@ -1,5 +1,5 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -11,13 +11,12 @@ namespace BlackSouls.Scripts.Cards;
 [RegisterCard(typeof(EventCardPool))]
 public class HlanithWineCard : ModCardTemplate
 {
-    private const int Cost = 3;
-    private const int UpgradedCost = 2;
-
-    private bool _extraTurnPending;
+    private const int Cost = 2;
+    private const int UpgradedCost = 1;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Ethereal
+        CardKeyword.Ethereal,
+        CardKeyword.Exhaust
     ];
 
     public override CardAssetProfile AssetProfile => new(
@@ -30,23 +29,7 @@ public class HlanithWineCard : ModCardTemplate
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        _extraTurnPending = true;
-        return Task.CompletedTask;
-    }
-
-    public override bool ShouldTakeExtraTurn(Player player)
-    {
-        return player == Owner && _extraTurnPending;
-    }
-
-    public override Task AfterTakingExtraTurn(Player player)
-    {
-        if (player == Owner)
-        {
-            _extraTurnPending = false;
-        }
-
-        return Task.CompletedTask;
+        return PowerCmd.Apply<HlanithWineExtraTurnPower>(Owner.Creature, 1, Owner.Creature, this, silent: true);
     }
 
     protected override void OnUpgrade()

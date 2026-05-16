@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -17,9 +16,6 @@ public class StageEndCard : ModCardTemplate
 {
     private const int CardsUntilDeath = 8;
     private const int MadnessGain = 1;
-
-    private bool _isCountingDown;
-    private int _cardsPlayedAfterStageEnd;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Ethereal,
@@ -32,7 +28,8 @@ public class StageEndCard : ModCardTemplate
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<MadnessPower>()
+        HoverTipFactory.FromPower<MadnessPower>(),
+        HoverTipFactory.FromPower<StageEndCountdownPower>()
     ];
 
     public override CardAssetProfile AssetProfile => new(
@@ -45,36 +42,10 @@ public class StageEndCard : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        _isCountingDown = true;
-        _cardsPlayedAfterStageEnd = 0;
-
         await RefillHand(choiceContext);
         await RefillEnergy();
         await PowerCmd.Apply<MadnessPower>(Owner.Creature, DynamicVars["MadnessPower"].BaseValue, Owner.Creature, this);
-    }
-
-    public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (!_isCountingDown || cardPlay.Card == this || cardPlay.Card.Owner != Owner || Owner.Creature.IsDead)
-        {
-            return;
-        }
-
-        _cardsPlayedAfterStageEnd++;
-        if (_cardsPlayedAfterStageEnd < DynamicVars.Cards.IntValue)
-        {
-            return;
-        }
-
-        _isCountingDown = false;
-        await CreatureCmd.Kill(Owner.Creature, force: true);
-    }
-
-    public override Task AfterCombatEnd(CombatRoom room)
-    {
-        _isCountingDown = false;
-        _cardsPlayedAfterStageEnd = 0;
-        return Task.CompletedTask;
+        await PowerCmd.Apply<StageEndCountdownPower>(Owner.Creature, DynamicVars.Cards.BaseValue, Owner.Creature, this);
     }
 
     private async Task RefillHand(PlayerChoiceContext choiceContext)

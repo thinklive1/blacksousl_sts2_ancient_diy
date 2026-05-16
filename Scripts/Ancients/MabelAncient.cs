@@ -49,9 +49,17 @@ public class MabelAncient : ModAncientEventTemplate
 
     private IReadOnlyList<EventOption> CreatePool2(bool isMultiplayer)
     {
-        return isMultiplayer
-            ? []
-            : [CreateHlanithWineOption()];
+        List<EventOption> options =
+        [
+            CreateStageEndOption(),
+        ];
+
+        if (!isMultiplayer)
+        {
+            options.Insert(0, CreateHlanithWineOption());
+        }
+
+        return options;
     }
 
     private IReadOnlyList<EventOption> FullPool1 => [
@@ -64,32 +72,46 @@ public class MabelAncient : ModAncientEventTemplate
 
     private IReadOnlyList<EventOption> FullPool2 => [
         CreateHlanithWineOption(),
+        CreateStageEndOption(),
     ];
 
-    private WeightedList<EventOption> Pool3 => new()
+    private WeightedList<EventOption> FullPool3 => new()
     {
         { CreateEternalVanityOption(), 1 },
         { CreateModRelicOption<MysteryOfNightSkyRelic>(), 1 },
         { CreateModRelicOption<GiftOfChaosRelic>(), 1 },
     };
 
-    public override IEnumerable<EventOption> AllPossibleOptions => [.. FullPool1, .. FullPool2, .. Pool3];
+    public override IEnumerable<EventOption> AllPossibleOptions => [.. FullPool1, .. FullPool2, .. FullPool3];
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
         bool isMultiplayer = Owner?.RunState.Players.Count > 1;
         IReadOnlyList<EventOption> pool1 = CreatePool1(isMultiplayer);
         IReadOnlyList<EventOption> pool2 = CreatePool2(isMultiplayer);
+        WeightedList<EventOption> pool3 = CreatePool3(isMultiplayer);
         List<EventOption> options =
         [
             Rng.NextItem(pool1)!,
-            Pool3.GetRandom(Rng),
+            pool3.GetRandom(Rng),
         ];
 
         if (pool2.Count > 0)
         {
             options.Insert(1, Rng.NextItem(pool2)!);
         }
+
+        return options;
+    }
+
+    private WeightedList<EventOption> CreatePool3(bool isMultiplayer)
+    {
+        WeightedList<EventOption> options = new()
+        {
+            { CreateEternalVanityOption(), 1 },
+            { CreateModRelicOption<MysteryOfNightSkyRelic>(), 1 },
+            { CreateModRelicOption<GiftOfChaosRelic>(), 1 },
+        };
 
         return options;
     }
@@ -130,6 +152,15 @@ public class MabelAncient : ModAncientEventTemplate
         EventOption option = CreateModRelicOption<HlanithWineRelic>();
         option.HoverTips = option.HoverTips
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<HlanithWineCard>());
+        return option;
+    }
+
+    private EventOption CreateStageEndOption()
+    {
+        EventOption option = CreateModRelicOption<StageEndRelic>();
+        option.HoverTips = option.HoverTips
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<StageEndCard>())
+            .Append(HoverTipFactory.FromPower<MadnessPower>());
         return option;
     }
 

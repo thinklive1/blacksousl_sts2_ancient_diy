@@ -17,13 +17,15 @@ public class PowerOfRewrite : ModCardTemplate
 {
     private const int Damage = 39;
     private const int UpgradedDamage = 45;
+    private const int BlockPerDebuff = 10;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Exhaust
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(Damage, ValueProp.Move)
+        new DamageVar(Damage, ValueProp.Move),
+        new BlockVar(BlockPerDebuff, ValueProp.Move)
     ];
 
     public override CardAssetProfile AssetProfile => new(
@@ -48,6 +50,16 @@ public class PowerOfRewrite : ModCardTemplate
         foreach (PowerModel debuff in debuffs)
         {
             await PowerCmd.Remove(debuff);
+        }
+
+        if (debuffs.Count > 0)
+        {
+            await CreatureCmd.GainBlock(
+                Owner.Creature,
+                DynamicVars.Block.BaseValue * debuffs.Count,
+                DynamicVars.Block.Props,
+                cardPlay
+            );
         }
     }
 

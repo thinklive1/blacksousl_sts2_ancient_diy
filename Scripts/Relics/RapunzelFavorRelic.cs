@@ -13,7 +13,7 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(SharedRelicPool))]
 public class RapunzelFavorRelic : ModRelicTemplate
 {
-    private const int DrawLoss = 2;
+    private const int DrawLoss = 1;
     private const int TurnsPerExtraTurn = 3;
 
     private int _ownerTurnsEnded;

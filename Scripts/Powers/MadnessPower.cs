@@ -48,7 +48,7 @@ public class MadnessPower : ModPowerTemplate
             return;
         }
 
-        decimal selfDamage = Math.Ceiling(Owner.MaxHp * DynamicVars["SelfDamagePercent"].BaseValue / 100m);
+        decimal selfDamage = Math.Ceiling(Owner.CurrentHp * DynamicVars["SelfDamagePercent"].BaseValue / 100m);
         selfDamage = Math.Min(selfDamage, Math.Max(Owner.CurrentHp - 1, 0));
 
         if (selfDamage <= 0m)

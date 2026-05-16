@@ -37,7 +37,7 @@ public class CinderellaFavorRelic : ModRelicTemplate
         }
 
         Flash();
-        await PowerCmd.Apply<StrengthPower>(Owner.Creature, -DynamicVars["StrengthPower"].BaseValue, Owner.Creature, null);
+        await ApplyStrengthLoss();
     }
 
     public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
@@ -61,5 +61,10 @@ public class CinderellaFavorRelic : ModRelicTemplate
         {
             await PowerCmd.Remove(debuff);
         }
+    }
+
+    private Task ApplyStrengthLoss()
+    {
+        return PowerCmd.Apply<StrengthPower>(Owner.Creature, -StrengthLoss, Owner.Creature, null);
     }
 }
