@@ -17,7 +17,7 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(SharedRelicPool))]
 public class DodoRunRelic : ModRelicTemplate
 {
-    private const int HealthThreshold = 10;
+    private const int HealthThreshold = 20;
 
     private bool _wasUsed;
     private bool _shouldClearSkippedCombatRewards;

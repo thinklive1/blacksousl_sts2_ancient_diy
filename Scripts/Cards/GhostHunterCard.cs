@@ -26,7 +26,7 @@ public class GhostHunterCard : ModCardTemplate
         new CardsVar(2)
     ];
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/GhostHunterCard.jpg"
+        PortraitPath: "res://bs_ancient/assets/images/cards/GhostHunterCard.png"
     );
 
     public GhostHunterCard() : base(-1, CardType.Skill, CardRarity.Ancient, TargetType.None)

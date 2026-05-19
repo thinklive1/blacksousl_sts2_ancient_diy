@@ -1,9 +1,9 @@
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -17,7 +17,8 @@ public class MysteryOfNightSkyRelic : ModRelicTemplate
     private const int ReplayChance = 50;
 
     private bool _hasCheckedFirstCardThisTurn;
-    private bool _isReplayingCard;
+    private bool _shouldReplayFirstCardThisTurn;
+    private bool _replayedFirstCardThisTurn;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
@@ -36,46 +37,46 @@ public class MysteryOfNightSkyRelic : ModRelicTemplate
         if (side == Owner.Creature.Side)
         {
             _hasCheckedFirstCardThisTurn = false;
+            _replayedFirstCardThisTurn = false;
+            _shouldReplayFirstCardThisTurn = Owner.RunState.Rng.Niche.NextInt(100) < ReplayChance;
         }
 
         return Task.CompletedTask;
     }
 
-    public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
     {
-        if (_isReplayingCard || _hasCheckedFirstCardThisTurn || cardPlay.Card.Owner != Owner || Owner.Creature.IsDead)
+        if (_hasCheckedFirstCardThisTurn || card.Owner != Owner || Owner.Creature.IsDead)
         {
-            return;
+            return playCount;
         }
 
         _hasCheckedFirstCardThisTurn = true;
-        if (Owner.RunState.Rng.Niche.NextInt(100) >= ReplayChance)
+        if (!_shouldReplayFirstCardThisTurn)
         {
-            return;
+            return playCount;
         }
 
-        Flash();
-        _isReplayingCard = true;
-        try
+        _replayedFirstCardThisTurn = true;
+        return playCount + 1;
+    }
+
+    public override Task AfterModifyingCardPlayCount(CardModel card)
+    {
+        if (_replayedFirstCardThisTurn)
         {
-            await CardCmd.AutoPlay(
-                choiceContext,
-                cardPlay.Card,
-                cardPlay.Target,
-                skipXCapture: true,
-                skipCardPileVisuals: true
-            );
+            Flash();
+            _replayedFirstCardThisTurn = false;
         }
-        finally
-        {
-            _isReplayingCard = false;
-        }
+
+        return Task.CompletedTask;
     }
 
     public override Task AfterCombatEnd(CombatRoom room)
     {
         _hasCheckedFirstCardThisTurn = false;
-        _isReplayingCard = false;
+        _shouldReplayFirstCardThisTurn = false;
+        _replayedFirstCardThisTurn = false;
         return Task.CompletedTask;
     }
 }

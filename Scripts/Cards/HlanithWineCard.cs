@@ -16,7 +16,6 @@ public class HlanithWineCard : ModCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Ethereal,
-        CardKeyword.Exhaust
     ];
 
     public override CardAssetProfile AssetProfile => new(
@@ -29,7 +28,7 @@ public class HlanithWineCard : ModCardTemplate
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return PowerCmd.Apply<HlanithWineExtraTurnPower>(Owner.Creature, 1, Owner.Creature, this, silent: true);
+        return PowerCmd.Apply<HlanithWineExtraTurnPower>(Owner.Creature, 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

@@ -25,6 +25,7 @@
   "BS_ANCIENT_EVENT_NODE_ANCIENT.talk.REGENT.2-0r.ancient": "请不要心急, 带上我的祝福",
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.title": "普利凯特",
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.epithet": "红之女王",
+  "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.talk.ANY.0-0r.ancient": "是来要签名的吗☆",
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.talk.IRONCLAD.0-0r.ancient": "死亡、杀戮与鲜血， 这里可是很棒的游乐园呢，让它变得更欢闹吧☆",
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.talk.SILENT.0-0r.ancient": "死亡、杀戮与鲜血， 这里可是很棒的游乐园呢，让它变得更欢闹吧☆",
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.talk.REGENT.0-0r.ancient": "来自星辰的旅客，欢迎来到普利凯特的游乐场☆",
@@ -32,9 +33,13 @@
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.talk.DEFECT.0-0r.ancient": "诶，把你修好的方法？只要有歌声就足够了吧☆",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.title": "梅贝尔",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.epithet": "虚无少女",
+  "BS_ANCIENT_EVENT_MABEL_ANCIENT.talk.ANY.0-0r.ancient": "想要永远地杀戮吗？我知道一个好去处哦",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.talk.IRONCLAD.0-0r.ancient": "想要永远地杀戮吗？我知道一个好去处哦",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.talk.SILENT.0-0r.ancient": "想要永远地狩猎吗？我知道一个好去处哦",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.talk.REGENT.0-0r.ancient": "用你来装饰我的箱庭一定会很好看吧，诶，不愿意吗？",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.talk.NECROBINDER.0-0r.ancient": "足以复仇的力量？成为我的仆从的话就可以给你哦",
-  "BS_ANCIENT_EVENT_MABEL_ANCIENT.talk.DEFECT.0-0r.ancient": "你看上去能成为不错的藏品呢，说笑的"
+  "BS_ANCIENT_EVENT_MABEL_ANCIENT.talk.DEFECT.0-0r.ancient": "你看上去能成为不错的藏品呢，说笑的",
+  "BS_ANCIENT_EVENT_MABEL_ANCIENT.pages.INITIAL.options.CHOOSE_FAVOR.title": "接受宠爱",
+  "BS_ANCIENT_EVENT_MABEL_ANCIENT.pages.INITIAL.options.CHOOSE_FAVOR.description": "从[blue]3[/blue]个随机[gold]宠爱[/gold]中选择一个。",
+  "BS_ANCIENT_EVENT_MABEL_ANCIENT.pages.CHOOSE_FAVOR.description": "梅贝尔注视着你，像是在等待你选中自己命运的一部分。"
 }

@@ -2,6 +2,7 @@ using Godot;
 using BlackSouls.Scripts.Cards;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Events;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.Acts;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -82,7 +83,7 @@ public class MabelAncient : ModAncientEventTemplate
         { CreateModRelicOption<GiftOfChaosRelic>(), 1 },
     };
 
-    public override IEnumerable<EventOption> AllPossibleOptions => [.. FullPool1, .. FullPool2, .. FullPool3];
+    public override IEnumerable<EventOption> AllPossibleOptions => [CreateFavorChoiceOption(false), .. FullPool1, .. FullPool2, .. FullPool3];
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
@@ -92,7 +93,7 @@ public class MabelAncient : ModAncientEventTemplate
         WeightedList<EventOption> pool3 = CreatePool3(isMultiplayer);
         List<EventOption> options =
         [
-            Rng.NextItem(pool1)!,
+            CreateFavorChoiceOption(isMultiplayer),
             pool3.GetRandom(Rng),
         ];
 
@@ -119,6 +120,23 @@ public class MabelAncient : ModAncientEventTemplate
     public override bool IsAllowed(IRunState runState)
     {
         return runState.CurrentActIndex is 1 or 2;
+    }
+
+    private EventOption CreateFavorChoiceOption(bool isMultiplayer)
+    {
+        return new EventOption(this, () => ChooseFavor(isMultiplayer), InitialOptionKey("CHOOSE_FAVOR"));
+    }
+
+    private Task ChooseFavor(bool isMultiplayer)
+    {
+        List<EventOption> options = CreatePool1(isMultiplayer)
+            .ToList()
+            .UnstableShuffle(Rng)
+            .Take(3)
+            .ToList();
+
+        SetEventState(L10NLookup($"{Id.Entry}.pages.CHOOSE_FAVOR.description"), options);
+        return Task.CompletedTask;
     }
 
     private EventOption CreatePrincessFrogFavorOption()

@@ -75,4 +75,9 @@ public class StageEndCard : ModCardTemplate
             await PlayerCmd.GainEnergy(energyToGain, Owner);
         }
     }
+
+    protected override void OnUpgrade()
+    {
+        RemoveKeyword(CardKeyword.Ethereal);
+    }
 }

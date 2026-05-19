@@ -27,7 +27,7 @@ public class FlorenceCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/FlorenceCard.jpg"
+        PortraitPath: "res://bs_ancient/assets/images/cards/FlorenceCard.png"
     );
 
     public FlorenceCard() : base(-1, CardType.Skill, CardRarity.Ancient, TargetType.None)

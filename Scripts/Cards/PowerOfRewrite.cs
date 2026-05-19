@@ -16,8 +16,7 @@ namespace BlackSouls.Scripts.Cards;
 public class PowerOfRewrite : ModCardTemplate
 {
     private const int Damage = 39;
-    private const int UpgradedDamage = 45;
-    private const int BlockPerDebuff = 10;
+    private const int BlockPerDebuff = 6;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Exhaust
@@ -65,6 +64,6 @@ public class PowerOfRewrite : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(UpgradedDamage - Damage);
+        AddKeyword(CardKeyword.Retain);
     }
 }

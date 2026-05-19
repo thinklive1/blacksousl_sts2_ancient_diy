@@ -43,7 +43,7 @@ public class PrickettAncient : ModAncientEventTemplate
         { CreateModRelicOption<CovenantOfPrickettRelic>(), 1 },
     };
 
-    public override IEnumerable<EventOption> AllPossibleOptions => [.. Pool1, .. Pool2, .. Pool3];
+    public override IEnumerable<EventOption> AllPossibleOptions => [.. Pool1, .. Pool2, .. Pool3, CreateModRelicOption<RedQueenSoldierRelic>()];
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
@@ -52,6 +52,7 @@ public class PrickettAncient : ModAncientEventTemplate
             Rng.NextItem(Pool1)!,
             Rng.NextItem(Pool2)!,
             Pool3.GetRandom(Rng),
+            CreateModRelicOption<RedQueenSoldierRelic>(),
         ];
     }
 
@@ -64,23 +65,8 @@ public class PrickettAncient : ModAncientEventTemplate
     {
         EventOption option = CreateModRelicOption<RedQueenDiceRelic>();
         option.HoverTips = option.HoverTips
-            .Append(CreateRedQueenDiceDetailsHoverTip())
-            .Append(HoverTipFactory.FromPower<StrengthPower>())
-            .Append(HoverTipFactory.FromPower<DexterityPower>());
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<RedQueenRerollCard>());
         return option;
-    }
-
-    private static HoverTip CreateRedQueenDiceDetailsHoverTip()
-    {
-        LocString description = new("relics", "BS_ANCIENT_RELIC_RED_QUEEN_DICE_RELIC.diceDetails.description");
-        description.Add("CardDrawPerTurn", 1);
-        description.Add("DexterityPower", 3);
-        description.Add("CardsPerDraw", 4);
-        description.Add("RewardCards", 5);
-
-        return new HoverTip(
-            new LocString("relics", "BS_ANCIENT_RELIC_RED_QUEEN_DICE_RELIC.diceDetails.title"),
-            description);
     }
 
     private EventOption CreateAliceRibbonOption()

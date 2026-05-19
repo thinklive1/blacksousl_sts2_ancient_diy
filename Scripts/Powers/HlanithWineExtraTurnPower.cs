@@ -13,9 +13,7 @@ public class HlanithWineExtraTurnPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Single;
-
-    protected override bool IsVisibleInternal => false;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/HlanithWineRelic.png",
@@ -24,7 +22,7 @@ public class HlanithWineExtraTurnPower : ModPowerTemplate
 
     public override bool ShouldTakeExtraTurn(Player player)
     {
-        return Owner.Player == player;
+        return Owner.Player == player && Amount > 0;
     }
 
     public override Task AfterTakingExtraTurn(Player player)
@@ -35,6 +33,6 @@ public class HlanithWineExtraTurnPower : ModPowerTemplate
         }
 
         Flash();
-        return PowerCmd.Remove(this);
+        return PowerCmd.Decrement(this);
     }
 }

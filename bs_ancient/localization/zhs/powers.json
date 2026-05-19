@@ -6,9 +6,12 @@
     "BS_ANCIENT_POWER_MADNESS_POWER.description": "攻击伤害变为[blue]2[/blue]倍。每回合开始时，受到当前生命值[green]50%[/green]的伤害，但不会因此死亡。",
     "BS_ANCIENT_POWER_MADNESS_POWER.smartDescription": "攻击伤害变为[blue]2[/blue]倍。每回合开始时，受到当前生命值[green]50%[/green]的伤害，但不会因此死亡。",
     "BS_ANCIENT_POWER_HLANITH_WINE_EXTRA_TURN_POWER.title": "海兰里斯酒",
-    "BS_ANCIENT_POWER_HLANITH_WINE_EXTRA_TURN_POWER.description": "本回合结束后，获得一个额外回合。",
-    "BS_ANCIENT_POWER_HLANITH_WINE_EXTRA_TURN_POWER.smartDescription": "本回合结束后，获得一个额外回合。",
+    "BS_ANCIENT_POWER_HLANITH_WINE_EXTRA_TURN_POWER.description": "本回合结束后，获得一个额外回合。触发后失去[blue]1[/blue]层。",
+    "BS_ANCIENT_POWER_HLANITH_WINE_EXTRA_TURN_POWER.smartDescription": "本回合结束后，获得一个额外回合。触发后失去[blue]1[/blue]层。",
     "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.title": "舞台落幕",
     "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.description": "再打出[blue]8[/blue]张牌后，强制死亡。",
-    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.smartDescription": "再打出[blue]{Amount}[/blue]张牌后，强制死亡。"
+    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.smartDescription": "再打出[blue]{Amount}[/blue]张牌后，强制死亡。",
+    "BS_ANCIENT_POWER_RED_QUEEN_DICE_CURRENT_POWER.title": "普利凯特的骰子",
+    "BS_ANCIENT_POWER_RED_QUEEN_DICE_CURRENT_POWER.description": "当前有[blue]0[/blue]张手牌已被重掷；这些牌的攻击和格挡点数随机上下浮动[blue]{RollRange}[/blue]点。",
+    "BS_ANCIENT_POWER_RED_QUEEN_DICE_CURRENT_POWER.smartDescription": "当前有[blue]{Amount}[/blue]张手牌已被重掷；这些牌的攻击和格挡点数随机上下浮动[blue]{RollRange}[/blue]点。"
 }

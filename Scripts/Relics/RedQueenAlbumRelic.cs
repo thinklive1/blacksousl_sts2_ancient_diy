@@ -37,7 +37,7 @@ public class RedQueenAlbumRelic : ModRelicTemplate
         }
 
         Flash();
-        Owner.RunState.Rng.CombatCardSelection.NextItem(candidates)?.SetToFreeThisCombat();
+        Owner.RunState.Rng.CombatCardSelection.NextItem(candidates)?.EnergyCost.AddThisCombat(-1);
         return Task.CompletedTask;
     }
 }

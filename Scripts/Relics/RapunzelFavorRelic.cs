@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -23,7 +24,7 @@ public class RapunzelFavorRelic : ModRelicTemplate
 
     public override bool ShowCounter => CombatManager.Instance.IsInProgress;
 
-    public override int DisplayAmount => TurnsPerExtraTurn - (_ownerTurnsEnded % TurnsPerExtraTurn);
+    public override int DisplayAmount => TurnsPerExtraTurn - (OwnerTurnsEnded % TurnsPerExtraTurn);
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar("DrawLoss", DrawLoss),
@@ -35,6 +36,18 @@ public class RapunzelFavorRelic : ModRelicTemplate
         IconOutlinePath: "res://bs_ancient/assets/images/relics/RapunzelFavorRelic.png",
         BigIconPath: "res://bs_ancient/assets/images/relics/RapunzelFavorRelic.png"
     );
+
+    [SavedProperty]
+    public int OwnerTurnsEnded
+    {
+        get => _ownerTurnsEnded;
+        set
+        {
+            AssertMutable();
+            _ownerTurnsEnded = value;
+            InvokeDisplayAmountChanged();
+        }
+    }
 
     public override decimal ModifyHandDraw(Player player, decimal count)
     {
@@ -48,13 +61,12 @@ public class RapunzelFavorRelic : ModRelicTemplate
             return Task.CompletedTask;
         }
 
-        _ownerTurnsEnded++;
-        if (_ownerTurnsEnded % TurnsPerExtraTurn == 0)
+        OwnerTurnsEnded++;
+        if (OwnerTurnsEnded % TurnsPerExtraTurn == 0)
         {
             _extraTurnPending = true;
         }
 
-        InvokeDisplayAmountChanged();
         return Task.CompletedTask;
     }
 
@@ -78,9 +90,7 @@ public class RapunzelFavorRelic : ModRelicTemplate
 
     public override Task AfterCombatEnd(CombatRoom _)
     {
-        _ownerTurnsEnded = 0;
         _extraTurnPending = false;
-        InvokeDisplayAmountChanged();
         return Task.CompletedTask;
     }
 }

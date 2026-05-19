@@ -1,6 +1,11 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Factories;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rooms;
@@ -12,7 +17,13 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(SharedRelicPool))]
 public class EternalVanityRelic : ModRelicTemplate
 {
+    private const int CardsPerTurn = 1;
+
     public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(CardsPerTurn)
+    ];
 
     public override RelicAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/EternalVanityRelic.png",
@@ -28,6 +39,36 @@ public class EternalVanityRelic : ModRelicTemplate
         }
 
         return Task.CompletedTask;
+    }
+
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, CombatState combatState)
+    {
+        if (player != Owner)
+        {
+            return;
+        }
+
+        IReadOnlyList<CardModel> candidates = Owner.Character.CardPool
+            .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
+            .Where(card => card.Rarity is not (CardRarity.Basic or CardRarity.Ancient))
+            .ToList();
+
+        if (candidates.Count == 0)
+        {
+            return;
+        }
+
+        CardModel[] cards = CardFactory
+            .GetDistinctForCombat(Owner, candidates, DynamicVars.Cards.IntValue, Owner.RunState.Rng.CombatCardGeneration)
+            .ToArray();
+
+        foreach (CardModel card in cards)
+        {
+            CardCmd.ApplyKeyword(card, CardKeyword.Ethereal);
+        }
+
+        Flash();
+        await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Hand, addedByPlayer: true);
     }
 
     public override Task AfterRoomEntered(AbstractRoom room)

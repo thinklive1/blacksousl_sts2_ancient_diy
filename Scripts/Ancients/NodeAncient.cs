@@ -41,6 +41,7 @@ public class NodeAncient : ModAncientEventTemplate
     private IReadOnlyList<EventOption> Pool2 => [
             CreateModRelicOption<DreamOfKadathRelic>(),
             CreateQuillPenOption(),
+            CreateModRelicOption<NodeRibbonRelic>(),
         ];
 
     // 带权重池三。权重越大越有机会生成。当然你也可以写自定义的列表生成函数
@@ -50,7 +51,7 @@ public class NodeAncient : ModAncientEventTemplate
     };
 
     // 所有可能的选项
-    public override IEnumerable<EventOption> AllPossibleOptions => [.. Pool1, .. Pool2, .. Pool3];
+    public override IEnumerable<EventOption> AllPossibleOptions => [.. Pool1, .. Pool2, .. Pool3, CreateModRelicOption<WhiteQueenSoldierRelic>()];
 
     // 生成选项
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
@@ -60,6 +61,7 @@ public class NodeAncient : ModAncientEventTemplate
             Rng.NextItem(Pool1)!,
             Rng.NextItem(Pool2)!,
             Pool3.GetRandom(Rng),
+            CreateModRelicOption<WhiteQueenSoldierRelic>(),
         ];
     }
 
