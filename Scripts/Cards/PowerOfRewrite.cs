@@ -37,6 +37,8 @@ public class PowerOfRewrite : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        BsAncientAudio.PlayOneShot(BsAncientAudio.Write);
+
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(cardPlay.Target!)

@@ -1,12 +1,15 @@
+using BlackSouls.Scripts.Cards;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
-using MegaCrit.Sts2.Core.Rewards;
-using MegaCrit.Sts2.Core.Rooms;
-using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,11 +18,11 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(SharedRelicPool))]
 public class GiftOfChaosRelic : ModRelicTemplate
 {
-    private const int RewardGroups = 10;
-    private const int RewardOptions = 3;
+    private const int MaxFusionMaterials = 3;
 
-    private bool _allowInitialRewards;
-    private bool _allowReplacementCard;
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(MaxFusionMaterials)];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [CreateFusionHoverTip()];
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
@@ -32,82 +35,66 @@ public class GiftOfChaosRelic : ModRelicTemplate
     public override async Task AfterObtained()
     {
         Flash();
-        _allowInitialRewards = true;
-        try
-        {
-            await RewardsCmd.OfferCustom(Owner, CreateCardRewards());
-        }
-        finally
-        {
-            _allowInitialRewards = false;
-        }
-    }
 
-    public override bool ShouldAddToDeck(CardModel card)
-    {
-        return card.Owner != Owner || _allowInitialRewards || _allowReplacementCard;
-    }
+        List<CardModel> selectedCards = (await CardSelectCmd.FromDeckGeneric(
+                Owner,
+                new CardSelectorPrefs(SelectionScreenPrompt, 1, MaxFusionMaterials),
+                IsValidMaterial))
+            .ToList();
 
-    public override async Task BeforeCardRemoved(CardModel card)
-    {
-        if (card.Owner != Owner || card.Pile?.Type != PileType.Deck || _allowReplacementCard)
+        if (selectedCards.Count == 0)
         {
             return;
         }
 
-        CardModel replacement = Owner.RunState.CloneCard(card);
-        _allowReplacementCard = true;
-        try
-        {
-            await CardPileCmd.Add(replacement, PileType.Deck, source: this, skipVisuals: true);
-        }
-        finally
-        {
-            _allowReplacementCard = false;
-        }
+        ChaosFusionCard fusionCard = Owner.RunState.CreateCard<ChaosFusionCard>(Owner);
+        fusionCard.ConfigureFrom(selectedCards, GetRandomFusionType(selectedCards));
+        PreserveRandomEnchantment(selectedCards, fusionCard);
+
+        await CardPileCmd.RemoveFromDeck(selectedCards);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(fusionCard, PileType.Deck, source: this), 2f);
     }
 
-    public override bool TryModifyRewards(Player player, List<Reward> rewards, AbstractRoom? room)
+    private static bool IsValidMaterial(CardModel card)
     {
-        if (player != Owner || _allowInitialRewards)
+        return card.Type is CardType.Attack or CardType.Skill;
+    }
+
+    private CardType GetRandomFusionType(IReadOnlyList<CardModel> materials)
+    {
+        IReadOnlyList<CardType> types = materials
+            .Select(card => card.Type)
+            .Where(type => type is CardType.Attack or CardType.Skill)
+            .Distinct()
+            .ToList();
+
+        return types.Count == 0 ? CardType.Skill : Owner.RunState.Rng.Niche.NextItem(types);
+    }
+
+    private void PreserveRandomEnchantment(IReadOnlyList<CardModel> materials, CardModel fusionCard)
+    {
+        List<SerializableEnchantment> enchantments = materials
+            .Select(card => card.Enchantment?.ToSerializable())
+            .OfType<SerializableEnchantment>()
+            .ToList();
+
+        SerializableEnchantment? selected = Owner.RunState.Rng.Niche.NextItem(enchantments);
+        if (selected == null)
         {
-            return false;
+            return;
         }
 
-        return RemoveCardRelatedRewards(rewards);
+        EnchantmentModel enchantment = EnchantmentModel.FromSerializable(selected);
+        fusionCard.EnchantInternal(enchantment, selected.Amount);
+        enchantment.ModifyCard();
+        fusionCard.FinalizeUpgradeInternal();
     }
 
-    public override bool TryModifyRewardsLate(Player player, List<Reward> rewards, AbstractRoom? room)
+    private IHoverTip CreateFusionHoverTip()
     {
-        if (player != Owner || _allowInitialRewards)
-        {
-            return false;
-        }
-
-        return RemoveCardRelatedRewards(rewards);
-    }
-
-    public override Task AfterModifyingRewards()
-    {
-        Flash();
-        return Task.CompletedTask;
-    }
-
-    private List<Reward> CreateCardRewards()
-    {
-        List<Reward> rewards = [];
-        CardCreationOptions options = CardCreationOptions.ForNonCombatWithUniformOdds([Owner.Character.CardPool]);
-        for (int i = 0; i < RewardGroups; i++)
-        {
-            rewards.Add(new CardReward(options, RewardOptions, Owner));
-        }
-
-        return rewards;
-    }
-
-    private static bool RemoveCardRelatedRewards(List<Reward> rewards)
-    {
-        int removed = rewards.RemoveAll(reward => reward is CardReward or CardRemovalReward);
-        return removed > 0;
+        LocString title = new("relics", $"{Id.Entry}.fusionDetails.title");
+        LocString description = new("relics", $"{Id.Entry}.fusionDetails.description");
+        DynamicVars.AddTo(description);
+        return new HoverTip(title, description);
     }
 }

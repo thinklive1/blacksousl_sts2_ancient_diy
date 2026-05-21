@@ -80,7 +80,7 @@ public class MabelAncient : ModAncientEventTemplate
     {
         { CreateEternalVanityOption(), 1 },
         { CreateModRelicOption<MysteryOfNightSkyRelic>(), 1 },
-        { CreateModRelicOption<GiftOfChaosRelic>(), 1 },
+        { CreateGiftOfChaosOption(), 1 },
     };
 
     public override IEnumerable<EventOption> AllPossibleOptions => [CreateFavorChoiceOption(false), .. FullPool1, .. FullPool2, .. FullPool3];
@@ -111,7 +111,7 @@ public class MabelAncient : ModAncientEventTemplate
         {
             { CreateEternalVanityOption(), 1 },
             { CreateModRelicOption<MysteryOfNightSkyRelic>(), 1 },
-            { CreateModRelicOption<GiftOfChaosRelic>(), 1 },
+            { CreateGiftOfChaosOption(), 1 },
         };
 
         return options;
@@ -187,6 +187,14 @@ public class MabelAncient : ModAncientEventTemplate
         EventOption option = CreateModRelicOption<EternalVanityRelic>();
         option.HoverTips = option.HoverTips
             .Append(HoverTipFactory.FromKeyword(CardKeyword.Ethereal));
+        return option;
+    }
+
+    private EventOption CreateGiftOfChaosOption()
+    {
+        EventOption option = CreateModRelicOption<GiftOfChaosRelic>();
+        option.HoverTips = option.HoverTips
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<ChaosFusionCard>());
         return option;
     }
 }

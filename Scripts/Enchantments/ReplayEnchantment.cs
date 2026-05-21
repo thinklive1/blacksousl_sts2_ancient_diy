@@ -105,6 +105,7 @@ public class ReplayEnchantment : ModEnchantmentTemplate
         }
 
         _triggersThisCombat++;
+        BsAncientAudio.PlayOneShot(BsAncientAudio.Clock);
         await CardPileCmd.Add(Card, PileType.Play);
         await CardCmd.AutoPlay(choiceContext, Card, target);
     }
