@@ -31,11 +31,13 @@ public class PrickettAncient : ModAncientEventTemplate
     private IReadOnlyList<EventOption> Pool1 => [
         CreateModRelicOption<RedQueenAlbumRelic>(),
         CreateRedQueenDiceOption(),
+        CreateOldFilmAOption(),
         ];
 
     private IReadOnlyList<EventOption> Pool2 => [
         CreateAliceRibbonOption(),
         CreateQuillPenOption(),
+        CreateOldFilmBOption(),
         ];
 
     private WeightedList<EventOption> Pool3 => new()
@@ -82,6 +84,22 @@ public class PrickettAncient : ModAncientEventTemplate
         EventOption option = CreateModRelicOption<QuillPenRelic>();
         option.HoverTips = option.HoverTips
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<PowerOfRewrite>());
+        return option;
+    }
+
+    private EventOption CreateOldFilmAOption()
+    {
+        EventOption option = CreateModRelicOption<OldFilmA>();
+        option.HoverTips = option.HoverTips
+            .Append(HoverTipFactory.FromPower<ViolenceDemonPower>());
+        return option;
+    }
+
+    private EventOption CreateOldFilmBOption()
+    {
+        EventOption option = CreateModRelicOption<OldFilmB>();
+        option.HoverTips = option.HoverTips
+            .Append(HoverTipFactory.FromPower<VulnerablePower>());
         return option;
     }
 }

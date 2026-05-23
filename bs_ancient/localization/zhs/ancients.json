@@ -1,4 +1,7 @@
 {
+  "BS_ANCIENT_ANCIENT_NODE_ANCIENT.title": "诺登",
+  "BS_ANCIENT_ANCIENT_NODE_ANCIENT.epithet": "白之女王",
+  "BS_ANCIENT_ANCIENT_NODE_ANCIENT.pages.INITIAL.description": "冬之钟的女王等待着你的选择。",
   "BS_ANCIENT_EVENT_NODE_ANCIENT.title": "诺登",
   "BS_ANCIENT_EVENT_NODE_ANCIENT.epithet": "白之女王",
   "BS_ANCIENT_EVENT_NODE_ANCIENT.talk.firstVisitEver.0-0.ancient": "欢迎来到幻梦之境, 尊贵的访客, 我是这里的主人。",
@@ -23,6 +26,9 @@
   "BS_ANCIENT_EVENT_NODE_ANCIENT.talk.REGENT.0-0.ancient": "来自群星的客人，您让我想起了一位故人，呵呵……",
   "BS_ANCIENT_EVENT_NODE_ANCIENT.talk.REGENT.1-0r.char": "那个嚣张的男人呢？哪里能找到他！",
   "BS_ANCIENT_EVENT_NODE_ANCIENT.talk.REGENT.2-0r.ancient": "请不要心急, 带上我的祝福",
+  "BS_ANCIENT_ANCIENT_PRICKETT_ANCIENT.title": "普利凯特",
+  "BS_ANCIENT_ANCIENT_PRICKETT_ANCIENT.epithet": "红之女王",
+  "BS_ANCIENT_ANCIENT_PRICKETT_ANCIENT.pages.INITIAL.description": "库因兰德的女王等待着你的选择。",
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.title": "普利凯特",
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.epithet": "红之女王",
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.talk.ANY.0-0r.ancient": "是来要签名的吗☆",
@@ -31,6 +37,9 @@
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.talk.REGENT.0-0r.ancient": "来自星辰的旅客，欢迎来到普利凯特的游乐场☆",
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.talk.NECROBINDER.0-0r.ancient": "那边的两位，不要苦着脸了，来听普利凯特的演唱会吧☆",
   "BS_ANCIENT_EVENT_PRICKETT_ANCIENT.talk.DEFECT.0-0r.ancient": "诶，把你修好的方法？只要有歌声就足够了吧☆",
+  "BS_ANCIENT_ANCIENT_MABEL_ANCIENT.title": "梅贝尔",
+  "BS_ANCIENT_ANCIENT_MABEL_ANCIENT.epithet": "虚无少女",
+  "BS_ANCIENT_ANCIENT_MABEL_ANCIENT.pages.INITIAL.description": "混沌迷宫之主等待着你的选择",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.title": "梅贝尔",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.epithet": "虚无少女",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.talk.ANY.0-0r.ancient": "想要永远地杀戮吗？我知道一个好去处哦",
@@ -41,5 +50,5 @@
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.talk.DEFECT.0-0r.ancient": "你看上去能成为不错的藏品呢，说笑的",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.pages.INITIAL.options.CHOOSE_FAVOR.title": "接受宠爱",
   "BS_ANCIENT_EVENT_MABEL_ANCIENT.pages.INITIAL.options.CHOOSE_FAVOR.description": "从[blue]3[/blue]个随机[gold]宠爱[/gold]中选择一个。",
-  "BS_ANCIENT_EVENT_MABEL_ANCIENT.pages.CHOOSE_FAVOR.description": "梅贝尔注视着你，像是在等待你选中自己命运的一部分。"
+  "BS_ANCIENT_EVENT_MABEL_ANCIENT.pages.CHOOSE_FAVOR.description": "混沌迷宫之主等待着你的选择"
 }

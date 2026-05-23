@@ -22,7 +22,8 @@ public class GiftOfChaosRelic : ModRelicTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(MaxFusionMaterials)];
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [CreateFusionHoverTip()];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [CreateFusionHoverTip(), .. HoverTipFactory.FromCardWithCardHoverTips<ChaosFusionCard>()];
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 

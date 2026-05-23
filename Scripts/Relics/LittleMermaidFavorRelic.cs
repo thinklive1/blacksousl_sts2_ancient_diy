@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -20,6 +21,10 @@ public class LittleMermaidFavorRelic : ModRelicTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new MaxHpVar(MaxHpLoss),
         new EnergyVar(EnergyGain)
+    ];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        RelicHoverTipHelpers.Details(this)
     ];
 
     public override RelicAssetProfile AssetProfile => new(

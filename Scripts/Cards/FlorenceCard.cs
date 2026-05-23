@@ -23,7 +23,7 @@ public class FlorenceCard : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<RegenPower>(3),
-        new CardsVar(2)
+        new CardsVar(3)
     ];
 
     public override CardAssetProfile AssetProfile => new(

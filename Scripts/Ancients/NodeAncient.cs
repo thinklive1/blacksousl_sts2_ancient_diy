@@ -37,11 +37,13 @@ public class NodeAncient : ModAncientEventTemplate
     private IReadOnlyList<EventOption> Pool1 => [
             CreateTimeQueenBlessingOption(),
             CreateWinterBellAllyOption(),
+            CreateModRelicOption<NodeRibbonRelic>(),
         ];
     private IReadOnlyList<EventOption> Pool2 => [
             CreateModRelicOption<DreamOfKadathRelic>(),
             CreateQuillPenOption(),
-            CreateModRelicOption<NodeRibbonRelic>(),
+            CreateUnicornRoyalCrestOption(),
+            CreateLionRoyalCrestOption(),
         ];
 
     // 带权重池三。权重越大越有机会生成。当然你也可以写自定义的列表生成函数
@@ -103,6 +105,25 @@ public class NodeAncient : ModAncientEventTemplate
         EventOption option = CreateModRelicOption<CovenantOfNodeRelic>();
         option.HoverTips = option.HoverTips
             .Append(HoverTipFactory.FromPower<RegenPower>());
+        return option;
+    }
+
+    private EventOption CreateUnicornRoyalCrestOption()
+    {
+        EventOption option = CreateModRelicOption<UnicornRoyalCrestRelic>();
+        option.HoverTips = option.HoverTips
+            .Append(HoverTipFactory.FromPower<DexterityPower>());
+        return option;
+    }
+
+    private EventOption CreateLionRoyalCrestOption()
+    {
+        EventOption option = CreateModRelicOption<LionRoyalCrestRelic>();
+        option.HoverTips = option.HoverTips
+            .Append(HoverTipFactory.FromPower<StrengthPower>())
+            .Append(HoverTipFactory.FromPower<BufferPower>())
+            .Append(HoverTipFactory.FromPower<PlatingPower>())
+            .Append(HoverTipFactory.FromPower<IntangiblePower>());
         return option;
     }
 }

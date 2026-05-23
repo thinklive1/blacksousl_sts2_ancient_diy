@@ -115,11 +115,13 @@ public class ChaosFusionCard : ModCardTemplate
             .Distinct()
             .OrderBy(tag => tag)
             .ToArray();
-        foreach (CardKeyword keyword in FusedKeywords)
-        {
-            AddKeyword(keyword);
-        }
+        ApplyFusedKeywords();
+        RefreshCost();
+    }
 
+    protected override void AfterDeserialized()
+    {
+        ApplyFusedKeywords();
         RefreshCost();
     }
 
@@ -156,6 +158,15 @@ public class ChaosFusionCard : ModCardTemplate
         if (IsMutable)
         {
             EnergyCost.SetCustomBaseCost(Math.Max(0, FusedCost));
+        }
+    }
+
+    private void ApplyFusedKeywords()
+    {
+        _ = Keywords;
+        foreach (CardKeyword keyword in FusedKeywords)
+        {
+            AddKeyword(keyword);
         }
     }
 

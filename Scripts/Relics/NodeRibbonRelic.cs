@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -19,6 +20,10 @@ public class NodeRibbonRelic : ModRelicTemplate
     private bool _hasTriggeredThisCombat;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        RelicHoverTipHelpers.Details(this)
+    ];
 
     public override RelicAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/NodeRibbonRelic.png",

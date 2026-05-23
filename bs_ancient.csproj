@@ -31,7 +31,8 @@
   <!-- NuGet获取，注意版本是否一致，不一致手动更改Version 
   <PackageReference Include="STS2.RitsuLib" Version="*" /> -->
   <!-- 如果你在正式版开发用这个 -->
-  <PackageReference Include="STS2.RitsuLib.Compat.0.103.2" Version="0.2.33" />
+  <PackageReference Include="STS2.RitsuLib.Compat.0.103.2" Version="0.3.0" />
+  <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
   </ItemGroup>
 
   <!-- 自动复制dll和json -->

@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -23,6 +24,11 @@ public class CovenantOfNodeRelic : ModRelicTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(EnergyGain),
         new PowerVar<RegenPower>(RegenGain)
+    ];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        RelicHoverTipHelpers.Details(this),
+        HoverTipFactory.FromPower<RegenPower>()
     ];
 
     public override RelicAssetProfile AssetProfile => new(

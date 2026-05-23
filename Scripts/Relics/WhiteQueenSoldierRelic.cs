@@ -1,5 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Map;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
@@ -31,6 +33,13 @@ public class WhiteQueenSoldierRelic : ModRelicTemplate
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
     public override bool HasUponPickupEffect => true;
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        RelicHoverTipHelpers.Details(this),
+        new HoverTip(
+            new LocString("relics", "BS_ANCIENT_RELIC_WHITE_QUEEN_PROMOTION_RELIC.title"),
+            new LocString("relics", "BS_ANCIENT_RELIC_WHITE_QUEEN_PROMOTION_RELIC.description"))
+    ];
 
     public override bool ShowCounter => true;
 

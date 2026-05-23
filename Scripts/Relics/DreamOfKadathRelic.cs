@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Entities.RestSite;
 using MegaCrit.Sts2.Core.Extensions;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -22,11 +23,15 @@ namespace BlackSouls.Scripts;
 public class DreamOfKadathRelic : ModRelicTemplate
 {
     private const decimal ExtraRestHealPercent = 0.3m;
-    private const int UpgradeCount = 2;
+    private const int UpgradeCount = 3;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(UpgradeCount)];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        RelicHoverTipHelpers.Details(this)
+    ];
 
     public override RelicAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/DreamOfKadathRelic.png",

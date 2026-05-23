@@ -23,7 +23,7 @@ public class GhostHunterCard : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<StrengthPower>(3),
-        new CardsVar(2)
+        new CardsVar(3)
     ];
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://bs_ancient/assets/images/cards/GhostHunterCard.png"

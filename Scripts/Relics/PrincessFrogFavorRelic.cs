@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -24,6 +25,13 @@ public class PrincessFrogFavorRelic : ModRelicTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Chance", PenaltyChance),
         new DynamicVar("Penalty", PenaltyAmount)
+    ];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        RelicHoverTipHelpers.Details(this),
+        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromPower<FrailPower>()
     ];
 
     public override RelicAssetProfile AssetProfile => new(

@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
@@ -24,6 +25,10 @@ public class MysteryOfNightSkyRelic : ModRelicTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Chance", ReplayChance)
+    ];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        RelicHoverTipHelpers.Details(this)
     ];
 
     public override RelicAssetProfile AssetProfile => new(

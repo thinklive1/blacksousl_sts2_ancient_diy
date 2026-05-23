@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
@@ -27,6 +28,10 @@ public class TimeQueenBlessingRelic : ModRelicTemplate
 
     // 遗物的数值。这里会替换本地化中的{Cards}。
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        HoverTipFactory.FromEnchantment<ReplayEnchantment>()
+            .Append(HoverTipFactory.FromKeyword(CardKeyword.Retain));
 
     public override RelicAssetProfile AssetProfile => new(
         // 小图标（原版85x85）

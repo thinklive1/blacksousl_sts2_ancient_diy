@@ -9,9 +9,14 @@
     "BS_ANCIENT_POWER_HLANITH_WINE_EXTRA_TURN_POWER.description": "本回合结束后，获得一个额外回合。触发后失去[blue]1[/blue]层。",
     "BS_ANCIENT_POWER_HLANITH_WINE_EXTRA_TURN_POWER.smartDescription": "本回合结束后，获得一个额外回合。触发后失去[blue]1[/blue]层。",
     "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.title": "舞台落幕",
-    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.description": "再打出[blue]8[/blue]张牌后，强制死亡。",
-    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.smartDescription": "再打出[blue]{Amount}[/blue]张牌后，强制死亡。",
+    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.description": "再打出[blue]8[/blue]张牌后，强制死亡。强制死亡无法被不死、无实体等任何效果豁免。",
+    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.smartDescription": "再打出[blue]{Amount}[/blue]张牌后，强制死亡。强制死亡无法被不死、无实体等任何效果豁免。",
+    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.forceDeathTip.title": "强制死亡",
+    "BS_ANCIENT_POWER_STAGE_END_COUNTDOWN_POWER.forceDeathTip.description": "该死亡无法被不死、无实体等任何效果豁免。",
     "BS_ANCIENT_POWER_RED_QUEEN_DICE_CURRENT_POWER.title": "普利凯特的骰子",
     "BS_ANCIENT_POWER_RED_QUEEN_DICE_CURRENT_POWER.description": "当前有[blue]0[/blue]张手牌已被重掷；这些牌的攻击和格挡点数随机上下浮动[blue]{RollRange}[/blue]点。",
-    "BS_ANCIENT_POWER_RED_QUEEN_DICE_CURRENT_POWER.smartDescription": "当前有[blue]{Amount}[/blue]张手牌已被重掷；这些牌的攻击和格挡点数随机上下浮动[blue]{RollRange}[/blue]点。"
+    "BS_ANCIENT_POWER_RED_QUEEN_DICE_CURRENT_POWER.smartDescription": "当前有[blue]{Amount}[/blue]张手牌已被重掷；这些牌的攻击和格挡点数随机上下浮动[blue]{RollRange}[/blue]点。",
+    "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.title": "暴魔",
+    "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.description": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。若本回合没有打出攻击牌，下回合开始时失去当前生命值的[green]50%[/green]。",
+    "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.smartDescription": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。若本回合没有打出攻击牌，下回合开始时失去当前生命值的[green]50%[/green]。"
 }
