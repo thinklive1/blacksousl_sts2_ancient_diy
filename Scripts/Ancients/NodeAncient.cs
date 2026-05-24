@@ -34,14 +34,28 @@ public class NodeAncient : ModAncientEventTemplate
     );
 
     // 固定池一和二
-    private IReadOnlyList<EventOption> Pool1 => [
+    private IReadOnlyList<EventOption> Pool1Base => [
             CreateTimeQueenBlessingOption(),
             CreateWinterBellAllyOption(),
             CreateModRelicOption<NodeRibbonRelic>(),
         ];
+
+    private IReadOnlyList<EventOption> Pool1
+    {
+        get
+        {
+            List<EventOption> options = [.. Pool1Base];
+
+            if (Owner != null && CatCollarRelic.CanBeOffered(Owner))
+            {
+                options.Add(CreateCatCollarOption());
+            }
+
+            return options;
+        }
+    }
     private IReadOnlyList<EventOption> Pool2 => [
             CreateModRelicOption<DreamOfKadathRelic>(),
-            CreateQuillPenOption(),
             CreateUnicornRoyalCrestOption(),
             CreateLionRoyalCrestOption(),
         ];
@@ -50,10 +64,17 @@ public class NodeAncient : ModAncientEventTemplate
     private WeightedList<EventOption> Pool3 => new()
     {
         { CreateCovenantOfNodeOption() ,1},
+        { CreateQuillPenOption(), 1 },
     };
 
     // 所有可能的选项
-    public override IEnumerable<EventOption> AllPossibleOptions => [.. Pool1, .. Pool2, .. Pool3, CreateModRelicOption<WhiteQueenSoldierRelic>()];
+    public override IEnumerable<EventOption> AllPossibleOptions => [
+        .. Pool1Base,
+        CreateCatCollarOption(),
+        .. Pool2,
+        .. Pool3,
+        CreateModRelicOption<WhiteQueenSoldierRelic>()
+    ];
 
     // 生成选项
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
@@ -89,6 +110,15 @@ public class NodeAncient : ModAncientEventTemplate
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<GerdaCard>())
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<FlorenceCard>())
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<GhostHunterCard>());
+        return option;
+    }
+
+    private EventOption CreateCatCollarOption()
+    {
+        EventOption option = CreateModRelicOption<CatCollarRelic>();
+        option.HoverTips = option.HoverTips
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<CatSmileCard>())
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<CatBiteCard>());
         return option;
     }
 

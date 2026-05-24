@@ -24,7 +24,6 @@ public class AliceCurseCard : ModCardTemplate
     private const int UndeadGain = 1;
     private const int StrengthGain = 2;
     private const int DexterityGain = 1;
-    private const int BlockGain = 10;
     private const int PlatingGain = 5;
     private const int MadnessGain = 1;
     private const int RandomDrawGain = 2;
@@ -42,7 +41,6 @@ public class AliceCurseCard : ModCardTemplate
         new PowerVar<UndeadPower>(UndeadGain),
         new PowerVar<StrengthPower>(StrengthGain),
         new PowerVar<DexterityPower>(DexterityGain),
-        new BlockVar(BlockGain, ValueProp.Move),
         new PowerVar<PlatingPower>(PlatingGain),
         new PowerVar<MadnessPower>(MadnessGain),
         new DynamicVar("RandomDraw", RandomDrawGain)

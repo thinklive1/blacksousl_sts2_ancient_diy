@@ -1,0 +1,9 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3]
+
+[ext_resource type="SpineAtlasResource" path="res://bs_ancient/assets/animations/cat/smile/smile.atlas" id="1_smile_atlas"]
+[ext_resource type="SpineSkeletonFileResource" path="res://bs_ancient/assets/animations/cat/smile/smile.skel" id="2_smile_skel"]
+
+[resource]
+atlas_res = ExtResource("1_smile_atlas")
+skeleton_file_res = ExtResource("2_smile_skel")
+default_mix = 0.02

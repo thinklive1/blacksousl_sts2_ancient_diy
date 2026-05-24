@@ -37,26 +37,40 @@ public class PrickettAncient : ModAncientEventTemplate
         CreateOldFilmAOption(),
         ];
 
-    private IReadOnlyList<EventOption> Pool2 => [
-        CreateAliceRibbonOption(),
-        CreateQuillPenOption(),
-        CreateOldFilmBOption(),
+    private IReadOnlyList<EventOption> CreatePool2(bool isMultiplayer)
+    {
+        List<EventOption> options =
+        [
+            CreateAliceRibbonOption(),
+            CreateOldFilmBOption(),
         ];
+
+        if (!isMultiplayer)
+        {
+            options.Insert(1, CreateRedQueenMirrorOption());
+        }
+
+        return options;
+    }
 
     public override IEnumerable<EventOption> AllPossibleOptions => [
         .. Pool1,
-        .. Pool2,
+        .. CreatePool2(isMultiplayer: false),
         CreateModRelicOption<CovenantOfPrickettRelic>(),
         CreateAliceCurseOption(),
+        CreateQuillPenOption(),
         CreateModRelicOption<RedQueenSoldierRelic>()
     ];
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
+        bool isMultiplayer = Owner?.RunState.Players.Count > 1;
+        IReadOnlyList<EventOption> pool2 = CreatePool2(isMultiplayer);
+
         return
         [
             Rng.NextItem(Pool1)!,
-            Rng.NextItem(Pool2)!,
+            Rng.NextItem(pool2)!,
             CreatePool3().GetRandom(Rng),
             CreateModRelicOption<RedQueenSoldierRelic>(),
         ];
@@ -72,6 +86,14 @@ public class PrickettAncient : ModAncientEventTemplate
         EventOption option = CreateModRelicOption<RedQueenDiceRelic>();
         option.HoverTips = option.HoverTips
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<RedQueenRerollCard>());
+        return option;
+    }
+
+    private EventOption CreateRedQueenMirrorOption()
+    {
+        EventOption option = CreateModRelicOption<RedQueenMirrorRelic>();
+        option.HoverTips = option.HoverTips
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<RedQueenMirrorCard>());
         return option;
     }
 
@@ -118,13 +140,15 @@ public class PrickettAncient : ModAncientEventTemplate
     private WeightedList<EventOption> CreatePool3()
     {
         bool hasEnoughCurses = Owner != null && PileType.Deck.GetPile(Owner).Cards.Count(IsCurseCard) >= 3;
-        int aliceCurseWeight = hasEnoughCurses ? 8 : 1;
-        int covenantWeight = hasEnoughCurses ? 2 : 9;
+        int aliceCurseWeight = hasEnoughCurses ? 8 : 10;
+        int covenantWeight = hasEnoughCurses ? 1 : 45;
+        int quillPenWeight = hasEnoughCurses ? 1 : 45;
 
         return new WeightedList<EventOption>
         {
             { CreateModRelicOption<CovenantOfPrickettRelic>(), covenantWeight },
             { CreateAliceCurseOption(), aliceCurseWeight },
+            { CreateQuillPenOption(), quillPenWeight },
         };
     }
 

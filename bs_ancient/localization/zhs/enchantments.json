@@ -1,5 +1,5 @@
 {
-    "BS_ANCIENT_ENCHANTMENT_REPLAY_ENCHANTMENT.title": "重演",
-    "BS_ANCIENT_ENCHANTMENT_REPLAY_ENCHANTMENT.description": "重演: 回合开始时，如果这张牌在你的[gold]消耗牌堆[/gold]中，则将其打出。每场战斗最多触发[blue]3[/blue]次。",
-    "BS_ANCIENT_ENCHANTMENT_REPLAY_ENCHANTMENT.extraCardText": "在你的回合开始时，如果这张牌在你的[gold]消耗牌堆[/gold]中，则将其打出。每场战斗最多触发[blue]3[/blue]次。"
+	"BS_ANCIENT_ENCHANTMENT_REPLAY_ENCHANTMENT.title": "重演",
+	"BS_ANCIENT_ENCHANTMENT_REPLAY_ENCHANTMENT.description": "重演: 回合开始时，如果这张牌在你的[gold]消耗牌堆[/gold]中，则将其打出。每场战斗最多触发[blue]3[/blue]次。",
+	"BS_ANCIENT_ENCHANTMENT_REPLAY_ENCHANTMENT.extraCardText": "在你的回合开始时，如果这张牌在你的[gold]消耗牌堆[/gold]中，则将其打出。每场战斗最多触发[blue]3[/blue]次。"
 }

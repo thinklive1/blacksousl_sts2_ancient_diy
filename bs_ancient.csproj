@@ -6,6 +6,7 @@
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 
     <!-- 改成你的杀戮尖塔2目录 -->
     <Sts2Dir>D:\software\steam\steamapps\common\Slay the Spire 2</Sts2Dir>
@@ -15,12 +16,12 @@
   <ItemGroup>
     <Reference Include="sts2">
       <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
-      <Private>false</Private>
+      <Private>true</Private>
     </Reference>
 
     <Reference Include="0Harmony">
       <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
-      <Private>false</Private>
+      <Private>true</Private>
     </Reference>
 
   <!-- 本地引用，注意路径是否正确 -->

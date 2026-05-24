@@ -23,7 +23,7 @@ public class RedQueenRerollCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenRerollCard.jpg"
+        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenRerollCard.png"
     );
 
     public RedQueenRerollCard() : base(0, CardType.Skill, CardRarity.Ancient, TargetType.Self)

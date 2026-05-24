@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgh0ckg1gj4bt"]
+
+[ext_resource type="Script" uid="uid://bplmrhaodp5i6" path="res://Scripts/Nodes/Combat/CheshireCatPetVisuals.cs" id="1_visuals_script"]
+[ext_resource type="SpineSkeletonDataResource" path="res://bs_ancient/assets/animations/cat/smile/smile_skel_data.tres" id="2_smile_skeleton"]
+[ext_resource type="SpineSkeletonDataResource" path="res://bs_ancient/assets/animations/cat/bite/bite_skel_data.tres" id="3_bite_skeleton"]
+
+[node name="CheshireCatPet" type="Node2D"]
+script = ExtResource("1_visuals_script")
+metadata/_edit_group_ = true
+
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="SmileVisuals" type="SpineSprite" parent="Visuals"]
+skeleton_data_res = ExtResource("2_smile_skeleton")
+preview_skin = "Default"
+preview_animation = "animation"
+preview_frame = false
+preview_time = 0.0
+unique_name_in_owner = true
+position = Vector2(100, -70)
+scale = Vector2(0.12, 0.12)
+
+[node name="BiteVisuals" type="SpineSprite" parent="Visuals"]
+skeleton_data_res = ExtResource("3_bite_skeleton")
+preview_skin = "Default"
+preview_animation = "animation"
+preview_frame = false
+preview_time = 0.0
+unique_name_in_owner = true
+visible = false
+position = Vector2(137, 40)
+scale = Vector2(0.06, 0.06)
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -80.0
+offset_top = -150.0
+offset_right = 80.0
+mouse_filter = 2
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(50, -70)
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -145)
