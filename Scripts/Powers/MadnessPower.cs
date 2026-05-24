@@ -33,7 +33,7 @@ public class MadnessPower : ModPowerTemplate
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (dealer != Owner || !props.IsPoweredAttack())
+        if ((dealer != Owner && dealer != Owner.Player?.Osty) || !props.IsPoweredAttack())
         {
             return 1m;
         }

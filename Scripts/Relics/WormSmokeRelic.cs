@@ -27,7 +27,7 @@ public class WormSmokeRelic : ModRelicTemplate
 
     public override RelicRarity Rarity => RelicRarity.Rare;
 
-    public override bool IsUsedUp => WasUsed;
+    public override bool IsUsedUp => BlackSouls_WasUsed;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new MaxHpVar(MaxHpLoss),
@@ -41,7 +41,7 @@ public class WormSmokeRelic : ModRelicTemplate
     );
 
     [SavedProperty]
-    public bool WasUsed
+    public bool BlackSouls_WasUsed
     {
         get => _wasUsed;
         set
@@ -57,7 +57,7 @@ public class WormSmokeRelic : ModRelicTemplate
 
     public override bool TryModifyRestSiteOptions(Player player, ICollection<RestSiteOption> options)
     {
-        if (player != Owner || WasUsed)
+        if (player != Owner || BlackSouls_WasUsed)
         {
             return false;
         }
@@ -69,7 +69,7 @@ public class WormSmokeRelic : ModRelicTemplate
     public async Task InhaleSmoke()
     {
         Flash();
-        WasUsed = true;
+        BlackSouls_WasUsed = true;
         await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars.MaxHp.BaseValue, isFromCard: false);
 
         IEnumerable<CardModel> cards = PileType.Deck.GetPile(Owner).Cards

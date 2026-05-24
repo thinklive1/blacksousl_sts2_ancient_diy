@@ -29,7 +29,7 @@ public class CovenantOfPrickettRelic : ModRelicTemplate
     {
         get
         {
-            int progress = CombatsSeen % CombatInterval;
+            int progress = BlackSouls_CombatsSeen % CombatInterval;
             return progress == 0 ? CombatInterval : CombatInterval - progress;
         }
     }
@@ -46,7 +46,7 @@ public class CovenantOfPrickettRelic : ModRelicTemplate
     );
 
     [SavedProperty]
-    public int CombatsSeen
+    public int BlackSouls_CombatsSeen
     {
         get => _combatsSeen;
         set
@@ -64,7 +64,7 @@ public class CovenantOfPrickettRelic : ModRelicTemplate
             return Task.CompletedTask;
         }
 
-        CombatsSeen++;
+        BlackSouls_CombatsSeen++;
         return Task.CompletedTask;
     }
 
@@ -95,8 +95,8 @@ public class CovenantOfPrickettRelic : ModRelicTemplate
         return room != null
             && room.RoomType.IsCombatRoom()
             && room.RoomType != RoomType.Boss
-            && CombatsSeen > 0
-            && CombatsSeen % DynamicVars["Combats"].IntValue == 0;
+            && BlackSouls_CombatsSeen > 0
+            && BlackSouls_CombatsSeen % DynamicVars["Combats"].IntValue == 0;
     }
 
     private static CardCreationOptions CreateRareCardOptions(Player player)

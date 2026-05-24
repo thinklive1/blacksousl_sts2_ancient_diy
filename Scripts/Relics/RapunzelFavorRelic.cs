@@ -25,7 +25,7 @@ public class RapunzelFavorRelic : ModRelicTemplate
 
     public override bool ShowCounter => CombatManager.Instance.IsInProgress;
 
-    public override int DisplayAmount => TurnsPerExtraTurn - (OwnerTurnsEnded % TurnsPerExtraTurn);
+    public override int DisplayAmount => TurnsPerExtraTurn - (BlackSouls_OwnerTurnsEnded % TurnsPerExtraTurn);
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar("DrawLoss", DrawLoss),
@@ -43,7 +43,7 @@ public class RapunzelFavorRelic : ModRelicTemplate
     );
 
     [SavedProperty]
-    public int OwnerTurnsEnded
+    public int BlackSouls_OwnerTurnsEnded
     {
         get => _ownerTurnsEnded;
         set
@@ -66,8 +66,8 @@ public class RapunzelFavorRelic : ModRelicTemplate
             return Task.CompletedTask;
         }
 
-        OwnerTurnsEnded++;
-        if (OwnerTurnsEnded % TurnsPerExtraTurn == 0)
+        BlackSouls_OwnerTurnsEnded++;
+        if (BlackSouls_OwnerTurnsEnded % TurnsPerExtraTurn == 0)
         {
             _extraTurnPending = true;
         }

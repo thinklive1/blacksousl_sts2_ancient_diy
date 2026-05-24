@@ -24,7 +24,7 @@ public class DodoRunRelic : ModRelicTemplate
 
     public override RelicRarity Rarity => RelicRarity.Rare;
 
-    public override bool IsUsedUp => WasUsed;
+    public override bool IsUsedUp => BlackSouls_WasUsed;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Health", HealthThreshold)];
 
@@ -40,7 +40,7 @@ public class DodoRunRelic : ModRelicTemplate
     }
 
     [SavedProperty]
-    public bool WasUsed
+    public bool BlackSouls_WasUsed
     {
         get => _wasUsed;
         set
@@ -68,7 +68,7 @@ public class DodoRunRelic : ModRelicTemplate
         }
 
         Flash();
-        WasUsed = true;
+        BlackSouls_WasUsed = true;
         _shouldClearSkippedCombatRewards = true;
 
         foreach (Creature enemy in combatState.Enemies.ToList())
@@ -93,7 +93,7 @@ public class DodoRunRelic : ModRelicTemplate
 
     private bool ShouldSkipCombat()
     {
-        return !WasUsed
+        return !BlackSouls_WasUsed
             && Owner.RunState.Players.Count == 1
             && Owner.Creature.CurrentHp < DynamicVars["Health"].IntValue
             && Owner.RunState.CurrentRoom is CombatRoom { RoomType: not RoomType.Boss };

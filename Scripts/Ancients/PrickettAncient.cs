@@ -1,9 +1,12 @@
 using Godot;
 using BlackSouls.Scripts.Cards;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Acts;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -40,12 +43,13 @@ public class PrickettAncient : ModAncientEventTemplate
         CreateOldFilmBOption(),
         ];
 
-    private WeightedList<EventOption> Pool3 => new()
-    {
-        { CreateModRelicOption<CovenantOfPrickettRelic>(), 1 },
-    };
-
-    public override IEnumerable<EventOption> AllPossibleOptions => [.. Pool1, .. Pool2, .. Pool3, CreateModRelicOption<RedQueenSoldierRelic>()];
+    public override IEnumerable<EventOption> AllPossibleOptions => [
+        .. Pool1,
+        .. Pool2,
+        CreateModRelicOption<CovenantOfPrickettRelic>(),
+        CreateAliceCurseOption(),
+        CreateModRelicOption<RedQueenSoldierRelic>()
+    ];
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
@@ -53,7 +57,7 @@ public class PrickettAncient : ModAncientEventTemplate
         [
             Rng.NextItem(Pool1)!,
             Rng.NextItem(Pool2)!,
-            Pool3.GetRandom(Rng),
+            CreatePool3().GetRandom(Rng),
             CreateModRelicOption<RedQueenSoldierRelic>(),
         ];
     }
@@ -101,5 +105,31 @@ public class PrickettAncient : ModAncientEventTemplate
         option.HoverTips = option.HoverTips
             .Append(HoverTipFactory.FromPower<VulnerablePower>());
         return option;
+    }
+
+    private EventOption CreateAliceCurseOption()
+    {
+        EventOption option = CreateModRelicOption<AliceCurseRelic>();
+        option.HoverTips = option.HoverTips
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<AliceCurseCard>());
+        return option;
+    }
+
+    private WeightedList<EventOption> CreatePool3()
+    {
+        bool hasEnoughCurses = Owner != null && PileType.Deck.GetPile(Owner).Cards.Count(IsCurseCard) >= 3;
+        int aliceCurseWeight = hasEnoughCurses ? 8 : 1;
+        int covenantWeight = hasEnoughCurses ? 2 : 9;
+
+        return new WeightedList<EventOption>
+        {
+            { CreateModRelicOption<CovenantOfPrickettRelic>(), covenantWeight },
+            { CreateAliceCurseOption(), aliceCurseWeight },
+        };
+    }
+
+    private static bool IsCurseCard(CardModel card)
+    {
+        return card.Type == CardType.Curse;
     }
 }

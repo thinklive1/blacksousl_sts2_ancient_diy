@@ -43,7 +43,7 @@ public class WhiteQueenSoldierRelic : ModRelicTemplate
 
     public override bool ShowCounter => true;
 
-    public override int DisplayAmount => Math.Max(0, TrialCount - CompletedTrials);
+    public override int DisplayAmount => Math.Max(0, TrialCount - BlackSouls_CompletedTrials);
 
     public override RelicAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/WhiteQueenSoldierRelic.png",
@@ -52,7 +52,7 @@ public class WhiteQueenSoldierRelic : ModRelicTemplate
     );
 
     [SavedProperty]
-    public int TrialActIndex
+    public int BlackSouls_TrialActIndex
     {
         get => _trialActIndex;
         set
@@ -63,7 +63,7 @@ public class WhiteQueenSoldierRelic : ModRelicTemplate
     }
 
     [SavedProperty]
-    public int CompletedTrials
+    public int BlackSouls_CompletedTrials
     {
         get => _completedTrials;
         set
@@ -81,15 +81,15 @@ public class WhiteQueenSoldierRelic : ModRelicTemplate
 
     public override async Task AfterObtained()
     {
-        TrialActIndex = Owner.RunState.CurrentActIndex;
-        CompletedTrials = 0;
+        BlackSouls_TrialActIndex = Owner.RunState.CurrentActIndex;
+        BlackSouls_CompletedTrials = 0;
         ApplyTrialRooms(Owner.RunState.Map);
         await Task.CompletedTask;
     }
 
     public override ActMap ModifyGeneratedMap(IRunState runState, ActMap map, int actIndex)
     {
-        if (actIndex != TrialActIndex || CompletedTrials >= TrialCount)
+        if (actIndex != BlackSouls_TrialActIndex || BlackSouls_CompletedTrials >= TrialCount)
         {
             return map;
         }
@@ -99,7 +99,7 @@ public class WhiteQueenSoldierRelic : ModRelicTemplate
 
     public override async Task AfterCombatEnd(CombatRoom room)
     {
-        if (Owner.RunState.CurrentActIndex != TrialActIndex || CompletedTrials >= TrialCount)
+        if (Owner.RunState.CurrentActIndex != BlackSouls_TrialActIndex || BlackSouls_CompletedTrials >= TrialCount)
         {
             return;
         }
@@ -109,10 +109,10 @@ public class WhiteQueenSoldierRelic : ModRelicTemplate
             return;
         }
 
-        CompletedTrials++;
+        BlackSouls_CompletedTrials++;
         Flash();
 
-        if (CompletedTrials >= TrialCount)
+        if (BlackSouls_CompletedTrials >= TrialCount)
         {
             await RelicCmd.Replace(this, ModelDb.Relic<WhiteQueenPromotionRelic>().ToMutable());
         }

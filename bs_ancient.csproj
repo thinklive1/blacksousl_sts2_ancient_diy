@@ -35,12 +35,13 @@
   <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
   </ItemGroup>
 
-  <!-- 自动复制dll和json -->
+  <!-- 自动复制dll、json和README -->
   <Target Name="Copy Mod" AfterTargets="PostBuildEvent">
     <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
     <MakeDir Directories="$(Sts2Dir)\mods\" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\" />
     <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" />
+    <Copy SourceFiles="README.md" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" />
     <Delete Files="$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName)_config.json" TreatErrorsAsWarnings="true" />
   </Target>
 </Project>

@@ -23,13 +23,13 @@ public class ChaosFusionCard : ModCardTemplate
     private CardType _fusedType = CardType.Skill;
     private int _fusedCost;
 
-    public override CardType Type => FusedType;
+    public override CardType Type => BlackSouls_FusedType;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => FusedKeywords;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => BlackSouls_FusedKeywords;
 
-    public override IEnumerable<CardTag> Tags => FusedTags;
+    public override IEnumerable<CardTag> Tags => BlackSouls_FusedTags;
 
-    protected override HashSet<CardTag> CanonicalTags => FusedTags.ToHashSet();
+    protected override HashSet<CardTag> CanonicalTags => BlackSouls_FusedTags.ToHashSet();
 
     public override int MaxUpgradeLevel => 0;
 
@@ -40,7 +40,7 @@ public class ChaosFusionCard : ModCardTemplate
     );
 
     [SavedProperty]
-    public List<SerializableCard> Materials
+    public List<SerializableCard> BlackSouls_Materials
     {
         get => _materials;
         set
@@ -52,7 +52,7 @@ public class ChaosFusionCard : ModCardTemplate
     }
 
     [SavedProperty]
-    public CardKeyword[] FusedKeywords
+    public CardKeyword[] BlackSouls_FusedKeywords
     {
         get => _fusedKeywords;
         set
@@ -63,7 +63,7 @@ public class ChaosFusionCard : ModCardTemplate
     }
 
     [SavedProperty]
-    public CardTag[] FusedTags
+    public CardTag[] BlackSouls_FusedTags
     {
         get => _fusedTags;
         set
@@ -74,7 +74,7 @@ public class ChaosFusionCard : ModCardTemplate
     }
 
     [SavedProperty]
-    public CardType FusedType
+    public CardType BlackSouls_FusedType
     {
         get => _fusedType;
         set
@@ -85,7 +85,7 @@ public class ChaosFusionCard : ModCardTemplate
     }
 
     [SavedProperty]
-    public int FusedCost
+    public int BlackSouls_FusedCost
     {
         get => _fusedCost;
         set
@@ -102,15 +102,15 @@ public class ChaosFusionCard : ModCardTemplate
 
     public void ConfigureFrom(IReadOnlyList<CardModel> materials, CardType fusedType)
     {
-        Materials = materials.Select(card => card.ToSerializable()).ToList();
-        FusedType = fusedType;
-        FusedCost = materials.Sum(GetMaterialCost);
-        FusedKeywords = materials
+        BlackSouls_Materials = materials.Select(card => card.ToSerializable()).ToList();
+        BlackSouls_FusedType = fusedType;
+        BlackSouls_FusedCost = materials.Sum(GetMaterialCost);
+        BlackSouls_FusedKeywords = materials
             .SelectMany(card => card.Keywords)
             .Distinct()
             .OrderBy(keyword => keyword)
             .ToArray();
-        FusedTags = materials
+        BlackSouls_FusedTags = materials
             .SelectMany(card => card.Tags)
             .Distinct()
             .OrderBy(tag => tag)
@@ -127,12 +127,12 @@ public class ChaosFusionCard : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (CombatState is null || Materials.Count == 0)
+        if (CombatState is null || BlackSouls_Materials.Count == 0)
         {
             return;
         }
 
-        List<CardModel> materialCards = Materials
+        List<CardModel> materialCards = BlackSouls_Materials
             .Select(CardModel.FromSerializable)
             .ToList();
 
@@ -149,7 +149,7 @@ public class ChaosFusionCard : ModCardTemplate
 
     protected override void AddExtraArgsToDescription(LocString description)
     {
-        string materialNames = string.Join("、", Materials.Select(GetMaterialTitle));
+        string materialNames = string.Join("、", BlackSouls_Materials.Select(GetMaterialTitle));
         description.Add("Materials", string.IsNullOrWhiteSpace(materialNames) ? "无" : materialNames);
     }
 
@@ -157,14 +157,14 @@ public class ChaosFusionCard : ModCardTemplate
     {
         if (IsMutable)
         {
-            EnergyCost.SetCustomBaseCost(Math.Max(0, FusedCost));
+            EnergyCost.SetCustomBaseCost(Math.Max(0, BlackSouls_FusedCost));
         }
     }
 
     private void ApplyFusedKeywords()
     {
         _ = Keywords;
-        foreach (CardKeyword keyword in FusedKeywords)
+        foreach (CardKeyword keyword in BlackSouls_FusedKeywords)
         {
             AddKeyword(keyword);
         }

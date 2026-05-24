@@ -21,7 +21,7 @@ public class AliceRibbonRelic : ModRelicTemplate
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
-    public override bool IsUsedUp => WasUsed;
+    public override bool IsUsedUp => BlackSouls_WasUsed;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<StrengthPower>(StrengthGain)];
 
@@ -37,7 +37,7 @@ public class AliceRibbonRelic : ModRelicTemplate
     );
 
     [SavedProperty]
-    public bool WasUsed
+    public bool BlackSouls_WasUsed
     {
         get => _wasUsed;
         set
@@ -53,7 +53,7 @@ public class AliceRibbonRelic : ModRelicTemplate
 
     public override bool ShouldDieLate(Creature creature)
     {
-        if (creature != Owner.Creature || WasUsed)
+        if (creature != Owner.Creature || BlackSouls_WasUsed)
         {
             return true;
         }
@@ -64,7 +64,7 @@ public class AliceRibbonRelic : ModRelicTemplate
     public override async Task AfterPreventingDeath(Creature creature)
     {
         Flash();
-        WasUsed = true;
+        BlackSouls_WasUsed = true;
         await CreatureCmd.Heal(creature, creature.MaxHp);
         await PowerCmd.Apply<StrengthPower>(creature, DynamicVars["StrengthPower"].BaseValue, creature, null);
     }

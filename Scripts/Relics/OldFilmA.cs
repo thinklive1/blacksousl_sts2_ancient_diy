@@ -32,6 +32,11 @@ public class OldFilmA : ModRelicTemplate
 
     public override async Task BeforeCombatStart()
     {
+        if (Owner.Creature.Powers.OfType<ViolenceDemonPower>().Any())
+        {
+            return;
+        }
+
         Flash();
         await PowerCmd.Apply<ViolenceDemonPower>(
             Owner.Creature,

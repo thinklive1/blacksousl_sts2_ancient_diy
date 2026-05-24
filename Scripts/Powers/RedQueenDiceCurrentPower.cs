@@ -11,7 +11,7 @@ public class RedQueenDiceCurrentPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => RedQueenDiceRelic.DiceStatusVars;
 
