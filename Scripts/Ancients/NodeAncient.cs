@@ -40,39 +40,36 @@ public class NodeAncient : ModAncientEventTemplate
             CreateModRelicOption<NodeRibbonRelic>(),
         ];
 
-    private IReadOnlyList<EventOption> Pool1
-    {
-        get
-        {
-            List<EventOption> options = [.. Pool1Base];
+    private IReadOnlyList<EventOption> Pool1 => Pool1Base;
 
-            if (Owner != null && CatCollarRelic.CanBeOffered(Owner))
-            {
-                options.Add(CreateCatCollarOption());
-            }
-
-            return options;
-        }
-    }
     private IReadOnlyList<EventOption> Pool2 => [
             CreateModRelicOption<DreamOfKadathRelic>(),
             CreateUnicornRoyalCrestOption(),
             CreateLionRoyalCrestOption(),
         ];
 
-    // 带权重池三。权重越大越有机会生成。当然你也可以写自定义的列表生成函数
-    private WeightedList<EventOption> Pool3 => new()
+    private WeightedList<EventOption> CreatePool3()
     {
-        { CreateCovenantOfNodeOption() ,1},
-        { CreateQuillPenOption(), 1 },
-    };
+        WeightedList<EventOption> options = new()
+        {
+            { CreateCovenantOfNodeOption() ,1},
+            { CreateQuillPenOption(), 1 },
+        };
+
+        if (Owner != null && CatCollarRelic.CanBeOffered(Owner))
+        {
+            options.Add(CreateCatCollarOption(), 1);
+        }
+
+        return options;
+    }
 
     // 所有可能的选项
     public override IEnumerable<EventOption> AllPossibleOptions => [
         .. Pool1Base,
         CreateCatCollarOption(),
         .. Pool2,
-        .. Pool3,
+        .. CreatePool3(),
         CreateModRelicOption<WhiteQueenSoldierRelic>()
     ];
 
@@ -83,7 +80,7 @@ public class NodeAncient : ModAncientEventTemplate
         [
             Rng.NextItem(Pool1)!,
             Rng.NextItem(Pool2)!,
-            Pool3.GetRandom(Rng),
+            CreatePool3().GetRandom(Rng),
             CreateModRelicOption<WhiteQueenSoldierRelic>(),
         ];
     }

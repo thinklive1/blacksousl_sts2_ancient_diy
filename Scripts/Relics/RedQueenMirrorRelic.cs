@@ -17,7 +17,8 @@ public class RedQueenMirrorRelic : ModRelicTemplate
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        HoverTipFactory.FromCardWithCardHoverTips<RedQueenMirrorCard>();
+        HoverTipFactory.FromCardWithCardHoverTips<RedQueenMirrorCard>()
+            .Append(RelicHoverTipHelpers.Details(this));
 
     public override bool IsAllowed(IRunState runState)
     {

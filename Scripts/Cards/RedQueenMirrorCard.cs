@@ -78,7 +78,7 @@ public class RedQueenMirrorCard : ModCardTemplate
 
         if (stillInPileToExhaust.Count > 0)
         {
-            await CardPileCmd.Add(stillInPileToExhaust, PileType.Exhaust, skipVisuals: true);
+            await CardPileCmd.RemoveFromCombat(stillInPileToExhaust, skipVisuals: true);
         }
 
         if (copies.Count > 0)
@@ -87,7 +87,6 @@ public class RedQueenMirrorCard : ModCardTemplate
         }
 
         RefreshPileCounter(pileToExhaust, removedCount: stillInPileToExhaust.Count);
-        RefreshPileCounter(PileType.Exhaust, addedCount: stillInPileToExhaust.Count);
         RefreshPileCounter(destinationPile, addedCount: copies.Count);
     }
 

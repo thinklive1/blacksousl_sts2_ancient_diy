@@ -18,8 +18,7 @@ public class ViolenceDemonPower : ModPowerTemplate
 {
     private const int SelfDamagePercent = 50;
 
-    private bool _hasStartedTurn;
-    private bool _playedAttackThisTurn;
+    private int _ownerTurnCount;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -44,16 +43,6 @@ public class ViolenceDemonPower : ModPowerTemplate
         return target == Owner ? 0m : 1m;
     }
 
-    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Owner?.Creature == Owner && cardPlay.Card.Type == CardType.Attack)
-        {
-            _playedAttackThisTurn = true;
-        }
-
-        return Task.CompletedTask;
-    }
-
     public override async Task AfterDamageGiven(
         PlayerChoiceContext choiceContext,
         Creature? dealer,
@@ -66,8 +55,6 @@ public class ViolenceDemonPower : ModPowerTemplate
         {
             return;
         }
-
-        _playedAttackThisTurn = true;
 
         int heal = result.UnblockedDamage + result.OverkillDamage;
         if (heal <= 0)
@@ -86,9 +73,11 @@ public class ViolenceDemonPower : ModPowerTemplate
             return;
         }
 
-        if (_hasStartedTurn && !_playedAttackThisTurn)
+        _ownerTurnCount++;
+        if (_ownerTurnCount >= 2)
         {
             decimal selfDamage = Math.Ceiling(Owner.CurrentHp * DynamicVars["SelfDamagePercent"].BaseValue / 100m);
+            selfDamage = Math.Min(selfDamage, Math.Max(Owner.CurrentHp - 1, 0));
             if (selfDamage > 0m)
             {
                 Flash();
@@ -101,15 +90,11 @@ public class ViolenceDemonPower : ModPowerTemplate
                     null);
             }
         }
-
-        _playedAttackThisTurn = false;
-        _hasStartedTurn = true;
     }
 
     public override Task AfterCombatEnd(CombatRoom room)
     {
-        _hasStartedTurn = false;
-        _playedAttackThisTurn = false;
+        _ownerTurnCount = 0;
         return Task.CompletedTask;
     }
 }

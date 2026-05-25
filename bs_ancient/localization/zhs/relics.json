@@ -49,6 +49,8 @@
 	"BS_ANCIENT_RELIC_RED_QUEEN_ALBUM_RELIC.flavor": "I am a THINKER, I CAN BREAK IT DOWN",
 	"BS_ANCIENT_RELIC_RED_QUEEN_MIRROR_RELIC.title": "普利凯特的化妆镜",
 	"BS_ANCIENT_RELIC_RED_QUEEN_MIRROR_RELIC.description": "拾取时，将一张[gold]红女王的化妆镜[/gold]加入你的牌组。",
+	"BS_ANCIENT_RELIC_RED_QUEEN_MIRROR_RELIC.details.title": "红女王的化妆镜",
+	"BS_ANCIENT_RELIC_RED_QUEEN_MIRROR_RELIC.details.description": "化妆镜移出的牌不会进入消耗堆，也不会触发消耗相关效果。",
 	"BS_ANCIENT_RELIC_RED_QUEEN_MIRROR_RELIC.flavor": "……回去………快变回去………快点………回去………",
 	"BS_ANCIENT_RELIC_CAT_COLLAR_RELIC.title": "宠物猫的项圈",
 	"BS_ANCIENT_RELIC_CAT_COLLAR_RELIC.description": "拾取时，选择[blue]{Cards}[/blue]张牌，变化为[gold]柴郡猫的微笑[/gold]和[gold]黛娜的撕咬[/gold]。",
