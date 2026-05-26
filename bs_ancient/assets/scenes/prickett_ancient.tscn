@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bk6dsd5y54vth"]
+[gd_scene load_steps=6 format=3 uid="uid://bk6dsd5y54vth"]
 
 [ext_resource type="Texture2D" path="res://bs_ancient/assets/images/map/prickett_bg.png" id="1_xjdov"]
+[ext_resource type="Script" path="res://Scripts/Nodes/Events/BsAncientFullscreenBackground.cs" id="2_fullscreen"]
 
 [sub_resource type="Shader" id="Shader_8eo3w"]
 code = "shader_type canvas_item;
@@ -55,6 +56,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_fullscreen")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
@@ -67,7 +69,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_xjdov")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 0
 
 [node name="snow" type="CPUParticles2D" parent="."]
 position = Vector2(960, -40)

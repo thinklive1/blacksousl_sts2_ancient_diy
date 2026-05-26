@@ -86,7 +86,7 @@
 	"BS_ANCIENT_RELIC_DODO_RUN_RELIC.description": "进入非 Boss 战斗时，若你的生命值低于[blue]{Health}[/blue]，跳过这场战斗。只能触发一次。",
 	"BS_ANCIENT_RELIC_DODO_RUN_RELIC.flavor": "随心所欲的跑起来吧！这个国家的这里那里。到处乱逛吧！",
 	"BS_ANCIENT_RELIC_WORM_SMOKE_RELIC.title": "芋虫之烟",
-	"BS_ANCIENT_RELIC_WORM_SMOKE_RELIC.description": "可在休息处选择吸入芋虫烟，失去[red]{MaxHp}[/red]点最大生命值，随机[gold]升级[/gold][blue]{Cards}[/blue]张牌。只能触发一次。",
+	"BS_ANCIENT_RELIC_WORM_SMOKE_RELIC.description": "可在休息处选择吸入芋虫烟，以最大生命值为代价选择并[gold]升级[/gold]一张牌，不消耗火堆选项次数。",
 	"BS_ANCIENT_RELIC_WORM_SMOKE_RELIC.flavor": "嘻……这感触已经烙印在你的脑髓里了吧",
 	"BS_ANCIENT_RELIC_RETHINK_POKER_RELIC.title": "再思扑克",
 	"BS_ANCIENT_RELIC_RETHINK_POKER_RELIC.description": "拾取时，获得上一局游戏剩余的金币，并从上一局牌组的最多[blue]3[/blue]张牌中选择[blue]1[/blue]张加入牌组。",
@@ -148,5 +148,10 @@
 	"BS_ANCIENT_RELIC_OLD_FILM_B.description": "首次击中非攻击意图敌人时，击晕并给予[blue]{VulnerablePower}[/blue]层易伤。",
 	"BS_ANCIENT_RELIC_OLD_FILM_B.details.title": "杀人鬼的电影胶卷",
 	"BS_ANCIENT_RELIC_OLD_FILM_B.details.description": "战斗中，每首次击中一个非攻击意图的敌人时，[gold]击晕[/gold]该敌人并给予[blue]{VulnerablePower}[/blue]层[gold]易伤[/gold]。",
-	"BS_ANCIENT_RELIC_OLD_FILM_B.flavor": "总有一天，总有一天我会把你从这里带出去。"
+	"BS_ANCIENT_RELIC_OLD_FILM_B.flavor": "总有一天，总有一天我会把你从这里带出去。",
+	"BS_ANCIENT_RELIC_MARGARET_RELIC.title": "公爵夫人的菜单",
+	"BS_ANCIENT_RELIC_MARGARET_RELIC.description": "获得卡牌奖励时，可以选择[gold]供应[/gold]。供应[blue]{Supplies}[/blue]次后，根据总分获得奖励。",
+	"BS_ANCIENT_RELIC_MARGARET_RELIC.details.title": "供应评分",
+	"BS_ANCIENT_RELIC_MARGARET_RELIC.details.description": "供应会记录该组卡牌奖励中所有卡牌的品质分：普通[blue]1[/blue]分，罕见[blue]2[/blue]分，稀有[blue]3[/blue]分。总分不高于[blue]12[/blue]：获得[gold]{Gold}[/gold]金币和一组罕见卡奖励；[blue]13[/blue]-[blue]18[/blue]：获得[gold]{MidGold}[/gold]金币和一组稀有卡奖励；高于[blue]18[/blue]：获得[gold]{HighGold}[/gold]金币和两组稀有卡奖励。",
+	"BS_ANCIENT_RELIC_MARGARET_RELIC.flavor": "…正好呢。我一直都很想吃掉您呀！！"
 }

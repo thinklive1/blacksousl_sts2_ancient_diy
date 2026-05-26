@@ -53,6 +53,7 @@ public class OldFilmB : ModRelicTemplate
         }
 
         Flash();
+        BsAncientAudio.PlayOneShot(BsAncientAudio.Shot);
         await CreatureCmd.Stun(target);
         await PowerCmd.Apply<VulnerablePower>(
             target,

@@ -10,7 +10,7 @@
 	"BS_ANCIENT_CARD_POWER_OF_REWRITE.title": "改变之权能",
 	"BS_ANCIENT_CARD_POWER_OF_REWRITE.description": "造成{Damage:diff()}点伤害。清除自身所有[red]负面状态[/red]。每清除一个，获得{Block}点[blue]格挡[/blue]。",
 	"BS_ANCIENT_CARD_HLANITH_WINE_CARD.title": "海兰里斯酒",
-	"BS_ANCIENT_CARD_HLANITH_WINE_CARD.description": "获得[gold]海兰里斯酒[/gold]。",
+	"BS_ANCIENT_CARD_HLANITH_WINE_CARD.description": "回合结束时，获得额外回合",
 	"BS_ANCIENT_CARD_STAGE_END_CARD.title": "舞台落幕",
 	"BS_ANCIENT_CARD_STAGE_END_CARD.description": "补满手牌和当前能量。获得{MadnessPower:diff()}层[gold]发狂[/gold]。本局战斗中打出{Cards:diff()}张牌后，强制死亡。强制死亡无法被不死、无实体等任何效果豁免。",
 	"BS_ANCIENT_CARD_RED_QUEEN_REROLL_CARD.title": "重掷",

@@ -16,12 +16,12 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-[RegisterRelic(typeof(EventRelicPool))]
+[RegisterRelic(typeof(SharedRelicPool))]
 public class RethinkPokerRelic : ModRelicTemplate
 {
     private const int CardChoices = 3;
 
-    public override RelicRarity Rarity => RelicRarity.Event;
+    public override RelicRarity Rarity => RelicRarity.Ancient;
 
     public override bool HasUponPickupEffect => true;
 

@@ -32,8 +32,13 @@ public static class NeowRethinkPokerPatch
             return;
         }
 
-        RelicModel relic = ModelDb.Relic<RethinkPokerRelic>().ToMutable();
-        if (!relic.IsAllowed(__instance.Owner.RunState))
+        List<RelicModel> candidates = [
+            ModelDb.Relic<RethinkPokerRelic>().ToMutable(),
+            ModelDb.Relic<WormSmokeRelic>().ToMutable(),
+            ModelDb.Relic<MargaretRelic>().ToMutable()
+        ];
+        candidates.RemoveAll(relic => !relic.IsAllowed(__instance.Owner.RunState));
+        if (candidates.Count == 0)
         {
             return;
         }
@@ -44,6 +49,12 @@ public static class NeowRethinkPokerPatch
         }
 
         List<EventOption> options = __result.ToList();
+        RelicModel? relic = __instance.Owner.RunState.Rng.Niche.NextItem(candidates);
+        if (relic == null)
+        {
+            return;
+        }
+
         int replacementIndex = __instance.Owner.RunState.Rng.Niche.NextInt(PositiveOptionCount);
         options[replacementIndex] = CreateRethinkPokerOption(__instance, relic);
         __result = options;
