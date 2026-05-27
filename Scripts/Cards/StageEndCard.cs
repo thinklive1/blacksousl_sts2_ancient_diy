@@ -6,8 +6,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using Blacksouls.Scripts;
 
 namespace BlackSouls.Scripts.Cards;
 
@@ -29,7 +31,8 @@ public class StageEndCard : ModCardTemplate
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<MadnessPower>(),
-        HoverTipFactory.FromPower<StageEndCountdownPower>()
+        HoverTipFactory.FromPower<StageEndCountdownPower>(),
+        ModKeywordRegistry.CreateHoverTip(MyKeywords.ForceDeath)
     ];
 
     public override CardAssetProfile AssetProfile => new(

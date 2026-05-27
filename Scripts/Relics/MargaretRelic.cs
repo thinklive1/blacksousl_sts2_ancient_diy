@@ -37,7 +37,8 @@ public class MargaretRelic : ModRelicTemplate
 
     public override int DisplayAmount => IsUsedUp ? 0 : RequiredSupplies - BlackSouls_SupplyCount;
 
-    public override bool IsUsedUp => Owner?.GetRelic<Driftwood>() != null || BlackSouls_SupplyCount >= RequiredSupplies;
+    public override bool IsUsedUp => IsMutable
+        && (Owner?.GetRelic<Driftwood>() != null || BlackSouls_SupplyCount >= RequiredSupplies);
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Supplies", RequiredSupplies),

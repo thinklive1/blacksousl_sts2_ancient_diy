@@ -1,0 +1,7 @@
+{
+  "BS_ANCIENT_EVENT_WAX_STATUE_EVENT.title": "蜡人偶",
+  "BS_ANCIENT_EVENT_WAX_STATUE_EVENT.pages.INITIAL.description": "你在旅途中遇到了一对蜡人偶，你似乎听到了它们对你发出了讯息。\"我们是天生的双子，请不要把我们分开。\" 你决定……",
+  "WAX_STATUE_EVENT.pages.INITIAL.options.BS_ANCIENT_RELIC_TWIN_WAX_STATUE_RELIC.title": "带走两个蜡人偶, 获得双生的蜡人偶",
+  "WAX_STATUE_EVENT.pages.INITIAL.options.BS_ANCIENT_RELIC_LONELY_WAX_STATUE_RELIC.title": "带走一个蜡人偶, 获得孤单的蜡人偶",
+  "BS_ANCIENT_EVENT_WAX_STATUE_EVENT.pages.DONE.description": "不管你做了什么选择，蜡人偶都不会动弹，毕竟人偶只是人偶而已。"
+}

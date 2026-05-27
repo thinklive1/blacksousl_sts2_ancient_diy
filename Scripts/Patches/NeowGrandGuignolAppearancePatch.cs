@@ -16,7 +16,7 @@ public static class NeowGrandGuignolAppearancePatch
     [HarmonyPrefix]
     public static bool CreateBackgroundScenePrefix(EventModel __instance, ref PackedScene __result)
     {
-        if (__instance is not Neow)
+        if (!BsAncientConfig.ReplaceNeowAppearance || __instance is not Neow)
         {
             return true;
         }
@@ -29,7 +29,7 @@ public static class NeowGrandGuignolAppearancePatch
     [HarmonyPostfix]
     public static void MapIconPostfix(AncientEventModel __instance, ref Texture2D __result)
     {
-        if (__instance is Neow)
+        if (BsAncientConfig.ReplaceNeowAppearance && __instance is Neow)
         {
             __result = ResourceLoader.Load<Texture2D>(MapIconPath);
         }
@@ -39,7 +39,7 @@ public static class NeowGrandGuignolAppearancePatch
     [HarmonyPostfix]
     public static void MapIconOutlinePostfix(AncientEventModel __instance, ref Texture2D __result)
     {
-        if (__instance is Neow)
+        if (BsAncientConfig.ReplaceNeowAppearance && __instance is Neow)
         {
             __result = ResourceLoader.Load<Texture2D>(MapIconOutlinePath);
         }
@@ -49,7 +49,7 @@ public static class NeowGrandGuignolAppearancePatch
     [HarmonyPostfix]
     public static void RunHistoryIconPostfix(AncientEventModel __instance, ref Texture2D __result)
     {
-        if (__instance is Neow)
+        if (BsAncientConfig.ReplaceNeowAppearance && __instance is Neow)
         {
             __result = ResourceLoader.Load<Texture2D>(MapIconPath);
         }
@@ -59,7 +59,7 @@ public static class NeowGrandGuignolAppearancePatch
     [HarmonyPostfix]
     public static void RunHistoryIconOutlinePostfix(AncientEventModel __instance, ref Texture2D __result)
     {
-        if (__instance is Neow)
+        if (BsAncientConfig.ReplaceNeowAppearance && __instance is Neow)
         {
             __result = ResourceLoader.Load<Texture2D>(MapIconOutlinePath);
         }
@@ -69,7 +69,7 @@ public static class NeowGrandGuignolAppearancePatch
     [HarmonyPostfix]
     public static void MapNodeAssetPathsPostfix(AncientEventModel __instance, ref IEnumerable<string> __result)
     {
-        if (__instance is Neow)
+        if (BsAncientConfig.ReplaceNeowAppearance && __instance is Neow)
         {
             __result = [MapIconPath, MapIconOutlinePath];
         }
@@ -79,7 +79,7 @@ public static class NeowGrandGuignolAppearancePatch
     [HarmonyPostfix]
     public static void GetAssetPathsPostfix(EventModel __instance, ref IEnumerable<string> __result)
     {
-        if (__instance is Neow)
+        if (BsAncientConfig.ReplaceNeowAppearance && __instance is Neow)
         {
             __result = __result.Append(BackgroundScenePath);
         }

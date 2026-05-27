@@ -12,7 +12,7 @@
 	"BS_ANCIENT_CARD_HLANITH_WINE_CARD.title": "海兰里斯酒",
 	"BS_ANCIENT_CARD_HLANITH_WINE_CARD.description": "回合结束时，获得额外回合",
 	"BS_ANCIENT_CARD_STAGE_END_CARD.title": "舞台落幕",
-	"BS_ANCIENT_CARD_STAGE_END_CARD.description": "补满手牌和当前能量。获得{MadnessPower:diff()}层[gold]发狂[/gold]。本局战斗中打出{Cards:diff()}张牌后，强制死亡。强制死亡无法被不死、无实体等任何效果豁免。",
+	"BS_ANCIENT_CARD_STAGE_END_CARD.description": "补满手牌和当前能量。获得{MadnessPower:diff()}层[gold]发狂[/gold]。本局战斗中打出{Cards:diff()}张牌后，[gold]强制死亡[/gold]。",
 	"BS_ANCIENT_CARD_RED_QUEEN_REROLL_CARD.title": "重掷",
 	"BS_ANCIENT_CARD_RED_QUEEN_REROLL_CARD.description": "若本牌是本回合第一张打出的牌，获得{Energy:energyIcons()}，重掷所有手牌的攻击和格挡点数。否则不产生效果并消耗。",
 	"BS_ANCIENT_CARD_RED_QUEEN_MIRROR_CARD.title": "红女王的化妆镜",

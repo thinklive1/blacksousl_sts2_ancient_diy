@@ -153,5 +153,12 @@
 	"BS_ANCIENT_RELIC_MARGARET_RELIC.description": "获得卡牌奖励时，可以选择[gold]供应[/gold]。供应[blue]{Supplies}[/blue]次后，根据总分获得奖励。",
 	"BS_ANCIENT_RELIC_MARGARET_RELIC.details.title": "供应评分",
 	"BS_ANCIENT_RELIC_MARGARET_RELIC.details.description": "供应会记录该组卡牌奖励中所有卡牌的品质分：普通[blue]1[/blue]分，罕见[blue]2[/blue]分，稀有[blue]3[/blue]分。总分不高于[blue]12[/blue]：获得[gold]{Gold}[/gold]金币和一组罕见卡奖励；[blue]13[/blue]-[blue]18[/blue]：获得[gold]{MidGold}[/gold]金币和一组稀有卡奖励；高于[blue]18[/blue]：获得[gold]{HighGold}[/gold]金币和两组稀有卡奖励。",
-	"BS_ANCIENT_RELIC_MARGARET_RELIC.flavor": "…正好呢。我一直都很想吃掉您呀！！"
+	"BS_ANCIENT_RELIC_MARGARET_RELIC.flavor": "…正好呢。我一直都很想吃掉您呀！！",
+	"BS_ANCIENT_RELIC_TWIN_WAX_STATUE_RELIC.title": "双生的蜡人偶",
+	"BS_ANCIENT_RELIC_TWIN_WAX_STATUE_RELIC.description": "选择一张拥有同名牌的牌，为其中[blue]{Cards}[/blue]张附魔[gold]双生[/gold]。",
+	"BS_ANCIENT_RELIC_TWIN_WAX_STATUE_RELIC.selectionScreenPrompt": "选择一张拥有同名牌的牌，为其中两张附魔双生。",
+	"BS_ANCIENT_RELIC_TWIN_WAX_STATUE_RELIC.flavor": "我们两人一直相亲相爱。请不要把我们分开",
+	"BS_ANCIENT_RELIC_LONELY_WAX_STATUE_RELIC.title": "孤单的蜡人偶",
+	"BS_ANCIENT_RELIC_LONELY_WAX_STATUE_RELIC.description": "选择[blue]{Cards}[/blue]张牌，附魔[gold]孤单[/gold]。",
+	"BS_ANCIENT_RELIC_LONELY_WAX_STATUE_RELIC.flavor": "因为我们是从诞生之时起就相爱着的……双子啊"
 }

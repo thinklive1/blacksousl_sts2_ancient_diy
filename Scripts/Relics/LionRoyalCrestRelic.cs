@@ -50,7 +50,7 @@ public class LionRoyalCrestRelic : ModRelicTemplate
         CardModel? cardSource,
         CardPlay? cardPlay)
     {
-        if (target.Side != Owner.Creature.Side)
+        if (target.Side != Owner.Creature.Side && !target.HasPower<BurrowedPower>())
         {
             return 0m;
         }

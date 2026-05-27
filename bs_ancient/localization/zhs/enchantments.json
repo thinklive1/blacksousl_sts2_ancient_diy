@@ -1,5 +1,11 @@
 {
 	"BS_ANCIENT_ENCHANTMENT_REPLAY_ENCHANTMENT.title": "重演",
 	"BS_ANCIENT_ENCHANTMENT_REPLAY_ENCHANTMENT.description": "重演: 回合开始时，如果这张牌在你的[gold]消耗牌堆[/gold]中，则将其打出。每场战斗最多触发[blue]3[/blue]次。",
-	"BS_ANCIENT_ENCHANTMENT_REPLAY_ENCHANTMENT.extraCardText": "在你的回合开始时，如果这张牌在你的[gold]消耗牌堆[/gold]中，则将其打出。每场战斗最多触发[blue]3[/blue]次。"
+	"BS_ANCIENT_ENCHANTMENT_REPLAY_ENCHANTMENT.extraCardText": "在你的回合开始时，如果这张牌在你的[gold]消耗牌堆[/gold]中，则将其打出。每场战斗最多触发[blue]3[/blue]次。",
+	"BS_ANCIENT_ENCHANTMENT_TWIN_ENCHANTMENT.title": "双生",
+	"BS_ANCIENT_ENCHANTMENT_TWIN_ENCHANTMENT.description": "双生: 打出这张牌时，打出另一张同名[gold]双生[/gold]牌。",
+	"BS_ANCIENT_ENCHANTMENT_TWIN_ENCHANTMENT.extraCardText": "打出这张牌时，打出另一张同名[gold]双生[/gold]牌。",
+	"BS_ANCIENT_ENCHANTMENT_LONELY_ENCHANTMENT.title": "孤单",
+	"BS_ANCIENT_ENCHANTMENT_LONELY_ENCHANTMENT.description": "孤单: 打出这张牌时，随机消耗一张同名牌。若成功消耗，这张牌获得[gold]重放[/gold][blue]{Times}[/blue]。",
+	"BS_ANCIENT_ENCHANTMENT_LONELY_ENCHANTMENT.extraCardText": "打出这张牌时，随机消耗一张同名牌。若成功消耗，获得[gold]重放[/gold][blue]{Times}[/blue]。"
 }

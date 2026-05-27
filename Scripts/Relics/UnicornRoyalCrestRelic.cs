@@ -23,6 +23,8 @@ public class UnicornRoyalCrestRelic : ModRelicTemplate
     private readonly Dictionary<(Creature Target, Creature Dealer), decimal> _incomingAttacks = [];
     private bool _isCounterattacking;
 
+    internal static bool IsCounterattacking { get; private set; }
+
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
@@ -89,6 +91,7 @@ public class UnicornRoyalCrestRelic : ModRelicTemplate
 
         Flash();
         _isCounterattacking = true;
+        IsCounterattacking = true;
         try
         {
             await CreatureCmd.Damage(
@@ -102,6 +105,7 @@ public class UnicornRoyalCrestRelic : ModRelicTemplate
         finally
         {
             _isCounterattacking = false;
+            IsCounterattacking = false;
         }
     }
 
