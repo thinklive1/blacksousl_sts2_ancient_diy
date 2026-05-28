@@ -14,8 +14,17 @@ public static class OnlyUseModAncientsPatch
     private static readonly AccessTools.FieldRef<ActModel, RoomSet> RoomsRef =
         AccessTools.FieldRefAccess<ActModel, RoomSet>("_rooms");
 
+    private static readonly AccessTools.FieldRef<ActModel, List<AncientEventModel>?> SharedAncientSubsetRef =
+        AccessTools.FieldRefAccess<ActModel, List<AncientEventModel>?>("_sharedAncientSubset");
+
     public static void Postfix(ActModel __instance, Rng rng, UnlockState unlockState, bool isMultiplayer)
     {
+        if (BsAncientConfig.DisableModAncients)
+        {
+            RemoveGeneratedModAncient(__instance, rng, unlockState);
+            return;
+        }
+
         if (!BsAncientConfig.OnlyUseModAncients)
         {
             return;
@@ -73,5 +82,30 @@ public static class OnlyUseModAncientsPatch
         }
 
         return false;
+    }
+
+    private static void RemoveGeneratedModAncient(ActModel act, Rng rng, UnlockState unlockState)
+    {
+        RoomSet rooms = RoomsRef(act);
+        if (!IsMapModAncient(rooms.Ancient))
+        {
+            return;
+        }
+
+        List<AncientEventModel> candidates = act.GetUnlockedAncients(unlockState)
+            .Concat(SharedAncientSubsetRef(act) ?? [])
+            .Where(ancient => !IsMapModAncient(ancient))
+            .ToList();
+
+        AncientEventModel? replacement = rng.NextItem(candidates);
+        if (replacement != null)
+        {
+            rooms.Ancient = replacement;
+        }
+    }
+
+    private static bool IsMapModAncient(AncientEventModel ancient)
+    {
+        return ancient is NodeAncient or PrickettAncient or MabelAncient;
     }
 }

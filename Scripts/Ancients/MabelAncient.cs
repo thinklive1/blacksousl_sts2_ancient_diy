@@ -119,7 +119,8 @@ public class MabelAncient : ModAncientEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return runState.CurrentActIndex is 1 or 2;
+        return !BsAncientConfig.DisableModAncients
+            && runState.CurrentActIndex is 1 or 2;
     }
 
     private EventOption CreateFavorChoiceOption(bool isMultiplayer)

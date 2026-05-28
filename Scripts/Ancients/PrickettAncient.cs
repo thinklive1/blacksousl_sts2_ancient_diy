@@ -78,7 +78,8 @@ public class PrickettAncient : ModAncientEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return runState.CurrentActIndex == 2;
+        return !BsAncientConfig.DisableModAncients
+            && runState.CurrentActIndex == 2;
     }
 
     private EventOption CreateRedQueenDiceOption()

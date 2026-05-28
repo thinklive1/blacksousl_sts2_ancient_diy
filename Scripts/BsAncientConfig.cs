@@ -8,6 +8,7 @@ public static class BsAncientConfig
     private const string ConfigFileName = "bs_ancient_config.cfg";
 
     public static bool OnlyUseModAncients = true;
+    public static bool DisableModAncients = false;
     public static bool ReplaceNeowAppearance = true;
 
     public static void Load(Assembly assembly)
@@ -28,6 +29,7 @@ public static class BsAncientConfig
         }
 
         OnlyUseModAncients = config.OnlyUseModAncients;
+        DisableModAncients = config.DisableModAncients;
         ReplaceNeowAppearance = config.ReplaceNeowAppearance;
     }
 
@@ -47,6 +49,7 @@ public static class BsAncientConfig
         FileConfig config = new()
         {
             OnlyUseModAncients = OnlyUseModAncients,
+            DisableModAncients = DisableModAncients,
             ReplaceNeowAppearance = ReplaceNeowAppearance
         };
         string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
@@ -56,6 +59,8 @@ public static class BsAncientConfig
     private sealed class FileConfig
     {
         public bool OnlyUseModAncients { get; set; } = true;
+
+        public bool DisableModAncients { get; set; } = false;
 
         public bool ReplaceNeowAppearance { get; set; } = true;
     }
