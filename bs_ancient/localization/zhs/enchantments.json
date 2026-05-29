@@ -7,5 +7,8 @@
 	"BS_ANCIENT_ENCHANTMENT_TWIN_ENCHANTMENT.extraCardText": "打出这张牌时，打出另一张同名[gold]双生[/gold]牌。",
 	"BS_ANCIENT_ENCHANTMENT_LONELY_ENCHANTMENT.title": "孤单",
 	"BS_ANCIENT_ENCHANTMENT_LONELY_ENCHANTMENT.description": "孤单: 打出这张牌时，随机消耗一张同名牌。若成功消耗，这张牌获得[gold]重放[/gold][blue]{Times}[/blue]。",
-	"BS_ANCIENT_ENCHANTMENT_LONELY_ENCHANTMENT.extraCardText": "打出这张牌时，随机消耗一张同名牌。若成功消耗，获得[gold]重放[/gold][blue]{Times}[/blue]。"
+	"BS_ANCIENT_ENCHANTMENT_LONELY_ENCHANTMENT.extraCardText": "打出这张牌时，随机消耗一张同名牌。若成功消耗，获得[gold]重放[/gold][blue]{Times}[/blue]。",
+	"BS_ANCIENT_ENCHANTMENT_FEEDING_ENCHANTMENT.title": "进食",
+	"BS_ANCIENT_ENCHANTMENT_FEEDING_ENCHANTMENT.description": "进食: 这张牌造成的伤害变为[blue]{Amount}%[/blue]。每场战斗后降低[blue]20%[/blue]，成功斩杀敌人时提高[blue]50%[/blue]，最低[blue]50%[/blue]，最高[blue]200%[/blue]。",
+	"BS_ANCIENT_ENCHANTMENT_FEEDING_ENCHANTMENT.extraCardText": "这张牌造成的伤害变为[blue]{Amount}%[/blue]。每场战斗后降低[blue]20%[/blue]，成功斩杀敌人时提高[blue]50%[/blue]。"
 }

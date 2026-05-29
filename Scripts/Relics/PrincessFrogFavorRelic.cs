@@ -15,7 +15,7 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(SharedRelicPool))]
 public class PrincessFrogFavorRelic : ModRelicTemplate
 {
-    private const int PenaltyChance = 50;
+    private const int PenaltyChance = 30;
     private const int PenaltyAmount = 1;
 
     private bool _isApplyingPenalty;

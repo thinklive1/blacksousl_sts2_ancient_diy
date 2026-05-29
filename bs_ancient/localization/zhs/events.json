@@ -11,5 +11,18 @@
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.FLEE.title": "转身就跑。",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.FLEE.description": "不会标记受歌声影响的节点。",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.WAIT.description": "她的歌声让你的脑子似乎挨了一计重锤，恢复清醒时，那个神秘的生物已经不见踪影",
-  "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.FLEE.description": "你在本能的驱使下离开了这里，背后似乎传来令人战栗的声音，还好没被波及"
+  "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.FLEE.description": "你在本能的驱使下离开了这里，背后似乎传来令人战栗的声音，还好没被波及",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.title": "骇人饿兽",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.description": "你在虫群肆虐的高塔看到一只奇异的半人半兽，她蹲坐在地上，正在吃一只虫子的尸体。NL \"不够吃！不够吃！\"她发现了你，对你抱怨着，\"为本大人找点好吃的来。\"",
+  "HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BS_ANCIENT_RELIC_HORRIFYING_GLUTTON_RELIC.title": "帮她捕猎。获得骇人饿兽。",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT.title": "帮她捕猎。",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT.description": "选择一张攻击牌附魔进食。",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT_LOCKED.title": "帮她捕猎。需要一张可附魔的攻击牌。",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT_LOCKED.description": "没有可附魔的攻击牌",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BUY_FOOD.title": "帮她买食物。",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BUY_FOOD.description": "花费[gold]{Gold}[/gold]金币，获得一件遗物。",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BUY_FOOD_LOCKED.title": "帮她买食物。需要[gold]{Gold}[/gold]金币。",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BUY_FOOD_LOCKED.description": "金币不足",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.HUNT.description": "哦哦，这真是美味的说♪为了表示感谢，让本大人教你狩猎的技巧吧",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.BUY_FOOD.description": "哦哦，这真是美味的说♪为了表示感谢，从本大人的宝藏里选一件带走吧"
 }
