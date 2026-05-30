@@ -58,7 +58,7 @@ public class RedQueenDiceRelic : ModRelicTemplate
         }
 
         RollAllCombatCards();
-        return SyncDiceStatus();
+        return Task.CompletedTask;
     }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPile, AbstractModel? source)
@@ -71,7 +71,6 @@ public class RedQueenDiceRelic : ModRelicTemplate
             }
 
             RefreshCardPreview(card);
-            await SyncDiceStatus();
         }
     }
 
@@ -83,7 +82,6 @@ public class RedQueenDiceRelic : ModRelicTemplate
         }
 
         ResetRolledCards();
-        await SyncDiceStatus();
     }
 
     public override Task AfterCombatEnd(CombatRoom _)
@@ -126,7 +124,6 @@ public class RedQueenDiceRelic : ModRelicTemplate
 
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
         RollAllCombatCards();
-        await SyncDiceStatus();
     }
 
     private void RollAllCombatCards()
@@ -162,20 +159,6 @@ public class RedQueenDiceRelic : ModRelicTemplate
         }
 
         return Math.Max(roll, -amount);
-    }
-
-    private Task SyncDiceStatus()
-    {
-        return PowerCmd.SetAmount<RedQueenDiceCurrentPower>(
-            Owner.Creature,
-            ActiveRolledCardCount(),
-            Owner.Creature,
-            null);
-    }
-
-    private int ActiveRolledCardCount()
-    {
-        return _cardRolls.Keys.Count(IsAffectedCard);
     }
 
     private void ResetRolledCards()

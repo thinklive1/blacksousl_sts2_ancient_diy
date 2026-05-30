@@ -18,6 +18,10 @@ public class FeedingEnchantment : ModEnchantmentTemplate
     private const int MinDamagePercent = 50;
     private const int MaxDamagePercent = 200;
 
+    private int _killsThisCombat;
+    private bool _isPlayingThisCard;
+    private readonly HashSet<Creature> _damagedTargetsThisPlay = [];
+
     public override bool ShowAmount => true;
 
     public override bool HasExtraCardText => true;
@@ -36,6 +40,17 @@ public class FeedingEnchantment : ModEnchantmentTemplate
         return Amount / 100m;
     }
 
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        if (cardPlay.Card == Card)
+        {
+            _isPlayingThisCard = true;
+            _damagedTargetsThisPlay.Clear();
+        }
+
+        return Task.CompletedTask;
+    }
+
     public override Task AfterDamageGiven(
         PlayerChoiceContext choiceContext,
         Creature? dealer,
@@ -44,19 +59,78 @@ public class FeedingEnchantment : ModEnchantmentTemplate
         Creature target,
         CardModel? cardSource)
     {
-        if (cardSource == Card && target.Side != dealer?.Side && result.WasTargetKilled)
+        if (IsDamageFromThisCard(dealer, target, cardSource) && result.TotalDamage > 0)
         {
-            Amount = Math.Min(MaxDamagePercent, Amount + KillGrowth);
-            Card.DynamicVars.RecalculateForUpgradeOrEnchant();
+            _damagedTargetsThisPlay.Add(target);
         }
 
         return Task.CompletedTask;
     }
 
+    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        if (cardPlay.Card != Card)
+        {
+            return Task.CompletedTask;
+        }
+
+        int kills = _damagedTargetsThisPlay.Count(target => target.IsDead);
+        if (kills > 0)
+        {
+            AddKills(kills);
+        }
+
+        _isPlayingThisCard = false;
+        _damagedTargetsThisPlay.Clear();
+        return Task.CompletedTask;
+    }
+
     public override Task AfterCombatEnd(CombatRoom room)
     {
-        Amount = Math.Max(MinDamagePercent, Amount - CombatEndDecay);
-        Card.DynamicVars.RecalculateForUpgradeOrEnchant();
+        if (TryGetDeckFeedingEnchantment(out _))
+        {
+            _killsThisCombat = 0;
+            return Task.CompletedTask;
+        }
+
+        SetAmount(Math.Max(MinDamagePercent, Amount - CombatEndDecay));
+        if (_killsThisCombat > 0)
+        {
+            SetAmount(Math.Min(MaxDamagePercent, Amount + KillGrowth * _killsThisCombat));
+            _killsThisCombat = 0;
+        }
+
         return Task.CompletedTask;
+    }
+
+    private bool IsDamageFromThisCard(Creature? dealer, Creature target, CardModel? cardSource)
+    {
+        return _isPlayingThisCard
+            && dealer == Card.Owner?.Creature
+            && target.Side != dealer?.Side
+            && (cardSource == Card || cardSource?.DeckVersion == Card || cardSource == Card.DeckVersion);
+    }
+
+    private void AddKills(int kills)
+    {
+        if (TryGetDeckFeedingEnchantment(out FeedingEnchantment? deckFeeding) && deckFeeding != null)
+        {
+            deckFeeding._killsThisCombat += kills;
+            return;
+        }
+
+        _killsThisCombat += kills;
+    }
+
+    private bool TryGetDeckFeedingEnchantment(out FeedingEnchantment? deckFeeding)
+    {
+        deckFeeding = Card.DeckVersion?.Enchantment as FeedingEnchantment;
+        return deckFeeding != null && deckFeeding != this;
+    }
+
+    private void SetAmount(int amount)
+    {
+        Amount = amount;
+        Card.DynamicVars.RecalculateForUpgradeOrEnchant();
     }
 }
