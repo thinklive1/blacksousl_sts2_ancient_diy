@@ -84,10 +84,7 @@ public class PrickettAncient : ModAncientEventTemplate
 
     private EventOption CreateRedQueenDiceOption()
     {
-        EventOption option = CreateModRelicOption<RedQueenDiceRelic>();
-        option.HoverTips = option.HoverTips
-            .Concat(HoverTipFactory.FromCardWithCardHoverTips<RedQueenRerollCard>());
-        return option;
+        return CreateModRelicOption<RedQueenDiceRelic>();
     }
 
     private EventOption CreateRedQueenMirrorOption()

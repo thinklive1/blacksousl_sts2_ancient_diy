@@ -1,4 +1,3 @@
-using BlackSouls.Scripts.Cards;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -21,22 +20,19 @@ namespace BlackSouls.Scripts;
 public class RedQueenDiceRelic : ModRelicTemplate
 {
     internal const int RollRange = 3;
-    private const int RerollEnergyGain = 1;
+    private const int MaxEnergyGain = 1;
 
     private readonly Dictionary<CardModel, int> _cardRolls = [];
-    private bool _hasPlayedCardThisTurn;
-    private CardModel? _firstCardPlayedThisTurn;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar("RollRange", RollRange),
-        new EnergyVar("RerollEnergyGain", RerollEnergyGain)
+        new EnergyVar("Energy", MaxEnergyGain)
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        HoverTipFactory.FromCardWithCardHoverTips<RedQueenRerollCard>()
-            .Prepend(RelicHoverTipHelpers.Details(this, "diceDetails"));
+        [RelicHoverTipHelpers.Details(this, "diceDetails")];
 
     internal static IEnumerable<DynamicVar> DiceStatusVars => [
         new CardsVar("RollRange", RollRange)
@@ -51,42 +47,29 @@ public class RedQueenDiceRelic : ModRelicTemplate
     public override Task BeforeCombatStart()
     {
         _cardRolls.Clear();
-        _hasPlayedCardThisTurn = false;
-        _firstCardPlayedThisTurn = null;
         return Task.CompletedTask;
     }
 
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner)
         {
-            return;
+            return Task.CompletedTask;
         }
 
-        Flash();
-        _hasPlayedCardThisTurn = false;
-        _firstCardPlayedThisTurn = null;
-        await AddRerollCardToHand();
-        RollHand();
-        await SyncDiceStatus();
-    }
-
-    public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
-    {
-        if (_hasPlayedCardThisTurn || card.Owner != Owner)
-        {
-            return playCount;
-        }
-
-        _hasPlayedCardThisTurn = true;
-        _firstCardPlayedThisTurn = card;
-        return playCount;
+        RollAllCombatCards();
+        return SyncDiceStatus();
     }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPile, AbstractModel? source)
     {
-        if (card.Owner == Owner && oldPile == PileType.Hand)
+        if (card.Owner == Owner)
         {
+            if (IsAffectedCard(card) && !_cardRolls.ContainsKey(card))
+            {
+                _cardRolls[card] = RollOffset();
+            }
+
             RefreshCardPreview(card);
             await SyncDiceStatus();
         }
@@ -100,30 +83,13 @@ public class RedQueenDiceRelic : ModRelicTemplate
         }
 
         ResetRolledCards();
-        _hasPlayedCardThisTurn = false;
-        _firstCardPlayedThisTurn = null;
         await SyncDiceStatus();
     }
 
     public override Task AfterCombatEnd(CombatRoom _)
     {
         _cardRolls.Clear();
-        _hasPlayedCardThisTurn = false;
-        _firstCardPlayedThisTurn = null;
         return Task.CompletedTask;
-    }
-
-    public async Task Reroll(PlayerChoiceContext choiceContext, CardModel card)
-    {
-        if (_firstCardPlayedThisTurn != card)
-        {
-            return;
-        }
-
-        Flash();
-        RollHand();
-        await SyncDiceStatus();
-        await PlayerCmd.GainEnergy(RerollEnergyGain, Owner);
     }
 
     public override decimal ModifyDamageAdditive(
@@ -146,26 +112,40 @@ public class RedQueenDiceRelic : ModRelicTemplate
         return GetCardRoll(cardSource, amount);
     }
 
-    private async Task AddRerollCardToHand()
+    public override decimal ModifyMaxEnergy(Player player, decimal amount)
     {
-        CombatState? combatState = Owner.Creature.CombatState;
-        if (combatState == null)
+        return player == Owner ? amount + DynamicVars.Energy.BaseValue * MaxEnergyGain : amount;
+    }
+
+    public async Task Reroll(PlayerChoiceContext choiceContext, CardModel sourceCard)
+    {
+        if (sourceCard.Owner != Owner)
         {
             return;
         }
 
-        CardModel card = combatState.CreateCard<RedQueenRerollCard>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+        RollAllCombatCards();
+        await SyncDiceStatus();
     }
 
-    private void RollHand()
+    private void RollAllCombatCards()
     {
         ResetRolledCards();
 
-        foreach (CardModel card in PileType.Hand.GetPile(Owner).Cards)
+        var combatState = Owner.PlayerCombatState;
+        if (combatState is null)
         {
-            _cardRolls[card] = RollOffset();
-            RefreshCardPreview(card);
+            return;
+        }
+
+        foreach (CardModel card in combatState.AllCards.ToList())
+        {
+            if (IsAffectedCard(card))
+            {
+                _cardRolls[card] = RollOffset();
+                RefreshCardPreview(card);
+            }
         }
     }
 
@@ -212,7 +192,7 @@ public class RedQueenDiceRelic : ModRelicTemplate
     {
         return CombatManager.Instance.IsInProgress
             && card?.Owner == Owner
-            && card.Pile?.Type == PileType.Hand;
+            && card.IsInCombat;
     }
 
     private void RefreshCardPreview(CardModel card)

@@ -29,5 +29,7 @@
 	"BS_ANCIENT_CARD_CAT_BITE_CARD.title": "黛娜的撕咬",
 	"BS_ANCIENT_CARD_CAT_BITE_CARD.description": "破除敌人所有[blue]格挡[/blue]，造成{Damage:diff()}点伤害。[gold]项圈[/gold]卡牌每回合只能触发其中一张。",
 	"BS_ANCIENT_CARD_ALICE_CURSE_CARD.title": "雋ｴ譁ｹ繧呈?縺",
-	"BS_ANCIENT_CARD_ALICE_CURSE_CARD.description": "被消耗时，受到{Damage:diff()}点伤害，抽{Cards:diff()}张牌，在抽牌堆和弃牌堆各加入1张复制，并随机获得以下效果之一：[blue]{IntangiblePower}[/blue]层[gold]无实体[/gold]、[blue]{UndeadPower}[/blue]层[gold]不死[/gold]、[blue]{StrengthPower}[/blue]点[gold]力量[/gold]、[blue]{DexterityPower}[/blue]点[gold]敏捷[/gold]、[blue]{PlatingPower}[/blue]点[gold]覆甲[/gold]、[blue]{MadnessPower}[/blue]层[gold]发狂[/gold]，或抽[blue]{RandomDraw}[/blue]张牌。"
+	"BS_ANCIENT_CARD_ALICE_CURSE_CARD.description": "被消耗时，受到{Damage:diff()}点伤害，抽{Cards:diff()}张牌，在抽牌堆和弃牌堆各加入1张复制，并随机获得以下效果之一：[blue]{IntangiblePower}[/blue]层[gold]无实体[/gold]、[blue]{UndeadPower}[/blue]层[gold]不死[/gold]、[blue]{StrengthPower}[/blue]点[gold]力量[/gold]、[blue]{DexterityPower}[/blue]点[gold]敏捷[/gold]、[blue]{PlatingPower}[/blue]点[gold]覆甲[/gold]、[blue]{MadnessPower}[/blue]层[gold]发狂[/gold]，或抽[blue]{RandomDraw}[/blue]张牌。",
+	"BS_ANCIENT_CARD_RED_QUEEN_GUILLOTINE_CARD.title": "红心女王的斩首架",
+	"BS_ANCIENT_CARD_RED_QUEEN_GUILLOTINE_CARD.description": "造成{Damage:diff()}点伤害。"
 }
