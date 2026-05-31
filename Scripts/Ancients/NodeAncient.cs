@@ -53,8 +53,12 @@ public class NodeAncient : ModAncientEventTemplate
         WeightedList<EventOption> options = new()
         {
             { CreateCovenantOfNodeOption() ,1},
-            { CreateQuillPenOption(), 1 },
         };
+
+        if (Owner != null && QuillPenRelic.CanBeOffered(Owner))
+        {
+            options.Add(CreateQuillPenOption(), 1);
+        }
 
         if (Owner != null && CatCollarRelic.CanBeOffered(Owner))
         {
@@ -76,13 +80,20 @@ public class NodeAncient : ModAncientEventTemplate
     // 生成选项
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
-        return
+        bool isMultiplayer = Owner?.RunState.Players.Count > 1;
+        List<EventOption> options =
         [
             Rng.NextItem(Pool1)!,
             Rng.NextItem(Pool2)!,
             CreatePool3().GetRandom(Rng),
-            CreateModRelicOption<WhiteQueenSoldierRelic>(),
         ];
+
+        if (!isMultiplayer)
+        {
+            options.Add(CreateModRelicOption<WhiteQueenSoldierRelic>());
+        }
+
+        return options;
     }
 
     // 出现条件。这里是只能在第二幕出现（索引为1）

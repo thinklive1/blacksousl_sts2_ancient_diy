@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.RelicPools;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -26,8 +27,18 @@ public class StageEndRelic : ModRelicTemplate
         BigIconPath: "res://bs_ancient/assets/images/relics/StageEndRelic.png"
     );
 
+    public override bool IsAllowed(IRunState runState)
+    {
+        return runState.Players.Count <= 1;
+    }
+
     public override async Task AfterObtained()
     {
+        if (Owner.RunState.Players.Count > 1)
+        {
+            return;
+        }
+
         CardModel card = Owner.RunState.CreateCard<StageEndCard>(Owner);
         CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, source: this), 2f);
     }

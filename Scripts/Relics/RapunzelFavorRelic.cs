@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.RelicPools;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -26,6 +27,11 @@ public class RapunzelFavorRelic : ModRelicTemplate
     public override bool ShowCounter => CombatManager.Instance.IsInProgress;
 
     public override int DisplayAmount => TurnsPerExtraTurn - (BlackSouls_OwnerTurnsEnded % TurnsPerExtraTurn);
+
+    public override bool IsAllowed(IRunState runState)
+    {
+        return runState.Players.Count <= 1;
+    }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar("DrawLoss", DrawLoss),

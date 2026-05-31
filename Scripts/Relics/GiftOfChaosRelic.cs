@@ -58,7 +58,8 @@ public class GiftOfChaosRelic : ModRelicTemplate
 
     private static bool IsValidMaterial(CardModel card)
     {
-        return card.Type is CardType.Attack or CardType.Skill;
+        return card.Type is CardType.Attack or CardType.Skill
+            && !card.EnergyCost.CostsX;
     }
 
     private CardType GetRandomFusionType(IReadOnlyList<CardModel> materials)

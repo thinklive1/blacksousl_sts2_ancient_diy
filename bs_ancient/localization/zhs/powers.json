@@ -19,5 +19,7 @@
 	"BS_ANCIENT_POWER_CAT_SMILE_COUNTDOWN_POWER.smartDescription": "再触发[blue]{Amount}[/blue]次[gold]柴郡猫的微笑[/gold]，获得[blue]1[/blue]层[gold]无实体[/gold]。",
 	"BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.title": "暴魔",
 	"BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.description": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。从第二回合开始，每回合开始时失去当前生命值[green]50%[/green]的生命值，但不会因此死亡。",
-	"BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.smartDescription": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。从第二回合开始，每回合开始时失去当前生命值[green]50%[/green]的生命值，但不会因此死亡。"
+	"BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.smartDescription": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。从第二回合开始，每回合开始时失去当前生命值[green]50%[/green]的生命值，但不会因此死亡。",
+	"BS_ANCIENT_POWER_SURROUNDED_VISUAL_POWER.title": "包围视觉",
+	"BS_ANCIENT_POWER_SURROUNDED_VISUAL_POWER.description": "保留包围战斗中的转向视觉。"
 }

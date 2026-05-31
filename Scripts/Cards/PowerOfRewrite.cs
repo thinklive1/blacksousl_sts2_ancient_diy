@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -16,15 +17,15 @@ namespace BlackSouls.Scripts.Cards;
 public class PowerOfRewrite : ModCardTemplate
 {
     private const int Damage = 39;
-    private const int BlockPerDebuff = 6;
+    private const int UpgradeDamage = 9;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        CardKeyword.Retain,
         CardKeyword.Exhaust
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(Damage, ValueProp.Move),
-        new BlockVar(BlockPerDebuff, ValueProp.Move)
+        new DamageVar(Damage, ValueProp.Move)
     ];
 
     public override CardAssetProfile AssetProfile => new(
@@ -47,25 +48,31 @@ public class PowerOfRewrite : ModCardTemplate
         List<PowerModel> debuffs = Owner.Creature.Powers
             .Where(power => power.TypeForCurrentAmount == PowerType.Debuff)
             .ToList();
+        SurroundedPower.Direction? surroundedFacing = debuffs
+            .OfType<SurroundedPower>()
+            .FirstOrDefault()
+            ?.Facing;
 
         foreach (PowerModel debuff in debuffs)
         {
             await PowerCmd.Remove(debuff);
         }
 
-        if (debuffs.Count > 0)
+        if (surroundedFacing != null)
         {
-            await CreatureCmd.GainBlock(
+            SurroundedVisualPower? visualPower = await PowerCmd.Apply<SurroundedVisualPower>(
                 Owner.Creature,
-                DynamicVars.Block.BaseValue * debuffs.Count,
-                DynamicVars.Block.Props,
-                cardPlay
-            );
+                1,
+                Owner.Creature,
+                this,
+                silent: true);
+            visualPower?.SetFacing(surroundedFacing.Value);
         }
+
     }
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        DynamicVars.Damage.UpgradeValueBy(UpgradeDamage);
     }
 }

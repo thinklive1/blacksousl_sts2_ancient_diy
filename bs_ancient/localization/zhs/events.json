@@ -20,7 +20,7 @@
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT_LOCKED.title": "帮她捕猎。需要一张可附魔的攻击牌。",
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT_LOCKED.description": "没有可附魔的攻击牌",
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BUY_FOOD.title": "帮她买食物。",
-  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BUY_FOOD.description": "花费[gold]{Gold}[/gold]金币，获得一件遗物。",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BUY_FOOD.description": "花费[gold]{Gold}[/gold]金币，获得一件普通或罕见遗物。",
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BUY_FOOD_LOCKED.title": "帮她买食物。需要[gold]{Gold}[/gold]金币。",
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BUY_FOOD_LOCKED.description": "金币不足",
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.HUNT.description": "哦哦，这真是美味的说♪为了表示感谢，让本大人教你狩猎的技巧吧",

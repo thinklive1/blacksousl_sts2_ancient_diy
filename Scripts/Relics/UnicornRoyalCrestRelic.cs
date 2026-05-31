@@ -17,7 +17,7 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(SharedRelicPool))]
 public class UnicornRoyalCrestRelic : ModRelicTemplate
 {
-    private const int DexterityAmount = 3;
+    private const int DexterityAmount = 2;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/UnicornRoyalCrestRelic.png";
 
     private readonly Dictionary<(Creature Target, Creature Dealer), decimal> _incomingAttacks = [];

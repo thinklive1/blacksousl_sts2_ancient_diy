@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -21,6 +22,11 @@ public class EternalVanityRelic : ModRelicTemplate
     private const int CardsPerTurn = 1;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    public override bool IsAllowed(IRunState runState)
+    {
+        return runState.Players.Count <= 1;
+    }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(CardsPerTurn)
@@ -39,6 +45,11 @@ public class EternalVanityRelic : ModRelicTemplate
 
     public override Task AfterCardEnteredCombat(CardModel card)
     {
+        if (IsMultiplayer)
+        {
+            return Task.CompletedTask;
+        }
+
         if (CanAffect(card))
         {
             CardCmd.ApplyKeyword(card, CardKeyword.Ethereal);
@@ -49,6 +60,11 @@ public class EternalVanityRelic : ModRelicTemplate
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, CombatState combatState)
     {
+        if (IsMultiplayer)
+        {
+            return;
+        }
+
         if (player != Owner)
         {
             return;
@@ -79,6 +95,11 @@ public class EternalVanityRelic : ModRelicTemplate
 
     public override Task AfterRoomEntered(AbstractRoom room)
     {
+        if (IsMultiplayer)
+        {
+            return Task.CompletedTask;
+        }
+
         if (room is not CombatRoom || Owner.PlayerCombatState is null)
         {
             return Task.CompletedTask;
@@ -101,4 +122,6 @@ public class EternalVanityRelic : ModRelicTemplate
         return card.Owner == Owner
             && !card.Keywords.Contains(CardKeyword.Ethereal);
     }
+
+    private bool IsMultiplayer => Owner?.RunState.Players.Count > 1;
 }

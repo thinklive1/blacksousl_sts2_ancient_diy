@@ -67,13 +67,19 @@ public class PrickettAncient : ModAncientEventTemplate
         bool isMultiplayer = Owner?.RunState.Players.Count > 1;
         IReadOnlyList<EventOption> pool2 = CreatePool2(isMultiplayer);
 
-        return
+        List<EventOption> options =
         [
             Rng.NextItem(Pool1)!,
             Rng.NextItem(pool2)!,
             CreatePool3().GetRandom(Rng),
-            CreateModRelicOption<RedQueenSoldierRelic>(),
         ];
+
+        if (!isMultiplayer)
+        {
+            options.Add(CreateModRelicOption<RedQueenSoldierRelic>());
+        }
+
+        return options;
     }
 
     public override bool IsAllowed(IRunState runState)
@@ -142,12 +148,18 @@ public class PrickettAncient : ModAncientEventTemplate
         int covenantWeight = hasEnoughCurses ? 1 : 45;
         int quillPenWeight = hasEnoughCurses ? 1 : 45;
 
-        return new WeightedList<EventOption>
+        WeightedList<EventOption> options = new()
         {
             { CreateModRelicOption<CovenantOfPrickettRelic>(), covenantWeight },
             { CreateAliceCurseOption(), aliceCurseWeight },
-            { CreateQuillPenOption(), quillPenWeight },
         };
+
+        if (Owner != null && QuillPenRelic.CanBeOffered(Owner))
+        {
+            options.Add(CreateQuillPenOption(), quillPenWeight);
+        }
+
+        return options;
     }
 
     private static bool IsCurseCard(CardModel card)

@@ -52,7 +52,10 @@ public class StageEndCard : ModCardTemplate
             await PowerCmd.Apply<MadnessPower>(Owner.Creature, DynamicVars["MadnessPower"].BaseValue, Owner.Creature, this);
         }
 
-        await PowerCmd.Apply<StageEndCountdownPower>(Owner.Creature, DynamicVars.Cards.BaseValue, Owner.Creature, this);
+        if (Owner.RunState.Players.Count <= 1)
+        {
+            await PowerCmd.Apply<StageEndCountdownPower>(Owner.Creature, DynamicVars.Cards.BaseValue, Owner.Creature, this);
+        }
     }
 
     private async Task RefillHand(PlayerChoiceContext choiceContext)

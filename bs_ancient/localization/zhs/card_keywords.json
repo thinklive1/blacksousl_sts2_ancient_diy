@@ -2,5 +2,7 @@
   "BS_ANCIENT_KEYWORD_REPLAY.description": "在你的回合开始时，如果这张牌在你的[gold]消耗牌堆[/gold]中，则将其打出。每场战斗最多触发[blue]3[/blue]次。",
 	"BS_ANCIENT_KEYWORD_REPLAY.title": "重演",
 	"BS_ANCIENT_KEYWORD_FORCE_DEATH.description": "强制死亡无法被[gold]不死[/gold]、[gold]无实体[/gold]等任何效果豁免。",
-	"BS_ANCIENT_KEYWORD_FORCE_DEATH.title": "强制死亡"
+	"BS_ANCIENT_KEYWORD_FORCE_DEATH.title": "强制死亡",
+	"BS_ANCIENT_KEYWORD_KILL.description": "敌人的攻击伤害总和大于等于你的当前生命、格挡、覆甲与奥斯提当前生命之和。",
+	"BS_ANCIENT_KEYWORD_KILL.title": "杀死"
 }

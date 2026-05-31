@@ -50,14 +50,12 @@ public class MabelAncient : ModAncientEventTemplate
 
     private IReadOnlyList<EventOption> CreatePool2(bool isMultiplayer)
     {
-        List<EventOption> options =
-        [
-            CreateStageEndOption(),
-        ];
+        List<EventOption> options = [];
 
         if (!isMultiplayer)
         {
             options.Insert(0, CreateHlanithWineOption());
+            options.Add(CreateStageEndOption());
         }
 
         return options;
@@ -109,10 +107,14 @@ public class MabelAncient : ModAncientEventTemplate
     {
         WeightedList<EventOption> options = new()
         {
-            { CreateEternalVanityOption(), 1 },
             { CreateModRelicOption<MysteryOfNightSkyRelic>(), 1 },
             { CreateGiftOfChaosOption(), 1 },
         };
+
+        if (!isMultiplayer)
+        {
+            options.Add(CreateEternalVanityOption(), 1);
+        }
 
         return options;
     }

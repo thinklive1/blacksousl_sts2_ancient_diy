@@ -12,11 +12,11 @@ namespace BlackSouls.Scripts;
 [RegisterEnchantment]
 public class FeedingEnchantment : ModEnchantmentTemplate
 {
-    public const int InitialDamagePercent = 200;
-    private const int CombatEndDecay = 20;
+    public const int InitialDamagePercent = 150;
+    private const int CombatEndDecay = 15;
     private const int KillGrowth = 50;
     private const int MinDamagePercent = 50;
-    private const int MaxDamagePercent = 200;
+    private const int MaxDamagePercent = 150;
 
     private int _killsThisCombat;
     private bool _isPlayingThisCard;

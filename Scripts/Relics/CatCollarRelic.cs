@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -33,6 +34,11 @@ public class CatCollarRelic : ModRelicTemplate
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
+    public override bool IsAllowed(IRunState runState)
+    {
+        return runState.Players.Count <= 1;
+    }
+
     public override RelicAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/Cat.png",
         IconOutlinePath: "res://bs_ancient/assets/images/relics/Cat.png",
@@ -51,6 +57,11 @@ public class CatCollarRelic : ModRelicTemplate
 
     public override async Task AfterObtained()
     {
+        if (Owner.RunState.Players.Count > 1)
+        {
+            return;
+        }
+
         List<CardModel> selectedCards = (await CardSelectCmd.FromDeckGeneric(
                 Owner,
                 new CardSelectorPrefs(SelectionScreenPrompt, RequiredTransformCards, RequiredTransformCards)
@@ -85,6 +96,11 @@ public class CatCollarRelic : ModRelicTemplate
 
     public override async Task BeforeCombatStart()
     {
+        if (Owner.RunState.Players.Count > 1)
+        {
+            return;
+        }
+
         _triggersThisTurn = 0;
         _smileTriggerCount = 0;
         await SetSmileCountdown(PlaysForIntangible);
@@ -110,6 +126,11 @@ public class CatCollarRelic : ModRelicTemplate
 
     public async Task<bool> TryTriggerCatCardEffect(string animationTrigger)
     {
+        if (Owner.RunState.Players.Count > 1)
+        {
+            return false;
+        }
+
         if (_triggersThisTurn >= MaxTriggersPerTurn)
         {
             return false;
@@ -140,6 +161,11 @@ public class CatCollarRelic : ModRelicTemplate
 
     public static bool CanBeOffered(Player player)
     {
+        if (player.RunState.Players.Count > 1)
+        {
+            return false;
+        }
+
         if (player.Relics.Any(relic => relic.AddsPet))
         {
             return false;

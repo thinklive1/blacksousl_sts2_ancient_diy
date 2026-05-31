@@ -1,3 +1,4 @@
+using Blacksouls.Scripts;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -9,6 +10,7 @@ using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
@@ -22,7 +24,8 @@ public class NodeRibbonRelic : ModRelicTemplate
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        RelicHoverTipHelpers.Details(this)
+        RelicHoverTipHelpers.Details(this),
+        ModKeywordRegistry.CreateHoverTip(MyKeywords.Kill)
     ];
 
     public override RelicAssetProfile AssetProfile => new(

@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -14,6 +15,11 @@ namespace BlackSouls.Scripts;
 public class HlanithWineRelic : ModRelicTemplate
 {
     public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    public override bool IsAllowed(IRunState runState)
+    {
+        return runState.Players.Count <= 1;
+    }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         HoverTipFactory.FromCardWithCardHoverTips<HlanithWineCard>();

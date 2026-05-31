@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Gold;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Factories;
@@ -15,7 +16,7 @@ namespace BlackSouls.Scripts;
 [RegisterActEvent(typeof(Hive))]
 public sealed class HorrifyingGluttonEvent : ModEventTemplate
 {
-    private const int FoodGoldCost = 75;
+    private const int FoodGoldCost = 100;
 
     public override EventAssetProfile AssetProfile => new(
         InitialPortraitPath: "res://bs_ancient/assets/images/events/HorrifyingGluttonEvent.png"
@@ -28,13 +29,13 @@ public sealed class HorrifyingGluttonEvent : ModEventTemplate
         return runState.CurrentActIndex == 1
             && runState.Players.All(player =>
                 HorrifyingGluttonRelic.HasAttackCandidate(player)
-                || (player.Gold >= FoodGoldCost && player.RelicGrabBag.HasAvailableRelics(runState)));
+                || (player.Gold >= FoodGoldCost && HasAvailableFoodRelic(player)));
     }
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
         bool canHunt = HorrifyingGluttonRelic.HasAttackCandidate(Owner!);
-        bool canBuyFood = Owner!.Gold >= FoodGoldCost && Owner.RelicGrabBag.HasAvailableRelics(Owner.RunState);
+        bool canBuyFood = Owner!.Gold >= FoodGoldCost && HasAvailableFoodRelic(Owner);
 
         return
         [
@@ -55,9 +56,45 @@ public sealed class HorrifyingGluttonEvent : ModEventTemplate
     private async Task BuyFood()
     {
         await PlayerCmd.LoseGold(FoodGoldCost, Owner!, GoldLossType.Spent);
-        RelicModel relic = RelicFactory.PullNextRelicFromFront(Owner!).ToMutable();
+        RelicModel relic = RelicFactory.PullNextRelicFromFront(Owner!, RollFoodRelicRarity(), IsFoodRelic).ToMutable();
         await RelicCmd.Obtain(relic, Owner!);
         SetEventFinished(L10NLookup($"{Id.Entry}.pages.BUY_FOOD.description"));
     }
 
+    private RelicRarity RollFoodRelicRarity()
+    {
+        bool hasCommon = HasAvailableFoodRelic(Owner!, RelicRarity.Common);
+        bool hasUncommon = HasAvailableFoodRelic(Owner!, RelicRarity.Uncommon);
+
+        if (hasCommon && hasUncommon)
+        {
+            RelicRarity rarity = RelicFactory.RollRarity(Owner!);
+            return rarity == RelicRarity.Common ? RelicRarity.Common : RelicRarity.Uncommon;
+        }
+
+        return hasCommon ? RelicRarity.Common : RelicRarity.Uncommon;
+    }
+
+    private static bool HasAvailableFoodRelic(Player player)
+    {
+        return HasAvailableFoodRelic(player, RelicRarity.Common)
+            || HasAvailableFoodRelic(player, RelicRarity.Uncommon);
+    }
+
+    private static bool HasAvailableFoodRelic(Player player, RelicRarity rarity)
+    {
+        if (!player.RelicGrabBag.ToSerializable().RelicIdLists.TryGetValue(rarity, out List<ModelId>? relicIds))
+        {
+            return false;
+        }
+
+        return relicIds
+            .Select(ModelDb.GetByIdOrNull<RelicModel>)
+            .Any(relic => relic != null && IsFoodRelic(relic) && relic.IsAllowed(player.RunState));
+    }
+
+    private static bool IsFoodRelic(RelicModel relic)
+    {
+        return relic.Rarity is RelicRarity.Common or RelicRarity.Uncommon;
+    }
 }
