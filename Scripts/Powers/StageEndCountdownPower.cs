@@ -25,11 +25,6 @@ public class StageEndCountdownPower : ModPowerTemplate
 
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (Owner.CombatState?.RunState.Players.Count > 1)
-        {
-            return;
-        }
-
         if (cardPlay.Card.Owner?.Creature != Owner || Owner.IsDead)
         {
             return;
@@ -41,7 +36,7 @@ public class StageEndCountdownPower : ModPowerTemplate
         }
 
         Flash();
-        await PowerCmd.Decrement(this);
+        SetAmount(Math.Max(0, Amount - 1), silent: true);
 
         if (!Owner.IsDead && Amount <= 0)
         {

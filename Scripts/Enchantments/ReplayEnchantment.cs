@@ -21,9 +21,6 @@ public class ReplayEnchantment : ModEnchantmentTemplate
 {
     private const int MaxTriggersPerCombat = 3;
 
-    private CombatState? _trackedCombatState;
-    private int _triggersThisCombat;
-
     // 是否在卡牌上显示数值
     public override bool ShowAmount => false;
 
@@ -60,6 +57,12 @@ public class ReplayEnchantment : ModEnchantmentTemplate
         ModKeywordRegistry.CreateHoverTip(MyKeywords.Replay);
     }
 
+    public override Task BeforeCombatStart()
+    {
+        Amount = MaxTriggersPerCombat;
+        return Task.CompletedTask;
+    }
+
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (Card?.Owner != player)
@@ -77,26 +80,20 @@ public class ReplayEnchantment : ModEnchantmentTemplate
             return;
         }
 
-        CombatState? combatState = Card.CombatState ?? player.Creature.CombatState;
-        if (combatState == null)
-        {
-            return;
-        }
-
-        if (!ReferenceEquals(_trackedCombatState, combatState))
-        {
-            _trackedCombatState = combatState;
-            _triggersThisCombat = 0;
-        }
-
-        if (_triggersThisCombat >= MaxTriggersPerCombat)
+        if (Amount <= 0)
         {
             return;
         }
 
         Creature? target = null;
+        CombatState? combatState = Card.CombatState ?? player.Creature.CombatState;
         if (Card.TargetType == TargetType.RandomEnemy)
         {
+            if (combatState == null)
+            {
+                return;
+            }
+
             target = player.RunState.Rng.CombatTargets.NextItem(combatState.HittableEnemies);
             if (target == null)
             {
@@ -104,7 +101,7 @@ public class ReplayEnchantment : ModEnchantmentTemplate
             }
         }
 
-        _triggersThisCombat++;
+        Amount--;
         BsAncientAudio.PlayOneShot(BsAncientAudio.Clock);
         await CardPileCmd.Add(Card, PileType.Play);
         await CardCmd.AutoPlay(choiceContext, Card, target);

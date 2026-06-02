@@ -27,18 +27,8 @@ public class StageEndRelic : ModRelicTemplate
         BigIconPath: "res://bs_ancient/assets/images/relics/StageEndRelic.png"
     );
 
-    public override bool IsAllowed(IRunState runState)
-    {
-        return runState.Players.Count <= 1;
-    }
-
     public override async Task AfterObtained()
     {
-        if (Owner.RunState.Players.Count > 1)
-        {
-            return;
-        }
-
         CardModel card = Owner.RunState.CreateCard<StageEndCard>(Owner);
         CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, source: this), 2f);
     }

@@ -27,17 +27,9 @@ public class CatCollarRelic : ModRelicTemplate
     private const int MaxTriggersPerTurn = 1;
     private const int PlaysForIntangible = 2;
 
-    private int _triggersThisTurn;
-    private int _smileTriggerCount;
-
     public override bool AddsPet => true;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
-
-    public override bool IsAllowed(IRunState runState)
-    {
-        return runState.Players.Count <= 1;
-    }
 
     public override RelicAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/Cat.png",
@@ -57,11 +49,6 @@ public class CatCollarRelic : ModRelicTemplate
 
     public override async Task AfterObtained()
     {
-        if (Owner.RunState.Players.Count > 1)
-        {
-            return;
-        }
-
         List<CardModel> selectedCards = (await CardSelectCmd.FromDeckGeneric(
                 Owner,
                 new CardSelectorPrefs(SelectionScreenPrompt, RequiredTransformCards, RequiredTransformCards)
@@ -89,54 +76,35 @@ public class CatCollarRelic : ModRelicTemplate
 
         if (CombatManager.Instance.IsInProgress)
         {
-            await SetSmileCountdown(PlaysForIntangible);
+            await EnsureSmileCountdown(PlaysForIntangible);
             await SummonPet();
         }
     }
 
     public override async Task BeforeCombatStart()
     {
-        if (Owner.RunState.Players.Count > 1)
-        {
-            return;
-        }
-
-        _triggersThisTurn = 0;
-        _smileTriggerCount = 0;
-        await SetSmileCountdown(PlaysForIntangible);
+        await EnsureSmileCountdown(PlaysForIntangible);
+        await SetTurnTriggerLimit(MaxTriggersPerTurn);
         await SummonPet();
     }
 
-    public override Task AfterCombatEnd(CombatRoom _)
-    {
-        _triggersThisTurn = 0;
-        _smileTriggerCount = 0;
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player == Owner)
         {
-            _triggersThisTurn = 0;
+            await SetTurnTriggerLimit(MaxTriggersPerTurn);
         }
-
-        return Task.CompletedTask;
     }
 
     public async Task<bool> TryTriggerCatCardEffect(string animationTrigger)
     {
-        if (Owner.RunState.Players.Count > 1)
+        CatCollarTriggerLimitPower? triggerLimit = Owner.Creature.GetPower<CatCollarTriggerLimitPower>();
+        if (triggerLimit == null || triggerLimit.Amount <= 0)
         {
             return false;
         }
 
-        if (_triggersThisTurn >= MaxTriggersPerTurn)
-        {
-            return false;
-        }
-
-        _triggersThisTurn++;
+        await PowerCmd.Decrement(triggerLimit);
         Flash();
         BsAncientAudio.PlayOneShot(BsAncientAudio.Cat);
 
@@ -147,25 +115,19 @@ public class CatCollarRelic : ModRelicTemplate
 
     public async Task<bool> RecordSmileAndShouldGainIntangible()
     {
-        _smileTriggerCount++;
-        if (_smileTriggerCount < PlaysForIntangible)
+        int remainingTriggers = GetSmileCountdown();
+        if (remainingTriggers > 1)
         {
-            await SetSmileCountdown(PlaysForIntangible - _smileTriggerCount);
+            await SetSmileCountdown(remainingTriggers - 1);
             return false;
         }
 
-        _smileTriggerCount = 0;
         await SetSmileCountdown(PlaysForIntangible);
         return true;
     }
 
     public static bool CanBeOffered(Player player)
     {
-        if (player.RunState.Players.Count > 1)
-        {
-            return false;
-        }
-
         if (player.Relics.Any(relic => relic.AddsPet))
         {
             return false;
@@ -218,6 +180,16 @@ public class CatCollarRelic : ModRelicTemplate
         return CreatureCmd.TriggerAnim(petCreature, animationTrigger, 0.15f);
     }
 
+    private int GetSmileCountdown()
+    {
+        return Owner?.Creature.GetPower<CatSmileCountdownPower>()?.Amount ?? PlaysForIntangible;
+    }
+
+    private Task EnsureSmileCountdown(int remainingTriggers)
+    {
+        return SetSmileCountdown(remainingTriggers);
+    }
+
     private Task SetSmileCountdown(int remainingTriggers)
     {
         if (Owner?.Creature == null || !CombatManager.Instance.IsInProgress)
@@ -226,6 +198,20 @@ public class CatCollarRelic : ModRelicTemplate
         }
 
         return PowerCmd.SetAmount<CatSmileCountdownPower>(
+            Owner.Creature,
+            remainingTriggers,
+            Owner.Creature,
+            null);
+    }
+
+    private Task SetTurnTriggerLimit(int remainingTriggers)
+    {
+        if (Owner?.Creature == null || !CombatManager.Instance.IsInProgress)
+        {
+            return Task.CompletedTask;
+        }
+
+        return PowerCmd.SetAmount<CatCollarTriggerLimitPower>(
             Owner.Creature,
             remainingTriggers,
             Owner.Creature,

@@ -22,8 +22,6 @@ public class RedQueenDiceRelic : ModRelicTemplate
     internal const int RollRange = 3;
     private const int MaxEnergyGain = 1;
 
-    private readonly Dictionary<CardModel, int> _cardRolls = [];
-
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -34,44 +32,36 @@ public class RedQueenDiceRelic : ModRelicTemplate
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [RelicHoverTipHelpers.Details(this, "diceDetails")];
 
-    internal static IEnumerable<DynamicVar> DiceStatusVars => [
-        new CardsVar("RollRange", RollRange)
-    ];
-
     public override RelicAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/RedQueenDiceRelic.png",
         IconOutlinePath: "res://bs_ancient/assets/images/relics/RedQueenDiceRelic.png",
         BigIconPath: "res://bs_ancient/assets/images/relics/RedQueenDiceRelic.png"
     );
 
-    public override Task BeforeCombatStart()
+    public override async Task BeforeCombatStart()
     {
-        _cardRolls.Clear();
-        return Task.CompletedTask;
+        await SetRerollIndex(0);
     }
 
-    public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner)
         {
-            return Task.CompletedTask;
+            return;
         }
 
-        RollAllCombatCards();
-        return Task.CompletedTask;
+        await SetRerollIndex(0);
+        RefreshAllCombatCards();
     }
 
-    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPile, AbstractModel? source)
+    public override Task AfterCardChangedPiles(CardModel card, PileType oldPile, AbstractModel? source)
     {
         if (card.Owner == Owner)
         {
-            if (IsAffectedCard(card) && !_cardRolls.ContainsKey(card))
-            {
-                _cardRolls[card] = RollOffset();
-            }
-
             RefreshCardPreview(card);
         }
+
+        return Task.CompletedTask;
     }
 
     public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
@@ -81,13 +71,7 @@ public class RedQueenDiceRelic : ModRelicTemplate
             return;
         }
 
-        ResetRolledCards();
-    }
-
-    public override Task AfterCombatEnd(CombatRoom _)
-    {
-        _cardRolls.Clear();
-        return Task.CompletedTask;
+        RefreshAllCombatCards();
     }
 
     public override decimal ModifyDamageAdditive(
@@ -123,13 +107,12 @@ public class RedQueenDiceRelic : ModRelicTemplate
         }
 
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        RollAllCombatCards();
+        await IncrementRerollIndex();
+        RefreshAllCombatCards();
     }
 
-    private void RollAllCombatCards()
+    private void RefreshAllCombatCards()
     {
-        ResetRolledCards();
-
         var combatState = Owner.PlayerCombatState;
         if (combatState is null)
         {
@@ -140,35 +123,45 @@ public class RedQueenDiceRelic : ModRelicTemplate
         {
             if (IsAffectedCard(card))
             {
-                _cardRolls[card] = RollOffset();
                 RefreshCardPreview(card);
             }
         }
     }
 
-    private int RollOffset()
-    {
-        return Owner.RunState.Rng.CombatCardSelection.NextInt(-RollRange, RollRange + 1);
-    }
-
     private decimal GetCardRoll(CardModel? card, decimal amount)
     {
-        if (!IsAffectedCard(card) || !_cardRolls.TryGetValue(card!, out int roll))
+        if (!IsAffectedCard(card))
         {
             return 0;
         }
 
+        int roll = GetDeterministicRoll(card!);
         return Math.Max(roll, -amount);
     }
 
-    private void ResetRolledCards()
+    private int GetDeterministicRoll(CardModel card)
     {
-        foreach (CardModel card in _cardRolls.Keys.ToList())
+        CombatState? combatState = Owner.Creature.CombatState;
+        if (combatState == null)
         {
-            RefreshCardPreview(card);
+            return 0;
         }
 
-        _cardRolls.Clear();
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 31 + Owner.NetId.GetHashCode();
+            hash = hash * 31 + card.EntrySortingId;
+            hash = hash * 31 + card.CurrentUpgradeLevel;
+            hash = hash * 31 + GetCombatCardIndex(card);
+            hash = hash * 31 + combatState.RoundNumber;
+            hash = hash * 31 + GetRerollIndex();
+            hash ^= hash >> 16;
+            hash *= 0x45d9f3b;
+            hash ^= hash >> 16;
+            int range = RollRange * 2 + 1;
+            return Math.Abs(hash % range) - RollRange;
+        }
     }
 
     private bool IsAffectedCard(CardModel? card)
@@ -181,5 +174,38 @@ public class RedQueenDiceRelic : ModRelicTemplate
     private void RefreshCardPreview(CardModel card)
     {
         card.UpdateDynamicVarPreview(CardPreviewMode.Normal, Owner.Creature, card.DynamicVars);
+    }
+
+    private int GetCombatCardIndex(CardModel card)
+    {
+        return Owner.PlayerCombatState?.AllCards.ToList().IndexOf(card) ?? 0;
+    }
+
+    private int GetRerollIndex()
+    {
+        return Owner.Creature.GetPower<RedQueenDiceRerollPower>()?.Amount ?? 0;
+    }
+
+    private Task SetRerollIndex(int index)
+    {
+        if (Owner?.Creature == null || !CombatManager.Instance.IsInProgress)
+        {
+            return Task.CompletedTask;
+        }
+
+        return PowerCmd.SetAmount<RedQueenDiceRerollPower>(Owner.Creature, index, Owner.Creature, null);
+    }
+
+    private Task IncrementRerollIndex()
+    {
+        if (Owner?.Creature == null || !CombatManager.Instance.IsInProgress)
+        {
+            return Task.CompletedTask;
+        }
+
+        RedQueenDiceRerollPower? power = Owner.Creature.GetPower<RedQueenDiceRerollPower>();
+        return power == null
+            ? SetRerollIndex(1)
+            : PowerCmd.ModifyAmount(power, 1, Owner.Creature, null);
     }
 }

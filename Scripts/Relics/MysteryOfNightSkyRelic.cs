@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -17,10 +18,6 @@ public class MysteryOfNightSkyRelic : ModRelicTemplate
 {
     private const int ReplayChance = 50;
 
-    private bool _hasCheckedFirstCardThisTurn;
-    private bool _shouldReplayFirstCardThisTurn;
-    private bool _replayedFirstCardThisTurn;
-
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -37,51 +34,39 @@ public class MysteryOfNightSkyRelic : ModRelicTemplate
         BigIconPath: "res://bs_ancient/assets/images/relics/MysteryOfNightSkyRelic.png"
     );
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
     {
         if (side == Owner.Creature.Side)
         {
-            _hasCheckedFirstCardThisTurn = false;
-            _replayedFirstCardThisTurn = false;
-            _shouldReplayFirstCardThisTurn = Owner.RunState.Rng.Niche.NextInt(100) < ReplayChance;
+            int decision = Owner.RunState.Rng.Niche.NextInt(100) < ReplayChance
+                ? MysteryOfNightSkyDecisionPower.ReplayAvailable
+                : MysteryOfNightSkyDecisionPower.NoReplayAvailable;
+            await PowerCmd.SetAmount<MysteryOfNightSkyDecisionPower>(Owner.Creature, decision, Owner.Creature, null);
         }
-
-        return Task.CompletedTask;
     }
 
     public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
     {
-        if (_hasCheckedFirstCardThisTurn || card.Owner != Owner || Owner.Creature.IsDead)
+        if (card.Owner != Owner || Owner.Creature.IsDead)
         {
             return playCount;
         }
 
-        _hasCheckedFirstCardThisTurn = true;
-        if (!_shouldReplayFirstCardThisTurn)
+        MysteryOfNightSkyDecisionPower? decision = Owner.Creature.GetPower<MysteryOfNightSkyDecisionPower>();
+        if (decision == null || decision.Amount == MysteryOfNightSkyDecisionPower.Consumed)
         {
             return playCount;
         }
 
-        _replayedFirstCardThisTurn = true;
-        return playCount + 1;
-    }
+        bool shouldReplay = decision.Amount == MysteryOfNightSkyDecisionPower.ReplayAvailable;
+        decision.SetAmount(MysteryOfNightSkyDecisionPower.Consumed, silent: true);
 
-    public override Task AfterModifyingCardPlayCount(CardModel card)
-    {
-        if (_replayedFirstCardThisTurn)
+        if (shouldReplay)
         {
             Flash();
-            _replayedFirstCardThisTurn = false;
+            return playCount + 1;
         }
 
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCombatEnd(CombatRoom room)
-    {
-        _hasCheckedFirstCardThisTurn = false;
-        _shouldReplayFirstCardThisTurn = false;
-        _replayedFirstCardThisTurn = false;
-        return Task.CompletedTask;
+        return playCount;
     }
 }

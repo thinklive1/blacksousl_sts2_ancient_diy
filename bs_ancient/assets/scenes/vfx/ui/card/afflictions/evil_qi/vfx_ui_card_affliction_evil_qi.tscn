@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Texture2D" path="res://bs_ancient/assets/images/vfx/ui/ui_card_mask.png" id="1_mask"]
+[ext_resource type="Texture2D" path="res://bs_ancient/assets/images/vfx/ui/card/ui_card_border_vignette.png" id="2_vignette"]
+[ext_resource type="Material" path="res://bs_ancient/assets/materials/vfx/ui/card/afflictions/evil_qi/vfx_ui_card_affliction_evil_qi_main.tres" id="3_material"]
+[ext_resource type="Texture2D" path="res://bs_ancient/assets/images/vfx/noise/vfx_noise_1.png" id="4_noise"]
+[ext_resource type="Texture2D" path="res://bs_ancient/assets/images/vfx/ui/card/ui_card_border_glow.png" id="5_glow"]
+
+[node name="vfx_ui_card_affliction_evil_qi" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -211.0
+offset_right = 150.0
+offset_bottom = 211.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="card_mask" type="TextureRect" parent="."]
+clip_children = 1
+custom_minimum_size = Vector2(300, 422)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_mask")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="card_vignette" type="TextureRect" parent="card_mask"]
+self_modulate = Color(0, 0, 0, 0.35)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -61.0
+offset_right = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_vignette")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="evil_qi_main" type="TextureRect" parent="card_mask"]
+texture_repeat = 2
+material = ExtResource("3_material")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_noise")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="card_glow" type="TextureRect" parent="card_mask"]
+self_modulate = Color(0.22, 0.22, 0.24, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_glow")
+expand_mode = 1

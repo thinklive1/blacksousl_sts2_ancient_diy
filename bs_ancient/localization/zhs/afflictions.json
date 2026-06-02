@@ -1,0 +1,5 @@
+{
+	"BS_ANCIENT_AFFLICTION_EVIL_QI_AFFLICTION.title": "邪气",
+	"BS_ANCIENT_AFFLICTION_EVIL_QI_AFFLICTION.description": "邪气: 打出这张牌时获得[blue]1[/blue]层[gold]邪气[/gold]。回合结束时，失去等同邪气层数的生命，并从随机敌人吸取等量力量、覆甲和生命。",
+	"BS_ANCIENT_AFFLICTION_EVIL_QI_AFFLICTION.extraCardText": "打出时获得[blue]1[/blue]层[gold]邪气[/gold]，回合结束时结算。"
+}

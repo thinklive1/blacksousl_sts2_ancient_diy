@@ -9,9 +9,12 @@
 	"BS_ANCIENT_ENCHANTMENT_LONELY_ENCHANTMENT.description": "孤单: 打出这张牌时，随机消耗一张同名牌。若成功消耗，这张牌获得[gold]重放[/gold][blue]{Times}[/blue]。",
 	"BS_ANCIENT_ENCHANTMENT_LONELY_ENCHANTMENT.extraCardText": "打出这张牌时，随机消耗一张同名牌。若成功消耗，获得[gold]重放[/gold][blue]{Times}[/blue]。",
 	"BS_ANCIENT_ENCHANTMENT_FEEDING_ENCHANTMENT.title": "进食",
-	"BS_ANCIENT_ENCHANTMENT_FEEDING_ENCHANTMENT.description": "进食: 这张牌造成的伤害变为[blue]{Amount}%[/blue]。每场战斗后降低[blue]15%[/blue]，成功斩杀敌人时提高[blue]50%[/blue]，最低[blue]50%[/blue]，最高[blue]150%[/blue]。",
-	"BS_ANCIENT_ENCHANTMENT_FEEDING_ENCHANTMENT.extraCardText": "这张牌造成的伤害变为[blue]{Amount}%[/blue]。每场战斗后降低[blue]15%[/blue]，成功斩杀敌人时提高[blue]50%[/blue]。",
+	"BS_ANCIENT_ENCHANTMENT_FEEDING_ENCHANTMENT.description": "进食: 这张牌造成的伤害变为[blue]{Amount}%[/blue]。每场战斗后降低[blue]15%[/blue]，每场战斗结束时，每个成功斩杀提高[blue]50%[/blue]，进食影响的伤害最低[blue]50%[/blue]，最高[blue]150%[/blue]。",
+	"BS_ANCIENT_ENCHANTMENT_FEEDING_ENCHANTMENT.extraCardText": "这张牌造成的伤害变为[blue]{Amount}%[/blue]。每场战斗后降低[blue]15%[/blue]，每场战斗结束时，每个成功斩杀提高[blue]50%[/blue]。",
 	"BS_ANCIENT_ENCHANTMENT_EXECUTION_ENCHANTMENT.title": "处刑",
 	"BS_ANCIENT_ENCHANTMENT_EXECUTION_ENCHANTMENT.description": "处刑: 对[gold]爪牙[/gold]敌人的伤害翻倍。若成功击杀敌人，立即返回手牌，否则被[gold]消耗[/gold]。此牌杀死的敌人禁止复活。",
-	"BS_ANCIENT_ENCHANTMENT_EXECUTION_ENCHANTMENT.extraCardText": "对[gold]爪牙[/gold]敌人的伤害翻倍。若成功击杀敌人，立即返回手牌，否则被[gold]消耗[/gold]。此牌杀死的敌人禁止复活。"
+	"BS_ANCIENT_ENCHANTMENT_EXECUTION_ENCHANTMENT.extraCardText": "对[gold]爪牙[/gold]敌人的伤害翻倍。若成功击杀敌人，立即返回手牌，否则被[gold]消耗[/gold]。此牌杀死的敌人禁止复活。",
+	"BS_ANCIENT_ENCHANTMENT_EVIL_QI_ENCHANTMENT.title": "邪气",
+	"BS_ANCIENT_ENCHANTMENT_EVIL_QI_ENCHANTMENT.description": "邪气: 打出这张牌时获得[blue]1[/blue]层[gold]邪气[/gold]。回合结束时，失去等同邪气层数的生命，并从随机敌人吸取等量力量、覆甲和生命。",
+	"BS_ANCIENT_ENCHANTMENT_EVIL_QI_ENCHANTMENT.extraCardText": "打出时获得[blue]1[/blue]层[gold]邪气[/gold]，回合结束时结算。"
 }

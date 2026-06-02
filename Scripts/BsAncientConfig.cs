@@ -7,6 +7,8 @@ public static class BsAncientConfig
 {
     private const string ConfigFileName = "bs_ancient_config.cfg";
 
+    private static string? _configPath;
+
     public static bool OnlyUseModAncients = true;
     public static bool DisableModAncients = false;
     public static bool ReplaceNeowAppearance = true;
@@ -14,6 +16,7 @@ public static class BsAncientConfig
     public static void Load(Assembly assembly)
     {
         string configPath = GetConfigPath(assembly);
+        _configPath = configPath;
         if (!File.Exists(configPath))
         {
             SaveDefault(configPath);
@@ -33,6 +36,16 @@ public static class BsAncientConfig
         ReplaceNeowAppearance = config.ReplaceNeowAppearance;
     }
 
+    public static void Save()
+    {
+        if (string.IsNullOrWhiteSpace(_configPath))
+        {
+            return;
+        }
+
+        SaveCurrent(_configPath);
+    }
+
     private static string GetConfigPath(Assembly assembly)
     {
         string? assemblyDirectory = Path.GetDirectoryName(assembly.Location);
@@ -45,6 +58,18 @@ public static class BsAncientConfig
     }
 
     private static void SaveDefault(string configPath)
+    {
+        FileConfig config = new()
+        {
+            OnlyUseModAncients = OnlyUseModAncients,
+            DisableModAncients = DisableModAncients,
+            ReplaceNeowAppearance = ReplaceNeowAppearance
+        };
+        string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(configPath, json);
+    }
+
+    private static void SaveCurrent(string configPath)
     {
         FileConfig config = new()
         {
