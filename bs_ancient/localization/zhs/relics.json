@@ -173,5 +173,17 @@
 	"BS_ANCIENT_RELIC_LONELY_WAX_STATUE_RELIC.flavor": "因为我们是从诞生之时起就相爱着的……双子啊",
 	"BS_ANCIENT_RELIC_MINI_SNOWMAN_RELIC.title": "迷你雪人",
 	"BS_ANCIENT_RELIC_MINI_SNOWMAN_RELIC.description": "拾取时，去除所有卡牌附魔；战斗开始时，以[gold]邪气[/gold]侵蚀所有牌。",
-	"BS_ANCIENT_RELIC_MINI_SNOWMAN_RELIC.flavor": "正经直率的爱什么的……看起来就，一点意思都没有啊……"
+	"BS_ANCIENT_RELIC_MINI_SNOWMAN_RELIC.flavor": "正经直率的爱什么的……看起来就，一点意思都没有啊……",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_NOD_RELIC.title": "友善的史莱姆",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_NOD_RELIC.description": "拾取时，选择[blue]{Cards}[/blue]张攻击或技能牌，附魔[gold]溶解[/gold]。",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_NOD_RELIC.selectionScreenPrompt": "选择一张攻击或技能牌附魔溶解。",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_NOD_RELIC.flavor": "泰克莉莉！",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HANDSHAKE_RELIC.title": "友善的史莱姆",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HANDSHAKE_RELIC.description": "拾取时，受到[red]{HpLoss}[/red]点伤害，选择[blue]{Cards}[/blue]张攻击或技能牌，附魔[gold]溶解[/gold]。",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HANDSHAKE_RELIC.selectionScreenPrompt": "选择两张攻击或技能牌附魔溶解。",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HANDSHAKE_RELIC.flavor": "泰克莉莉！",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HUG_RELIC.title": "友善的史莱姆",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HUG_RELIC.description": "拾取时，受到[red]{HpLoss}[/red]点伤害，选择[blue]{Cards}[/blue]张攻击或技能牌，附魔[gold]溶解[/gold]。",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HUG_RELIC.selectionScreenPrompt": "选择三张攻击或技能牌附魔溶解。",
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HUG_RELIC.flavor": "泰克莉莉！"
 }
