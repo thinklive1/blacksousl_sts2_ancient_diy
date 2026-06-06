@@ -1,5 +1,6 @@
 using Godot;
 using BlackSouls.Scripts.Cards;
+using Blacksouls.Scripts;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -38,6 +39,7 @@ public class NodeAncient : ModAncientEventTemplate
             CreateTimeQueenBlessingOption(),
             CreateWinterBellAllyOption(),
             CreateModRelicOption<NodeRibbonRelic>(),
+            CreateStagnantGearOption(),
         ];
 
     private IReadOnlyList<EventOption> Pool1 => Pool1Base;
@@ -119,6 +121,15 @@ public class NodeAncient : ModAncientEventTemplate
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<GerdaCard>())
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<FlorenceCard>())
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<GhostHunterCard>());
+        return option;
+    }
+
+    private EventOption CreateStagnantGearOption()
+    {
+        EventOption option = CreateModRelicOption<StagnantGearRelic>();
+        option.HoverTips = option.HoverTips
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<StagnantGearCard>())
+            .Append(HoverTipFactory.FromKeyword(MyKeywords.Encore));
         return option;
     }
 

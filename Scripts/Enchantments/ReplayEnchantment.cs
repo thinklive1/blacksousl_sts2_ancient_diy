@@ -11,7 +11,6 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
@@ -50,12 +49,6 @@ public class ReplayEnchantment : ModEnchantmentTemplate
         return false;
     }
     */
-
-    // 当附魔被应用时调用
-    protected override void OnEnchant()
-    {
-        ModKeywordRegistry.CreateHoverTip(MyKeywords.Replay);
-    }
 
     public override Task BeforeCombatStart()
     {

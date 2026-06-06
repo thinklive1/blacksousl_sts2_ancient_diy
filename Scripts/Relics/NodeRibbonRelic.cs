@@ -10,7 +10,6 @@ using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
@@ -25,7 +24,7 @@ public class NodeRibbonRelic : ModRelicTemplate
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         RelicHoverTipHelpers.Details(this),
-        ModKeywordRegistry.CreateHoverTip(MyKeywords.Kill)
+        HoverTipFactory.FromKeyword(MyKeywords.Kill)
     ];
 
     public override RelicAssetProfile AssetProfile => new(

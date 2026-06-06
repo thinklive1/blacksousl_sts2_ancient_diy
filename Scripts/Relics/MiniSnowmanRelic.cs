@@ -46,7 +46,8 @@ public sealed class MiniSnowmanRelic : ModRelicTemplate
             return;
         }
 
-        foreach (CardModel card in Owner.PlayerCombatState.AllCards.Where(ModelDb.Affliction<EvilQiAffliction>().CanAfflict))
+        AfflictionModel evilQi = ModelDb.Affliction<EvilQiAffliction>();
+        foreach (CardModel card in Owner.PlayerCombatState.AllCards)
         {
             if (card.Affliction is EvilQiAffliction)
             {
@@ -58,7 +59,7 @@ public sealed class MiniSnowmanRelic : ModRelicTemplate
                 CardCmd.ClearAffliction(card);
             }
 
-            if (card.Affliction == null)
+            if (card.Affliction == null && evilQi.CanAfflict(card))
             {
                 await CardCmd.Afflict<EvilQiAffliction>(card, 1m);
             }

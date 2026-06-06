@@ -26,6 +26,12 @@ public class FeedingEnchantment : ModEnchantmentTemplate
 
     public override bool HasExtraCardText => true;
 
+    public override Task BeforeCombatStart()
+    {
+        _killsThisCombat = 0;
+        return Task.CompletedTask;
+    }
+
     public override EnchantmentAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/HorrifyingGluttonRelic.png"
     );
@@ -93,12 +99,8 @@ public class FeedingEnchantment : ModEnchantmentTemplate
             return Task.CompletedTask;
         }
 
-        SetAmount(Math.Max(MinDamagePercent, Amount - CombatEndDecay));
-        if (_killsThisCombat > 0)
-        {
-            SetAmount(Math.Min(MaxDamagePercent, Amount + KillGrowth * _killsThisCombat));
-            _killsThisCombat = 0;
-        }
+        ApplyCombatEndDelta(_killsThisCombat);
+        _killsThisCombat = 0;
 
         return Task.CompletedTask;
     }
@@ -130,7 +132,12 @@ public class FeedingEnchantment : ModEnchantmentTemplate
 
     private void SetAmount(int amount)
     {
-        Amount = amount;
+        Amount = Math.Clamp(amount, MinDamagePercent, MaxDamagePercent);
         Card.DynamicVars.RecalculateForUpgradeOrEnchant();
+    }
+
+    private void ApplyCombatEndDelta(int kills)
+    {
+        SetAmount(Amount - CombatEndDecay + KillGrowth * kills);
     }
 }

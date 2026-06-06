@@ -15,10 +15,10 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(SharedRelicPool))]
 public class PrincessFrogFavorRelic : ModRelicTemplate
 {
-    private const int PenaltyChance = 30;
+    private const int PenaltyChance = 20;
     private const int PenaltyAmount = 1;
 
-    private bool _isApplyingPenalty;
+    private bool _isApplyingRelicEffect;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
@@ -40,37 +40,26 @@ public class PrincessFrogFavorRelic : ModRelicTemplate
         BigIconPath: "res://bs_ancient/assets/images/relics/PrincessFrogFavorRelic.png"
     );
 
-    public override decimal ModifyPowerAmountGiven(PowerModel power, Creature giver, decimal amount, Creature? target, CardModel? cardSource)
-    {
-        if (!IsOwnerDebuffingEnemy(power, amount, giver, target))
-        {
-            return amount;
-        }
-
-        return amount * 2m;
-    }
-
     public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        if (_isApplyingPenalty || !IsOwnerDebuffingEnemy(power, amount, applier, power.Owner))
-        {
-            return;
-        }
-
-        if (Owner.RunState.Rng.Niche.NextInt(100) >= DynamicVars["Chance"].BaseValue)
+        if (_isApplyingRelicEffect || !IsOwnerDebuffingEnemy(power, amount, applier, power.Owner))
         {
             return;
         }
 
         Flash();
-        _isApplyingPenalty = true;
+        _isApplyingRelicEffect = true;
         try
         {
-            await ApplyRandomPenalty();
+            await ApplyExtraDebuff(power, amount, cardSource);
+            if (Owner.RunState.Rng.Niche.NextInt(100) < DynamicVars["Chance"].BaseValue)
+            {
+                await ApplyRandomPenalty();
+            }
         }
         finally
         {
-            _isApplyingPenalty = false;
+            _isApplyingRelicEffect = false;
         }
     }
 
@@ -82,6 +71,12 @@ public class PrincessFrogFavorRelic : ModRelicTemplate
             && amount > 0m
             && power.IsVisible
             && power.GetTypeForAmount(amount) == PowerType.Debuff;
+    }
+
+    private Task ApplyExtraDebuff(PowerModel power, decimal amount, CardModel? cardSource)
+    {
+        PowerModel extraPower = ModelDb.GetById<PowerModel>(power.Id).ToMutable();
+        return PowerCmd.Apply(extraPower, power.Owner, amount, Owner.Creature, cardSource);
     }
 
     private Task ApplyRandomPenalty()

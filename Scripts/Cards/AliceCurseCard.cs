@@ -11,12 +11,14 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using BlackSouls.Scripts.Patches;
 
 namespace BlackSouls.Scripts.Cards;
 
 [RegisterCard(typeof(EventCardPool))]
 public class AliceCurseCard : ModCardTemplate
 {
+    private const int EasterEggChance = 5;
     private const int SelfDamage = 1;
     private const int DrawOnExhaust = 1;
     private const int CopiesToAdd = 2;
@@ -63,9 +65,23 @@ public class AliceCurseCard : ModCardTemplate
     {
     }
 
-    protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return Task.CompletedTask;
+        if (Owner?.Creature is not { IsDead: false } || Owner.RunState.Players.Count > 1)
+        {
+            return;
+        }
+
+        if (Owner.Creature.Powers.OfType<AliceCurseEasterEggPower>().Any())
+        {
+            return;
+        }
+
+        if (Owner.RunState.Rng.CombatCardSelection.NextInt(100) < EasterEggChance)
+        {
+            await PowerCmd.Apply<AliceCurseEasterEggPower>(Owner.Creature, 1, Owner.Creature, this);
+            AliceCurseEasterEggVisualPatch.RefreshVisibleCombatCards(Owner);
+        }
     }
 
     public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
@@ -100,8 +116,28 @@ public class AliceCurseCard : ModCardTemplate
         CardModel drawCopy = combatState.CreateCard<AliceCurseCard>(Owner);
         CardModel discardCopy = combatState.CreateCard<AliceCurseCard>(Owner);
 
-        await CardPileCmd.AddGeneratedCardToCombat(drawCopy, PileType.Draw, addedByPlayer: true, CardPilePosition.Random);
-        await CardPileCmd.AddGeneratedCardToCombat(discardCopy, PileType.Discard, addedByPlayer: true);
+        CardPileAddResult drawResult = await CardPileCmd.AddGeneratedCardToCombat(
+            drawCopy,
+            PileType.Draw,
+            addedByPlayer: true,
+            CardPilePosition.Random
+        );
+        CardPileAddResult discardResult = await CardPileCmd.AddGeneratedCardToCombat(
+            discardCopy,
+            PileType.Discard,
+            addedByPlayer: true
+        );
+
+        RefreshPileCounter(drawResult, PileType.Draw);
+        RefreshPileCounter(discardResult, PileType.Discard);
+    }
+
+    private void RefreshPileCounter(CardPileAddResult result, PileType pileType)
+    {
+        if (result.success)
+        {
+            pileType.GetPile(Owner).InvokeCardAddFinished();
+        }
     }
 
     private async Task ApplyRandomEffect(PlayerChoiceContext choiceContext)
