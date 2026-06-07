@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using Blacksouls.Scripts;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -68,7 +67,7 @@ public class EncoreNextTurnPower : ModPowerTemplate
             .ToList();
 
         PendingCards.Clear();
-        await SyncVisualPower(0);
+        SyncVisualPower(0);
 
         foreach ((CardModel card, int playCount) in cardsToPlay)
         {
@@ -93,9 +92,9 @@ public class EncoreNextTurnPower : ModPowerTemplate
         await SyncAmount();
     }
 
-    public static async Task AddTrackedCard(Player player, CardModel card, int priorPlays)
+    public static async Task AddTrackedCard(Player player, CardModel card)
     {
-        EncoreNextTurnPower? manager = await EnsureManager(player);
+        EncoreNextTurnPower? manager = player.Creature.GetPower<EncoreNextTurnPower>();
         if (manager == null)
         {
             return;
@@ -126,37 +125,19 @@ public class EncoreNextTurnPower : ModPowerTemplate
         int amount = ManagerAmount + nextTurnPlayCount;
         if (Amount != amount)
         {
-            await PowerCmd.SetAmount<EncoreNextTurnPower>(Owner, amount, Owner, null);
+            SetAmount(amount, silent: true);
         }
 
-        await SyncVisualPower(nextTurnPlayCount);
+        SyncVisualPower(nextTurnPlayCount);
     }
 
-    private async Task SyncVisualPower(int nextTurnPlayCount)
+    private void SyncVisualPower(int nextTurnPlayCount)
     {
         EncoreNextTurnVisualPower? visual = Owner.GetPower<EncoreNextTurnVisualPower>();
-        if (nextTurnPlayCount > 0)
+        if (visual != null && visual.Amount != nextTurnPlayCount)
         {
-            if (visual?.Amount != nextTurnPlayCount)
-            {
-                await PowerCmd.SetAmount<EncoreNextTurnVisualPower>(Owner, nextTurnPlayCount, Owner, null);
-            }
+            visual.SetAmount(nextTurnPlayCount, silent: true);
         }
-        else if (visual != null)
-        {
-            await PowerCmd.Remove(visual);
-        }
-    }
-
-    private static async Task<EncoreNextTurnPower?> EnsureManager(Player player)
-    {
-        EncoreNextTurnPower? manager = player.Creature.GetPower<EncoreNextTurnPower>();
-        return manager ?? await PowerCmd.Apply<EncoreNextTurnPower>(
-            player.Creature,
-            ManagerAmount,
-            player.Creature,
-            null,
-            silent: true);
     }
 
     private void PruneInactiveCards()

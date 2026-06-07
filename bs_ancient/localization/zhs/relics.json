@@ -188,5 +188,13 @@
 	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HUG_RELIC.title": "友善的史莱姆",
 	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HUG_RELIC.description": "拾取时，受到[red]{HpLoss}[/red]点伤害，选择[blue]{Cards}[/blue]张攻击或技能牌，附魔[gold]溶解[/gold]。",
 	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HUG_RELIC.selectionScreenPrompt": "选择三张攻击或技能牌附魔溶解。",
-	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HUG_RELIC.flavor": "泰克莉莉！"
+	"BS_ANCIENT_RELIC_FRIENDLY_SLIME_HUG_RELIC.flavor": "泰克莉莉！",
+	"BS_ANCIENT_RELIC_MERCURY_RELIC.title": "水银",
+	"BS_ANCIENT_RELIC_MERCURY_RELIC.description": "拾取时，将一张[gold]水银[/gold]加入你的牌组。",
+	"BS_ANCIENT_RELIC_MERCURY_RELIC.flavor": "面向着宇宙的通信来舔一口水银吧！",
+	"BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC.title": "可疑的帽子",
+	"BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC.description": "始终复制最右侧的非先古遗物效果。",
+	"BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC.details.title": "复制目标",
+	"BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC.details.description": "只会复制你遗物栏中位于最右侧，且稀有度不是先古的遗物。若没有符合条件的遗物，则不产生效果。",
+	"BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC.flavor": "售价为十先令六便士。"
 }

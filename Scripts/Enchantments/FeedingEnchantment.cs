@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -18,17 +19,37 @@ public class FeedingEnchantment : ModEnchantmentTemplate
     private const int MinDamagePercent = 50;
     private const int MaxDamagePercent = 150;
 
+    private int _damagePercent = InitialDamagePercent;
     private int _killsThisCombat;
     private bool _isPlayingThisCard;
     private readonly HashSet<Creature> _damagedTargetsThisPlay = [];
 
     public override bool ShowAmount => true;
 
+    public override int DisplayAmount => BlackSouls_DamagePercent;
+
     public override bool HasExtraCardText => true;
+
+    [SavedProperty]
+    public int BlackSouls_DamagePercent
+    {
+        get => _damagePercent;
+        set
+        {
+            AssertMutable();
+            _damagePercent = Math.Clamp(value, MinDamagePercent, MaxDamagePercent);
+        }
+    }
+
+    protected override void OnEnchant()
+    {
+        SyncAmountForDisplayAndLoc();
+    }
 
     public override Task BeforeCombatStart()
     {
         _killsThisCombat = 0;
+        SyncAmountForDisplayAndLoc();
         return Task.CompletedTask;
     }
 
@@ -43,7 +64,7 @@ public class FeedingEnchantment : ModEnchantmentTemplate
 
     public override decimal EnchantDamageMultiplicative(decimal originalDamage, ValueProp props)
     {
-        return Amount / 100m;
+        return BlackSouls_DamagePercent / 100m;
     }
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)
@@ -132,12 +153,18 @@ public class FeedingEnchantment : ModEnchantmentTemplate
 
     private void SetAmount(int amount)
     {
-        Amount = Math.Clamp(amount, MinDamagePercent, MaxDamagePercent);
+        BlackSouls_DamagePercent = amount;
+        SyncAmountForDisplayAndLoc();
         Card.DynamicVars.RecalculateForUpgradeOrEnchant();
     }
 
     private void ApplyCombatEndDelta(int kills)
     {
-        SetAmount(Amount - CombatEndDecay + KillGrowth * kills);
+        SetAmount(BlackSouls_DamagePercent - CombatEndDecay + KillGrowth * kills);
+    }
+
+    private void SyncAmountForDisplayAndLoc()
+    {
+        Amount = BlackSouls_DamagePercent;
     }
 }

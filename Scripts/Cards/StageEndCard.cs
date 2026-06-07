@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
-using Blacksouls.Scripts;
+using BlackSouls.Scripts;
 
 namespace BlackSouls.Scripts.Cards;
 

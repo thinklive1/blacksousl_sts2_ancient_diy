@@ -3,7 +3,7 @@ using STS2RitsuLib.Content;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 
-namespace Blacksouls.Scripts;
+namespace BlackSouls.Scripts;
 [RegisterOwnedCardKeyword(nameof(Replay), IconPath = "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 [RegisterOwnedCardKeyword(nameof(ForceDeath), IconPath = "res://bs_ancient/assets/images/relics/StageEndRelic.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 [RegisterOwnedCardKeyword(nameof(Kill), IconPath = "res://bs_ancient/assets/images/relics/NodeRibbonRelic.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]

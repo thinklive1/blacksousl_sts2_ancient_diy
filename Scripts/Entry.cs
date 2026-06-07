@@ -1,5 +1,4 @@
 using System.Reflection;
-using BlackSouls.Scripts;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
@@ -8,7 +7,7 @@ using STS2RitsuLib.Interop;
 using STS2RitsuLib.Settings;
 using STS2RitsuLib.Utils.Persistence;
 
-namespace Blacksouls.Scripts;
+namespace BlackSouls.Scripts;
 
 [ModInitializer(nameof(Init))]
 public class Entry

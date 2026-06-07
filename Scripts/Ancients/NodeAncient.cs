@@ -1,6 +1,5 @@
 using Godot;
 using BlackSouls.Scripts.Cards;
-using Blacksouls.Scripts;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.HoverTips;

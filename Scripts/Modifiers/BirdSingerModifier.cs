@@ -9,11 +9,13 @@ using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
+using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-public sealed class BirdSingerModifier : ModifierModel
+public sealed class BirdSingerModifier : ModModifierTemplate
 {
+    private const string BirdSingerIconPath = "res://bs_ancient/assets/images/events/BirdSinger.png";
     private const int AffectedNodeCount = 7;
     private const decimal HealthMultiplier = 0.5m;
 
@@ -21,6 +23,8 @@ public sealed class BirdSingerModifier : ModifierModel
     private bool _showMarkers;
     private int[] _coordCols = [];
     private int[] _coordRows = [];
+
+    public override ModifierAssetProfile AssetProfile => new(BirdSingerIconPath);
 
     [SavedProperty]
     public int BlackSouls_ActIndex

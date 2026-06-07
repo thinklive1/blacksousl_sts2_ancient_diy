@@ -12,6 +12,8 @@ public sealed class EncoreNextTurnVisualPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    protected override bool IsVisibleInternal => Amount > 0;
+
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/StagnantGearRelic.png",
         BigIconPath: "res://bs_ancient/assets/images/relics/StagnantGearRelic.png"
