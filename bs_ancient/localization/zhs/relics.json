@@ -196,5 +196,14 @@
 	"BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC.description": "始终复制最右侧的非先古遗物效果。",
 	"BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC.details.title": "复制目标",
 	"BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC.details.description": "只会复制你遗物栏中位于最右侧，且稀有度不是先古的遗物。若没有符合条件的遗物，则不产生效果。",
-	"BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC.flavor": "售价为十先令六便士。"
+	"BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC.flavor": "售价为十先令六便士。",
+	"BS_ANCIENT_RELIC_ANGEL_FEATHER_RELIC.title": "天使的羽毛",
+	"BS_ANCIENT_RELIC_ANGEL_FEATHER_RELIC.description": "每场战斗第一次受到生命伤害时，获得等量[gold]活力[/gold]。进入第[blue]2[/blue]层后变化。",
+	"BS_ANCIENT_RELIC_ANGEL_FEATHER_RELIC.flavor": "能够拯救大家的天使，只要有我一个就够了♪",
+	"BS_ANCIENT_RELIC_QUESTION_ANGEL_FEATHER_RELIC.title": "天使的羽毛?",
+	"BS_ANCIENT_RELIC_QUESTION_ANGEL_FEATHER_RELIC.description": "受到生命伤害时，获得等量[gold]活力[/gold]。进入第[blue]3[/blue]层后变化。",
+	"BS_ANCIENT_RELIC_QUESTION_ANGEL_FEATHER_RELIC.flavor": "那长在我身上的，可憎的恶魔羽翼……",
+	"BS_ANCIENT_RELIC_BRUTALIZING_ANGEL_FEATHER_RELIC.title": "暴杀天使的羽毛",
+	"BS_ANCIENT_RELIC_BRUTALIZING_ANGEL_FEATHER_RELIC.description": "受到生命伤害时，获得等量[gold]活力[/gold]。每场战斗第一次受伤后，攻击造成生命伤害时恢复生命，恢复总量不超过该次受伤值。",
+	"BS_ANCIENT_RELIC_BRUTALIZING_ANGEL_FEATHER_RELIC.flavor": "不管撕裂切碎到什么程度，都会一次次地长出来……"
 }

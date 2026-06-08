@@ -12,7 +12,6 @@ namespace BlackSouls.Scripts;
 public static class NeowRethinkPokerPatch
 {
     private const int PositiveOptionCount = 2;
-    private const int ApproximatePositiveOptionPoolSize = 14;
 
     private static readonly MethodInfo RelicOptionMethod =
         AccessTools.Method(
@@ -35,7 +34,8 @@ public static class NeowRethinkPokerPatch
         List<RelicModel> candidates = [
             ModelDb.Relic<RethinkPokerRelic>().ToMutable(),
             ModelDb.Relic<WormSmokeRelic>().ToMutable(),
-            ModelDb.Relic<MargaretRelic>().ToMutable()
+            ModelDb.Relic<MargaretRelic>().ToMutable(),
+            ModelDb.Relic<AngelFeatherRelic>().ToMutable()
         ];
         candidates.RemoveAll(relic => !relic.IsAllowed(__instance.Owner.RunState));
         if (candidates.Count == 0)
@@ -43,7 +43,7 @@ public static class NeowRethinkPokerPatch
             return;
         }
 
-        if (__instance.Owner.RunState.Rng.Niche.NextInt(ApproximatePositiveOptionPoolSize) != 0)
+        if (__instance.Owner.RunState.Rng.Niche.NextInt(100) >= BsAncientConfig.GrandGuignolInitialRelicChance)
         {
             return;
         }

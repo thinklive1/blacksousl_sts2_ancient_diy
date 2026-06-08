@@ -59,13 +59,39 @@ public class Entry
                         "ReplaceNeowAppearance",
                         () => BsAncientConfig.ReplaceNeowAppearance,
                         value => BsAncientConfig.ReplaceNeowAppearance = value),
-                    ModSettingsText.Literal("开启后，将开局涅奥的外观、名称、标题和相关对话替换为古兰.吉涅尔。更改后需要重启游戏。"))));
+                    ModSettingsText.Literal("开启后，将开局涅奥的外观、名称、标题和相关对话替换为古兰.吉涅尔。更改后需要重启游戏。"))
+                .AddIntSlider(
+                    "grand_guignol_initial_relic_chance",
+                    ModSettingsText.Literal("古兰初始遗物出现概率"),
+                    IntBinding(
+                        "GrandGuignolInitialRelicChance",
+                        () => BsAncientConfig.GrandGuignolInitialRelicChance,
+                        value => BsAncientConfig.GrandGuignolInitialRelicChance = Math.Clamp(value, 0, 100)),
+                    0,
+                    100,
+                    5,
+                    value => $"{value}%",
+                    ModSettingsText.Literal("控制开局正面选项被替换为古兰初始遗物的概率。更改后需要重启游戏并新开一局。"))));
     }
 
     private static IModSettingsValueBinding<bool> BoolBinding(
         string key,
         Func<bool> getter,
         Action<bool> setter)
+    {
+        return ModSettingsBindings.Callback(
+            ModId,
+            key,
+            getter,
+            setter,
+            BsAncientConfig.Save,
+            SaveScope.Global);
+    }
+
+    private static IModSettingsValueBinding<int> IntBinding(
+        string key,
+        Func<int> getter,
+        Action<int> setter)
     {
         return ModSettingsBindings.Callback(
             ModId,

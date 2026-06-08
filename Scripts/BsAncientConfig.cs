@@ -12,6 +12,7 @@ public static class BsAncientConfig
     public static bool OnlyUseModAncients = true;
     public static bool DisableModAncients = false;
     public static bool ReplaceNeowAppearance = true;
+    public static int GrandGuignolInitialRelicChance = 30;
 
     public static void Load(Assembly assembly)
     {
@@ -34,6 +35,7 @@ public static class BsAncientConfig
         OnlyUseModAncients = config.OnlyUseModAncients;
         DisableModAncients = config.DisableModAncients;
         ReplaceNeowAppearance = config.ReplaceNeowAppearance;
+        GrandGuignolInitialRelicChance = Math.Clamp(config.GrandGuignolInitialRelicChance, 0, 100);
     }
 
     public static void Save()
@@ -63,7 +65,8 @@ public static class BsAncientConfig
         {
             OnlyUseModAncients = OnlyUseModAncients,
             DisableModAncients = DisableModAncients,
-            ReplaceNeowAppearance = ReplaceNeowAppearance
+            ReplaceNeowAppearance = ReplaceNeowAppearance,
+            GrandGuignolInitialRelicChance = GrandGuignolInitialRelicChance
         };
         string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(configPath, json);
@@ -75,7 +78,8 @@ public static class BsAncientConfig
         {
             OnlyUseModAncients = OnlyUseModAncients,
             DisableModAncients = DisableModAncients,
-            ReplaceNeowAppearance = ReplaceNeowAppearance
+            ReplaceNeowAppearance = ReplaceNeowAppearance,
+            GrandGuignolInitialRelicChance = GrandGuignolInitialRelicChance
         };
         string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(configPath, json);
@@ -88,5 +92,7 @@ public static class BsAncientConfig
         public bool DisableModAncients { get; set; } = false;
 
         public bool ReplaceNeowAppearance { get; set; } = true;
+
+        public int GrandGuignolInitialRelicChance { get; set; } = 30;
     }
 }

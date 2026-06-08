@@ -37,5 +37,8 @@
   "BS_ANCIENT_POWER_ALICE_CURSE_EASTER_EGG_POWER.title": "雋ｴ譁ｹ繧呈?縺",
   "BS_ANCIENT_POWER_ALICE_CURSE_EASTER_EGG_POWER.description": "雠惡岻?恉玞馨?呂c`釕动i枊?x岓虾$,榮zt",
   "BS_ANCIENT_POWER_ALICE_CURSE_EASTER_EGG_POWER.smartDescription": "雠惡岻?恉玞馨?呂c`釕动i枊?x岓虾$,榮zt",
-  "BS_ANCIENT_POWER_ALICE_CURSE_EASTER_EGG_POWER.garbled": "雋ｴ譁ｹ繧呈?縺"
+  "BS_ANCIENT_POWER_ALICE_CURSE_EASTER_EGG_POWER.garbled": "雋ｴ譁ｹ繧呈?縺",
+  "BS_ANCIENT_POWER_BRUTALIZING_ANGEL_POWER.title": "暴杀天使",
+  "BS_ANCIENT_POWER_BRUTALIZING_ANGEL_POWER.description": "攻击造成生命伤害时恢复生命，剩余可恢复[blue]{Amount}[/blue]点。",
+  "BS_ANCIENT_POWER_BRUTALIZING_ANGEL_POWER.smartDescription": "攻击造成生命伤害时恢复生命，剩余可恢复[blue]{Amount}[/blue]点。"
 }

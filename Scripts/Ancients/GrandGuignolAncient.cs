@@ -26,6 +26,7 @@ public class GrandGuignolAncient : ModAncientEventTemplate
         CreateModRelicOption<RethinkPokerRelic>(),
         CreateModRelicOption<WormSmokeRelic>(),
         CreateModRelicOption<MargaretRelic>(),
+        CreateModRelicOption<AngelFeatherRelic>(),
     ];
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
