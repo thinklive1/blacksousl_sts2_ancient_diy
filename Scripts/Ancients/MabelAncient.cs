@@ -50,7 +50,10 @@ public class MabelAncient : ModAncientEventTemplate
 
     private IReadOnlyList<EventOption> CreatePool2(bool isMultiplayer)
     {
-        List<EventOption> options = [];
+        List<EventOption> options =
+        [
+            CreateModRelicOption<SilverKeyRelic>(),
+        ];
 
         if (!isMultiplayer)
         {
@@ -72,6 +75,7 @@ public class MabelAncient : ModAncientEventTemplate
     private IReadOnlyList<EventOption> FullPool2 => [
         CreateHlanithWineOption(),
         CreateStageEndOption(),
+        CreateModRelicOption<SilverKeyRelic>(),
     ];
 
     private WeightedList<EventOption> FullPool3 => new()

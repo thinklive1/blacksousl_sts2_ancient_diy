@@ -10,6 +10,7 @@ public static class BsAncientAudio
     public const string Write = "res://bs_ancient/assets/audio/write.mp3";
     public const string Cat = "res://bs_ancient/assets/audio/cat.mp3";
     public const string Shot = "res://bs_ancient/assets/audio/shot.mp3";
+    public const string Claps = "res://bs_ancient/assets/audio/claps.wav";
 
     public static void PlayOneShot(string path, float volume = 1f)
     {

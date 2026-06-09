@@ -10,7 +10,9 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
+using BlackSouls.Scripts.Cards;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -21,6 +23,8 @@ public class RedQueenDiceRelic : ModRelicTemplate
 {
     internal const int RollRange = 3;
     private const int MaxEnergyGain = 1;
+    private bool _bigSuccessTriggered;
+    private int _rerollIndex;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
@@ -30,7 +34,7 @@ public class RedQueenDiceRelic : ModRelicTemplate
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [RelicHoverTipHelpers.Details(this, "diceDetails")];
+        [RelicHoverTipHelpers.Details(this, "diceDetails"), .. HoverTipFactory.FromCardWithCardHoverTips<RedQueenBigSuccessCard>()];
 
     public override RelicAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/RedQueenDiceRelic.png",
@@ -38,9 +42,21 @@ public class RedQueenDiceRelic : ModRelicTemplate
         BigIconPath: "res://bs_ancient/assets/images/relics/RedQueenDiceRelic.png"
     );
 
-    public override async Task BeforeCombatStart()
+    [SavedProperty]
+    public bool BlackSouls_BigSuccessTriggered
     {
-        await SetRerollIndex(0);
+        get => _bigSuccessTriggered;
+        set
+        {
+            AssertMutable();
+            _bigSuccessTriggered = value;
+        }
+    }
+
+    public override Task BeforeCombatStart()
+    {
+        _rerollIndex = 0;
+        return Task.CompletedTask;
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
@@ -50,8 +66,9 @@ public class RedQueenDiceRelic : ModRelicTemplate
             return;
         }
 
-        await SetRerollIndex(0);
+        _rerollIndex = 0;
         RefreshAllCombatCards();
+        await TryTriggerBigSuccess();
     }
 
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPile, AbstractModel? source)
@@ -107,8 +124,49 @@ public class RedQueenDiceRelic : ModRelicTemplate
         }
 
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        await IncrementRerollIndex();
+        _rerollIndex++;
         RefreshAllCombatCards();
+        await TryTriggerBigSuccess();
+    }
+
+    private async Task TryTriggerBigSuccess()
+    {
+        if (BlackSouls_BigSuccessTriggered)
+        {
+            return;
+        }
+
+        var combatState = Owner.PlayerCombatState;
+        if (combatState is null)
+        {
+            return;
+        }
+
+        List<CardModel> rollableCards = combatState.AllCards
+            .Where(IsRollableCard)
+            .ToList();
+        if (rollableCards.Count == 0)
+        {
+            return;
+        }
+
+        int requiredSuccesses = Math.Max(1, (int)Math.Ceiling(rollableCards.Count / 3m));
+        int successes = rollableCards.Count(card => GetDeterministicRoll(card) >= RollRange);
+        if (successes < requiredSuccesses)
+        {
+            return;
+        }
+
+        BlackSouls_BigSuccessTriggered = true;
+        Flash();
+        CombatState? currentCombat = Owner.Creature.CombatState;
+        if (currentCombat == null)
+        {
+            return;
+        }
+
+        CardModel card = currentCombat.CreateCard<RedQueenBigSuccessCard>(Owner);
+        await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
     }
 
     private void RefreshAllCombatCards()
@@ -171,6 +229,12 @@ public class RedQueenDiceRelic : ModRelicTemplate
             && card.IsInCombat;
     }
 
+    private bool IsRollableCard(CardModel? card)
+    {
+        return IsAffectedCard(card)
+            && (card!.Type == CardType.Attack || card.GainsBlock);
+    }
+
     private void RefreshCardPreview(CardModel card)
     {
         card.UpdateDynamicVarPreview(CardPreviewMode.Normal, Owner.Creature, card.DynamicVars);
@@ -183,29 +247,6 @@ public class RedQueenDiceRelic : ModRelicTemplate
 
     private int GetRerollIndex()
     {
-        return Owner.Creature.GetPower<RedQueenDiceRerollPower>()?.Amount ?? 0;
-    }
-
-    private Task SetRerollIndex(int index)
-    {
-        if (Owner?.Creature == null || !CombatManager.Instance.IsInProgress)
-        {
-            return Task.CompletedTask;
-        }
-
-        return PowerCmd.SetAmount<RedQueenDiceRerollPower>(Owner.Creature, index, Owner.Creature, null);
-    }
-
-    private Task IncrementRerollIndex()
-    {
-        if (Owner?.Creature == null || !CombatManager.Instance.IsInProgress)
-        {
-            return Task.CompletedTask;
-        }
-
-        RedQueenDiceRerollPower? power = Owner.Creature.GetPower<RedQueenDiceRerollPower>();
-        return power == null
-            ? SetRerollIndex(1)
-            : PowerCmd.ModifyAmount(power, 1, Owner.Creature, null);
+        return _rerollIndex;
     }
 }
