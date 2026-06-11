@@ -2,20 +2,24 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
-using System.Reflection;
+using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts.Patches;
 
-[HarmonyPatch]
-public static class UnlockEnchantmentCanPlayPatch
+public class UnlockEnchantmentCanPlayPatch : IPatchMethod
 {
-    public static MethodBase TargetMethod()
-    {
-        return AccessTools.Method(
-            typeof(CardModel),
-            nameof(CardModel.CanPlay),
-            [typeof(UnplayableReason).MakeByRefType(), typeof(AbstractModel).MakeByRefType()]);
-    }
+    public static string PatchId => "unlock_enchantment_can_play";
+    public static string Description => "Allow Unlock-enchanted cards to bypass play restrictions once per combat.";
+    public static bool IsCritical => false;
+
+    public static ModPatchTarget[] GetTargets() =>
+        [
+            new(
+                typeof(CardModel),
+                nameof(CardModel.CanPlay),
+                [typeof(UnplayableReason).MakeByRefType(), typeof(AbstractModel).MakeByRefType()],
+                ignoreIfMissing: true)
+        ];
 
     [HarmonyPostfix]
     public static void Postfix(CardModel __instance, ref bool __result, ref UnplayableReason reason, ref AbstractModel? preventer)

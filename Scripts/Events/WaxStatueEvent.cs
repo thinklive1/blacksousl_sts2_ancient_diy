@@ -29,8 +29,12 @@ public sealed class WaxStatueEvent : ModEventTemplate
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>
     [
-        RelicOption<TwinWaxStatueRelic>(HasTwinPair(Owner!) ? ObtainTwinWaxStatue : null),
-        RelicOption<LonelyWaxStatueRelic>(ObtainLonelyWaxStatue),
+        RelicOption<TwinWaxStatueRelic>(
+            HasTwinPair(Owner!) ? ObtainTwinWaxStatue : null,
+            InitialOptionKey("TWIN")),
+        RelicOption<LonelyWaxStatueRelic>(
+            ObtainLonelyWaxStatue,
+            InitialOptionKey("LONELY")),
     ];
 
     private async Task ObtainTwinWaxStatue()

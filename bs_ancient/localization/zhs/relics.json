@@ -209,5 +209,11 @@
 	"BS_ANCIENT_RELIC_QUESTION_ANGEL_FEATHER_RELIC.flavor": "那长在我身上的，可憎的恶魔羽翼……",
 	"BS_ANCIENT_RELIC_BRUTALIZING_ANGEL_FEATHER_RELIC.title": "暴杀天使的羽毛",
 	"BS_ANCIENT_RELIC_BRUTALIZING_ANGEL_FEATHER_RELIC.description": "受到生命伤害时，获得等量[gold]活力[/gold]。每场战斗第一次受伤后，攻击造成生命伤害时恢复生命，恢复总量不超过该次受伤值。",
-	"BS_ANCIENT_RELIC_BRUTALIZING_ANGEL_FEATHER_RELIC.flavor": "不管撕裂切碎到什么程度，都会一次次地长出来……"
+	"BS_ANCIENT_RELIC_BRUTALIZING_ANGEL_FEATHER_RELIC.flavor": "不管撕裂切碎到什么程度，都会一次次地长出来……",
+	"BS_ANCIENT_RELIC_KNIGHT_CHESS_PIECE_RELIC.title": "骑士棋子",
+	"BS_ANCIENT_RELIC_KNIGHT_CHESS_PIECE_RELIC.description": "通过迎战红骑士获得。选择下层节点时，可以不限次数地左右移动[blue]1[/blue]格。",
+	"BS_ANCIENT_RELIC_KNIGHT_CHESS_PIECE_RELIC.flavor": "这是场光荣的胜利， 对不对？",
+	"BS_ANCIENT_RELIC_ALICE_HANDKERCHIEF_RELIC.title": "爱丽丝的手帕",
+	"BS_ANCIENT_RELIC_ALICE_HANDKERCHIEF_RELIC.description": "下个章节的前[blue]5[/blue]个非先古节点中，若为战斗节点，战斗开始时获得[blue]3[/blue]点[gold]力量[/gold]与[blue]3[/blue]点[gold]敏捷[/gold]。",
+	"BS_ANCIENT_RELIC_ALICE_HANDKERCHIEF_RELIC.flavor": "等我转弯的时候，请挥挥手帕"
 }

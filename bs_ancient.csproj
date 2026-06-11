@@ -24,8 +24,8 @@
       <Private>true</Private>
     </Reference>
 
-  <!-- NuGet获取 -->
-  <PackageReference Include="STS2.RitsuLib" Version="*" />
+  <!-- 固定 RitsuLib 版本，避免 Version="*" 在发布时绑定到玩家未安装的新程序集版本 -->
+  <PackageReference Include="STS2.RitsuLib" Version="0.4.0" />
   <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
   </ItemGroup>
 
@@ -36,6 +36,7 @@
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\" />
     <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" />
     <Copy SourceFiles="README.md" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" />
+    <Copy SourceFiles="README_EN.md" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" />
     <Delete Files="$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName)_config.json" TreatErrorsAsWarnings="true" />
   </Target>
 </Project>

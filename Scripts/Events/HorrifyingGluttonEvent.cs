@@ -39,7 +39,9 @@ public sealed class HorrifyingGluttonEvent : ModEventTemplate
 
         return
         [
-            RelicOption<HorrifyingGluttonRelic>(canHunt ? ObtainHorrifyingGluttonRelic : null),
+            RelicOption<HorrifyingGluttonRelic>(
+                canHunt ? ObtainHorrifyingGluttonRelic : null,
+                InitialOptionKey(canHunt ? "HUNT" : "HUNT_LOCKED")),
             new EventOption(
                 this,
                 canBuyFood ? BuyFood : null,

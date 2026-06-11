@@ -45,9 +45,15 @@ public sealed class FriendlySlimeEvent : ModEventTemplate
 
         return
         [
-            RelicOption<FriendlySlimeNodRelic>(canNod ? ObtainNodRelic : null),
-            RelicOption<FriendlySlimeHandshakeRelic>(canHandshake ? ObtainHandshakeRelic : null),
-            RelicOption<FriendlySlimeHugRelic>(canHug ? ObtainHugRelic : null),
+            RelicOption<FriendlySlimeNodRelic>(
+                canNod ? ObtainNodRelic : null,
+                InitialOptionKey(canNod ? "NOD" : "NOD_LOCKED")),
+            RelicOption<FriendlySlimeHandshakeRelic>(
+                canHandshake ? ObtainHandshakeRelic : null,
+                InitialOptionKey(canHandshake ? "HANDSHAKE" : "HANDSHAKE_LOCKED")),
+            RelicOption<FriendlySlimeHugRelic>(
+                canHug ? ObtainHugRelic : null,
+                InitialOptionKey(canHug ? "HUG" : "HUG_LOCKED")),
         ];
     }
 

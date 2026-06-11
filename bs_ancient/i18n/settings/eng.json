@@ -1,0 +1,14 @@
+{
+  "displayName": "BS Ancient",
+  "title": "BS Ancient Settings",
+  "description": "These options are written to bs_ancient_config.cfg. Changes require restarting the game and starting a new run to take effect.",
+  "sections.ancients.title": "Ancients",
+  "onlyUseModAncients.title": "Only Spawn Mod Ancients",
+  "onlyUseModAncients.description": "When enabled, Act 2 will only choose from Node/Mabel, and Act 3 will only choose from Prickett/Mabel. Requires restarting the game and starting a new run.",
+  "disableModAncients.title": "Disable Mod Map Ancients",
+  "disableModAncients.description": "When enabled, Node, Prickett, and Mabel will not appear on the map. This takes priority over \"Only Spawn Mod Ancients\". Requires restarting the game and starting a new run.",
+  "replaceNeowAppearance.title": "Replace Neow Appearance",
+  "replaceNeowAppearance.description": "When enabled, replaces starting Neow's appearance, name, title, and related dialogue with Grand Guignol. Requires restarting the game.",
+  "grandGuignolInitialRelicChance.title": "Grand Guignol Initial Relic Chance",
+  "grandGuignolInitialRelicChance.description": "Controls the chance for a starting positive option to be replaced by Grand Guignol's initial relic. Requires restarting the game and starting a new run."
+}

@@ -1,4 +1,3 @@
-using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
@@ -8,12 +7,19 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Afflictions;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
-[HarmonyPatch(typeof(ChainsOfBindingPower), nameof(ChainsOfBindingPower.AfterCardDrawn))]
-public static class ChainsOfBindingEvilQiOverwritePatch
+public class ChainsOfBindingEvilQiOverwritePatch : IPatchMethod
 {
+    public static string PatchId => "chains_of_binding_evil_qi_overwrite";
+    public static string Description => "Allow Chains of Binding to overwrite Evil Qi instead of being blocked by it.";
+    public static bool IsCritical => false;
+
+    public static ModPatchTarget[] GetTargets() =>
+        [new(typeof(ChainsOfBindingPower), nameof(ChainsOfBindingPower.AfterCardDrawn))];
+
     public static bool Prefix(
         ChainsOfBindingPower __instance,
         PlayerChoiceContext choiceContext,

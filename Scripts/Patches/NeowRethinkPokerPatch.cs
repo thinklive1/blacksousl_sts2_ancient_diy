@@ -5,12 +5,19 @@ using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
+using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
-[HarmonyPatch(typeof(Neow), "GenerateInitialOptions")]
-public static class NeowRethinkPokerPatch
+public class NeowRethinkPokerPatch : IPatchMethod
 {
+    public static string PatchId => "neow_grand_guignol_initial_relic_option";
+    public static string Description => "Replace one positive Neow option with a Grand Guignol initial relic option.";
+    public static bool IsCritical => false;
+
+    public static ModPatchTarget[] GetTargets() =>
+        [new(typeof(Neow), "GenerateInitialOptions", ignoreIfMissing: true)];
+
     private const int PositiveOptionCount = 2;
 
     private static readonly MethodInfo RelicOptionMethod =

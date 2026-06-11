@@ -50,7 +50,7 @@ public sealed class GentleGiftEvent : ModEventTemplate
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>
     [
-        RelicOption<MiniSnowmanRelic>(AcceptGift),
+        RelicOption<MiniSnowmanRelic>(AcceptGift, InitialOptionKey("ACCEPT")),
         new EventOption(this, RefuseGift, InitialOptionKey("REFUSE")),
     ];
 

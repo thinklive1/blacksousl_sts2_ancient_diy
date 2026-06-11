@@ -5,12 +5,19 @@ using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Unlocks;
+using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
-[HarmonyPatch(typeof(ActModel), nameof(ActModel.GenerateRooms))]
-public static class OnlyUseModAncientsPatch
+public class OnlyUseModAncientsPatch : IPatchMethod
 {
+    public static string PatchId => "mod_ancient_room_generation_rules";
+    public static string Description => "Apply BS Ancient map ancient generation settings.";
+    public static bool IsCritical => false;
+
+    public static ModPatchTarget[] GetTargets() =>
+        [new(typeof(ActModel), nameof(ActModel.GenerateRooms))];
+
     private static readonly AccessTools.FieldRef<ActModel, RoomSet> RoomsRef =
         AccessTools.FieldRefAccess<ActModel, RoomSet>("_rooms");
 

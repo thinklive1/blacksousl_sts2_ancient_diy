@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -19,6 +20,7 @@ public sealed class MercuryCard : ModCardTemplate
     private SerializableCard? _copiedCard;
     private string _copiedDescription = "";
     private int _copiedCost = -1;
+    private readonly HashSet<CardModel> _autoPlayedCopies = [];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Retain,
@@ -97,6 +99,12 @@ public sealed class MercuryCard : ModCardTemplate
         }
 
         CardModel copy = CardModel.FromSerializable(copiedCard);
+        if (copy is DeprecatedCard)
+        {
+            return;
+        }
+
+        _autoPlayedCopies.Add(copy);
         combatState.AddCard(copy, owner);
         Creature? target = GetAutoPlayTarget(copy, cardPlay.Target);
         if (copy.TargetType.IsSingleTarget() && copy.TargetType != TargetType.Self && target == null)
@@ -109,6 +117,11 @@ public sealed class MercuryCard : ModCardTemplate
 
     public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        if (_autoPlayedCopies.Contains(cardPlay.Card))
+        {
+            return Task.CompletedTask;
+        }
+
         if (cardPlay.Card.Owner == Owner && TryCopyFrom(cardPlay.Card))
         {
             Owner?.PlayerCombatState?.RecalculateCardValues();
@@ -152,6 +165,7 @@ public sealed class MercuryCard : ModCardTemplate
             .Select(entry => entry.CardPlay.Card)
             .LastOrDefault(card => card != this
                 && card is not MercuryCard
+                && !_autoPlayedCopies.Contains(card)
                 && !card.EnergyCost.CostsX);
     }
 

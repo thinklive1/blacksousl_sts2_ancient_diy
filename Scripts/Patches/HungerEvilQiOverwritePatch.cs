@@ -1,4 +1,3 @@
-using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
@@ -7,11 +6,8 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace BlackSouls.Scripts;
 
-[HarmonyPatch]
 public static class HungerEvilQiOverwritePatch
 {
-    [HarmonyPatch(typeof(HungerPower), "Afflict")]
-    [HarmonyPrefix]
     public static bool AfflictPrefix(HungerPower __instance, CardModel card, ref Task __result)
     {
         if (card.Affliction is not EvilQiAffliction)
@@ -23,8 +19,6 @@ public static class HungerEvilQiOverwritePatch
         return false;
     }
 
-    [HarmonyPatch(typeof(HungerPower), nameof(HungerPower.AfterCardEnteredCombat))]
-    [HarmonyPrefix]
     public static bool AfterCardEnteredCombatPrefix(HungerPower __instance, CardModel card, ref Task __result)
     {
         if (card.Affliction is not EvilQiAffliction)
