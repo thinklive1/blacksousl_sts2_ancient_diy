@@ -1,6 +1,7 @@
 using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Localization;
+using STS2RitsuLib.Utils;
 
 namespace BlackSouls.Scripts;
 
@@ -11,7 +12,7 @@ public static class NeowGrandGuignolLocalizationPatch
 
     private static readonly FieldInfo TableNameField = AccessTools.Field(typeof(LocTable), "_name");
 
-    private static readonly Dictionary<string, string> Replacements = new()
+    private static readonly Dictionary<string, string> ChineseReplacements = new()
     {
         ["NEOW.title"] = "古兰.吉涅尔",
         ["NEOW.epithet"] = "暗黑舞台装置",
@@ -44,6 +45,9 @@ public static class NeowGrandGuignolLocalizationPatch
         ["NEOW.talk.REGENT.1-0r.ancient"] = "帷幕……已经升起……",
         ["NEOW.talk.REGENT.2-1.ancient"] = "帷幕……已经升起……"
     };
+
+    private static readonly Dictionary<string, string> EnglishReplacements = ChineseReplacements.Keys
+        .ToDictionary(key => key, GetEnglishReplacement);
 
     [HarmonyPatch(typeof(LocTable), nameof(LocTable.GetRawText))]
     [HarmonyPrefix]
@@ -95,7 +99,7 @@ public static class NeowGrandGuignolLocalizationPatch
         }
 
         IReadOnlyList<LocString> currentResult = __result;
-        LocString[] additionalLocStrings = Replacements.Keys
+        LocString[] additionalLocStrings = ChineseReplacements.Keys
             .Where(key => key.StartsWith(keyPrefix, StringComparison.Ordinal) && currentResult.All(loc => loc.LocEntryKey != key))
             .Select(key => new LocString(AncientTableName, key))
             .ToArray();
@@ -111,13 +115,42 @@ public static class NeowGrandGuignolLocalizationPatch
     private static bool TryGetReplacement(LocTable table, string key, out string? replacement)
     {
         replacement = null;
+        Dictionary<string, string> replacements = GetCurrentReplacements();
         return BsAncientConfig.ReplaceNeowAppearance
             && GetTableName(table) == AncientTableName
-            && Replacements.TryGetValue(key, out replacement);
+            && replacements.TryGetValue(key, out replacement);
     }
 
     private static string? GetTableName(LocTable table)
     {
         return TableNameField.GetValue(table) as string;
+    }
+
+    private static Dictionary<string, string> GetCurrentReplacements()
+    {
+        string languageCode = I18N.ResolveCurrentLanguageCode();
+        return languageCode.StartsWith("zh", StringComparison.OrdinalIgnoreCase) || languageCode.Equals("zhs", StringComparison.OrdinalIgnoreCase)
+            ? ChineseReplacements
+            : EnglishReplacements;
+    }
+
+    private static string GetEnglishReplacement(string key)
+    {
+        return key switch
+        {
+            "NEOW.title" => "Grand Guignol",
+            "NEOW.epithet" => "Dark Stage Device",
+            "NEOW.pages.INITIAL.description" or "NEOW.EVENT.description" => "The curtain rises. Grand Guignol awaits your choice.",
+            "NEOW.talk.firstVisitEver.0-0.ancient"
+                or "NEOW.talk.ANY.0-0r.ancient"
+                or "NEOW.talk.IRONCLAD.0-0.ancient"
+                or "NEOW.talk.SILENT.0-0.ancient"
+                or "NEOW.talk.DEFECT.0-0.ancient"
+                or "NEOW.talk.NECROBINDER.0-0.ancient"
+                or "NEOW.talk.NECROBINDER.0-2.ancient"
+                or "NEOW.talk.REGENT.0-1.ancient"
+                => "Go forth... actor... your script is to kill the arrogant one at the top of the Spire.",
+            _ => "The curtain... has already risen..."
+        };
     }
 }

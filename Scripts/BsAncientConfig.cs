@@ -12,6 +12,8 @@ public static class BsAncientConfig
     public static bool OnlyUseModAncients = true;
     public static bool DisableModAncients = false;
     public static bool ReplaceNeowAppearance = true;
+    public static bool EnableModEvents = true;
+    public static bool DisableTestingEvents = false;
     public static int GrandGuignolInitialRelicChance = 30;
 
     public static void Load(Assembly assembly)
@@ -35,6 +37,8 @@ public static class BsAncientConfig
         OnlyUseModAncients = config.OnlyUseModAncients;
         DisableModAncients = config.DisableModAncients;
         ReplaceNeowAppearance = config.ReplaceNeowAppearance;
+        EnableModEvents = config.EnableModEvents;
+        DisableTestingEvents = config.DisableTestingEvents;
         GrandGuignolInitialRelicChance = Math.Clamp(config.GrandGuignolInitialRelicChance, 0, 100);
     }
 
@@ -66,6 +70,8 @@ public static class BsAncientConfig
             OnlyUseModAncients = OnlyUseModAncients,
             DisableModAncients = DisableModAncients,
             ReplaceNeowAppearance = ReplaceNeowAppearance,
+            EnableModEvents = EnableModEvents,
+            DisableTestingEvents = DisableTestingEvents,
             GrandGuignolInitialRelicChance = GrandGuignolInitialRelicChance
         };
         string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
@@ -79,6 +85,8 @@ public static class BsAncientConfig
             OnlyUseModAncients = OnlyUseModAncients,
             DisableModAncients = DisableModAncients,
             ReplaceNeowAppearance = ReplaceNeowAppearance,
+            EnableModEvents = EnableModEvents,
+            DisableTestingEvents = DisableTestingEvents,
             GrandGuignolInitialRelicChance = GrandGuignolInitialRelicChance
         };
         string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
@@ -92,6 +100,10 @@ public static class BsAncientConfig
         public bool DisableModAncients { get; set; } = false;
 
         public bool ReplaceNeowAppearance { get; set; } = true;
+
+        public bool EnableModEvents { get; set; } = true;
+
+        public bool DisableTestingEvents { get; set; } = false;
 
         public int GrandGuignolInitialRelicChance { get; set; } = 30;
     }

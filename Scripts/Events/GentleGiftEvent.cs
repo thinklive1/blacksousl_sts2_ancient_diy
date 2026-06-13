@@ -29,7 +29,8 @@ public sealed class GentleGiftEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return runState.CurrentActIndex == 2
+        return BsAncientConfig.EnableModEvents
+            && runState.CurrentActIndex == 2
             && runState.Players.All(HasEnchantedCard);
     }
 
@@ -51,7 +52,10 @@ public sealed class GentleGiftEvent : ModEventTemplate
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>
     [
         RelicOption<MiniSnowmanRelic>(AcceptGift, InitialOptionKey("ACCEPT")),
-        new EventOption(this, RefuseGift, InitialOptionKey("REFUSE")),
+        new EventOption(
+            this,
+            HasEvilQiCandidate(Owner!) ? RefuseGift : null,
+            InitialOptionKey(HasEvilQiCandidate(Owner!) ? "REFUSE" : "REFUSE_LOCKED")),
     ];
 
     private async Task AcceptGift()
@@ -63,7 +67,7 @@ public sealed class GentleGiftEvent : ModEventTemplate
     private Task RefuseGift()
     {
         List<CardModel> candidates = PileType.Deck.GetPile(Owner!).Cards
-            .Where(card => card.Type is not CardType.Status)
+            .Where(CanReceiveEvilQi)
             .ToList();
         CardModel? selected = candidates.Count == 0
             ? null
@@ -90,5 +94,17 @@ public sealed class GentleGiftEvent : ModEventTemplate
     private static bool HasEnchantedCard(Player player)
     {
         return PileType.Deck.GetPile(player).Cards.Any(card => card.Enchantment != null);
+    }
+
+    private static bool HasEvilQiCandidate(Player player)
+    {
+        return PileType.Deck.GetPile(player).Cards.Any(CanReceiveEvilQi);
+    }
+
+    private static bool CanReceiveEvilQi(CardModel card)
+    {
+        return card.Type is not (CardType.Status or CardType.Curse or CardType.Quest)
+            && !card.Keywords.Contains(CardKeyword.Unplayable)
+            && (card.Enchantment != null || ModelDb.Enchantment<EvilQiEnchantment>().CanEnchant(card));
     }
 }

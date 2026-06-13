@@ -215,5 +215,20 @@
 	"BS_ANCIENT_RELIC_KNIGHT_CHESS_PIECE_RELIC.flavor": "Those are the rules of the game.",
 	"BS_ANCIENT_RELIC_ALICE_HANDKERCHIEF_RELIC.title": "Alice's Handkerchief",
 	"BS_ANCIENT_RELIC_ALICE_HANDKERCHIEF_RELIC.description": "In the first [blue]5[/blue] non-Ancient nodes of the next act, if a node is a combat node, gain [blue]3[/blue] [gold]Strength[/gold] and [blue]3[/blue] [gold]Dexterity[/gold] at the start of combat.",
-	"BS_ANCIENT_RELIC_ALICE_HANDKERCHIEF_RELIC.flavor": "Please dry your tears."
+	"BS_ANCIENT_RELIC_ALICE_HANDKERCHIEF_RELIC.flavor": "Please dry your tears.",
+	"BS_ANCIENT_RELIC_PUMPKIN_HAND_MIRROR_RELIC.title": "Pumpkin's Hand Mirror",
+	"BS_ANCIENT_RELIC_PUMPKIN_HAND_MIRROR_RELIC.description": "On pickup, add [gold]Orr's Reflection[/gold] to your deck. The counter shows current SAN; SAN below [blue]0[/blue] is treated as SEN.",
+	"BS_ANCIENT_RELIC_PUMPKIN_HAND_MIRROR_RELIC.flavor": "The mirror does not always reflect yourself.",
+	"BS_ANCIENT_RELIC_RABBIT_HAND_MIRROR_RELIC.title": "Rabbit's Hand Mirror",
+	"BS_ANCIENT_RELIC_RABBIT_HAND_MIRROR_RELIC.description": "On pickup, add [gold]Banai's Reflection[/gold] to your deck. The counter shows current SAN; SAN below [blue]0[/blue] is treated as SEN.",
+	"BS_ANCIENT_RELIC_RABBIT_HAND_MIRROR_RELIC.flavor": "The mirror does not always reflect yourself.",
+	"BS_ANCIENT_RELIC_JACK_HAND_MIRROR_RELIC.title": "Jack's Hand Mirror",
+	"BS_ANCIENT_RELIC_JACK_HAND_MIRROR_RELIC.description": "On pickup, add [gold]Holmes' Reflection[/gold] and [gold]Jack the Ripper's Reflection[/gold] to your deck. The next act is guaranteed to contain a route made only of monsters and elites. The counter shows current SAN; SAN below [blue]0[/blue] is treated as SEN.",
+	"BS_ANCIENT_RELIC_JACK_HAND_MIRROR_RELIC.flavor": "The mirror does not always reflect yourself.",
+	"BS_ANCIENT_RELIC_EDITH_RING_RELIC.title": "Edith's Ring",
+	"BS_ANCIENT_RELIC_EDITH_RING_RELIC.description": "At the start of combat, gain [blue]1[/blue] [gold]Flutter[/gold]. This effect is removed at the start of your second turn.",
+	"BS_ANCIENT_RELIC_EDITH_RING_RELIC.flavor": "She is still waiting.",
+	"BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.title": "Girl's Hand Mirror",
+	"BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.description": "On pickup, add [gold]Liddell's Reflection[/gold] to your deck. The first time you take unblocked damage after combat starts, reflect that much damage to the enemy that dealt it. The counter shows current SAN; SAN below [blue]0[/blue] is treated as SEN.",
+	"BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.flavor": "There is a road in the mirror that never ends."
 }

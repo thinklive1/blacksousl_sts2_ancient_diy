@@ -3,6 +3,7 @@
   "title": "BS Ancient Settings",
   "description": "These options are written to bs_ancient_config.cfg. Changes require restarting the game and starting a new run to take effect.",
   "sections.ancients.title": "Ancients",
+  "sections.events.title": "Events",
   "onlyUseModAncients.title": "Only Spawn Mod Ancients",
   "onlyUseModAncients.description": "When enabled, Act 2 will only choose from Node/Mabel, and Act 3 will only choose from Prickett/Mabel. Requires restarting the game and starting a new run.",
   "disableModAncients.title": "Disable Mod Map Ancients",
@@ -10,5 +11,9 @@
   "replaceNeowAppearance.title": "Replace Neow Appearance",
   "replaceNeowAppearance.description": "When enabled, replaces starting Neow's appearance, name, title, and related dialogue with Grand Guignol. Requires restarting the game.",
   "grandGuignolInitialRelicChance.title": "Grand Guignol Initial Relic Chance",
-  "grandGuignolInitialRelicChance.description": "Controls the chance for a starting positive option to be replaced by Grand Guignol's initial relic. Requires restarting the game and starting a new run."
+  "grandGuignolInitialRelicChance.description": "Controls the chance for a starting positive option to be replaced by Grand Guignol's initial relic. Requires restarting the game and starting a new run.",
+  "enableModEvents.title": "Enable Mod Events",
+  "enableModEvents.description": "When enabled, BS Ancient events can appear in the normal event pool. When disabled, these events will not appear naturally. Requires restarting the game and starting a new run.",
+  "disableTestingEvents.title": "Disable Testing Events",
+  "disableTestingEvents.description": "When enabled, testing events related to SAN and hand mirrors, such as Clown and Girl in the Maze, will not appear naturally. Requires restarting the game and starting a new run."
 }

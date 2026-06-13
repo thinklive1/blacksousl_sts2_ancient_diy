@@ -22,7 +22,7 @@ public sealed class QueenTartModifier : ModifierModel
 
     public override EventModel ModifyNextEvent(EventModel currentEvent)
     {
-        return RunState.CurrentActIndex == 1 && !BlackSouls_Claimed
+        return BsAncientConfig.EnableModEvents && RunState.CurrentActIndex == 1 && !BlackSouls_Claimed
             ? ModelDb.Event<QueenOfHeartsEvent>()
             : currentEvent;
     }

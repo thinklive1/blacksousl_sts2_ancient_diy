@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace BlackSouls.Scripts;
 
 [RegisterActEvent(typeof(Overgrowth))]
+[RegisterActEvent(typeof(Underdocks))]
 public sealed class QueenTartEvent : ModEventTemplate
 {
     private const int MaxHpGain = 8;
@@ -22,7 +23,8 @@ public sealed class QueenTartEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return runState.CurrentActIndex == 0
+        return BsAncientConfig.EnableModEvents
+            && runState.CurrentActIndex == 0
             && !runState.Players.Any(player => player.GetRelic<QueenTartRelic>() != null)
             && !runState.Modifiers.Any(modifier => modifier is QueenTartModifier);
     }

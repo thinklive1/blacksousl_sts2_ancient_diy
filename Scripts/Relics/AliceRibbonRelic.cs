@@ -65,6 +65,7 @@ public class AliceRibbonRelic : ModRelicTemplate
     {
         Flash();
         BlackSouls_WasUsed = true;
+        MirrorSan.Get(creature.Player)?.ResetSan();
         await CreatureCmd.Heal(creature, creature.MaxHp);
         await PowerCmd.Apply<StrengthPower>(creature, DynamicVars["StrengthPower"].BaseValue, creature, null);
     }

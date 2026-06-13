@@ -14,6 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace BlackSouls.Scripts;
 
 [RegisterActEvent(typeof(Overgrowth))]
+[RegisterActEvent(typeof(Underdocks))]
 [RegisterActEvent(typeof(Hive))]
 public sealed class LastWhiteKnightEvent : ModEventTemplate
 {
@@ -33,7 +34,8 @@ public sealed class LastWhiteKnightEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return runState.CurrentActIndex is 0 or 1
+        return BsAncientConfig.EnableModEvents
+            && runState.CurrentActIndex is 0 or 1
             && runState.Players.Any(player =>
                 player.Creature.CurrentHp > 0
                 && player.Creature.CurrentHp <= Math.Floor(player.Creature.MaxHp * HealthThreshold));

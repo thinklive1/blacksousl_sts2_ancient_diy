@@ -23,7 +23,8 @@ public sealed class QueenOfHeartsEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return runState.CurrentActIndex == 1
+        return BsAncientConfig.EnableModEvents
+            && runState.CurrentActIndex == 1
             && (runState.Players.Any(player => player.GetRelic<QueenTartRelic>() != null)
                 || QueenTartModifier.FindActive(runState) != null);
     }

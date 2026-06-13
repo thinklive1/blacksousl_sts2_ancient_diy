@@ -26,6 +26,8 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<UnlockEnchantmentCanPlayPatch>();
         patcher.RegisterPatch<DeprecatedAncientTextureFallbackPatch>();
         patcher.RegisterPatch<DeprecatedAncientMapNodeAssetPathsFallbackPatch>();
+        patcher.RegisterPatch<MirrorSanFairyResetPatch>();
+        patcher.RegisterPatch<MirrorSanLizardTailResetPatch>();
         RegisterMercuryCardDescriptionPatch(patcher);
     }
 

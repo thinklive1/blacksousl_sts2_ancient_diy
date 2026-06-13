@@ -1,6 +1,6 @@
 # BS Ancient
 
-Note: this English README and the in-game English localization are machine-translated and provided for reference.
+Note: this English README and the in-game English localization are machine-translated.
 
 A Slay the Spire 2 Ancient expansion mod. It currently adds 3 map Ancients, replaces the starting Neow appearance with Grand Guignol, and adds a separate "Grand Guignol?" compendium category for starting Ancient relics.
 
@@ -24,6 +24,8 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
   "OnlyUseModAncients": true,
   "DisableModAncients": false,
   "ReplaceNeowAppearance": true,
+  "EnableModEvents": true,
+  "DisableTestingEvents": false,
   "GrandGuignolInitialRelicChance": 30
 }
 ```
@@ -31,6 +33,8 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
 - `OnlyUseModAncients`: whether only this mod's map Ancients can spawn. If `true`, Act 2 only chooses from Node/Mabel and Act 3 only chooses from Prickett/Mabel. If `false`, the new Ancients enter the candidate pool without blocking vanilla or other modded Ancients. Requires restarting the game and starting a new run.
 - `DisableModAncients`: completely disables this mod's map Ancients. If `true`, Node, Prickett, and Mabel will not appear on the map. This takes priority over `OnlyUseModAncients`. Requires restarting the game and starting a new run.
 - `ReplaceNeowAppearance`: replaces Neow's appearance, name, title, and related dialogue with Grand Guignol. If `false`, Neow display returns to vanilla. Requires restarting the game.
+- `EnableModEvents`: enables this mod's random events. If `false`, this mod's new random events will not enter the event pool. Requires restarting the game and starting a new run.
+- `DisableTestingEvents`: disables testing events. If `true`, SAN/hand-mirror related testing events such as Clown and Girl in the Maze will not appear naturally. Requires restarting the game and starting a new run.
 - `GrandGuignolInitialRelicChance`: chance, from 0 to 100, for a Grand Guignol starting relic to replace a positive starting option. Default is 30. Requires restarting the game and starting a new run.
 
 ## Grand Guignol?
@@ -137,6 +141,16 @@ Relics:
 - White Knight's Protection: until the next rest site, gain 3 Strength and 3 Dexterity at the start of combat.
 - Knight Chess Piece: obtained by facing the Red Knight in The Last White Knight. When choosing the next map node, you may move 1 column left or right any number of times.
 - Alice's Handkerchief: obtained from The Last White Knight. In the first 5 non-Ancient nodes of the next act, if a node is a combat node, gain 3 Strength and 3 Dexterity at the start of combat. The relic becomes greyed out when its remaining counter reaches 0.
+- Clown: can appear in Act 1, single-player only. Choose Rabbit Hand Mirror, Pumpkin Hand Mirror, or Jack Hand Mirror.
+- Rabbit Hand Mirror: on pickup, gain Banai's Reflection. The relic counter shows current SAN. Banai's Reflection grants Block and shuffles a copy into the draw pile; copies cost 0 and their Block decreases each generation.
+- Pumpkin Hand Mirror: on pickup, gain Orr's Reflection. The relic counter shows current SAN. Orr's Reflection heals HP and makes your Attack cards played next turn play one additional time.
+- Jack Hand Mirror: on pickup, gain Holmes' Reflection and Jack the Ripper's Reflection, and modify the next act map so one route contains only normal combats and elites. Holmes' Reflection chooses 1 random Colorless card into your hand and increases SAN. Jack the Ripper's Reflection deals damage; each play permanently increases only this card's damage. All Jack cards share a combat counter; after 3 total plays, gain Virtue of Duality and, after combat, you must choose a deck card to transform into Jack the Ripper's Reflection.
+- Edith's Ring (shared rare relic): at the start of combat, gain 1 Flutter, which is lost at the end of the first turn.
+- Girl in the Maze: can appear in Act 3, single-player only, if you have one of Rabbit/Pumpkin/Jack Hand Mirror and SAN is below 0. Choose Girl's Hand Mirror, break the mirror, or gain 8 max HP.
+- Girl's Hand Mirror: on pickup, gain Liddell's Reflection. The first time you take HP damage after combat starts, reflect equal damage to the attacker. Liddell's Reflection is an unplayable Curse; when exhausted or when it vanishes due to Ethereal, it copies your entire deck, gives the copies Ethereal, and adds them to the discard pile.
+- Pervasive Malice (?): obtained from Girl in the Maze. Gain 1 Energy and draw 3 cards. Each use loses 15 SAN.
+- SAN/SEN: the hand mirror series shares one SAN value, starting at 50 and saved across the run. Taking HP damage from attacks loses 5 SAN per hit; multi-hit attacks count each hit. At 100 or more SAN, enter Rationality: apply 1 Vulnerable and 1 Weak to all enemies, and stop gaining Status cards during combat. When Rationality ends, lose 1 Energy and gain 1 Weak. Below 0 SAN is treated as SEN. At -100 or less SAN, cards drawn this combat randomly transform into obtainable class cards, curses, or statuses; transformed cards are upgraded, and both damage you deal and damage you take are increased by 50%.
+- Wriggling Shadow: gained the first time SAN reaches 0 or below, once per run. Wriggling Shadow, 辷卪, and Executioner evolve into the next card and remove themselves after enough kills; the card text shows remaining kills. Executioner Ketch removes all enemy Artifact and deals high damage.
 
 ## Other New Relics
 
@@ -155,5 +169,6 @@ The following do not appear in multiplayer:
 - Re-Thinking Poker
 - Caterpillar's Smoke
 - Duchess' Menu
+- Rabbit Hand Mirror / Pumpkin Hand Mirror / Jack Hand Mirror / Girl's Hand Mirror
 
 Some random effects that still appear in multiplayer need more testing, especially Mystery of the Night Sky, Gift of Chaos, Prickett's Dice, and Red Queen's Signed Album.

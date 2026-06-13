@@ -26,7 +26,8 @@ public sealed class HorrifyingGluttonEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return runState.CurrentActIndex == 1
+        return BsAncientConfig.EnableModEvents
+            && runState.CurrentActIndex == 1
             && runState.Players.All(player =>
                 HorrifyingGluttonRelic.HasAttackCandidate(player)
                 || (player.Gold >= FoodGoldCost && HasAvailableFoodRelic(player)));

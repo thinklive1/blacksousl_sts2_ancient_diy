@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using BlackSouls.Scripts.Cards;
@@ -42,5 +43,11 @@ public class StageEndCountdownPower : ModPowerTemplate
         {
             await CreatureCmd.Kill(Owner, force: true);
         }
+    }
+
+    public override Task AfterCombatEnd(CombatRoom room)
+    {
+        BsAncientAudio.StopStageEndLoop();
+        return Task.CompletedTask;
     }
 }

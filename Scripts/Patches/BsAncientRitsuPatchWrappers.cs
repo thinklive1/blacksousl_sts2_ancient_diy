@@ -1,7 +1,10 @@
 using MegaCrit.Sts2.Core.Hooks;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
+using MegaCrit.Sts2.Core.Models.Potions;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models.Relics;
 using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
@@ -127,5 +130,35 @@ public class DeprecatedAncientMapNodeAssetPathsFallbackPatch : IPatchMethod
     {
         __result = [MapIconPath, MapIconOutlinePath];
         return false;
+    }
+}
+
+public class MirrorSanFairyResetPatch : IPatchMethod
+{
+    public static string PatchId => "mirror_san_fairy_reset";
+    public static string Description => "Reset mirror SAN when Fairy in a Bottle triggers.";
+    public static bool IsCritical => false;
+
+    public static ModPatchTarget[] GetTargets() =>
+        [new(typeof(FairyInABottle), nameof(FairyInABottle.AfterPreventingDeath), ignoreIfMissing: true)];
+
+    public static void Postfix(Creature creature)
+    {
+        MirrorSan.Get(creature.Player)?.ResetSan();
+    }
+}
+
+public class MirrorSanLizardTailResetPatch : IPatchMethod
+{
+    public static string PatchId => "mirror_san_lizard_tail_reset";
+    public static string Description => "Reset mirror SAN when Lizard Tail triggers.";
+    public static bool IsCritical => false;
+
+    public static ModPatchTarget[] GetTargets() =>
+        [new(typeof(LizardTail), nameof(LizardTail.AfterPreventingDeath), ignoreIfMissing: true)];
+
+    public static void Postfix(Creature creature)
+    {
+        MirrorSan.Get(creature.Player)?.ResetSan();
     }
 }

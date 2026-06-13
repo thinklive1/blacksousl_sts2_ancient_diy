@@ -3,6 +3,7 @@
   "title": "BS Ancient 设置",
   "description": "这些开关会同步写入 bs_ancient_config.cfg。更改后需要重启游戏并从新一局开始生效。",
   "sections.ancients.title": "先古之民",
+  "sections.events.title": "事件",
   "onlyUseModAncients.title": "只生成 Mod 先古之民",
   "onlyUseModAncients.description": "开启后，第 2 层只会从诺登/梅贝尔中选择，第 3 层只会从普利凯特/梅贝尔中选择。更改后需要重启游戏并新开一局。",
   "disableModAncients.title": "完全禁用 Mod 地图先古之民",
@@ -10,5 +11,9 @@
   "replaceNeowAppearance.title": "替换涅奥外观",
   "replaceNeowAppearance.description": "开启后，将开局涅奥的外观、名称、标题和相关对话替换为古兰.吉涅尔。更改后需要重启游戏。",
   "grandGuignolInitialRelicChance.title": "古兰初始遗物出现概率",
-  "grandGuignolInitialRelicChance.description": "控制开局正面选项被替换为古兰初始遗物的概率。更改后需要重启游戏并新开一局。"
+  "grandGuignolInitialRelicChance.description": "控制开局正面选项被替换为古兰初始遗物的概率。更改后需要重启游戏并新开一局。",
+  "enableModEvents.title": "启用 Mod 事件",
+  "enableModEvents.description": "开启后，普通事件池中会出现 BS Ancient 的 Mod 事件。关闭后不会自然遇到这些事件。更改后需要重启游戏并新开一局。",
+  "disableTestingEvents.title": "禁用测试中事件",
+  "disableTestingEvents.description": "开启后，小丑、迷宫中的少女等 SAN/手镜相关测试事件不会自然出现。更改后需要重启游戏并新开一局。"
 }

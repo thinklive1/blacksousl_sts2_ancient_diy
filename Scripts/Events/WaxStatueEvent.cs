@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace BlackSouls.Scripts;
 
 [RegisterActEvent(typeof(Overgrowth))]
+[RegisterActEvent(typeof(Underdocks))]
 [RegisterActEvent(typeof(Hive))]
 [RegisterActEvent(typeof(Glory))]
 public sealed class WaxStatueEvent : ModEventTemplate
@@ -24,7 +25,8 @@ public sealed class WaxStatueEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return runState.Players.Any(player => PileType.Deck.GetPile(player).Cards.Count > 0);
+        return BsAncientConfig.EnableModEvents
+            && runState.Players.Any(player => PileType.Deck.GetPile(player).Cards.Count > 0);
     }
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>

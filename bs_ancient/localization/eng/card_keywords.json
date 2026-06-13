@@ -6,5 +6,7 @@
 	"BS_ANCIENT_KEYWORD_KILL.description": "The total incoming enemy attack damage is greater than or equal to your current HP, Block, Plating, and Osty's current HP combined.",
 	"BS_ANCIENT_KEYWORD_KILL.title": "Kill",
 	"BS_ANCIENT_KEYWORD_ENCORE.description": "After you manually play this card this turn, at the start of next turn, automatically play this card a number of times equal to how many times it has been played this combat. Automatic plays count as plays, but do not independently trigger Encore for the next turn.",
-	"BS_ANCIENT_KEYWORD_ENCORE.title": "Encore"
+	"BS_ANCIENT_KEYWORD_ENCORE.title": "Encore",
+	"BS_ANCIENT_KEYWORD_KILLING_BLOW.description": "Deal damage with this card and kill an enemy.",
+	"BS_ANCIENT_KEYWORD_KILLING_BLOW.title": "Killing Blow"
 }

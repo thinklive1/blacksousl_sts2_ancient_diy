@@ -88,7 +88,25 @@ public class Entry
                     100,
                     5,
                     value => $"{value}%",
-                    S("grandGuignolInitialRelicChance.description", "控制开局正面选项被替换为古兰初始遗物的概率。更改后需要重启游戏并新开一局。"))));
+                    S("grandGuignolInitialRelicChance.description", "控制开局正面选项被替换为古兰初始遗物的概率。更改后需要重启游戏并新开一局。")))
+            .AddSection("events", section => section
+                .WithTitle(S("sections.events.title", "事件"))
+                .AddToggle(
+                    "enable_mod_events",
+                    S("enableModEvents.title", "启用 Mod 事件"),
+                    BoolBinding(
+                        "EnableModEvents",
+                        () => BsAncientConfig.EnableModEvents,
+                        value => BsAncientConfig.EnableModEvents = value),
+                    S("enableModEvents.description", "开启后，普通事件池中会出现 BS Ancient 的 Mod 事件。关闭后不会自然遇到这些事件。更改后需要重启游戏并新开一局。"))
+                .AddToggle(
+                    "disable_testing_events",
+                    S("disableTestingEvents.title", "禁用测试中事件"),
+                    BoolBinding(
+                        "DisableTestingEvents",
+                        () => BsAncientConfig.DisableTestingEvents,
+                        value => BsAncientConfig.DisableTestingEvents = value),
+                    S("disableTestingEvents.description", "开启后，小丑、迷宫中的少女等 SAN/手镜相关测试事件不会自然出现。更改后需要重启游戏并新开一局。"))));
     }
 
     private static ModSettingsText S(string key, string fallback)

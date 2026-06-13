@@ -6,5 +6,7 @@
 	"BS_ANCIENT_KEYWORD_KILL.description": "敌人的攻击伤害总和大于等于你的当前生命、格挡、覆甲与奥斯提当前生命之和。",
 	"BS_ANCIENT_KEYWORD_KILL.title": "杀死",
 	"BS_ANCIENT_KEYWORD_ENCORE.description": "本回合手动打出这张牌后，下回合开始时，自动打出本场战斗中打出过次数的这张牌。自动打出也计入打出次数，但不会单独触发下回合再演。",
-	"BS_ANCIENT_KEYWORD_ENCORE.title": "再演"
+	"BS_ANCIENT_KEYWORD_ENCORE.title": "再演",
+	"BS_ANCIENT_KEYWORD_KILLING_BLOW.description": "由这张牌造成伤害并杀死敌人。",
+	"BS_ANCIENT_KEYWORD_KILLING_BLOW.title": "斩杀"
 }

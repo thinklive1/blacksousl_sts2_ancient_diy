@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace BlackSouls.Scripts;
 
 [RegisterActEvent(typeof(Overgrowth))]
+[RegisterActEvent(typeof(Underdocks))]
 [RegisterActEvent(typeof(Hive))]
 public sealed class FriendlySlimeEvent : ModEventTemplate
 {
@@ -33,7 +34,8 @@ public sealed class FriendlySlimeEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return runState.Players.All(player => CountDissolveCandidates(player) >= NodCards);
+        return BsAncientConfig.EnableModEvents
+            && runState.Players.All(player => CountDissolveCandidates(player) >= NodCards);
     }
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()

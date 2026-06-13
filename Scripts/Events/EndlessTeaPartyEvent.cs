@@ -14,6 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace BlackSouls.Scripts;
 
 [RegisterActEvent(typeof(Overgrowth))]
+[RegisterActEvent(typeof(Underdocks))]
 [RegisterActEvent(typeof(Hive))]
 [RegisterActEvent(typeof(Glory))]
 public sealed class EndlessTeaPartyEvent : ModEventTemplate
@@ -32,7 +33,8 @@ public sealed class EndlessTeaPartyEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return runState.CurrentActIndex is >= 0 and <= 2;
+        return BsAncientConfig.EnableModEvents
+            && runState.CurrentActIndex is >= 0 and <= 2;
     }
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>

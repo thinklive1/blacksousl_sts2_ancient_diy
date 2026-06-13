@@ -44,6 +44,7 @@ public class StageEndCard : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        BsAncientAudio.PlayStageEndLoop();
         await RefillHand(choiceContext);
         await RefillEnergy();
         if (!Owner.Creature.Powers.OfType<MadnessPower>().Any())
