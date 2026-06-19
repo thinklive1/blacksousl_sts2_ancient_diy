@@ -32,7 +32,7 @@ public class NodeRibbonRelic : ModRelicTemplate
         BigIconPath: "res://bs_ancient/assets/images/relics/NodeRibbonRelic.png"
     );
 
-    public override Task BeforeTurnEndVeryEarly(PlayerChoiceContext choiceContext, CombatSide side)
+    public override Task BeforeSideTurnEndVeryEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (_hasTriggeredThisCombat || side != Owner.Creature.Side || Owner.Creature.IsDead || !WouldEnemyAttacksBeLethal())
         {
@@ -87,7 +87,7 @@ public class NodeRibbonRelic : ModRelicTemplate
     private int GetIncomingEnemyAttackDamage()
     {
         Creature ownerCreature = Owner.Creature;
-        CombatState? combatState = ownerCreature.CombatState;
+        ICombatState? combatState = ownerCreature.CombatState;
         if (combatState == null)
         {
             return 0;

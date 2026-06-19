@@ -54,10 +54,12 @@ public class CatSmileCard : ModCardTemplate
         if (await collar.RecordSmileAndShouldGainIntangible())
         {
             await PowerCmd.Apply<IntangiblePower>(
+                choiceContext,
                 Owner.Creature,
                 DynamicVars["IntangiblePower"].BaseValue,
                 Owner.Creature,
-                this);
+                this,
+                false);
         }
     }
 

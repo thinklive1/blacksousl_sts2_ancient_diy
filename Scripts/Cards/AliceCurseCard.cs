@@ -79,7 +79,7 @@ public class AliceCurseCard : ModCardTemplate
 
         if (Owner.RunState.Rng.CombatCardSelection.NextInt(100) < EasterEggChance)
         {
-            await PowerCmd.Apply<AliceCurseEasterEggPower>(Owner.Creature, 1, Owner.Creature, this);
+            await PowerCmd.Apply<AliceCurseEasterEggPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, 1, Owner.Creature, this, false);
             AliceCurseEasterEggVisualPatch.RefreshVisibleCombatCards(Owner);
         }
     }
@@ -107,7 +107,7 @@ public class AliceCurseCard : ModCardTemplate
 
     private async Task AddCopiesToCombat()
     {
-        CombatState? combatState = Owner.Creature.CombatState;
+        ICombatState? combatState = Owner.Creature.CombatState;
         if (combatState == null)
         {
             return;
@@ -119,13 +119,14 @@ public class AliceCurseCard : ModCardTemplate
         CardPileAddResult drawResult = await CardPileCmd.AddGeneratedCardToCombat(
             drawCopy,
             PileType.Draw,
-            addedByPlayer: true,
+            Owner,
             CardPilePosition.Random
         );
         CardPileAddResult discardResult = await CardPileCmd.AddGeneratedCardToCombat(
             discardCopy,
             PileType.Discard,
-            addedByPlayer: true
+            Owner,
+            CardPilePosition.Top
         );
 
         RefreshPileCounter(drawResult, PileType.Draw);
@@ -145,24 +146,24 @@ public class AliceCurseCard : ModCardTemplate
         switch (Owner.RunState.Rng.CombatCardSelection.NextInt(7))
         {
             case 0:
-                await PowerCmd.Apply<IntangiblePower>(Owner.Creature, DynamicVars["IntangiblePower"].BaseValue, Owner.Creature, this);
+                await PowerCmd.Apply<IntangiblePower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["IntangiblePower"].BaseValue, Owner.Creature, this, false);
                 break;
             case 1:
-                await PowerCmd.Apply<UndeadPower>(Owner.Creature, DynamicVars["UndeadPower"].BaseValue, Owner.Creature, this);
+                await PowerCmd.Apply<UndeadPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["UndeadPower"].BaseValue, Owner.Creature, this, false);
                 break;
             case 2:
-                await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars["StrengthPower"].BaseValue, Owner.Creature, this);
+                await PowerCmd.Apply<StrengthPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["StrengthPower"].BaseValue, Owner.Creature, this, false);
                 break;
             case 3:
-                await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars["DexterityPower"].BaseValue, Owner.Creature, this);
+                await PowerCmd.Apply<DexterityPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["DexterityPower"].BaseValue, Owner.Creature, this, false);
                 break;
             case 4:
-                await PowerCmd.Apply<PlatingPower>(Owner.Creature, DynamicVars["PlatingPower"].BaseValue, Owner.Creature, this);
+                await PowerCmd.Apply<PlatingPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["PlatingPower"].BaseValue, Owner.Creature, this, false);
                 break;
             case 5:
                 if (!Owner.Creature.Powers.OfType<MadnessPower>().Any())
                 {
-                    await PowerCmd.Apply<MadnessPower>(Owner.Creature, DynamicVars["MadnessPower"].BaseValue, Owner.Creature, this);
+                    await PowerCmd.Apply<MadnessPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["MadnessPower"].BaseValue, Owner.Creature, this, false);
                 }
                 break;
             case 6:

@@ -95,7 +95,7 @@ public class MargaretRelic : ModRelicTemplate
             return false;
         }
 
-        alternatives.Add(new CardRewardAlternative("SUPPLY", () => Supply(cardReward), PostAlternateCardRewardAction.DismissScreenAndRemoveReward));
+        alternatives.Add(new CardRewardAlternative("SUPPLY", () => Supply(cardReward), PostAlternateCardRewardAction.EndSelectionAndCompleteReward));
         return true;
     }
 

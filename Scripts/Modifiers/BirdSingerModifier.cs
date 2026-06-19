@@ -117,7 +117,7 @@ public sealed class BirdSingerModifier : ModModifierTemplate
             return;
         }
 
-        CombatState? combatState = RunState.Players.FirstOrDefault()?.Creature.CombatState;
+        ICombatState? combatState = RunState.Players.FirstOrDefault()?.Creature.CombatState;
         if (combatState == null)
         {
             return;

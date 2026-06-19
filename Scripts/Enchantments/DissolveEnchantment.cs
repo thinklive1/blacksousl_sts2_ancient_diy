@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -69,7 +70,12 @@ public class DissolveEnchantment : ModEnchantmentTemplate
         return -Math.Min(originalDamage, BlackSouls_DamageReduction);
     }
 
-    public override decimal EnchantBlockAdditive(decimal originalBlock, ValueProp props)
+    public override decimal ModifyBlockAdditive(
+        Creature target,
+        decimal originalBlock,
+        ValueProp props,
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         return -Math.Min(originalBlock, BlackSouls_BlockReduction);
     }

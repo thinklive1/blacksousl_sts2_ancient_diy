@@ -127,7 +127,7 @@ public sealed class GirlInMazeEvent : ModEventTemplate
     private async Task AddCardToDeck<T>() where T : CardModel
     {
         CardModel card = Owner!.RunState.CreateCard<T>(Owner);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, source: this), 2f);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
     }
 
     private static bool HasBasicHandMirror(MegaCrit.Sts2.Core.Entities.Players.Player player)

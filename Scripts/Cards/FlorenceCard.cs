@@ -42,7 +42,7 @@ public class FlorenceCard : ModCardTemplate
         }
 
         await CardCmd.Exhaust(choiceContext, this);
-        await PowerCmd.Apply<RegenPower>(Owner.Creature, DynamicVars["RegenPower"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<RegenPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["RegenPower"].BaseValue, Owner.Creature, this, false);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 

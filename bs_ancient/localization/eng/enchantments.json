@@ -5,6 +5,9 @@
 	"BS_ANCIENT_ENCHANTMENT_UNLOCK_ENCHANTMENT.title": "Unlock",
 	"BS_ANCIENT_ENCHANTMENT_UNLOCK_ENCHANTMENT.description": "Unlock: Once each combat, you may play this card for free while ignoring play requirements. When this first triggers, remove all card Afflictions.",
 	"BS_ANCIENT_ENCHANTMENT_UNLOCK_ENCHANTMENT.extraCardText": "Once each combat, you may play this card for free while ignoring play requirements. When this first triggers, remove all card Afflictions.",
+	"BS_ANCIENT_ENCHANTMENT_LIE_ENCHANTMENT.title": "Lie",
+	"BS_ANCIENT_ENCHANTMENT_LIE_ENCHANTMENT.description": "Lie: After this card is played, permanently swap this card's damage and block values. If it only has damage, after swapping it gains that much Block and deals no damage. If it only has Block, after swapping it deals that much damage and gains no Block.",
+	"BS_ANCIENT_ENCHANTMENT_LIE_ENCHANTMENT.extraCardText": "After this card is played, permanently swap damage and block values. If it only has damage, after swapping it gains that much Block and deals no damage. If it only has Block, after swapping it deals that much damage and gains no Block.",
 	"BS_ANCIENT_ENCHANTMENT_TWIN_ENCHANTMENT.title": "Twin",
 	"BS_ANCIENT_ENCHANTMENT_TWIN_ENCHANTMENT.description": "Twin: When this card is played, play the other [gold]Twin[/gold] card with the same name.",
 	"BS_ANCIENT_ENCHANTMENT_TWIN_ENCHANTMENT.extraCardText": "When this card is played, play the other [gold]Twin[/gold] card with the same name.",
@@ -22,5 +25,8 @@
 	"BS_ANCIENT_ENCHANTMENT_EVIL_QI_ENCHANTMENT.extraCardText": "Gain [blue]1[/blue] [gold]Evil Qi[/gold] when played; resolves at end of turn.",
 	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.title": "Dissolve",
 	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.description": "Dissolve: Add [gold]Exhaust[/gold] to this card. After it is played, permanently reduce this card's damage and block values by [blue]1[/blue]. When all reducible values reach [blue]0[/blue], remove it from your deck.",
-	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.extraCardText": "Add [gold]Exhaust[/gold]. After it is played, permanently reduce damage and block by [blue]1[/blue]. When all reach [blue]0[/blue], remove it from your deck."
+	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.extraCardText": "Add [gold]Exhaust[/gold]. After it is played, permanently reduce damage and block by [blue]1[/blue]. When all reach [blue]0[/blue], remove it from your deck.",
+	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.title": "Ascension",
+	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.description": "Ascension: After [blue]{Amount}[/blue] nodes, transform into a random card of the next higher rarity. Common cards become Uncommon, Uncommon cards become Rare, and Rare cards become Ancient. It cannot skip rarities.",
+	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.extraCardText": "After [blue]{Amount}[/blue] nodes, transform into a random card of the next higher rarity. It cannot skip rarities."
 }

@@ -96,7 +96,7 @@ public class RethinkPokerRelic : ModRelicTemplate
 
         if (selected != null)
         {
-            CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(selected, PileType.Deck, source: this), 2f);
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(selected, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
         }
     }
 

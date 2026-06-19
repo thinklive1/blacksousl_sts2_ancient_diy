@@ -34,14 +34,14 @@ public class MysteryOfNightSkyRelic : ModRelicTemplate
         BigIconPath: "res://bs_ancient/assets/images/relics/MysteryOfNightSkyRelic.png"
     );
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == Owner.Creature.Side)
         {
             int decision = Owner.RunState.Rng.Niche.NextInt(100) < ReplayChance
                 ? MysteryOfNightSkyDecisionPower.ReplayAvailable
                 : MysteryOfNightSkyDecisionPower.NoReplayAvailable;
-            await PowerCmd.SetAmount<MysteryOfNightSkyDecisionPower>(Owner.Creature, decision, Owner.Creature, null);
+            await BsPowerCmd.SetAmount<MysteryOfNightSkyDecisionPower>(Owner.Creature, decision, Owner.Creature, null);
         }
     }
 

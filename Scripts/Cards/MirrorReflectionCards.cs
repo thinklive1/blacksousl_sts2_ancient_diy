@@ -76,7 +76,7 @@ public sealed class BanaiReflectionCard : ModCardTemplate
         await CreatureCmd.GainBlock(Owner.Creature, Math.Max(0, DynamicVars.Block.BaseValue - BlackSouls_CopyBlockLoss), DynamicVars.Block.Props, cardPlay);
         await MirrorSan.Change(Owner, -SanLoss);
 
-        CombatState? combatState = Owner.Creature.CombatState;
+        ICombatState? combatState = Owner.Creature.CombatState;
         if (combatState == null)
         {
             return;
@@ -88,7 +88,7 @@ public sealed class BanaiReflectionCard : ModCardTemplate
             ConfigureMirrorCopy(banaiCopy, this);
         }
 
-        CardPileAddResult result = await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Draw, addedByPlayer: true, CardPilePosition.Random);
+        CardPileAddResult result = await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Draw, Owner, CardPilePosition.Random);
         RefreshPileCounter(result, PileType.Draw);
     }
 
@@ -167,7 +167,7 @@ public sealed class OrrReflectionCard : ModCardTemplate
     {
         await CreatureCmd.Heal(Owner.Creature, DynamicVars["Heal"].BaseValue);
         await MirrorSan.Change(Owner, -SanLoss);
-        await PowerCmd.Apply<OrrReflectionPendingPower>(Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<OrrReflectionPendingPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, 1, Owner.Creature, this, false);
     }
 
     protected override void OnUpgrade()
@@ -215,10 +215,19 @@ public sealed class HolmesReflectionCard : ModCardTemplate
         CardModel? selected = await CardSelectCmd.FromChooseACardScreen(choiceContext, cards, Owner, canSkip: true);
         if (selected != null)
         {
-            await CardPileCmd.AddGeneratedCardToCombat(selected, PileType.Hand, addedByPlayer: true);
+            await CardPileCmd.AddGeneratedCardToCombat(selected, PileType.Hand, Owner, CardPilePosition.Top);
         }
 
         await MirrorSan.Change(Owner, SanGain);
+    }
+
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        description.Add(
+            "UpgradeText",
+            CurrentUpgradeLevel > 0
+                ? new LocString("cards", $"{Id.Entry}.upgradeText").GetFormattedText()
+                : string.Empty);
     }
 }
 
@@ -284,7 +293,7 @@ public sealed class JackTheRipperReflectionCard : ModCardTemplate
         GainDamageBonus(DamageGainPerPlay);
         if (ShouldQueueTwoSidedVirtue())
         {
-            await PowerCmd.Apply<TwoSidedVirtuePower>(Owner.Creature, TwoSidedVirtuePower.PlaysPerTransform, Owner.Creature, this);
+            await PowerCmd.Apply<TwoSidedVirtuePower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, TwoSidedVirtuePower.PlaysPerTransform, Owner.Creature, this, false);
             Owner.Creature.GetPower<TwoSidedVirtuePower>()?.QueueTransform();
         }
 
@@ -375,6 +384,8 @@ public sealed class JackTheRipperReflectionCard : ModCardTemplate
 [RegisterCard(typeof(EventCardPool))]
 public sealed class LiddellReflectionCard : ModCardTemplate
 {
+    public override int MaxUpgradeLevel => 0;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Eternal,
         CardKeyword.Ethereal,
@@ -417,7 +428,7 @@ public sealed class LiddellReflectionCard : ModCardTemplate
             await CardPileCmd.AddGeneratedCardsToCombat(
                 copies,
                 PileType.Discard,
-                addedByPlayer: true,
+                Owner,
                 CardPilePosition.Random);
             RefreshPileCounter(PileType.Discard, copies.Count);
         }

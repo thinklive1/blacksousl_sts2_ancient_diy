@@ -36,6 +36,6 @@ public sealed class RedQueenGuillotineRelic : ModRelicTemplate
     {
         CardModel card = Owner.RunState.CreateCard<RedQueenGuillotineCard>(Owner);
         CardCmd.Enchant<ExecutionEnchantment>(card, 1m);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, source: this), 2f);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
     }
 }

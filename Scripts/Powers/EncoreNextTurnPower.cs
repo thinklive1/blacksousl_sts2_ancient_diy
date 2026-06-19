@@ -163,7 +163,7 @@ public class EncoreNextTurnPower : ModPowerTemplate
 
     private static Creature? GetAutoPlayTarget(CardModel card)
     {
-        CombatState? combatState = card.CombatState ?? card.Owner.Creature.CombatState;
+        ICombatState? combatState = card.CombatState ?? card.Owner.Creature.CombatState;
         return card.TargetType switch
         {
             TargetType.Self or TargetType.AnyPlayer => card.Owner.Creature,

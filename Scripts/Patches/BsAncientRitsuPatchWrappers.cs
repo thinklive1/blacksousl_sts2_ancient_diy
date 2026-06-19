@@ -9,32 +9,6 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
-public class HungerEvilQiAfflictPatch : IPatchMethod
-{
-    public static string PatchId => "hunger_evil_qi_afflict";
-    public static string Description => "Allow Hunger Afflict to overwrite Evil Qi.";
-    public static bool IsCritical => false;
-
-    public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(HungerPower), "Afflict", ignoreIfMissing: true)];
-
-    public static bool Prefix(HungerPower __instance, CardModel card, ref Task __result) =>
-        HungerEvilQiOverwritePatch.AfflictPrefix(__instance, card, ref __result);
-}
-
-public class HungerEvilQiAfterCardEnteredCombatPatch : IPatchMethod
-{
-    public static string PatchId => "hunger_evil_qi_after_card_entered_combat";
-    public static string Description => "Allow Hunger card-entered-combat affliction to overwrite Evil Qi.";
-    public static bool IsCritical => false;
-
-    public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(HungerPower), nameof(HungerPower.AfterCardEnteredCombat), ignoreIfMissing: true)];
-
-    public static bool Prefix(HungerPower __instance, CardModel card, ref Task __result) =>
-        HungerEvilQiOverwritePatch.AfterCardEnteredCombatPrefix(__instance, card, ref __result);
-}
-
 public class UnicornHookBeforeDamageReceivedPatch : IPatchMethod
 {
     public static string PatchId => "unicorn_hook_before_damage_received";

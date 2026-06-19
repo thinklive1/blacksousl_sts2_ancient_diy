@@ -69,7 +69,7 @@ public abstract class AngelFeatherRelicBase : ModRelicTemplate
         {
             _convertedDamageThisCombat = true;
             Flash();
-            await PowerCmd.Apply<VigorPower>(Owner.Creature, result.UnblockedDamage, Owner.Creature, null);
+            await PowerCmd.Apply<VigorPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, result.UnblockedDamage, Owner.Creature, null, false);
         }
 
         if (HasLifestealAfterFirstDamage && !_unlockedLifestealThisCombat)
@@ -113,7 +113,7 @@ public abstract class AngelFeatherRelicBase : ModRelicTemplate
             return Task.CompletedTask;
         }
 
-        return PowerCmd.SetAmount<BrutalizingAngelPower>(Owner.Creature, amount, Owner.Creature, null);
+        return BsPowerCmd.SetAmount<BrutalizingAngelPower>(Owner.Creature, amount, Owner.Creature, null);
     }
 }
 

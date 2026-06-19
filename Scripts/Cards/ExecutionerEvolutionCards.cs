@@ -98,7 +98,7 @@ public abstract class ExecutionerEvolutionCard<TNext> : ModCardTemplate where TN
         }
 
         CardModel nextCard = Owner.RunState.CreateCard<TNext>(Owner);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(nextCard, PileType.Deck, source: this), 2f);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(nextCard, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
 
         if (deckCard.Pile?.Type == PileType.Deck)
         {

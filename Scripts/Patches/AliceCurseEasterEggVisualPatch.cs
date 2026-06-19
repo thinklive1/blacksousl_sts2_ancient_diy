@@ -28,9 +28,6 @@ public static class AliceCurseEasterEggVisualPatch
     private static readonly AccessTools.FieldRef<NCard, Control> AncientBannerRef =
         AccessTools.FieldRefAccess<NCard, Control>("_ancientBanner");
 
-    private static readonly AccessTools.FieldRef<NCard, TextureRect> AncientHighlightRef =
-        AccessTools.FieldRefAccess<NCard, TextureRect>("_ancientHighlight");
-
     private static readonly AccessTools.FieldRef<NCard, TextureRect> AncientPortraitRef =
         AccessTools.FieldRefAccess<NCard, TextureRect>("_ancientPortrait");
 
@@ -64,7 +61,7 @@ public static class AliceCurseEasterEggVisualPatch
 
     private static bool IsActive()
     {
-        CombatState? combatState = CombatManager.Instance?.DebugOnlyGetState();
+        ICombatState? combatState = CombatManager.Instance?.DebugOnlyGetState();
         return combatState?.Players.Any(player => player.Creature.Powers.OfType<AliceCurseEasterEggPower>().Any()) ?? false;
     }
 
@@ -149,8 +146,6 @@ public static class AliceCurseEasterEggVisualPatch
         AncientBorderRef(card).Visible = true;
         AncientTextBgRef(card).Visible = true;
         AncientBannerRef(card).Visible = true;
-        AncientHighlightRef(card).Visible = true;
-
         AncientPortraitRef(card).Texture = AliceCursePortrait;
         AncientTextBgRef(card).Texture = GetAncientTextBg(card.Model.Type);
 

@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -35,7 +36,7 @@ public class CinderellaFavorRelic : ModRelicTemplate
         BigIconPath: "res://bs_ancient/assets/images/relics/CinderellaFavorRelic.png"
     );
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != Owner.Creature.Side)
         {
@@ -46,7 +47,7 @@ public class CinderellaFavorRelic : ModRelicTemplate
         await ApplyStrengthLoss();
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != Owner.Creature.Side)
         {
@@ -71,6 +72,6 @@ public class CinderellaFavorRelic : ModRelicTemplate
 
     private Task ApplyStrengthLoss()
     {
-        return PowerCmd.Apply<StrengthPower>(Owner.Creature, -StrengthLoss, Owner.Creature, null);
+        return PowerCmd.Apply<StrengthPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, -StrengthLoss, Owner.Creature, null, false);
     }
 }

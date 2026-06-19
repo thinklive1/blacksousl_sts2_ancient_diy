@@ -39,9 +39,11 @@ public class OldFilmA : ModRelicTemplate
 
         Flash();
         await PowerCmd.Apply<ViolenceDemonPower>(
+            new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(),
             Owner.Creature,
             DynamicVars["ViolenceDemonPower"].BaseValue,
             Owner.Creature,
-            null);
+            null,
+            false);
     }
 }

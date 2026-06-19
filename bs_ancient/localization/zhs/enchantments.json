@@ -5,6 +5,9 @@
 	"BS_ANCIENT_ENCHANTMENT_UNLOCK_ENCHANTMENT.title": "解锁",
 	"BS_ANCIENT_ENCHANTMENT_UNLOCK_ENCHANTMENT.description": "解锁: 每场战斗中，可以无视打出条件并免费打出这张牌[blue]1[/blue]次。首次触发时，解除所有卡牌的侵蚀。",
 	"BS_ANCIENT_ENCHANTMENT_UNLOCK_ENCHANTMENT.extraCardText": "每场战斗中，可以无视打出条件并免费打出这张牌[blue]1[/blue]次。首次触发时，解除所有卡牌的侵蚀。",
+	"BS_ANCIENT_ENCHANTMENT_LIE_ENCHANTMENT.title": "谎言",
+	"BS_ANCIENT_ENCHANTMENT_LIE_ENCHANTMENT.description": "谎言: 每次打出这张牌后，永久对调这张牌的伤害与格挡数值。若只有伤害，切换后获得等量格挡且不造成伤害；若只有格挡，切换后造成等量伤害且不获得格挡。",
+	"BS_ANCIENT_ENCHANTMENT_LIE_ENCHANTMENT.extraCardText": "每次打出后，永久对调伤害与格挡数值；若只有伤害，切换后获得等量格挡且不造成伤害；若只有格挡，切换后造成等量伤害且不获得格挡。",
 	"BS_ANCIENT_ENCHANTMENT_TWIN_ENCHANTMENT.title": "双生",
 	"BS_ANCIENT_ENCHANTMENT_TWIN_ENCHANTMENT.description": "双生: 打出这张牌时，打出另一张同名[gold]双生[/gold]牌。",
 	"BS_ANCIENT_ENCHANTMENT_TWIN_ENCHANTMENT.extraCardText": "打出这张牌时，打出另一张同名[gold]双生[/gold]牌。",
@@ -22,5 +25,8 @@
 	"BS_ANCIENT_ENCHANTMENT_EVIL_QI_ENCHANTMENT.extraCardText": "打出时获得[blue]1[/blue]层[gold]邪气[/gold]，回合结束时结算。",
 	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.title": "溶解",
 	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.description": "溶解: 为这张牌添加[gold]消耗[/gold]。打出后，这张牌的伤害与格挡数值永久减少[blue]1[/blue]；可减少数值全部降为[blue]0[/blue]时，从牌组中移除。",
-	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.extraCardText": "添加[gold]消耗[/gold]。打出后，伤害与格挡永久减少[blue]1[/blue]；全部降为[blue]0[/blue]时移出牌组。"
+	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.extraCardText": "添加[gold]消耗[/gold]。打出后，伤害与格挡永久减少[blue]1[/blue]；全部降为[blue]0[/blue]时移出牌组。",
+	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.title": "升格",
+	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.description": "升格: 经过[blue]{Amount}[/blue]个节点后，变化为一张随机的更高一级稀有度卡牌。普通牌变罕见牌，罕见牌变稀有牌，稀有牌变先古牌，不能跨级。",
+	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.extraCardText": "经过[blue]{Amount}[/blue]个节点后，随机变为更高一级稀有度卡牌，不能跨级。"
 }

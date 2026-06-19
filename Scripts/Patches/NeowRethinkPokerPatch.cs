@@ -42,7 +42,8 @@ public class NeowRethinkPokerPatch : IPatchMethod
             ModelDb.Relic<RethinkPokerRelic>().ToMutable(),
             ModelDb.Relic<WormSmokeRelic>().ToMutable(),
             ModelDb.Relic<MargaretRelic>().ToMutable(),
-            ModelDb.Relic<AngelFeatherRelic>().ToMutable()
+            ModelDb.Relic<AngelFeatherRelic>().ToMutable(),
+            ModelDb.Relic<MabelSoldierRelic>().ToMutable()
         ];
         candidates.RemoveAll(relic => !relic.IsAllowed(__instance.Owner.RunState));
         if (candidates.Count == 0)

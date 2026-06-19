@@ -34,7 +34,7 @@ public class EvilQiAfflictionOverwritePatch : IPatchMethod
         }
 
         affliction.AssertMutable();
-        CombatState? combatState = card.CombatState ?? card.Owner.Creature.CombatState;
+        ICombatState? combatState = card.CombatState ?? card.Owner.Creature.CombatState;
         if (combatState == null || !Hook.ShouldAfflict(combatState, card, affliction))
         {
             __result = Task.FromResult<AfflictionModel?>(null);

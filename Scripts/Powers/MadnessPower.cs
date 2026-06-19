@@ -41,7 +41,7 @@ public class MadnessPower : ModPowerTemplate
         return DynamicVars["DamageMultiplier"].BaseValue;
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != Owner.Side || Owner.IsDead)
         {

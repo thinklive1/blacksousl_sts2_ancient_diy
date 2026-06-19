@@ -58,7 +58,7 @@ public class EternalVanityRelic : ModRelicTemplate
         return Task.CompletedTask;
     }
 
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, CombatState combatState)
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
         if (IsMultiplayer)
         {
@@ -90,7 +90,7 @@ public class EternalVanityRelic : ModRelicTemplate
         }
 
         Flash();
-        await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Hand, addedByPlayer: true);
+        await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Hand, Owner, CardPilePosition.Top);
     }
 
     public override Task AfterRoomEntered(AbstractRoom room)

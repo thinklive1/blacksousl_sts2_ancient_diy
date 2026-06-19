@@ -45,7 +45,7 @@ public class GerdaCard : ModCardTemplate
         }
 
         await CardCmd.Exhaust(choiceContext, this);
-        await PowerCmd.Apply<UndeadPower>(Owner.Creature, DynamicVars["UndeadPower"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<UndeadPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["UndeadPower"].BaseValue, Owner.Creature, this, false);
     }
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

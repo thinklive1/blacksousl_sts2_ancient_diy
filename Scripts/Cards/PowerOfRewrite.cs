@@ -61,6 +61,7 @@ public class PowerOfRewrite : ModCardTemplate
         if (surroundedFacing != null)
         {
             SurroundedVisualPower? visualPower = await PowerCmd.Apply<SurroundedVisualPower>(
+                choiceContext,
                 Owner.Creature,
                 1,
                 Owner.Creature,

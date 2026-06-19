@@ -20,6 +20,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+#pragma warning disable CS8765, CS8604
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class SuspiciousHatRelic : ModRelicTemplate
 {
@@ -88,9 +89,13 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
         return CopiedRelic()?.AfterRoomEntered(room) ?? Task.CompletedTask;
     }
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override Task BeforeSideTurnStart(
+        PlayerChoiceContext choiceContext,
+        CombatSide side,
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState)
     {
-        return CopiedRelic()?.BeforeSideTurnStart(choiceContext, side, combatState) ?? Task.CompletedTask;
+        return CopiedRelic()?.BeforeSideTurnStart(choiceContext, side, participants, combatState) ?? Task.CompletedTask;
     }
 
     public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
@@ -103,7 +108,7 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
         return CopiedRelic()?.AfterPlayerTurnStartLate(choiceContext, player) ?? Task.CompletedTask;
     }
 
-    public override Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         RelicModel? copied = CopiedRelic();
         if (copied is PhylacteryUnbound && side == CombatSide.Player)
@@ -111,37 +116,37 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
             return OstyCmd.Summon(new ThrowingPlayerChoiceContext(), Owner, copied.DynamicVars["StartOfTurn"].BaseValue, this);
         }
 
-        return copied?.AfterSideTurnStart(side, combatState) ?? Task.CompletedTask;
+        return copied?.AfterSideTurnStart(side, participants, combatState) ?? Task.CompletedTask;
     }
 
-    public override Task BeforePlayPhaseStart(PlayerChoiceContext choiceContext, Player player)
+    public override Task AfterAutoPrePlayPhaseEntered(PlayerChoiceContext choiceContext, Player player)
     {
-        return CopiedRelic()?.BeforePlayPhaseStart(choiceContext, player) ?? Task.CompletedTask;
+        return CopiedRelic()?.AfterAutoPrePlayPhaseEntered(choiceContext, player) ?? Task.CompletedTask;
     }
 
-    public override Task BeforePlayPhaseStartLate(PlayerChoiceContext choiceContext, Player player)
+    public override Task AfterAutoPrePlayPhaseEnteredLate(PlayerChoiceContext choiceContext, Player player)
     {
-        return CopiedRelic()?.BeforePlayPhaseStartLate(choiceContext, player) ?? Task.CompletedTask;
+        return CopiedRelic()?.AfterAutoPrePlayPhaseEnteredLate(choiceContext, player) ?? Task.CompletedTask;
     }
 
-    public override Task BeforeTurnEndVeryEarly(PlayerChoiceContext choiceContext, CombatSide side)
+    public override Task BeforeSideTurnEndVeryEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        return CopiedRelic()?.BeforeTurnEndVeryEarly(choiceContext, side) ?? Task.CompletedTask;
+        return CopiedRelic()?.BeforeSideTurnEndVeryEarly(choiceContext, side, participants) ?? Task.CompletedTask;
     }
 
-    public override Task BeforeTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side)
+    public override Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        return CopiedRelic()?.BeforeTurnEndEarly(choiceContext, side) ?? Task.CompletedTask;
+        return CopiedRelic()?.BeforeSideTurnEndEarly(choiceContext, side, participants) ?? Task.CompletedTask;
     }
 
-    public override Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        return CopiedRelic()?.BeforeTurnEnd(choiceContext, side) ?? Task.CompletedTask;
+        return CopiedRelic()?.BeforeSideTurnEnd(choiceContext, side, participants) ?? Task.CompletedTask;
     }
 
-    public override Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        return CopiedRelic()?.AfterTurnEnd(choiceContext, side) ?? Task.CompletedTask;
+        return CopiedRelic()?.AfterSideTurnEnd(choiceContext, side, participants) ?? Task.CompletedTask;
     }
 
     public override Task AfterEnergyReset(Player player)
@@ -162,7 +167,7 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
         return copied?.AfterEnergyResetLate(player) ?? Task.CompletedTask;
     }
 
-    public override Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, CombatState combatState)
+    public override Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
         return CopiedRelic()?.BeforeHandDraw(player, choiceContext, combatState) ?? Task.CompletedTask;
     }
@@ -242,9 +247,9 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
         return CopiedRelic()?.AfterTakingExtraTurn(player) ?? Task.CompletedTask;
     }
 
-    public override Task AfterAttack(AttackCommand command)
+    public override Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
     {
-        return CopiedRelic()?.AfterAttack(command) ?? Task.CompletedTask;
+        return CopiedRelic()?.AfterAttack(choiceContext, command) ?? Task.CompletedTask;
     }
 
     public override Task AfterDamageGiven(
@@ -294,7 +299,7 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
     }
 
     public override decimal ModifyDamageAdditive(
-        Creature? target,
+        Creature target,
         decimal amount,
         ValueProp props,
         Creature? dealer,
@@ -314,7 +319,7 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
     }
 
     public override decimal ModifyBlockAdditive(
-        Creature target,
+        Creature? target,
         decimal amount,
         ValueProp props,
         CardModel? cardSource,
@@ -324,7 +329,7 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
     }
 
     public override decimal ModifyBlockMultiplicative(
-        Creature target,
+        Creature? target,
         decimal block,
         ValueProp props,
         CardModel? cardSource,
@@ -344,7 +349,7 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
     }
 
     public override decimal ModifyHpLostBeforeOsty(
-        Creature target,
+        Creature? target,
         decimal amount,
         ValueProp props,
         Creature? dealer,
@@ -442,14 +447,24 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
         return CopiedRelic()?.ShouldPlayerResetEnergy(player) ?? true;
     }
 
-    public override decimal ModifyPowerAmountGiven(
+    public override decimal ModifyPowerAmountGivenAdditive(
         PowerModel power,
         Creature giver,
         decimal amount,
-        Creature? target,
+        Creature target,
         CardModel? cardSource)
     {
-        return CopiedRelic()?.ModifyPowerAmountGiven(power, giver, amount, target, cardSource) ?? amount;
+        return CopiedRelic()?.ModifyPowerAmountGivenAdditive(power, giver, amount, target, cardSource) ?? 0m;
+    }
+
+    public override decimal ModifyPowerAmountGivenMultiplicative(
+        PowerModel power,
+        Creature giver,
+        decimal amount,
+        Creature target,
+        CardModel? cardSource)
+    {
+        return CopiedRelic()?.ModifyPowerAmountGivenMultiplicative(power, giver, amount, target, cardSource) ?? 1m;
     }
 
     public override Task AfterModifyingPowerAmountGiven(PowerModel power)
@@ -479,9 +494,9 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
         return CopiedRelic()?.AfterModifyingPowerAmountReceived(power) ?? Task.CompletedTask;
     }
 
-    public override Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        return CopiedRelic()?.AfterPowerAmountChanged(power, amount, applier, cardSource) ?? Task.CompletedTask;
+        return CopiedRelic()?.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource) ?? Task.CompletedTask;
     }
 
     private RelicModel? CopiedRelic()
@@ -498,3 +513,4 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
         return relic.GetType().Namespace == "MegaCrit.Sts2.Core.Models.Relics";
     }
 }
+#pragma warning restore CS8765, CS8604

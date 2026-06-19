@@ -92,8 +92,8 @@ public sealed class AliceHandkerchiefModifier : ModModifierTemplate
 
         foreach (MegaCrit.Sts2.Core.Entities.Players.Player player in RunState.Players)
         {
-            await PowerCmd.Apply<StrengthPower>(player.Creature, BuffAmount, player.Creature, null);
-            await PowerCmd.Apply<DexterityPower>(player.Creature, BuffAmount, player.Creature, null);
+            await PowerCmd.Apply<StrengthPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), player.Creature, BuffAmount, player.Creature, null, false);
+            await PowerCmd.Apply<DexterityPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), player.Creature, BuffAmount, player.Creature, null, false);
         }
     }
 

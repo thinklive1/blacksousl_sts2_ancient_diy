@@ -4,6 +4,10 @@ Note: this English README and the in-game English localization are machine-trans
 
 A Slay the Spire 2 Ancient expansion mod. It currently adds 3 map Ancients, replaces the starting Neow appearance with Grand Guignol, and adds a separate "Grand Guignol?" compendium category for starting Ancient relics.
 
+## Requirements
+
+- RitsuLib 0.4.10 or later
+
 ## Ancient Spawn Rules
 
 - Node: appears in Act 2.
@@ -45,6 +49,7 @@ This category displays starting Ancient relics. These relics are not shown in th
 - Caterpillar's Smoke: may appear in Grand Guignol's starting options. At rest sites, you may spend max HP to choose and upgrade 1 card without consuming the rest-site option. Up to 3 uses; costs 3/5/8 max HP.
 - Duchess' Menu: may appear in Grand Guignol's starting options. At card rewards, you may choose to supply the reward. After 3 supplies, gain a reward based on the total quality score of the supplied card sets. Common cards are 1 point, uncommon cards 2 points, rare cards 3 points. 12 or less: 200 Gold and 1 uncommon card reward. 13-18: 300 Gold and 1 rare card reward. 19 or more: 500 Gold and 2 rare card rewards. If you obtain Driftwood, this relic is disabled.
 - Angel's Feather: may appear in Grand Guignol's starting options. The first time you take HP damage each combat, gain that much Vigor. When entering Act 2, it becomes Angel's Feather?. Angel's Feather? grants Vigor whenever you take HP damage. When entering Act 3, it becomes Brutalizing Angel's Feather. Brutalizing Angel's Feather grants Vigor whenever you take HP damage; after the first time you are damaged each combat, attacks that deal HP damage heal you, up to the amount of that first damage. A power icon shows the remaining heal amount.
+- Mabel's Soldier Piece: may appear in Grand Guignol's starting options. During Act 1, all enchantable cards in card rewards are enchanted with Ascension. After 7 nodes, an Ascension card transforms into a random card of the next higher rarity: common to uncommon, uncommon to rare, rare to Ancient. It cannot skip rarity tiers.
 
 ## Node
 

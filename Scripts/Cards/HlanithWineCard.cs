@@ -28,7 +28,7 @@ public class HlanithWineCard : ModCardTemplate
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return PowerCmd.Apply<HlanithWineExtraTurnPower>(Owner.Creature, 1, Owner.Creature, this);
+        return PowerCmd.Apply<HlanithWineExtraTurnPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, 1, Owner.Creature, this, false);
     }
 
     protected override void OnUpgrade()

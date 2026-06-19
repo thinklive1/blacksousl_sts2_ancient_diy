@@ -26,6 +26,6 @@ public class RedQueenBigSuccessCard : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         BsAncientAudio.PlayOneShot(BsAncientAudio.Claps);
-        await PowerCmd.Apply<RedQueenDiceBigSuccessPower>(Owner.Creature, 1m, Owner.Creature, this);
+        await PowerCmd.Apply<RedQueenDiceBigSuccessPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, this, false);
     }
 }

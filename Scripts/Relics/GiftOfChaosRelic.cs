@@ -53,7 +53,7 @@ public class GiftOfChaosRelic : ModRelicTemplate
         PreserveRandomEnchantment(selectedCards, fusionCard);
 
         await CardPileCmd.RemoveFromDeck(selectedCards);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(fusionCard, PileType.Deck, source: this), 2f);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(fusionCard, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
     }
 
     private static bool IsValidMaterial(CardModel card)

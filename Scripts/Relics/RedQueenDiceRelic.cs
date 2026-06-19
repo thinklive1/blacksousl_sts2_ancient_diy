@@ -81,7 +81,7 @@ public class RedQueenDiceRelic : ModRelicTemplate
         return Task.CompletedTask;
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != Owner.Creature.Side)
         {
@@ -159,14 +159,14 @@ public class RedQueenDiceRelic : ModRelicTemplate
 
         BlackSouls_BigSuccessTriggered = true;
         Flash();
-        CombatState? currentCombat = Owner.Creature.CombatState;
+        ICombatState? currentCombat = Owner.Creature.CombatState;
         if (currentCombat == null)
         {
             return;
         }
 
         CardModel card = currentCombat.CreateCard<RedQueenBigSuccessCard>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
+        await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner, CardPilePosition.Top);
     }
 
     private void RefreshAllCombatCards()
@@ -199,7 +199,7 @@ public class RedQueenDiceRelic : ModRelicTemplate
 
     private int GetDeterministicRoll(CardModel card)
     {
-        CombatState? combatState = Owner.Creature.CombatState;
+        ICombatState? combatState = Owner.Creature.CombatState;
         if (combatState == null)
         {
             return 0;

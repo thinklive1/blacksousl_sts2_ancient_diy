@@ -12,7 +12,7 @@ internal static class EvilQiEffect
 {
     public static Task Apply(PlayerChoiceContext choiceContext, CardModel card)
     {
-        return PowerCmd.Apply<EvilQiPendingPower>(card.Owner.Creature, 1m, card.Owner.Creature, card);
+        return PowerCmd.Apply<EvilQiPendingPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), card.Owner.Creature, 1m, card.Owner.Creature, card, false);
     }
 
     public static async Task Resolve(PlayerChoiceContext choiceContext, Creature owner, int amount)
@@ -30,7 +30,7 @@ internal static class EvilQiEffect
             owner,
             null);
 
-        CombatState? combatState = owner.CombatState;
+        ICombatState? combatState = owner.CombatState;
         if (combatState == null)
         {
             return;
@@ -56,8 +56,8 @@ internal static class EvilQiEffect
             return;
         }
 
-        await DrainPower<StrengthPower>(target, owner, amount);
-        await DrainPower<PlatingPower>(target, owner, amount);
+        await DrainPower<StrengthPower>(choiceContext, target, owner, amount);
+        await DrainPower<PlatingPower>(choiceContext, target, owner, amount);
 
         if (target.IsAlive && target.CurrentHp > 0)
         {
@@ -85,7 +85,7 @@ internal static class EvilQiEffect
         return plating is { Amount: > 0 };
     }
 
-    private static async Task DrainPower<T>(Creature target, Creature owner, int amount)
+    private static async Task DrainPower<T>(PlayerChoiceContext choiceContext, Creature target, Creature owner, int amount)
         where T : MegaCrit.Sts2.Core.Models.PowerModel
     {
         T? power = target.GetPower<T>();
@@ -95,7 +95,7 @@ internal static class EvilQiEffect
         }
 
         int drain = Math.Min(amount, power.Amount);
-        await PowerCmd.ModifyAmount(power, -drain, owner, null);
-        await PowerCmd.Apply<T>(owner, drain, owner, null);
+        await PowerCmd.ModifyAmount(choiceContext, power, -drain, owner, null, false);
+        await PowerCmd.Apply<T>(choiceContext, owner, drain, owner, null, false);
     }
 }

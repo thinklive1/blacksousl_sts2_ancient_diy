@@ -38,7 +38,7 @@ public class SnowWhiteFavorRelic : ModRelicTemplate
     public override async Task BeforeCombatStart()
     {
         Flash();
-        await PowerCmd.Apply<DexterityPower>(Owner.Creature, -DynamicVars["DexterityPower"].BaseValue, Owner.Creature, null);
+        await PowerCmd.Apply<DexterityPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, -DynamicVars["DexterityPower"].BaseValue, Owner.Creature, null, false);
     }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)

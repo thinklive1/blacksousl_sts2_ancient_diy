@@ -49,10 +49,10 @@ public class StageEndCard : ModCardTemplate
         await RefillEnergy();
         if (!Owner.Creature.Powers.OfType<MadnessPower>().Any())
         {
-            await PowerCmd.Apply<MadnessPower>(Owner.Creature, DynamicVars["MadnessPower"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<MadnessPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["MadnessPower"].BaseValue, Owner.Creature, this, false);
         }
 
-        await PowerCmd.Apply<StageEndCountdownPower>(Owner.Creature, DynamicVars.Cards.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<StageEndCountdownPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars.Cards.BaseValue, Owner.Creature, this, false);
     }
 
     private async Task RefillHand(PlayerChoiceContext choiceContext)

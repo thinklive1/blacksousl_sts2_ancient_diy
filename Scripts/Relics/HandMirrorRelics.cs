@@ -62,7 +62,7 @@ public abstract class HandMirrorRelicBase : ModRelicTemplate
     protected async Task AddCardToDeck<T>() where T : CardModel
     {
         CardModel card = Owner.RunState.CreateCard<T>(Owner);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, source: this), 2f);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
     }
 }
 
@@ -143,7 +143,7 @@ public sealed class EdithRingRelic : ModRelicTemplate
 
     public override Task BeforeCombatStart()
     {
-        return PowerCmd.Apply<EdithFlutterPower>(Owner.Creature, 1, Owner.Creature, null);
+        return PowerCmd.Apply<EdithFlutterPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, 1, Owner.Creature, null, false);
     }
 }
 

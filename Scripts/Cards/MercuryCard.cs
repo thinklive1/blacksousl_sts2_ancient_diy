@@ -92,7 +92,7 @@ public sealed class MercuryCard : ModCardTemplate
             }
         }
 
-        CombatState? combatState = owner.Creature.CombatState;
+        ICombatState? combatState = owner.Creature.CombatState;
         if (combatState == null)
         {
             return;
@@ -149,7 +149,7 @@ public sealed class MercuryCard : ModCardTemplate
         return true;
     }
 
-    public override Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side == Owner.Creature.Side && CurrentUpgradeLevel <= 0 && BlackSouls_CopiedCard != null)
         {
@@ -203,7 +203,7 @@ public sealed class MercuryCard : ModCardTemplate
             return preferredTarget;
         }
 
-        CombatState? combatState = Owner.Creature.CombatState;
+        ICombatState? combatState = Owner.Creature.CombatState;
         return card.TargetType switch
         {
             TargetType.Self or TargetType.AnyPlayer => Owner.Creature,

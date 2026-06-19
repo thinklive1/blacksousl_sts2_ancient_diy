@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -40,7 +41,7 @@ public class PrincessFrogFavorRelic : ModRelicTemplate
         BigIconPath: "res://bs_ancient/assets/images/relics/PrincessFrogFavorRelic.png"
     );
 
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         if (_isApplyingRelicEffect || !IsOwnerDebuffingEnemy(power, amount, applier, power.Owner))
         {
@@ -51,10 +52,10 @@ public class PrincessFrogFavorRelic : ModRelicTemplate
         _isApplyingRelicEffect = true;
         try
         {
-            await ApplyExtraDebuff(power, amount, cardSource);
+            await ApplyExtraDebuff(choiceContext, power, amount, cardSource);
             if (Owner.RunState.Rng.Niche.NextInt(100) < DynamicVars["Chance"].BaseValue)
             {
-                await ApplyRandomPenalty();
+                await ApplyRandomPenalty(choiceContext);
             }
         }
         finally
@@ -73,20 +74,20 @@ public class PrincessFrogFavorRelic : ModRelicTemplate
             && power.GetTypeForAmount(amount) == PowerType.Debuff;
     }
 
-    private Task ApplyExtraDebuff(PowerModel power, decimal amount, CardModel? cardSource)
+    private Task ApplyExtraDebuff(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, CardModel? cardSource)
     {
         PowerModel extraPower = ModelDb.GetById<PowerModel>(power.Id).ToMutable();
-        return PowerCmd.Apply(extraPower, power.Owner, amount, Owner.Creature, cardSource);
+        return PowerCmd.Apply(choiceContext, extraPower, power.Owner, amount, Owner.Creature, cardSource, false);
     }
 
-    private Task ApplyRandomPenalty()
+    private Task ApplyRandomPenalty(PlayerChoiceContext choiceContext)
     {
         decimal amount = DynamicVars["Penalty"].BaseValue;
         return Owner.RunState.Rng.Niche.NextInt(3) switch
         {
-            0 => PowerCmd.Apply<WeakPower>(Owner.Creature, amount, Owner.Creature, null),
-            1 => PowerCmd.Apply<VulnerablePower>(Owner.Creature, amount, Owner.Creature, null),
-            _ => PowerCmd.Apply<FrailPower>(Owner.Creature, amount, Owner.Creature, null)
+            0 => PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, amount, Owner.Creature, null, false),
+            1 => PowerCmd.Apply<VulnerablePower>(choiceContext, Owner.Creature, amount, Owner.Creature, null, false),
+            _ => PowerCmd.Apply<FrailPower>(choiceContext, Owner.Creature, amount, Owner.Creature, null, false)
         };
     }
 }

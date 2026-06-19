@@ -30,6 +30,6 @@ public class StageEndRelic : ModRelicTemplate
     public override async Task AfterObtained()
     {
         CardModel card = Owner.RunState.CreateCard<StageEndCard>(Owner);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, source: this), 2f);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
     }
 }

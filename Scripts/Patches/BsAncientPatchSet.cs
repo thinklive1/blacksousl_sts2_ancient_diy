@@ -17,8 +17,6 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<NeowRethinkPokerPatch>();
         patcher.RegisterPatch<OnlyUseModAncientsPatch>();
         patcher.RegisterPatch<WormSmokeRestSiteIconPatch>();
-        patcher.RegisterPatch<HungerEvilQiAfflictPatch>();
-        patcher.RegisterPatch<HungerEvilQiAfterCardEnteredCombatPatch>();
         patcher.RegisterPatch<UnicornHookBeforeDamageReceivedPatch>();
         patcher.RegisterPatch<UnicornHookAfterDamageReceivedPatch>();
         patcher.RegisterPatch<UnicornThornsBeforeDamageReceivedPatch>();

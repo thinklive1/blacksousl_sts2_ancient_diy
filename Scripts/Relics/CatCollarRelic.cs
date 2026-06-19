@@ -197,7 +197,7 @@ public class CatCollarRelic : ModRelicTemplate
             return Task.CompletedTask;
         }
 
-        return PowerCmd.SetAmount<CatSmileCountdownPower>(
+        return BsPowerCmd.SetAmount<CatSmileCountdownPower>(
             Owner.Creature,
             remainingTriggers,
             Owner.Creature,
@@ -211,7 +211,7 @@ public class CatCollarRelic : ModRelicTemplate
             return Task.CompletedTask;
         }
 
-        return PowerCmd.SetAmount<CatCollarTriggerLimitPower>(
+        return BsPowerCmd.SetAmount<CatCollarTriggerLimitPower>(
             Owner.Creature,
             remainingTriggers,
             Owner.Creature,

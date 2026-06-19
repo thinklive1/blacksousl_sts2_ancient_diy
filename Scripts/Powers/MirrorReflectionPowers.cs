@@ -31,11 +31,17 @@ public sealed class OrrReflectionPendingPower : ModPowerTemplate
         BigIconPath: OrrIconPath
     );
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == Owner.Side)
         {
-            await PowerCmd.Apply<OrrReflectionPower>(Owner, Amount, Owner, null);
+            await PowerCmd.Apply<OrrReflectionPower>(
+                new ThrowingPlayerChoiceContext(),
+                Owner,
+                Amount,
+                Owner,
+                null,
+                false);
             await PowerCmd.Remove(this);
         }
     }
@@ -75,7 +81,7 @@ public sealed class OrrReflectionPower : ModPowerTemplate
         await CardCmd.AutoPlay(context, cardPlay.Card, target, skipXCapture: true);
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side == Owner.Side)
         {
@@ -116,7 +122,7 @@ public sealed class TwoSidedVirtuePower : ModPowerTemplate
         }
     }
 
-    public override Task AfterPowerAmountChanged(PowerModel power, decimal originalAmount, Creature? source, CardModel? cardSource)
+    public override Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal originalAmount, Creature? source, CardModel? cardSource)
     {
         if (power == this && !BlackSouls_TransformQueued && Amount >= PlaysPerTransform)
         {

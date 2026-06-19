@@ -121,7 +121,7 @@ public sealed class MirrorSanModifier : ModModifierTemplate
         {
             BlackSouls_WrigglingShadowGranted = true;
             CardModel card = player.RunState.CreateCard<WrigglingShadowCard>(player);
-            CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, source: this), 2f);
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
         }
     }
 
@@ -186,7 +186,7 @@ public sealed class MirrorSanModifier : ModModifierTemplate
         return SenDamageTakenMultiplier;
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         foreach (Player player in RunState.Players.Where(player => player.Creature.Side == side))
         {
@@ -278,7 +278,7 @@ public sealed class MirrorSanModifier : ModModifierTemplate
         {
             if (existing == null)
             {
-                await PowerCmd.Apply<TPower>(player.Creature, 1, player.Creature, null);
+                await PowerCmd.Apply<TPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), player.Creature, 1, player.Creature, null, false);
             }
 
             return;
@@ -292,7 +292,7 @@ public sealed class MirrorSanModifier : ModModifierTemplate
 
     private static async Task ApplyRationalEntry(Player player)
     {
-        CombatState? combatState = player.Creature.CombatState;
+        ICombatState? combatState = player.Creature.CombatState;
         if (combatState == null)
         {
             return;
@@ -300,8 +300,8 @@ public sealed class MirrorSanModifier : ModModifierTemplate
 
         foreach (Creature enemy in combatState.Enemies.Where(enemy => enemy.IsAlive))
         {
-            await PowerCmd.Apply<VulnerablePower>(enemy, 1, player.Creature, null);
-            await PowerCmd.Apply<WeakPower>(enemy, 1, player.Creature, null);
+            await PowerCmd.Apply<VulnerablePower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), enemy, 1, player.Creature, null, false);
+            await PowerCmd.Apply<WeakPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), enemy, 1, player.Creature, null, false);
         }
     }
 
@@ -312,12 +312,12 @@ public sealed class MirrorSanModifier : ModModifierTemplate
             await PlayerCmd.LoseEnergy(1, player);
         }
 
-        await PowerCmd.Apply<WeakPower>(player.Creature, 1, player.Creature, null);
+        await PowerCmd.Apply<WeakPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), player.Creature, 1, player.Creature, null, false);
     }
 
     private CardModel? CreateSenTransformCard(Player player)
     {
-        CombatState? combatState = player.Creature.CombatState;
+        ICombatState? combatState = player.Creature.CombatState;
         if (combatState == null)
         {
             return null;

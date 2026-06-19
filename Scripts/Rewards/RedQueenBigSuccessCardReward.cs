@@ -32,9 +32,8 @@ public sealed class RedQueenBigSuccessCardReward : Reward, IModSerializableRewar
 
     protected override string IconPath => "res://bs_ancient/assets/images/relics/RedQueenDiceRelic.png";
 
-    public override Task Populate()
+    public override void Populate()
     {
-        return Task.CompletedTask;
     }
 
     protected override async Task<bool> OnSelect()

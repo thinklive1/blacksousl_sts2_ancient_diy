@@ -67,6 +67,6 @@ public class AliceRibbonRelic : ModRelicTemplate
         BlackSouls_WasUsed = true;
         MirrorSan.Get(creature.Player)?.ResetSan();
         await CreatureCmd.Heal(creature, creature.MaxHp);
-        await PowerCmd.Apply<StrengthPower>(creature, DynamicVars["StrengthPower"].BaseValue, creature, null);
+        await PowerCmd.Apply<StrengthPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), creature, DynamicVars["StrengthPower"].BaseValue, creature, null, false);
     }
 }

@@ -28,19 +28,31 @@ public class StagnantGearRelic : ModRelicTemplate
     public override async Task AfterObtained()
     {
         CardModel card = Owner.RunState.CreateCard<StagnantGearCard>(Owner);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, source: this), 2f);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
     }
 
     public override async Task BeforeCombatStart()
     {
         if (Owner.Creature.GetPower<EncoreNextTurnPower>() == null)
         {
-            await PowerCmd.Apply<EncoreNextTurnPower>(Owner.Creature, 1, Owner.Creature, null, silent: true);
+            await PowerCmd.Apply<EncoreNextTurnPower>(
+                new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(),
+                Owner.Creature,
+                1,
+                Owner.Creature,
+                null,
+                silent: true);
         }
 
         if (Owner.Creature.GetPower<EncoreNextTurnVisualPower>() == null)
         {
-            await PowerCmd.Apply<EncoreNextTurnVisualPower>(Owner.Creature, 0, Owner.Creature, null, silent: true);
+            await PowerCmd.Apply<EncoreNextTurnVisualPower>(
+                new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(),
+                Owner.Creature,
+                0,
+                Owner.Creature,
+                null,
+                silent: true);
         }
     }
 }

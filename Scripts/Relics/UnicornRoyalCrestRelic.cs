@@ -48,10 +48,12 @@ public class UnicornRoyalCrestRelic : ModRelicTemplate
         _isCounterattacking = false;
         Flash();
         await PowerCmd.Apply<DexterityPower>(
+            new ThrowingPlayerChoiceContext(),
             Owner.Creature,
             DynamicVars["DexterityPower"].BaseValue,
             Owner.Creature,
-            null);
+            null,
+            false);
     }
 
     public override Task BeforeDamageReceived(

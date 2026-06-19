@@ -78,7 +78,7 @@ public class ReplayEnchantment : ModEnchantmentTemplate
         }
 
         Creature? target = null;
-        CombatState? combatState = Card.CombatState ?? player.Creature.CombatState;
+        ICombatState? combatState = Card.CombatState ?? player.Creature.CombatState;
         if (Card.TargetType == TargetType.RandomEnemy)
         {
             if (combatState == null)

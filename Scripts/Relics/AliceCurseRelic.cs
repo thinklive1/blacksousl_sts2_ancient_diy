@@ -42,7 +42,7 @@ public class AliceCurseRelic : ModRelicTemplate
             .ToList<CardModel>();
 
         await CardPileCmd.RemoveFromDeck(curses, showPreview: false);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(replacements, PileType.Deck, source: this), 2f);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(replacements, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
     }
 
     private static bool IsTargetCurse(CardModel card)

@@ -46,7 +46,7 @@ public class WinterBellAllyRelic : ModRelicTemplate
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(
             cards,
             PileType.Draw,
-            addedByPlayer: true,
+            Owner,
             CardPilePosition.Random));
     }
 }

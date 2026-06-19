@@ -56,10 +56,12 @@ public class OldFilmB : ModRelicTemplate
         BsAncientAudio.PlayOneShot(BsAncientAudio.Shot);
         await CreatureCmd.Stun(target);
         await PowerCmd.Apply<VulnerablePower>(
+            choiceContext,
             target,
             DynamicVars["VulnerablePower"].BaseValue,
             Owner.Creature,
-            null);
+            null,
+            false);
     }
 
     public override Task AfterCombatEnd(CombatRoom room)
