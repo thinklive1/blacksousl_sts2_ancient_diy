@@ -29,7 +29,8 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
   "DisableModAncients": false,
   "ReplaceNeowAppearance": true,
   "EnableModEvents": true,
-  "DisableTestingEvents": false,
+  "DisableTestingEvents": true,
+  "EnableFairyTaleMode": false,
   "GrandGuignolInitialRelicChance": 30
 }
 ```
@@ -39,6 +40,7 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
 - `ReplaceNeowAppearance`: replaces Neow's appearance, name, title, and related dialogue with Grand Guignol. If `false`, Neow display returns to vanilla. Requires restarting the game.
 - `EnableModEvents`: enables this mod's random events. If `false`, this mod's new random events will not enter the event pool. Requires restarting the game and starting a new run.
 - `DisableTestingEvents`: disables testing events. If `true`, SAN/hand-mirror related testing events such as Clown and Girl in the Maze will not appear naturally. Requires restarting the game and starting a new run.
+- `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. Duplicates are allowed. Requires restarting the game and starting a new run.
 - `GrandGuignolInitialRelicChance`: chance, from 0 to 100, for a Grand Guignol starting relic to replace a positive starting option. Default is 30. Requires restarting the game and starting a new run.
 
 ## Grand Guignol?
@@ -49,7 +51,7 @@ This category displays starting Ancient relics. These relics are not shown in th
 - Caterpillar's Smoke: may appear in Grand Guignol's starting options. At rest sites, you may spend max HP to choose and upgrade 1 card without consuming the rest-site option. Up to 3 uses; costs 3/5/8 max HP.
 - Duchess' Menu: may appear in Grand Guignol's starting options. At card rewards, you may choose to supply the reward. After 3 supplies, gain a reward based on the total quality score of the supplied card sets. Common cards are 1 point, uncommon cards 2 points, rare cards 3 points. 12 or less: 200 Gold and 1 uncommon card reward. 13-18: 300 Gold and 1 rare card reward. 19 or more: 500 Gold and 2 rare card rewards. If you obtain Driftwood, this relic is disabled.
 - Angel's Feather: may appear in Grand Guignol's starting options. The first time you take HP damage each combat, gain that much Vigor. When entering Act 2, it becomes Angel's Feather?. Angel's Feather? grants Vigor whenever you take HP damage. When entering Act 3, it becomes Brutalizing Angel's Feather. Brutalizing Angel's Feather grants Vigor whenever you take HP damage; after the first time you are damaged each combat, attacks that deal HP damage heal you, up to the amount of that first damage. A power icon shows the remaining heal amount.
-- Mabel's Soldier Piece: may appear in Grand Guignol's starting options. During Act 1, all enchantable cards in card rewards are enchanted with Ascension. After 7 nodes, an Ascension card transforms into a random card of the next higher rarity: common to uncommon, uncommon to rare, rare to Ancient. It cannot skip rarity tiers.
+- Mabel's Soldier Piece: may appear in Grand Guignol's starting options. During Act 1, all enchantable Common and Uncommon cards in card rewards are enchanted with Ascension. After 7 nodes, an Ascension card transforms into a random card of the next higher rarity: Common to Uncommon, Uncommon to Rare. Rare cards are not enchanted, so this relic does not Ascend cards into Ancient cards.
 
 ## Node
 
@@ -120,6 +122,27 @@ Relics:
 - Mystery of the Night Sky: each turn, 50% chance for the first card you play to be played one additional time.
 - Gift of Chaos: choose up to 3 non-X-cost Attack or Skill cards and fuse them into 1 Chaos Fusion. The fused card inherits material costs, keywords, and tags; its type is random, and it keeps at most 1 random enchantment. When played, it plays all material effects in random order against random targets. Fusion cards cannot be upgraded.
 
+## Fairy Tale Relics
+
+Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining nodes; after every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. Duplicates are allowed.
+
+- Unnamed Fairy Tale Book: obtained at the start of a run when Fairy Tale Mode is enabled. Shows how many nodes remain before the next random Fairy Tale. After every 7 non-Boss/non-Ancient nodes, gain a random Fairy Tale. Duplicates are allowed.
+- Fairy Tale - Pinocchio: on pickup, choose 1 card with damage or block values and enchant it with Lie. After a Lie card is played, swap its damage and block values. Damage-only cards switch to gaining that much Block and dealing no damage; block-only cards switch to dealing that much damage and gaining no Block.
+- Alice Through the Looking Glass: on pickup, choose 4 cards and enchant them with Ascension. The next act map becomes up to 8 straight routes. After 7 non-Ancient nodes, Ascension cards transform into a random card of the next higher rarity; rare cards transform into random Ancient cards, and Ancient cards cannot receive Ascension.
+- Fairy Tale - The Three Little Pigs: the next 3 combats grant no rewards.
+- Fairy Tale - The Emperor's New Clothes: during the second turn of each combat, you cannot gain Block.
+- Fairy Tale - Alicuxel's Dog: at the start of combat, gain 3 Feel No Pain.
+- Fairy Tale - The Singing Bone: at the start of combat, play Elegy.
+- Fairy Tale - The Fox and the Sour Grapes: at the start of combat, all creatures gain 1 Envenom. Monsters also gain Envenom; when a monster attack deals HP damage to the player, the player gains Poison.
+- Fairy Tale - The Pied Piper of Hamelin: at the start of combat, gain 3 Poison.
+- Fairy Tale - Jack and the Beanstalk: after each node, lose 5 HP, but this cannot reduce you below 1 HP. When you reach the 6th node, gain Max HP equal to the total HP lost this way, then this relic becomes inactive.
+- Fairy Tale - Aladdin and the Magic Lamp: at the start of turn, gain 3 Vigor.
+- Fairy Tale - Beauty and the Beast: at the start of combat, if you can afford it, spend 20 Gold to gain 3 Strength. If you cannot afford it, lose 3 Strength.
+- Fairy Tale - The Ugly Duckling: on pickup, add an upgraded Sovereign Blade and an upgraded Wrought in War to your deck.
+- Fairy Tale - The High Jumpers: at the start of combat, gain 2 Flutter.
+- Fairy Tale - The Wolf and X Little Goats: for the first three turns, your Block is not removed. At the start of your third turn, deal damage equal to your Block to all creatures.
+- Fairy Tale - My Former Rascal: when you enter the next normal or elite combat, all enemies gain 5 Strength, then this relic becomes inactive.
+
 ## Random Events
 
 - Wax Dolls: can appear in Acts 1-3. Choose Twin Wax Statue or Lonely Wax Statue. If your deck has no pair of same-name cards, the Twin option is disabled.
@@ -150,11 +173,11 @@ Relics:
 - Rabbit Hand Mirror: on pickup, gain Banai's Reflection. The relic counter shows current SAN. Banai's Reflection grants Block and shuffles a copy into the draw pile; copies cost 0 and their Block decreases each generation.
 - Pumpkin Hand Mirror: on pickup, gain Orr's Reflection. The relic counter shows current SAN. Orr's Reflection heals HP and makes your Attack cards played next turn play one additional time.
 - Jack Hand Mirror: on pickup, gain Holmes' Reflection and Jack the Ripper's Reflection, and modify the next act map so one route contains only normal combats and elites. Holmes' Reflection chooses 1 random Colorless card into your hand and increases SAN. Jack the Ripper's Reflection deals damage; each play permanently increases only this card's damage. All Jack cards share a combat counter; after 3 total plays, gain Virtue of Duality and, after combat, you must choose a deck card to transform into Jack the Ripper's Reflection.
-- Edith's Ring (shared rare relic): at the start of combat, gain 1 Flutter, which is lost at the end of the first turn.
+- Edith's Ring (shared rare relic): at the start of combat, gain 1 Flutter, which is removed at the start of your second turn.
 - Girl in the Maze: can appear in Act 3, single-player only, if you have one of Rabbit/Pumpkin/Jack Hand Mirror and SAN is below 0. Choose Girl's Hand Mirror, break the mirror, or gain 8 max HP.
 - Girl's Hand Mirror: on pickup, gain Liddell's Reflection. The first time you take HP damage after combat starts, reflect equal damage to the attacker. Liddell's Reflection is an unplayable Curse; when exhausted or when it vanishes due to Ethereal, it copies your entire deck, gives the copies Ethereal, and adds them to the discard pile.
 - Pervasive Malice (?): obtained from Girl in the Maze. Gain 1 Energy and draw 3 cards. Each use loses 15 SAN.
-- SAN/SEN: the hand mirror series shares one SAN value, starting at 50 and saved across the run. Taking HP damage from attacks loses 5 SAN per hit; multi-hit attacks count each hit. At 100 or more SAN, enter Rationality: apply 1 Vulnerable and 1 Weak to all enemies, and stop gaining Status cards during combat. When Rationality ends, lose 1 Energy and gain 1 Weak. Below 0 SAN is treated as SEN. At -100 or less SAN, cards drawn this combat randomly transform into obtainable class cards, curses, or statuses; transformed cards are upgraded, and both damage you deal and damage you take are increased by 50%.
+- SAN: the hand mirror series shares one SAN value, starting at 50 and saved across the run. Taking HP damage from attacks loses 5 SAN per hit; multi-hit attacks count each hit. Winning combat restores 20 SAN, up to 80. At 100 or more SAN, enter Rationality: apply 1 Vulnerable and 1 Weak to all enemies, and stop gaining Status cards during combat. When Rationality ends, lose 1 Energy and gain 1 Weak. At -100 or less SAN, enter low SAN: cards drawn this combat randomly transform into obtainable class cards, curses, or statuses; transformed cards are upgraded, and both damage you deal and damage you take are increased by 50%.
 - Wriggling Shadow: gained the first time SAN reaches 0 or below, once per run. Wriggling Shadow, 辷卪, and Executioner evolve into the next card and remove themselves after enough kills; the card text shows remaining kills. Executioner Ketch removes all enemy Artifact and deals high damage.
 
 ## Other New Relics

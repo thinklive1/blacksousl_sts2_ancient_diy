@@ -59,5 +59,8 @@
   "BS_ANCIENT_POWER_SAN_HIGH_POWER.smartDescription": "All enemies were given [blue]1[/blue] [gold]Vulnerable[/gold] and [gold]Weak[/gold]. You will not gain Status cards during combat.",
   "BS_ANCIENT_POWER_SAN_LOW_POWER.title": "縺薙％縺ｯ縺ｩ縺薙〒縺吶°",
   "BS_ANCIENT_POWER_SAN_LOW_POWER.description": "蜩咎函荳榊庄蜿ｯ縺ｪ髏ｰ縺九ｉ蜿悶ｊ谿九＆繧後◆譁?ｭ励?譁ｰ縺励＞蜷阪?荳翫〒蠢?ｴ医☆繧九?",
-  "BS_ANCIENT_POWER_SAN_LOW_POWER.smartDescription": "蜩咎函荳榊庄蜿ｯ縺ｪ髏ｰ縺九ｉ蜿悶ｊ谿九＆繧後◆譁?ｭ励?譁ｰ縺励＞蜷阪?荳翫〒蠢?ｴ医☆繧九?"
+  "BS_ANCIENT_POWER_SAN_LOW_POWER.smartDescription": "蜩咎函荳榊庄蜿ｯ縺ｪ髏ｰ縺九ｉ蜿悶ｊ谿九＆繧後◆譁?ｭ励?譁ｰ縺励＞蜷阪?荳翫〒蠢?ｴ医☆繧九?",
+  "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.title": "Fairy Tale - The Wolf and X Little Goats",
+  "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.description": "For the first three turns, your Block is not removed. At the start of your third turn, deal damage equal to your Block to all creatures.",
+  "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.smartDescription": "[blue]{Amount}[/blue] turns remaining: your Block is not removed. At the start of your third turn, deal damage equal to your Block to all creatures."
 }

@@ -8,5 +8,7 @@
 	"BS_ANCIENT_KEYWORD_ENCORE.description": "本回合手动打出这张牌后，下回合开始时，自动打出本场战斗中打出过次数的这张牌。自动打出也计入打出次数，但不会单独触发下回合再演。",
 	"BS_ANCIENT_KEYWORD_ENCORE.title": "再演",
 	"BS_ANCIENT_KEYWORD_KILLING_BLOW.description": "由这张牌造成伤害并杀死敌人。",
-	"BS_ANCIENT_KEYWORD_KILLING_BLOW.title": "斩杀"
+	"BS_ANCIENT_KEYWORD_KILLING_BLOW.title": "斩杀",
+	"BS_ANCIENT_KEYWORD_SAN.description": "手镜系列共用的精神值，初始为[blue]50[/blue]，跨整局保存。受到攻击并失去生命时减少[blue]5[/blue]点，多段攻击每段单独结算；战斗胜利后增加[blue]20[/blue]点，但最多恢复到[blue]80[/blue]。SAN 大于等于[blue]100[/blue]时进入[gold]理性[/gold]状态：敌方全体获得[blue]1[/blue]层[gold]易伤[/gold]与[gold]虚弱[/gold]，战斗中不会再获得状态牌；退出理性状态时，失去[blue]1[/blue]点能量并获得[blue]1[/blue]层[gold]虚弱[/gold]。SAN 小于等于[red]-100[/red]时进入低 SAN 状态：抽到的牌会在本场战斗内随机变化为本职业可获得牌、诅咒或状态，变化牌会升级；你造成和受到的伤害均提高[green]50%[/green]。",
+	"BS_ANCIENT_KEYWORD_SAN.title": "SAN"
 }

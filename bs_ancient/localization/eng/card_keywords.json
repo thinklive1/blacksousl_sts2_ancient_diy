@@ -8,5 +8,7 @@
 	"BS_ANCIENT_KEYWORD_ENCORE.description": "After you manually play this card this turn, at the start of next turn, automatically play this card a number of times equal to how many times it has been played this combat. Automatic plays count as plays, but do not independently trigger Encore for the next turn.",
 	"BS_ANCIENT_KEYWORD_ENCORE.title": "Encore",
 	"BS_ANCIENT_KEYWORD_KILLING_BLOW.description": "Deal damage with this card and kill an enemy.",
-	"BS_ANCIENT_KEYWORD_KILLING_BLOW.title": "Killing Blow"
+	"BS_ANCIENT_KEYWORD_KILLING_BLOW.title": "Killing Blow",
+	"BS_ANCIENT_KEYWORD_SAN.description": "The shared sanity value for the hand mirror series. It starts at [blue]50[/blue] and is saved across the run. Taking attack damage that causes HP loss reduces SAN by [blue]5[/blue]; multi-hit attacks count each hit separately. Winning combat increases SAN by [blue]20[/blue], up to [blue]80[/blue]. At [blue]100[/blue] or higher SAN, enter [gold]Rationality[/gold]: all enemies gain [blue]1[/blue] [gold]Vulnerable[/gold] and [gold]Weak[/gold], and you will not gain Status cards during combat. When leaving Rationality, lose [blue]1[/blue] Energy and gain [blue]1[/blue] [gold]Weak[/gold]. At [red]-100[/red] or lower SAN, enter low SAN: cards you draw randomly transform for this combat into character cards, Curses, or Statuses; transformed cards are upgraded, and your damage dealt and damage taken are both increased by [green]50%[/green].",
+	"BS_ANCIENT_KEYWORD_SAN.title": "SAN"
 }

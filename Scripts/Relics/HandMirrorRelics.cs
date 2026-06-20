@@ -64,6 +64,10 @@ public abstract class HandMirrorRelicBase : ModRelicTemplate
         CardModel card = Owner.RunState.CreateCard<T>(Owner);
         CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition.Top, this, false), 2f);
     }
+
+    protected static IEnumerable<IHoverTip> MirrorSanHoverTips() => [
+        HoverTipFactory.FromKeyword(MyKeywords.San)
+    ];
 }
 
 [RegisterRelic(typeof(EventRelicPool))]
@@ -72,7 +76,8 @@ public sealed class PumpkinHandMirrorRelic : HandMirrorRelicBase
     protected override string IconName => nameof(PumpkinHandMirrorRelic);
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        HoverTipFactory.FromCardWithCardHoverTips<OrrReflectionCard>();
+        HoverTipFactory.FromCardWithCardHoverTips<OrrReflectionCard>()
+            .Concat(MirrorSanHoverTips());
 
     public override async Task AfterObtained()
     {
@@ -87,7 +92,8 @@ public sealed class RabbitHandMirrorRelic : HandMirrorRelicBase
     protected override string IconName => nameof(RabbitHandMirrorRelic);
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        HoverTipFactory.FromCardWithCardHoverTips<BanaiReflectionCard>();
+        HoverTipFactory.FromCardWithCardHoverTips<BanaiReflectionCard>()
+            .Concat(MirrorSanHoverTips());
 
     public override async Task AfterObtained()
     {
@@ -103,7 +109,8 @@ public sealed class JackHandMirrorRelic : HandMirrorRelicBase
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         HoverTipFactory.FromCardWithCardHoverTips<HolmesReflectionCard>()
-            .Concat(HoverTipFactory.FromCardWithCardHoverTips<JackTheRipperReflectionCard>());
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<JackTheRipperReflectionCard>())
+            .Concat(MirrorSanHoverTips());
 
     public override async Task AfterObtained()
     {
@@ -155,7 +162,8 @@ public sealed class GirlHandMirrorRelic : HandMirrorRelicBase
     protected override string IconName => nameof(GirlHandMirrorRelic);
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        HoverTipFactory.FromCardWithCardHoverTips<LiddellReflectionCard>();
+        HoverTipFactory.FromCardWithCardHoverTips<LiddellReflectionCard>()
+            .Concat(MirrorSanHoverTips());
 
     public override async Task AfterObtained()
     {

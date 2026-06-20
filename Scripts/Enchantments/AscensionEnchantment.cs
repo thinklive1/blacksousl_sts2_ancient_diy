@@ -54,27 +54,40 @@ public sealed class AscensionEnchantment : ModEnchantmentTemplate
 
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
-        if (!ShouldCountCurrentNode() || Card.HasBeenRemovedFromState)
+        if (IsCombatRoom(room) || IsCurrentPointCombat() || !ShouldCountCurrentNode() || Card.HasBeenRemovedFromState)
+        {
+            return;
+        }
+
+        await CountNode();
+    }
+
+    public override Task AfterCombatVictory(CombatRoom room)
+    {
+        return IsCombatRoom(room) ? CountNode() : Task.CompletedTask;
+    }
+
+    private async Task CountNode()
+    {
+        if (Card.HasBeenRemovedFromState)
         {
             return;
         }
 
         BlackSouls_RemainingNodes--;
-        if (BlackSouls_RemainingNodes > 0)
+        if (BlackSouls_RemainingNodes <= 0)
         {
-            return;
-        }
+            CardModel? replacement = CreateHigherRarityReplacement();
+            if (replacement == null)
+            {
+                return;
+            }
 
-        CardModel? replacement = CreateHigherRarityReplacement();
-        if (replacement == null)
-        {
-            return;
-        }
-
-        CardModel target = Card.DeckVersion ?? Card;
-        if (!target.HasBeenRemovedFromState)
-        {
-            await CardCmd.Transform(target, replacement, CardPreviewStyle.MessyLayout);
+            CardModel target = Card.DeckVersion ?? Card;
+            if (!target.HasBeenRemovedFromState)
+            {
+                await CardCmd.Transform(target, replacement, CardPreviewStyle.MessyLayout);
+            }
         }
     }
 
@@ -88,6 +101,22 @@ public sealed class AscensionEnchantment : ModEnchantmentTemplate
         MapPoint? currentPoint = Card.Owner?.RunState.CurrentMapPoint;
         return currentPoint != null
             && currentPoint.PointType is not MapPointType.Ancient and not MapPointType.Unassigned;
+    }
+
+    private bool IsCurrentPointCombat()
+    {
+        MapPoint? currentPoint = Card.Owner?.RunState.CurrentMapPoint;
+        return currentPoint?.PointType is MapPointType.Monster or MapPointType.Elite;
+    }
+
+    private static bool IsCombatRoom(CombatRoom room)
+    {
+        return room.RoomType is RoomType.Monster or RoomType.Elite;
+    }
+
+    private static bool IsCombatRoom(AbstractRoom room)
+    {
+        return room is CombatRoom || room.RoomType is RoomType.Monster or RoomType.Elite;
     }
 
     private CardModel? CreateHigherRarityReplacement()

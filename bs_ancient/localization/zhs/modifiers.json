@@ -2,7 +2,7 @@
   "BS_ANCIENT_MODIFIER_BIRD_SINGER_MODIFIER.title": "鸟类歌唱家",
   "BS_ANCIENT_MODIFIER_BIRD_SINGER_MODIFIER.description": "地图上部分怪物节点受到歌声影响，战斗开始时敌人当前生命值减半。",
   "MIRROR_SAN_MODIFIER.title": "SAN",
-  "MIRROR_SAN_MODIFIER.description": "手镜系列共用的 SAN/SEN 状态。",
+  "MIRROR_SAN_MODIFIER.description": "手镜系列共用的 SAN 状态。",
   "JACK_HAND_MIRROR_ROUTE_MODIFIER.title": "杰克的手镜",
   "JACK_HAND_MIRROR_ROUTE_MODIFIER.description": "下一幕会出现一条只有战斗的路线。"
 }

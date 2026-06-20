@@ -49,7 +49,7 @@ public sealed class MabelSoldierRelic : ModRelicTemplate
         {
             foreach (CardModel card in cardReward.Cards)
             {
-                if (card.Enchantment == null && ascension.CanEnchant(card))
+                if (card.Enchantment == null && CanReceiveMabelAscension(card, ascension))
                 {
                     CardCmd.Enchant<AscensionEnchantment>(card, 1m);
                     modified = true;
@@ -63,5 +63,11 @@ public sealed class MabelSoldierRelic : ModRelicTemplate
         }
 
         return modified;
+    }
+
+    private static bool CanReceiveMabelAscension(CardModel card, AscensionEnchantment ascension)
+    {
+        return card.Rarity is CardRarity.Basic or CardRarity.Common or CardRarity.Uncommon
+            && ascension.CanEnchant(card);
     }
 }

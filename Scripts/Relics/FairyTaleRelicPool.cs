@@ -15,5 +15,13 @@ public sealed class FairyTaleRelicPool : RelicPoolModel
         yield return ModelDb.Relic<AlicuxelsDogRelic>();
         yield return ModelDb.Relic<SongOfBoneRelic>();
         yield return ModelDb.Relic<FoxAndSourGrapesRelic>();
+        yield return ModelDb.Relic<PiedPiperOfHamelinRelic>();
+        yield return ModelDb.Relic<JackAndTheBeanstalkRelic>();
+        yield return ModelDb.Relic<AladdinAndTheMagicLampRelic>();
+        yield return ModelDb.Relic<BeautyAndTheBeastRelic>();
+        yield return ModelDb.Relic<UglyDucklingRelic>();
+        yield return ModelDb.Relic<HighJumperRelic>();
+        yield return ModelDb.Relic<WolfAndLittleGoatsRelic>();
+        yield return ModelDb.Relic<MyFormerRascalRelic>();
     }
 }

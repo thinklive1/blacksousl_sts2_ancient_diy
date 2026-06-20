@@ -51,6 +51,7 @@ public sealed class LieEnchantment : ModEnchantmentTemplate
     public override bool CanEnchant(CardModel card)
     {
         return base.CanEnchant(card)
+            && !card.Tags.Contains(CardTag.OstyAttack)
             && (GetDamageVars(card).Any() || GetBlockVar(card) != null);
     }
 
@@ -129,31 +130,31 @@ public sealed class LieEnchantment : ModEnchantmentTemplate
             return;
         }
 
-        decimal oldDamage = damageVars.Count > 0
-            ? damageVars[0].BaseValue
+        int oldDamage = damageVars.Count > 0
+            ? damageVars[0].IntValue
             : lie.BlackSouls_VirtualDamage;
-        decimal oldBlock = blockVar?.BaseValue ?? lie.BlackSouls_VirtualBlock;
+        int oldBlock = blockVar?.IntValue ?? lie.BlackSouls_VirtualBlock;
 
         if (damageVars.Count > 0)
         {
             foreach (DynamicVar damageVar in damageVars)
             {
-                damageVar.UpgradeValueBy(oldBlock - damageVar.BaseValue);
+                damageVar.UpgradeValueBy(oldBlock - damageVar.IntValue);
             }
         }
         else
         {
-            lie.BlackSouls_VirtualDamage = Math.Max(0, (int)oldBlock);
+            lie.BlackSouls_VirtualDamage = Math.Max(0, oldBlock);
         }
 
         if (blockVar != null)
         {
-            blockVar.UpgradeValueBy(oldDamage - blockVar.BaseValue);
+            blockVar.UpgradeValueBy(oldDamage - blockVar.IntValue);
             lie.BlackSouls_VirtualBlock = 0;
         }
         else
         {
-            lie.BlackSouls_VirtualBlock = Math.Max(0, (int)oldDamage);
+            lie.BlackSouls_VirtualBlock = Math.Max(0, oldDamage);
         }
 
         if (damageVars.Count > 0)

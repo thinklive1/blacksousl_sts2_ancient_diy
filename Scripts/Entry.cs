@@ -6,6 +6,7 @@ using STS2RitsuLib;
 using STS2RitsuLib.Interop;
 using STS2RitsuLib.Patching.Core;
 using STS2RitsuLib.Settings;
+using STS2RitsuLib.Ui.Toast;
 using STS2RitsuLib.Utils.Persistence;
 using STS2RitsuLib.Utils;
 
@@ -32,6 +33,7 @@ public class Entry
             ["res://bs_ancient/i18n/settings"],
             assembly);
         RegisterSettings();
+        RegisterFirstLaunchToast();
         ModPatcher patcher = RitsuLibFramework.CreatePatcher(ModId, "core-patches");
         patcher.RegisterPatches<BsAncientPatchSet>();
         if (!patcher.PatchAll())
@@ -43,6 +45,21 @@ public class Entry
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         // 自动注册内容
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+    }
+
+    private static void RegisterFirstLaunchToast()
+    {
+        RitsuLibFramework.SubscribeLifecycle<GameReadyEvent>(_ =>
+        {
+            if (BsAncientConfig.HasShownSettingsToast)
+            {
+                return;
+            }
+
+            RitsuToastService.ShowInfo("您可以在Mod设置内编辑各种选项");
+            BsAncientConfig.HasShownSettingsToast = true;
+            BsAncientConfig.Save();
+        });
     }
 
     private static void RegisterSettings()
@@ -106,7 +123,17 @@ public class Entry
                         "DisableTestingEvents",
                         () => BsAncientConfig.DisableTestingEvents,
                         value => BsAncientConfig.DisableTestingEvents = value),
-                    S("disableTestingEvents.description", "开启后，小丑、迷宫中的少女等 SAN/手镜相关测试事件不会自然出现。更改后需要重启游戏并新开一局。"))));
+                    S("disableTestingEvents.description", "开启后，小丑、迷宫中的少女等 SAN/手镜相关测试事件不会自然出现。更改后需要重启游戏并新开一局。")))
+            .AddSection("fairyTales", section => section
+                .WithTitle(S("sections.fairyTales.title", "童话"))
+                .AddToggle(
+                    "enable_fairy_tale_mode",
+                    S("enableFairyTaleMode.title", "童话模式"),
+                    BoolBinding(
+                        "EnableFairyTaleMode",
+                        () => BsAncientConfig.EnableFairyTaleMode,
+                        value => BsAncientConfig.EnableFairyTaleMode = value),
+                    S("enableFairyTaleMode.description", "开启后，每经过 7 个非 Boss/先古节点，获得一本随机童话。可以重复获得。更改后需要重启游戏并新开一局。"))));
     }
 
     private static ModSettingsText S(string key, string fallback)

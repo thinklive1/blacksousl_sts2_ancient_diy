@@ -1,6 +1,8 @@
 using System.Reflection;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ancients;
+using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
@@ -28,44 +30,66 @@ public class NeowRethinkPokerPatch : IPatchMethod
 
     public static void Postfix(Neow __instance, ref IReadOnlyList<EventOption> __result)
     {
-        if (__instance.Owner == null || __instance.Owner.RunState.Modifiers.Count > 0)
+        try
+        {
+            if (__instance.Owner == null || __instance.Owner.RunState.Modifiers.Count > 0)
+            {
+                return;
+            }
+
+            if (__result.Count < PositiveOptionCount)
+            {
+                return;
+            }
+
+            List<RelicModel> candidates = [
+                ModelDb.Relic<RethinkPokerRelic>().ToMutable(),
+                ModelDb.Relic<WormSmokeRelic>().ToMutable(),
+                ModelDb.Relic<MargaretRelic>().ToMutable(),
+                ModelDb.Relic<AngelFeatherRelic>().ToMutable(),
+                ModelDb.Relic<MabelSoldierRelic>().ToMutable()
+            ];
+            candidates.RemoveAll(relic => !relic.IsAllowed(__instance.Owner.RunState));
+            if (candidates.Count == 0)
+            {
+                return;
+            }
+
+            if (__instance.Owner.RunState.Rng.Niche.NextInt(100) >= BsAncientConfig.GrandGuignolInitialRelicChance)
+            {
+                return;
+            }
+
+            List<EventOption> options = __result.ToList();
+            RelicModel? relic = __instance.Owner.RunState.Rng.Niche.NextItem(candidates);
+            if (relic == null)
+            {
+                return;
+            }
+
+            int replacementIndex = __instance.Owner.RunState.Rng.Niche.NextInt(PositiveOptionCount);
+            options[replacementIndex] = CreateRethinkPokerOption(__instance, relic);
+            __result = options;
+        }
+        finally
+        {
+            if (__instance.Owner != null)
+            {
+                TryObtainFairyTaleBook(__instance);
+            }
+        }
+    }
+
+    private static void TryObtainFairyTaleBook(Neow neow)
+    {
+        if (!BsAncientConfig.EnableFairyTaleMode
+            || neow.Owner == null
+            || neow.Owner.GetRelic<UnnamedFairyTaleBookRelic>() != null)
         {
             return;
         }
 
-        if (__result.Count < PositiveOptionCount)
-        {
-            return;
-        }
-
-        List<RelicModel> candidates = [
-            ModelDb.Relic<RethinkPokerRelic>().ToMutable(),
-            ModelDb.Relic<WormSmokeRelic>().ToMutable(),
-            ModelDb.Relic<MargaretRelic>().ToMutable(),
-            ModelDb.Relic<AngelFeatherRelic>().ToMutable(),
-            ModelDb.Relic<MabelSoldierRelic>().ToMutable()
-        ];
-        candidates.RemoveAll(relic => !relic.IsAllowed(__instance.Owner.RunState));
-        if (candidates.Count == 0)
-        {
-            return;
-        }
-
-        if (__instance.Owner.RunState.Rng.Niche.NextInt(100) >= BsAncientConfig.GrandGuignolInitialRelicChance)
-        {
-            return;
-        }
-
-        List<EventOption> options = __result.ToList();
-        RelicModel? relic = __instance.Owner.RunState.Rng.Niche.NextItem(candidates);
-        if (relic == null)
-        {
-            return;
-        }
-
-        int replacementIndex = __instance.Owner.RunState.Rng.Niche.NextInt(PositiveOptionCount);
-        options[replacementIndex] = CreateRethinkPokerOption(__instance, relic);
-        __result = options;
+        RelicCmd.Obtain<UnnamedFairyTaleBookRelic>(neow.Owner).GetAwaiter().GetResult();
     }
 
     private static EventOption CreateRethinkPokerOption(Neow neow, RelicModel relic)

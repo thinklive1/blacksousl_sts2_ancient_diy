@@ -13,7 +13,9 @@ public static class BsAncientConfig
     public static bool DisableModAncients = false;
     public static bool ReplaceNeowAppearance = true;
     public static bool EnableModEvents = true;
-    public static bool DisableTestingEvents = false;
+    public static bool DisableTestingEvents = true;
+    public static bool EnableFairyTaleMode = false;
+    public static bool HasShownSettingsToast = false;
     public static int GrandGuignolInitialRelicChance = 30;
 
     public static void Load(Assembly assembly)
@@ -27,6 +29,7 @@ public static class BsAncientConfig
         }
 
         string json = File.ReadAllText(configPath);
+        bool shouldWriteBack = !HasAllConfigFields(json);
         FileConfig? config = JsonSerializer.Deserialize<FileConfig>(json);
         if (config == null)
         {
@@ -39,7 +42,18 @@ public static class BsAncientConfig
         ReplaceNeowAppearance = config.ReplaceNeowAppearance;
         EnableModEvents = config.EnableModEvents;
         DisableTestingEvents = config.DisableTestingEvents;
+        EnableFairyTaleMode = config.EnableFairyTaleMode;
+        HasShownSettingsToast = config.HasShownSettingsToast;
         GrandGuignolInitialRelicChance = Math.Clamp(config.GrandGuignolInitialRelicChance, 0, 100);
+        if (GrandGuignolInitialRelicChance != config.GrandGuignolInitialRelicChance)
+        {
+            shouldWriteBack = true;
+        }
+
+        if (shouldWriteBack)
+        {
+            SaveCurrent(configPath);
+        }
     }
 
     public static void Save()
@@ -72,6 +86,8 @@ public static class BsAncientConfig
             ReplaceNeowAppearance = ReplaceNeowAppearance,
             EnableModEvents = EnableModEvents,
             DisableTestingEvents = DisableTestingEvents,
+            EnableFairyTaleMode = EnableFairyTaleMode,
+            HasShownSettingsToast = HasShownSettingsToast,
             GrandGuignolInitialRelicChance = GrandGuignolInitialRelicChance
         };
         string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
@@ -87,10 +103,34 @@ public static class BsAncientConfig
             ReplaceNeowAppearance = ReplaceNeowAppearance,
             EnableModEvents = EnableModEvents,
             DisableTestingEvents = DisableTestingEvents,
+            EnableFairyTaleMode = EnableFairyTaleMode,
+            HasShownSettingsToast = HasShownSettingsToast,
             GrandGuignolInitialRelicChance = GrandGuignolInitialRelicChance
         };
         string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(configPath, json);
+    }
+
+    private static bool HasAllConfigFields(string json)
+    {
+        try
+        {
+            using JsonDocument document = JsonDocument.Parse(json);
+            JsonElement root = document.RootElement;
+            return root.ValueKind == JsonValueKind.Object
+                && root.TryGetProperty(nameof(FileConfig.OnlyUseModAncients), out _)
+                && root.TryGetProperty(nameof(FileConfig.DisableModAncients), out _)
+                && root.TryGetProperty(nameof(FileConfig.ReplaceNeowAppearance), out _)
+                && root.TryGetProperty(nameof(FileConfig.EnableModEvents), out _)
+                && root.TryGetProperty(nameof(FileConfig.DisableTestingEvents), out _)
+                && root.TryGetProperty(nameof(FileConfig.EnableFairyTaleMode), out _)
+                && root.TryGetProperty(nameof(FileConfig.HasShownSettingsToast), out _)
+                && root.TryGetProperty(nameof(FileConfig.GrandGuignolInitialRelicChance), out _);
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
     }
 
     private sealed class FileConfig
@@ -103,7 +143,11 @@ public static class BsAncientConfig
 
         public bool EnableModEvents { get; set; } = true;
 
-        public bool DisableTestingEvents { get; set; } = false;
+        public bool DisableTestingEvents { get; set; } = true;
+
+        public bool EnableFairyTaleMode { get; set; } = false;
+
+        public bool HasShownSettingsToast { get; set; } = false;
 
         public int GrandGuignolInitialRelicChance { get; set; } = 30;
     }

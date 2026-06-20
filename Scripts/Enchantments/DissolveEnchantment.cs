@@ -70,12 +70,7 @@ public class DissolveEnchantment : ModEnchantmentTemplate
         return -Math.Min(originalDamage, BlackSouls_DamageReduction);
     }
 
-    public override decimal ModifyBlockAdditive(
-        Creature target,
-        decimal originalBlock,
-        ValueProp props,
-        CardModel? cardSource,
-        CardPlay? cardPlay)
+    public override decimal EnchantBlockAdditive(decimal originalBlock)
     {
         return -Math.Min(originalBlock, BlackSouls_BlockReduction);
     }
@@ -94,7 +89,12 @@ public class DissolveEnchantment : ModEnchantmentTemplate
         }
 
         IncrementSavedReductions(deckCard);
-        IncrementSavedReductions(Card);
+        if (deckCard != Card)
+        {
+            IncrementSavedReductions(Card);
+        }
+
+        Card.Owner?.PlayerCombatState?.RecalculateCardValues();
 
         if (ShouldRemoveFromDeck(deckCard) && deckCard.Pile?.Type == PileType.Deck)
         {

@@ -2,7 +2,7 @@
 	"BS_ANCIENT_MODIFIER_BIRD_SINGER_MODIFIER.title": "Bird Singer",
 	"BS_ANCIENT_MODIFIER_BIRD_SINGER_MODIFIER.description": "Affected monster nodes start combat with half HP.",
 	"MIRROR_SAN_MODIFIER.title": "SAN",
-	"MIRROR_SAN_MODIFIER.description": "The shared SAN/SEN state for the hand mirror series.",
+	"MIRROR_SAN_MODIFIER.description": "The shared SAN state for the hand mirror series.",
 	"JACK_HAND_MIRROR_ROUTE_MODIFIER.title": "Jack Hand Mirror",
 	"JACK_HAND_MIRROR_ROUTE_MODIFIER.description": "The next act will contain a route with only normal combats and elites."
 }

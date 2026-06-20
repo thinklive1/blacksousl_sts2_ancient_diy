@@ -1,10 +1,12 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -12,19 +14,19 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace BlackSouls.Scripts;
 
 [RegisterRelic(typeof(EventRelicPool))]
-public sealed class AlicuxelsDogRelic : ModRelicTemplate
+public sealed class AladdinAndTheMagicLampRelic : ModRelicTemplate
 {
-    private const int FeelNoPainAmount = 3;
+    private const int VigorAmount = 3;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/FairyTaleRelic.png";
 
     public override RelicRarity Rarity => RelicRarity.Event;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<FeelNoPainPower>(FeelNoPainAmount)
+        new PowerVar<VigorPower>(VigorAmount)
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<FeelNoPainPower>()
+        HoverTipFactory.FromPower<VigorPower>()
     ];
 
     public override RelicAssetProfile AssetProfile => new(
@@ -38,13 +40,18 @@ public sealed class AlicuxelsDogRelic : ModRelicTemplate
         return false;
     }
 
-    public override async Task BeforeCombatStart()
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
+        if (player != Owner)
+        {
+            return;
+        }
+
         Flash();
-        await PowerCmd.Apply<FeelNoPainPower>(
-            new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(),
+        await PowerCmd.Apply<VigorPower>(
+            choiceContext,
             Owner.Creature,
-            DynamicVars["FeelNoPainPower"].BaseValue,
+            DynamicVars["VigorPower"].BaseValue,
             Owner.Creature,
             null,
             false);

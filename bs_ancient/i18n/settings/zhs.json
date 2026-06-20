@@ -4,6 +4,7 @@
   "description": "这些开关会同步写入 bs_ancient_config.cfg。更改后需要重启游戏并从新一局开始生效。",
   "sections.ancients.title": "先古之民",
   "sections.events.title": "事件",
+  "sections.fairyTales.title": "童话",
   "onlyUseModAncients.title": "只生成 Mod 先古之民",
   "onlyUseModAncients.description": "开启后，第 2 层只会从诺登/梅贝尔中选择，第 3 层只会从普利凯特/梅贝尔中选择。更改后需要重启游戏并新开一局。",
   "disableModAncients.title": "完全禁用 Mod 地图先古之民",
@@ -15,5 +16,7 @@
   "enableModEvents.title": "启用 Mod 事件",
   "enableModEvents.description": "开启后，普通事件池中会出现 BS Ancient 的 Mod 事件。关闭后不会自然遇到这些事件。更改后需要重启游戏并新开一局。",
   "disableTestingEvents.title": "禁用测试中事件",
-  "disableTestingEvents.description": "开启后，小丑、迷宫中的少女等 SAN/手镜相关测试事件不会自然出现。更改后需要重启游戏并新开一局。"
+  "disableTestingEvents.description": "开启后，小丑、迷宫中的少女等 SAN/手镜相关测试事件不会自然出现。更改后需要重启游戏并新开一局。",
+  "enableFairyTaleMode.title": "童话模式",
+  "enableFairyTaleMode.description": "开启后，开局获得无名的童话书；每经过 7 个非 Boss/先古节点，获得一本随机童话。可以重复获得。更改后需要重启游戏并新开一局。"
 }

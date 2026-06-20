@@ -9,6 +9,7 @@ namespace BlackSouls.Scripts;
 [RegisterOwnedCardKeyword(nameof(Kill), IconPath = "res://bs_ancient/assets/images/relics/NodeRibbonRelic.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 [RegisterOwnedCardKeyword(nameof(Encore), IconPath = "res://bs_ancient/assets/images/relics/StagnantGearRelic.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 [RegisterOwnedCardKeyword(nameof(KillingBlow), IconPath = "res://bs_ancient/assets/images/cards/WrigglingShadowCard.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
+[RegisterOwnedCardKeyword(nameof(San), IconPath = "res://bs_ancient/assets/images/powers/SanHighPower.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 public class MyKeywords
 {
     public static readonly CardKeyword Replay = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Replay)).GetModCardKeyword();
@@ -16,4 +17,5 @@ public class MyKeywords
     public static readonly CardKeyword Kill = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Kill)).GetModCardKeyword();
     public static readonly CardKeyword Encore = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Encore)).GetModCardKeyword();
     public static readonly CardKeyword KillingBlow = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(KillingBlow)).GetModCardKeyword();
+    public static readonly CardKeyword San = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(San)).GetModCardKeyword();
 }
