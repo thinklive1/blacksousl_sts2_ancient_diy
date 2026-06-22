@@ -27,6 +27,9 @@
 	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.description": "Dissolve: Add [gold]Exhaust[/gold] to this card. After it is played, permanently reduce this card's damage and block values by [blue]1[/blue]. When all reducible values reach [blue]0[/blue], remove it from your deck.",
 	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.extraCardText": "Add [gold]Exhaust[/gold]. After it is played, permanently reduce damage and block by [blue]1[/blue]. When all reach [blue]0[/blue], remove it from your deck.",
 	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.title": "Ascension",
-	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.description": "Ascension: After [blue]{Amount}[/blue] nodes, transform into a random card of the next higher rarity. Common cards become Uncommon, Uncommon cards become Rare, and Rare cards become Ancient. It cannot skip rarities.",
-	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.extraCardText": "After [blue]{Amount}[/blue] nodes, transform into a random card of the next higher rarity. It cannot skip rarities."
+	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.description": "Ascension: After [blue]{Amount}[/blue] nodes, transform into a random card of the next higher rarity. Common cards become Uncommon and Uncommon cards become Rare. It cannot skip rarities and cannot become an Ancient card.",
+	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.extraCardText": "After [blue]{Amount}[/blue] nodes, transform into a random card of the next higher rarity. It cannot skip rarities and cannot become an Ancient card.",
+	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.title": "Armament",
+	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.description": "Armament: Automatically play this card when drawn. Each time it is played, deal damage to yourself equal to [red]20%[/red] of this card's damage value.",
+	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.extraCardText": "Automatically play this card when drawn. Each time it is played, deal damage to yourself equal to [red]20%[/red] of this card's damage value."
 }

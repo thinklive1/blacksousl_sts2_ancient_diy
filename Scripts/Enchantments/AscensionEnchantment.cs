@@ -2,7 +2,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Map;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -144,13 +143,6 @@ public sealed class AscensionEnchantment : ModEnchantmentTemplate
 
     private IEnumerable<CardModel> GetCandidatePool(CardRarity rarity)
     {
-        if (rarity == CardRarity.Ancient)
-        {
-            return ModelDb.CardPool<EventCardPool>()
-                .GetUnlockedCards(Card.Owner.UnlockState, Card.Owner.RunState.CardMultiplayerConstraint)
-                .Where(card => card.Rarity == CardRarity.Ancient && IsValidReplacement(card));
-        }
-
         return Card.Owner.Character.CardPool
             .GetUnlockedCards(Card.Owner.UnlockState, Card.Owner.RunState.CardMultiplayerConstraint)
             .Where(card => card.Rarity == rarity && IsValidReplacement(card));
@@ -162,7 +154,6 @@ public sealed class AscensionEnchantment : ModEnchantmentTemplate
         {
             CardRarity.Basic or CardRarity.Common => CardRarity.Uncommon,
             CardRarity.Uncommon => CardRarity.Rare,
-            CardRarity.Rare => CardRarity.Ancient,
             _ => null
         };
     }

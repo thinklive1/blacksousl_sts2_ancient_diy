@@ -18,5 +18,5 @@
   "disableTestingEvents.title": "禁用测试中事件",
   "disableTestingEvents.description": "开启后，小丑、迷宫中的少女等 SAN/手镜相关测试事件不会自然出现。更改后需要重启游戏并新开一局。",
   "enableFairyTaleMode.title": "童话模式",
-  "enableFairyTaleMode.description": "开启后，开局获得无名的童话书；每经过 7 个非 Boss/先古节点，获得一本随机童话。可以重复获得。更改后需要重启游戏并新开一局。"
+  "enableFairyTaleMode.description": "开启后，开局获得无名的童话书；每经过 7 个非 Boss/先古节点，获得一本随机童话。可以重复获得。强烈不建议在多人模式启用。更改后需要重启游戏并新开一局。"
 }

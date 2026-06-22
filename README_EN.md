@@ -40,7 +40,7 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
 - `ReplaceNeowAppearance`: replaces Neow's appearance, name, title, and related dialogue with Grand Guignol. If `false`, Neow display returns to vanilla. Requires restarting the game.
 - `EnableModEvents`: enables this mod's random events. If `false`, this mod's new random events will not enter the event pool. Requires restarting the game and starting a new run.
 - `DisableTestingEvents`: disables testing events. If `true`, SAN/hand-mirror related testing events such as Clown and Girl in the Maze will not appear naturally. Requires restarting the game and starting a new run.
-- `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. Duplicates are allowed. Requires restarting the game and starting a new run.
+- `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. Duplicates are allowed. Strongly not recommended in multiplayer. Requires restarting the game and starting a new run.
 - `GrandGuignolInitialRelicChance`: chance, from 0 to 100, for a Grand Guignol starting relic to replace a positive starting option. Default is 30. Requires restarting the game and starting a new run.
 
 ## Grand Guignol?
@@ -91,7 +91,7 @@ Relics:
 - Red Queen's Signed Album: at the start of each turn, randomly reduce the cost of 1 current hand card by 1 for this combat.
 - Prickett's Dice: at the start of each turn, gain 1 Energy. During combat, all cards' attack and block values randomly fluctuate by up to 3. If at least one third of eligible cards roll +3, gain 1 Big Success, once per run.
 - Big Success: 0-cost Ethereal Power card. At the end of combat, gain 1 rare card reward and may remove 1 card.
-- Jabberwock's Film Reel: gain Jabberwock at the start of combat. Jabberwock cannot gain Block; attacks heal HP equal to unblocked damage dealt; starting on turn 2, lose half your current HP at the start of each turn, but this cannot kill you.
+- Jabberwock's Film Reel: gain Jabberwock at the start of combat. Jabberwock cannot gain Block; attacks heal HP equal to unblocked damage dealt; lose half your current HP at the start of each turn, but this cannot kill you.
 - Alice's Ribbon: one-use relic. When you die, revive to full HP and gain 10 Strength.
 - Prickett's Looking Glass: gain 1 Red Queen's Looking Glass. Red Queen's Looking Glass is a 0-cost Ancient Skill with Ethereal. Choose to remove the discard pile and copy the draw pile into it, or remove the draw pile and copy the discard pile into it. Removed cards do not enter the exhaust pile and do not trigger exhaust effects. Upgraded version removes Ethereal.
 - 蟇?ｋ蟆大･ｳ縺溘: transform all curses in your deck into 雋ｴ譁ｹ繧呈?縺. 雋ｴ譁ｹ繧呈?縺 is a 0-cost Ancient Curse with Exhaust and Ethereal. When exhausted, take 1 damage, draw 1 card, add 1 copy to the draw pile and 1 copy to the discard pile, then randomly gain 1 Intangible, 1 Undying, 2 Strength, 1 Dexterity, 5 Plated Armor, 1 Madness, or draw 2 cards. In single-player, each time you play 雋ｴ譁ｹ繧呈?縺 there is a 5% chance to trigger 驨o咇輠??vf墈荖鞷?悢篓.
@@ -124,11 +124,11 @@ Relics:
 
 ## Fairy Tale Relics
 
-Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining nodes; after every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. Duplicates are allowed.
+Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining nodes; after every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. Duplicates are allowed. Fairy Tale Mode is strongly not recommended in multiplayer.
 
 - Unnamed Fairy Tale Book: obtained at the start of a run when Fairy Tale Mode is enabled. Shows how many nodes remain before the next random Fairy Tale. After every 7 non-Boss/non-Ancient nodes, gain a random Fairy Tale. Duplicates are allowed.
 - Fairy Tale - Pinocchio: on pickup, choose 1 card with damage or block values and enchant it with Lie. After a Lie card is played, swap its damage and block values. Damage-only cards switch to gaining that much Block and dealing no damage; block-only cards switch to dealing that much damage and gaining no Block.
-- Alice Through the Looking Glass: on pickup, choose 4 cards and enchant them with Ascension. The next act map becomes up to 8 straight routes. After 7 non-Ancient nodes, Ascension cards transform into a random card of the next higher rarity; rare cards transform into random Ancient cards, and Ancient cards cannot receive Ascension.
+- Alice Through the Looking Glass: on pickup, choose 4 cards and enchant them with Ascension. The next act map becomes 3 straight routes with no branches. After 7 non-Ancient nodes, Ascension cards transform into a random card of the next higher rarity; Common cards become Uncommon and Uncommon cards become Rare. They cannot become Ancient cards.
 - Fairy Tale - The Three Little Pigs: the next 3 combats grant no rewards.
 - Fairy Tale - The Emperor's New Clothes: during the second turn of each combat, you cannot gain Block.
 - Fairy Tale - Alicuxel's Dog: at the start of combat, gain 3 Feel No Pain.
@@ -142,6 +142,9 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Fairy Tale - The High Jumpers: at the start of combat, gain 2 Flutter.
 - Fairy Tale - The Wolf and X Little Goats: for the first three turns, your Block is not removed. At the start of your third turn, deal damage equal to your Block to all creatures.
 - Fairy Tale - My Former Rascal: when you enter the next normal or elite combat, all enemies gain 5 Strength, then this relic becomes inactive.
+- Fairy Tale - Sinbad the Sailor: at the start of combat, gain 1 Slow.
+- Fairy Tale - Town Musicians of Bremen: at the start of the first turn, Stun all enemies and shuffle 5 Dazed into your draw pile or discard pile at random.
+- Fairy Tale - Iron Hans: on pickup, choose 1 card and enchant it with Armament. Armament cards automatically play when drawn. Each time one is played, it deals damage to you equal to 20% of that card's damage value.
 
 ## Random Events
 

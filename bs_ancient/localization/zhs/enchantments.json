@@ -27,6 +27,9 @@
 	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.description": "溶解: 为这张牌添加[gold]消耗[/gold]。打出后，这张牌的伤害与格挡数值永久减少[blue]1[/blue]；可减少数值全部降为[blue]0[/blue]时，从牌组中移除。",
 	"BS_ANCIENT_ENCHANTMENT_DISSOLVE_ENCHANTMENT.extraCardText": "添加[gold]消耗[/gold]。打出后，伤害与格挡永久减少[blue]1[/blue]；全部降为[blue]0[/blue]时移出牌组。",
 	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.title": "升格",
-	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.description": "升格: 经过[blue]{Amount}[/blue]个节点后，变化为一张随机的更高一级稀有度卡牌。普通牌变罕见牌，罕见牌变稀有牌，稀有牌变先古牌，不能跨级。",
-	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.extraCardText": "经过[blue]{Amount}[/blue]个节点后，随机变为更高一级稀有度卡牌，不能跨级。"
+	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.description": "升格: 经过[blue]{Amount}[/blue]个节点后，变化为一张随机的更高一级稀有度卡牌。",
+	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.extraCardText": "经过[blue]{Amount}[/blue]个节点后，随机变为更高一级稀有度卡牌，不会升格为先古牌。",
+	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.title": "兵装",
+	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.description": "兵装: 抽到时自动打出。每次打出后，对自身造成等同这张牌伤害数值[red]20%[/red]的伤害。",
+	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.extraCardText": "抽到时自动打出。每次打出后，对自身造成等同这张牌伤害数值[red]20%[/red]的伤害。"
 }

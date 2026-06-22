@@ -17,8 +17,10 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
 {
     private const int NodesPerReward = 7;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/FairyTaleRelic.png";
+    private const char ObtainedRelicSeparator = '|';
 
     private int _remainingNodes = NodesPerReward;
+    private string _obtainedFairyTaleRelicIds = string.Empty;
 
     public override RelicRarity Rarity => RelicRarity.Event;
 
@@ -39,6 +41,17 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
             AssertMutable();
             _remainingNodes = Math.Clamp(value, 0, NodesPerReward);
             InvokeDisplayAmountChanged();
+        }
+    }
+
+    [SavedProperty]
+    public string BlackSouls_ObtainedFairyTaleRelicIds
+    {
+        get => _obtainedFairyTaleRelicIds;
+        set
+        {
+            AssertMutable();
+            _obtainedFairyTaleRelicIds = value ?? string.Empty;
         }
     }
 
@@ -120,11 +133,39 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
             return;
         }
 
-        RelicModel? relic = Owner.RunState.Rng.Niche.NextItem(FairyTaleRelics());
+        HashSet<string> obtainedRelicIds = ObtainedFairyTaleRelicIds();
+        HashSet<string> ownedRelicIds = Owner.Relics
+            .Select(relic => relic.Id.Entry)
+            .ToHashSet(StringComparer.Ordinal);
+
+        List<RelicModel> candidates = FairyTaleRelics()
+            .Where(relic => !obtainedRelicIds.Contains(relic.Id.Entry) && !ownedRelicIds.Contains(relic.Id.Entry))
+            .ToList();
+
+        RelicModel? relic = Owner.RunState.Rng.Niche.NextItem(candidates);
         if (relic != null)
         {
+            RecordObtainedFairyTale(relic);
             await RelicCmd.Obtain(relic.ToMutable(), Owner);
         }
+    }
+
+    private HashSet<string> ObtainedFairyTaleRelicIds()
+    {
+        return BlackSouls_ObtainedFairyTaleRelicIds
+            .Split(ObtainedRelicSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .ToHashSet(StringComparer.Ordinal);
+    }
+
+    private void RecordObtainedFairyTale(RelicModel relic)
+    {
+        HashSet<string> obtainedRelicIds = ObtainedFairyTaleRelicIds();
+        if (!obtainedRelicIds.Add(relic.Id.Entry))
+        {
+            return;
+        }
+
+        BlackSouls_ObtainedFairyTaleRelicIds = string.Join(ObtainedRelicSeparator, obtainedRelicIds.Order(StringComparer.Ordinal));
     }
 
     private static List<RelicModel> FairyTaleRelics() =>
@@ -143,6 +184,14 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         ModelDb.Relic<UglyDucklingRelic>(),
         ModelDb.Relic<HighJumperRelic>(),
         ModelDb.Relic<WolfAndLittleGoatsRelic>(),
-        ModelDb.Relic<MyFormerRascalRelic>()
+        ModelDb.Relic<MyFormerRascalRelic>(),
+        ModelDb.Relic<SinbadTheSailorRelic>(),
+        ModelDb.Relic<TownMusiciansOfBremenRelic>(),
+        ModelDb.Relic<IronHansRelic>(),
+        ModelDb.Relic<FlandersDogRelic>(),
+        ModelDb.Relic<LittlePrinceRelic>(),
+        ModelDb.Relic<ArmoredKnightRelic>(),
+        ModelDb.Relic<KingWithDonkeyEarsRelic>(),
+        ModelDb.Relic<PeterPanRelic>()
     ];
 }

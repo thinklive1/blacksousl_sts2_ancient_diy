@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -17,8 +16,6 @@ namespace BlackSouls.Scripts;
 public class ViolenceDemonPower : ModPowerTemplate
 {
     private const int SelfDamagePercent = 50;
-
-    private int _ownerTurnCount;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -73,28 +70,18 @@ public class ViolenceDemonPower : ModPowerTemplate
             return;
         }
 
-        _ownerTurnCount++;
-        if (_ownerTurnCount >= 2)
+        decimal selfDamage = Math.Ceiling(Owner.CurrentHp * DynamicVars["SelfDamagePercent"].BaseValue / 100m);
+        selfDamage = Math.Min(selfDamage, Math.Max(Owner.CurrentHp - 1, 0));
+        if (selfDamage > 0m)
         {
-            decimal selfDamage = Math.Ceiling(Owner.CurrentHp * DynamicVars["SelfDamagePercent"].BaseValue / 100m);
-            selfDamage = Math.Min(selfDamage, Math.Max(Owner.CurrentHp - 1, 0));
-            if (selfDamage > 0m)
-            {
-                Flash();
-                await CreatureCmd.Damage(
-                    new ThrowingPlayerChoiceContext(),
-                    Owner,
-                    selfDamage,
-                    ValueProp.Unblockable | ValueProp.Unpowered,
-                    Owner,
-                    null);
-            }
+            Flash();
+            await CreatureCmd.Damage(
+                new ThrowingPlayerChoiceContext(),
+                Owner,
+                selfDamage,
+                ValueProp.Unblockable | ValueProp.Unpowered,
+                Owner,
+                null);
         }
-    }
-
-    public override Task AfterCombatEnd(CombatRoom room)
-    {
-        _ownerTurnCount = 0;
-        return Task.CompletedTask;
     }
 }

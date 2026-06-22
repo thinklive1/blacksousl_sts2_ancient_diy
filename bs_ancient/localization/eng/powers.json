@@ -22,8 +22,8 @@
   "BS_ANCIENT_POWER_MYSTERY_OF_NIGHT_SKY_DECISION_POWER.title": "Mystery of the Night Sky",
   "BS_ANCIENT_POWER_MYSTERY_OF_NIGHT_SKY_DECISION_POWER.description": "Tracks whether the first card played this turn will be played an additional time.",
   "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.title": "Violence Demon",
-  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.description": "You cannot gain [gold]Block[/gold] by any means. When you attack, heal HP equal to the unblocked damage dealt. Starting on turn 2, at the start of each turn, lose [green]50%[/green] of your current HP, but this cannot kill you.",
-  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.smartDescription": "You cannot gain [gold]Block[/gold] by any means. When you attack, heal HP equal to the unblocked damage dealt. Starting on turn 2, at the start of each turn, lose [green]50%[/green] of your current HP, but this cannot kill you.",
+  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.description": "You cannot gain [gold]Block[/gold] by any means. When you attack, heal HP equal to the unblocked damage dealt. At the start of each turn, lose [green]50%[/green] of your current HP, but this cannot kill you.",
+  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.smartDescription": "You cannot gain [gold]Block[/gold] by any means. When you attack, heal HP equal to the unblocked damage dealt. At the start of each turn, lose [green]50%[/green] of your current HP, but this cannot kill you.",
   "BS_ANCIENT_POWER_SURROUNDED_VISUAL_POWER.title": "Surrounded Visual",
   "BS_ANCIENT_POWER_SURROUNDED_VISUAL_POWER.description": "Preserves turning visuals in surrounded combats.",
   "BS_ANCIENT_POWER_EVIL_QI_PENDING_POWER.title": "Evil Qi",
@@ -62,5 +62,14 @@
   "BS_ANCIENT_POWER_SAN_LOW_POWER.smartDescription": "蜩咎函荳榊庄蜿ｯ縺ｪ髏ｰ縺九ｉ蜿悶ｊ谿九＆繧後◆譁?ｭ励?譁ｰ縺励＞蜷阪?荳翫〒蠢?ｴ医☆繧九?",
   "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.title": "Fairy Tale - The Wolf and X Little Goats",
   "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.description": "For the first three turns, your Block is not removed. At the start of your third turn, deal damage equal to your Block to all creatures.",
-  "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.smartDescription": "[blue]{Amount}[/blue] turns remaining: your Block is not removed. At the start of your third turn, deal damage equal to your Block to all creatures."
+  "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.smartDescription": "[blue]{Amount}[/blue] turns remaining: your Block is not removed. At the start of your third turn, deal damage equal to your Block to all creatures.",
+  "BS_ANCIENT_POWER_SINBAD_SLOW_POWER.title": "Slow",
+  "BS_ANCIENT_POWER_SINBAD_SLOW_POWER.description": "Whenever you play a card, increase damage you take by [blue]10%[/blue]. Resets at the start of each turn.",
+  "BS_ANCIENT_POWER_SINBAD_SLOW_POWER.smartDescription": "Whenever you play a card, increase damage you take by [blue]10%[/blue]. Resets at the start of each turn.",
+  "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.title": "Hunt",
+  "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.description": "While you have [gold]Weak[/gold], damage you take is multiplied by [blue]2[/blue].",
+  "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.smartDescription": "While you have [gold]Weak[/gold], damage you take is multiplied by [blue]2[/blue].",
+  "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.title": "Fairy Tale - The Little Prince",
+  "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.description": "When the countdown ends, all creatures take [blue]30[/blue] damage.",
+  "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.smartDescription": "[blue]{Amount}[/blue] turns remaining: when the countdown ends, all creatures take [blue]30[/blue] damage."
 }

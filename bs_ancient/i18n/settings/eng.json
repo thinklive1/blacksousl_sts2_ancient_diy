@@ -18,5 +18,5 @@
   "disableTestingEvents.title": "Disable Testing Events",
   "disableTestingEvents.description": "When enabled, testing events related to SAN and hand mirrors, such as Clown and Girl in the Maze, will not appear naturally. Requires restarting the game and starting a new run.",
   "enableFairyTaleMode.title": "Fairy Tale Mode",
-  "enableFairyTaleMode.description": "When enabled, you start with Unnamed Fairy Tale Book. After every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. Duplicates are allowed. Requires restarting the game and starting a new run."
+  "enableFairyTaleMode.description": "When enabled, you start with Unnamed Fairy Tale Book. After every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. Duplicates are allowed. Strongly not recommended in multiplayer. Requires restarting the game and starting a new run."
 }

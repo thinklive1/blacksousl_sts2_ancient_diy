@@ -22,8 +22,8 @@
   "BS_ANCIENT_POWER_MYSTERY_OF_NIGHT_SKY_DECISION_POWER.title": "夜空的神秘",
   "BS_ANCIENT_POWER_MYSTERY_OF_NIGHT_SKY_DECISION_POWER.description": "记录本回合第一张牌是否会额外打出一次。",
   "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.title": "暴魔",
-  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.description": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。从第二回合开始，每回合开始时失去当前生命值[green]50%[/green]的生命值，但不会因此死亡。",
-  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.smartDescription": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。从第二回合开始，每回合开始时失去当前生命值[green]50%[/green]的生命值，但不会因此死亡。",
+  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.description": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。每回合开始时失去当前生命值[green]50%[/green]的生命值，但不会因此死亡。",
+  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.smartDescription": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。每回合开始时失去当前生命值[green]50%[/green]的生命值，但不会因此死亡。",
   "BS_ANCIENT_POWER_SURROUNDED_VISUAL_POWER.title": "包围视觉",
   "BS_ANCIENT_POWER_SURROUNDED_VISUAL_POWER.description": "保留包围战斗中的转向视觉。",
   "BS_ANCIENT_POWER_EVIL_QI_PENDING_POWER.title": "邪气",
@@ -62,5 +62,14 @@
   "BS_ANCIENT_POWER_SAN_LOW_POWER.smartDescription": "蜩咎函荳榊庄蜿ｯ縺ｪ髏ｰ縺九ｉ蜿悶ｊ谿九＆繧後◆譁?ｭ励?譁ｰ縺励＞蜷阪?荳翫〒蠢?ｴ医☆繧九?",
   "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.title": "童话-狼和X只小山羊",
   "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.description": "前三个回合，你的格挡不会消失。第三个回合开始时，对所有生物造成等于你格挡值的伤害。",
-  "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.smartDescription": "剩余[blue]{Amount}[/blue]回合：你的格挡不会消失。第三个回合开始时，对所有生物造成等于你格挡值的伤害。"
+  "BS_ANCIENT_POWER_WOLF_AND_LITTLE_GOATS_POWER.smartDescription": "剩余[blue]{Amount}[/blue]回合：你的格挡不会消失。第三个回合开始时，对所有生物造成等于你格挡值的伤害。",
+  "BS_ANCIENT_POWER_SINBAD_SLOW_POWER.title": "缓慢",
+  "BS_ANCIENT_POWER_SINBAD_SLOW_POWER.description": "每打出一张牌，自身受到的伤害提高[blue]10%[/blue]。每回合开始时重置。",
+  "BS_ANCIENT_POWER_SINBAD_SLOW_POWER.smartDescription": "每打出一张牌，自身受到的伤害提高[blue]10%[/blue]。每回合开始时重置。",
+  "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.title": "追猎",
+  "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.description": "自身拥有[gold]虚弱[/gold]时，受到的伤害变为[blue]2[/blue]倍。",
+  "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.smartDescription": "自身拥有[gold]虚弱[/gold]时，受到的伤害变为[blue]2[/blue]倍。",
+  "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.title": "童话-小王子",
+  "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.description": "倒计时结束时，所有生物受到[blue]30[/blue]点伤害。",
+  "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.smartDescription": "剩余[blue]{Amount}[/blue]回合：倒计时结束时，所有生物受到[blue]30[/blue]点伤害。"
 }

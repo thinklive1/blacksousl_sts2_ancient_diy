@@ -10,7 +10,9 @@
 
     <!-- 改成你的杀戮尖塔2目录 -->
     <Sts2Dir>D:\software\steam\steamapps\common\Slay the Spire 2</Sts2Dir>
+    <GodotExe>D:\game\bsmod\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64_console.exe</GodotExe>
     <Sts2DataDir>$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
+    <WorkshopUploadContentDir>$(MSBuildProjectDirectory)\upload\content</WorkshopUploadContentDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,12 +33,33 @@
 
   <!-- 自动复制dll、json和README -->
   <Target Name="Copy Mod" AfterTargets="PostBuildEvent">
+    <Message Text="Copying mod to Steam Workshop uploader workspace..." Importance="high" />
+    <MakeDir Directories="$(WorkshopUploadContentDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(WorkshopUploadContentDir)\" />
+    <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(WorkshopUploadContentDir)\" />
+    <Copy SourceFiles="README.md" DestinationFolder="$(WorkshopUploadContentDir)\" />
+    <Copy SourceFiles="README_EN.md" DestinationFolder="$(WorkshopUploadContentDir)\" />
+    <Copy SourceFiles="$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName).pck" DestinationFolder="$(WorkshopUploadContentDir)\" Condition="Exists('$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName).pck')" />
+    <Copy SourceFiles="$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName)_config.cfg" DestinationFolder="$(WorkshopUploadContentDir)\" Condition="Exists('$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName)_config.cfg')" />
+
     <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
     <MakeDir Directories="$(Sts2Dir)\mods\" />
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\" />
-    <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" />
-    <Copy SourceFiles="README.md" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" />
-    <Copy SourceFiles="README_EN.md" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\" ContinueOnError="WarnAndContinue" />
+    <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" ContinueOnError="WarnAndContinue" />
+    <Copy SourceFiles="README.md" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" ContinueOnError="WarnAndContinue" />
+    <Copy SourceFiles="README_EN.md" DestinationFolder="$(Sts2Dir)/mods/$(MSBuildProjectName)/" ContinueOnError="WarnAndContinue" />
     <Delete Files="$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName)_config.json" TreatErrorsAsWarnings="true" />
+  </Target>
+
+  <!-- 手动执行 dotnet build -t:ExportPck 时，使用 Godot headless 导出 PCK。普通 dotnet build 不会触发。 -->
+  <Target Name="ExportPck" DependsOnTargets="Build">
+    <Message Text="Exporting PCK to Slay the Spire 2 mods folder..." Importance="high" />
+    <MakeDir Directories="$(Sts2Dir)\mods\$(MSBuildProjectName)\" />
+    <Exec Command="&quot;$(GodotExe)&quot; --headless --path &quot;$(MSBuildProjectDirectory)&quot; --export-pack &quot;Windows Desktop&quot; &quot;$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName).pck&quot;"
+      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
+      ContinueOnError="WarnAndContinue"
+      Condition="Exists('$(GodotExe)')" />
+    <Warning Text="GodotExe not found: $(GodotExe)" Condition="!Exists('$(GodotExe)')" />
+    <Copy SourceFiles="$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName).pck" DestinationFolder="$(WorkshopUploadContentDir)\" Condition="Exists('$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName).pck')" />
   </Target>
 </Project>

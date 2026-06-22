@@ -1,7 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Runs;
-using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -16,9 +15,9 @@ public sealed class AliceHandkerchiefRelic : ModRelicTemplate
 
     public override bool ShowCounter => true;
 
-    public override int DisplayAmount => GetModifier()?.BlackSouls_RemainingNodes ?? 0;
+    public override int DisplayAmount => IsCanonical ? 0 : GetModifier()?.BlackSouls_RemainingNodes ?? 0;
 
-    public override bool IsUsedUp => GetModifier() is { BlackSouls_RemainingNodes: <= 0 };
+    public override bool IsUsedUp => IsMutable && GetModifier() is { BlackSouls_RemainingNodes: <= 0 };
 
     public override bool IsAllowed(IRunState runState)
     {
@@ -33,12 +32,22 @@ public sealed class AliceHandkerchiefRelic : ModRelicTemplate
 
     internal void RefreshCounter()
     {
+        if (IsCanonical)
+        {
+            return;
+        }
+
         Status = IsUsedUp ? RelicStatus.Disabled : RelicStatus.Normal;
         InvokeDisplayAmountChanged();
     }
 
     private AliceHandkerchiefModifier? GetModifier()
     {
+        if (IsCanonical)
+        {
+            return null;
+        }
+
         return Owner?.RunState.Modifiers.OfType<AliceHandkerchiefModifier>().FirstOrDefault();
     }
 }
