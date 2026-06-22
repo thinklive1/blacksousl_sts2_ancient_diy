@@ -192,6 +192,10 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         ModelDb.Relic<LittlePrinceRelic>(),
         ModelDb.Relic<ArmoredKnightRelic>(),
         ModelDb.Relic<KingWithDonkeyEarsRelic>(),
-        ModelDb.Relic<PeterPanRelic>()
+        ModelDb.Relic<PeterPanRelic>(),
+        ModelDb.Relic<MonkeyCrabBattleRelic>(),
+        ModelDb.Relic<GreedyDogRelic>(),
+        ModelDb.Relic<TortoiseAndHareRelic>(),
+        ModelDb.Relic<KachiKachiYamaRelic>()
     ];
 }

@@ -31,5 +31,8 @@
 	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.extraCardText": "After [blue]{Amount}[/blue] nodes, transform into a random card of the next higher rarity. It cannot skip rarities and cannot become an Ancient card.",
 	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.title": "Armament",
 	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.description": "Armament: Automatically play this card when drawn. Each time it is played, deal damage to yourself equal to [red]20%[/red] of this card's damage value.",
-	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.extraCardText": "Automatically play this card when drawn. Each time it is played, deal damage to yourself equal to [red]20%[/red] of this card's damage value."
+	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.extraCardText": "Automatically play this card when drawn. Each time it is played, deal damage to yourself equal to [red]20%[/red] of this card's damage value.",
+	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.title": "Brutality",
+	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.description": "Brutality: After a Brutality card kills any enemy, the next Brutality card you play deals double damage.",
+	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.extraCardText": "After a Brutality card kills any enemy, the next Brutality card you play deals double damage."
 }

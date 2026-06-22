@@ -40,7 +40,7 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
 - `ReplaceNeowAppearance`: replaces Neow's appearance, name, title, and related dialogue with Grand Guignol. If `false`, Neow display returns to vanilla. Requires restarting the game.
 - `EnableModEvents`: enables this mod's random events. If `false`, this mod's new random events will not enter the event pool. Requires restarting the game and starting a new run.
 - `DisableTestingEvents`: disables testing events. If `true`, SAN/hand-mirror related testing events such as Clown and Girl in the Maze will not appear naturally. Requires restarting the game and starting a new run.
-- `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. Duplicates are allowed. Strongly not recommended in multiplayer. Requires restarting the game and starting a new run.
+- `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run. Strongly not recommended in multiplayer. In single-player, the character select screen also shows a per-run Fairy Tale Mode toggle, which takes priority over this default setting.
 - `GrandGuignolInitialRelicChance`: chance, from 0 to 100, for a Grand Guignol starting relic to replace a positive starting option. Default is 30. Requires restarting the game and starting a new run.
 
 ## Grand Guignol?
@@ -104,7 +104,7 @@ Relics:
 
 Options:
 
-- Option 1: choose 1 from 3 random favors. Candidate pool: Rapunzel's Favor / Little Mermaid's Favor / Frog Princess' Favor / Snow White's Favor / Cinderella's Favor.
+- Option 1: choose 1 from 3 random favors. Candidate pool: Rapunzel's Favor / Little Mermaid's Favor / Frog Princess' Favor / Snow White's Favor / Cinderella's Favor / Baphomet's Favor.
 - Option 2: Heinlyth Wine / Stage End / Silver Key.
 - Option 3: Eternal Void / Mystery of the Night Sky / Gift of Chaos.
 
@@ -115,6 +115,7 @@ Relics:
 - Frog Princess' Favor: whenever you apply a debuff to an enemy, apply the same debuff one extra time; then there is a 20% chance to apply 1 Weak, Vulnerable, or Frail to yourself.
 - Snow White's Favor: lose 5 Dexterity at the start of combat; enemy attack damage taken is halved.
 - Cinderella's Favor: lose 3 Strength at the start of each turn; at the end of each turn, remove all debuffs from yourself.
+- Baphomet's Favor: prevents Energy gain. You may spend HP equal to a card's Energy cost to play it; X-cost cards resolve as if X were 3.
 - Heinlyth Wine: gain 1 matching card. Heinlyth Wine is a 2/1-cost Ancient Power with Ethereal. Playing it grants an extra-turn effect.
 - Stage End: gain 1 matching card. Stage End is a 0-cost Ancient Skill that refills your hand and Energy and grants Madness; after you play 8 non-Stage End cards, you are forcibly killed. Upgraded version removes Ethereal.
 - Silver Key: on pickup, choose 1 card and enchant it with Unlock. Once per combat, an Unlock card can ignore play conditions and be played for free; the first trigger removes all card Afflictions.
@@ -124,9 +125,9 @@ Relics:
 
 ## Fairy Tale Relics
 
-Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining nodes; after every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. Duplicates are allowed. Fairy Tale Mode is strongly not recommended in multiplayer.
+Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining nodes; after every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run. In single-player, the character select screen can enable or disable Fairy Tale Mode for the current run, and that toggle takes priority over the config default. Fairy Tale Mode is strongly not recommended in multiplayer.
 
-- Unnamed Fairy Tale Book: obtained at the start of a run when Fairy Tale Mode is enabled. Shows how many nodes remain before the next random Fairy Tale. After every 7 non-Boss/non-Ancient nodes, gain a random Fairy Tale. Duplicates are allowed.
+- Unnamed Fairy Tale Book: obtained at the start of a run when Fairy Tale Mode is enabled. Shows how many nodes remain before the next random Fairy Tale. After every 7 non-Boss/non-Ancient nodes, gain a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run.
 - Fairy Tale - Pinocchio: on pickup, choose 1 card with damage or block values and enchant it with Lie. After a Lie card is played, swap its damage and block values. Damage-only cards switch to gaining that much Block and dealing no damage; block-only cards switch to dealing that much damage and gaining no Block.
 - Alice Through the Looking Glass: on pickup, choose 4 cards and enchant them with Ascension. The next act map becomes 3 straight routes with no branches. After 7 non-Ancient nodes, Ascension cards transform into a random card of the next higher rarity; Common cards become Uncommon and Uncommon cards become Rare. They cannot become Ancient cards.
 - Fairy Tale - The Three Little Pigs: the next 3 combats grant no rewards.
@@ -134,7 +135,7 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Fairy Tale - Alicuxel's Dog: at the start of combat, gain 3 Feel No Pain.
 - Fairy Tale - The Singing Bone: at the start of combat, play Elegy.
 - Fairy Tale - The Fox and the Sour Grapes: at the start of combat, all creatures gain 1 Envenom. Monsters also gain Envenom; when a monster attack deals HP damage to the player, the player gains Poison.
-- Fairy Tale - The Pied Piper of Hamelin: at the start of combat, gain 3 Poison.
+- Fairy Tale - The Pied Piper of Hamelin: at the start of combat, gain 4 Poison.
 - Fairy Tale - Jack and the Beanstalk: after each node, lose 5 HP, but this cannot reduce you below 1 HP. When you reach the 6th node, gain Max HP equal to the total HP lost this way, then this relic becomes inactive.
 - Fairy Tale - Aladdin and the Magic Lamp: at the start of turn, gain 3 Vigor.
 - Fairy Tale - Beauty and the Beast: at the start of combat, if you can afford it, spend 20 Gold to gain 3 Strength. If you cannot afford it, lose 3 Strength.
@@ -145,6 +146,15 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Fairy Tale - Sinbad the Sailor: at the start of combat, gain 1 Slow.
 - Fairy Tale - Town Musicians of Bremen: at the start of the first turn, Stun all enemies and shuffle 5 Dazed into your draw pile or discard pile at random.
 - Fairy Tale - Iron Hans: on pickup, choose 1 card and enchant it with Armament. Armament cards automatically play when drawn. Each time one is played, it deals damage to you equal to 20% of that card's damage value.
+- Fairy Tale - A Dog of Flanders: at the start of combat, gain 1 Hunt. While you have Weak, damage you take is doubled.
+- Fairy Tale - The Little Prince: at the start of turn 5, all creatures take 30 damage.
+- Fairy Tale - The Knight in Armor: at the start of combat, gain 6 Plating.
+- Fairy Tale - The King with Donkey Ears: deal 50% more damage to bosses.
+- Fairy Tale - Peter Pan: on pickup, choose any number of the 5 most recently obtained cards and remove them.
+- Fairy Tale - The Monkey and the Crab: on pickup, add 1 Greed and 1 Injury to your deck.
+- Fairy Tale - The Greedy Dog: on pickup, transform one of the highest-rarity non-Ancient cards in your deck into Greed. If multiple cards share that rarity, choose one at random.
+- Fairy Tale - The Tortoise and the Hare: on pickup, choose 2 Attack cards and enchant them with Brutality. After a Brutality card kills any enemy, the next Brutality card you play deals double damage.
+- Fairy Tale - Kachi-kachi Yama: at the start of each of your turns, automatically play Anger a number of times equal to the current turn number.
 
 ## Random Events
 

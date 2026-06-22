@@ -1,9 +1,9 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -12,20 +12,17 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace BlackSouls.Scripts;
 
 [RegisterRelic(typeof(EventRelicPool))]
-public sealed class PiedPiperOfHamelinRelic : ModRelicTemplate
+public sealed class MonkeyCrabBattleRelic : ModRelicTemplate
 {
-    private const int PoisonAmount = 4;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/FairyTaleRelic.png";
 
     public override RelicRarity Rarity => RelicRarity.Event;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<PoisonPower>(PoisonAmount)
-    ];
+    public override bool HasUponPickupEffect => true;
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<PoisonPower>()
-    ];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        HoverTipFactory.FromCardWithCardHoverTips<Greed>()
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<Injury>());
 
     public override RelicAssetProfile AssetProfile => new(
         IconPath: RelicIconPath,
@@ -38,15 +35,15 @@ public sealed class PiedPiperOfHamelinRelic : ModRelicTemplate
         return false;
     }
 
-    public override async Task BeforeCombatStart()
+    public override async Task AfterObtained()
     {
-        Flash();
-        await PowerCmd.Apply<PoisonPower>(
-            new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(),
-            Owner.Creature,
-            DynamicVars["PoisonPower"].BaseValue,
-            Owner.Creature,
-            null,
-            false);
+        await AddCurseToDeck<Greed>();
+        await AddCurseToDeck<Injury>();
+    }
+
+    private async Task AddCurseToDeck<T>() where T : CardModel
+    {
+        CardModel card = Owner.RunState.CreateCard<T>(Owner);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck, CardPilePosition.Top, this, false), 2f);
     }
 }

@@ -69,6 +69,9 @@
   "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.title": "追猎",
   "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.description": "自身拥有[gold]虚弱[/gold]时，受到的伤害变为[blue]2[/blue]倍。",
   "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.smartDescription": "自身拥有[gold]虚弱[/gold]时，受到的伤害变为[blue]2[/blue]倍。",
+  "BS_ANCIENT_POWER_BRUTALITY_POWER.title": "残虐",
+  "BS_ANCIENT_POWER_BRUTALITY_POWER.description": "下一张打出的[gold]残虐[/gold]牌造成的伤害翻倍。",
+  "BS_ANCIENT_POWER_BRUTALITY_POWER.smartDescription": "下一张打出的[gold]残虐[/gold]牌造成的伤害翻倍。",
   "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.title": "童话-小王子",
   "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.description": "倒计时结束时，所有生物受到[blue]30[/blue]点伤害。",
   "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.smartDescription": "剩余[blue]{Amount}[/blue]回合：倒计时结束时，所有生物受到[blue]30[/blue]点伤害。"

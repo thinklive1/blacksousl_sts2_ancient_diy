@@ -69,6 +69,9 @@
   "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.title": "Hunt",
   "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.description": "While you have [gold]Weak[/gold], damage you take is multiplied by [blue]2[/blue].",
   "BS_ANCIENT_POWER_FLANDERS_TRACKING_POWER.smartDescription": "While you have [gold]Weak[/gold], damage you take is multiplied by [blue]2[/blue].",
+  "BS_ANCIENT_POWER_BRUTALITY_POWER.title": "Brutality",
+  "BS_ANCIENT_POWER_BRUTALITY_POWER.description": "The next [gold]Brutality[/gold] card you play deals double damage.",
+  "BS_ANCIENT_POWER_BRUTALITY_POWER.smartDescription": "The next [gold]Brutality[/gold] card you play deals double damage.",
   "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.title": "Fairy Tale - The Little Prince",
   "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.description": "When the countdown ends, all creatures take [blue]30[/blue] damage.",
   "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.smartDescription": "[blue]{Amount}[/blue] turns remaining: when the countdown ends, all creatures take [blue]30[/blue] damage."

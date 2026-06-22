@@ -82,14 +82,21 @@ public class NeowRethinkPokerPatch : IPatchMethod
 
     private static void TryObtainFairyTaleBook(Neow neow)
     {
-        if (!BsAncientConfig.EnableFairyTaleMode
-            || neow.Owner == null
-            || neow.Owner.GetRelic<UnnamedFairyTaleBookRelic>() != null)
+        try
         {
-            return;
-        }
+            if (!BsAncientRunOptions.FairyTaleModeForNextRun
+                || neow.Owner == null
+                || neow.Owner.GetRelic<UnnamedFairyTaleBookRelic>() != null)
+            {
+                return;
+            }
 
-        RelicCmd.Obtain<UnnamedFairyTaleBookRelic>(neow.Owner).GetAwaiter().GetResult();
+            RelicCmd.Obtain<UnnamedFairyTaleBookRelic>(neow.Owner).GetAwaiter().GetResult();
+        }
+        finally
+        {
+            BsAncientRunOptions.ResetFairyTaleModeOverride();
+        }
     }
 
     private static EventOption CreateRethinkPokerOption(Neow neow, RelicModel relic)

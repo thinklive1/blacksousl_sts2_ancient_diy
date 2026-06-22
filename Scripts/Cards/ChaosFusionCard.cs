@@ -144,6 +144,11 @@ public class ChaosFusionCard : ModCardTemplate
         foreach (CardModel material in materialCards.StableShuffle(Owner.RunState.Rng.CombatCardSelection))
         {
             await CardCmd.AutoPlay(choiceContext, material, null, AutoPlayType.Default, skipCardPileVisuals: false);
+
+            if (material.Pile?.Type.IsCombatPile() == true)
+            {
+                await CardPileCmd.RemoveFromCombat(material, skipVisuals: true);
+            }
         }
     }
 

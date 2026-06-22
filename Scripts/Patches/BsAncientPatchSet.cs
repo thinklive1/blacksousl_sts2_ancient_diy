@@ -15,6 +15,7 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<GrandGuignolAncientSpawnPatch>();
         patcher.RegisterPatch<GrandGuignolRelicCollectionPatch>();
         patcher.RegisterPatch<NeowRethinkPokerPatch>();
+        patcher.RegisterPatch<FairyTaleModeCharacterSelectPatch>();
         patcher.RegisterPatch<OnlyUseModAncientsPatch>();
         patcher.RegisterPatch<WormSmokeRestSiteIconPatch>();
         patcher.RegisterPatch<UnicornHookBeforeDamageReceivedPatch>();
@@ -22,6 +23,7 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<UnicornThornsBeforeDamageReceivedPatch>();
         patcher.RegisterPatch<UnicornPersonalHiveAfterDamageReceivedPatch>();
         patcher.RegisterPatch<UnlockEnchantmentCanPlayPatch>();
+        patcher.RegisterPatch<BaphometFavorCanPlayPatch>();
         patcher.RegisterPatch<DeprecatedAncientTextureFallbackPatch>();
         patcher.RegisterPatch<DeprecatedAncientMapNodeAssetPathsFallbackPatch>();
         patcher.RegisterPatch<MirrorSanFairyResetPatch>();

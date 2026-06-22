@@ -35,6 +35,7 @@ public class MabelAncient : ModAncientEventTemplate
         List<EventOption> options =
         [
             CreateModRelicOption<LittleMermaidFavorRelic>(),
+            CreateModRelicOption<BaphometFavorRelic>(),
             CreatePrincessFrogFavorOption(),
             CreateSnowWhiteFavorOption(),
             CreateCinderellaFavorOption(),
@@ -67,6 +68,7 @@ public class MabelAncient : ModAncientEventTemplate
     private IReadOnlyList<EventOption> FullPool1 => [
         CreateModRelicOption<RapunzelFavorRelic>(),
         CreateModRelicOption<LittleMermaidFavorRelic>(),
+        CreateModRelicOption<BaphometFavorRelic>(),
         CreatePrincessFrogFavorOption(),
         CreateSnowWhiteFavorOption(),
         CreateCinderellaFavorOption(),

@@ -31,5 +31,9 @@ public sealed class FairyTaleRelicPool : RelicPoolModel
         yield return ModelDb.Relic<ArmoredKnightRelic>();
         yield return ModelDb.Relic<KingWithDonkeyEarsRelic>();
         yield return ModelDb.Relic<PeterPanRelic>();
+        yield return ModelDb.Relic<MonkeyCrabBattleRelic>();
+        yield return ModelDb.Relic<GreedyDogRelic>();
+        yield return ModelDb.Relic<TortoiseAndHareRelic>();
+        yield return ModelDb.Relic<KachiKachiYamaRelic>();
     }
 }

@@ -31,5 +31,8 @@
 	"BS_ANCIENT_ENCHANTMENT_ASCENSION_ENCHANTMENT.extraCardText": "经过[blue]{Amount}[/blue]个节点后，随机变为更高一级稀有度卡牌，不会升格为先古牌。",
 	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.title": "兵装",
 	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.description": "兵装: 抽到时自动打出。每次打出后，对自身造成等同这张牌伤害数值[red]20%[/red]的伤害。",
-	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.extraCardText": "抽到时自动打出。每次打出后，对自身造成等同这张牌伤害数值[red]20%[/red]的伤害。"
+	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.extraCardText": "抽到时自动打出。每次打出后，对自身造成等同这张牌伤害数值[red]20%[/red]的伤害。",
+	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.title": "残虐",
+	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.description": "残虐: 以残虐牌杀死任意敌人后，你打出的下一张残虐牌伤害翻倍。",
+	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.extraCardText": "以残虐牌杀死任意敌人后，你打出的下一张残虐牌伤害翻倍。"
 }
