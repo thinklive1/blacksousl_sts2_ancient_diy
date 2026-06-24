@@ -14,6 +14,7 @@ public sealed class FairyTaleRelicPool : RelicPoolModel
         yield return ModelDb.Relic<EmperorsNewClothesRelic>();
         yield return ModelDb.Relic<AlicuxelsDogRelic>();
         yield return ModelDb.Relic<SongOfBoneRelic>();
+        yield return ModelDb.Relic<FrogPrincessRelic>();
         yield return ModelDb.Relic<FoxAndSourGrapesRelic>();
         yield return ModelDb.Relic<PiedPiperOfHamelinRelic>();
         yield return ModelDb.Relic<JackAndTheBeanstalkRelic>();
@@ -21,6 +22,7 @@ public sealed class FairyTaleRelicPool : RelicPoolModel
         yield return ModelDb.Relic<BeautyAndTheBeastRelic>();
         yield return ModelDb.Relic<UglyDucklingRelic>();
         yield return ModelDb.Relic<HighJumperRelic>();
+        yield return ModelDb.Relic<RapunzelFairyTaleRelic>();
         yield return ModelDb.Relic<WolfAndLittleGoatsRelic>();
         yield return ModelDb.Relic<MyFormerRascalRelic>();
         yield return ModelDb.Relic<SinbadTheSailorRelic>();
@@ -35,5 +37,12 @@ public sealed class FairyTaleRelicPool : RelicPoolModel
         yield return ModelDb.Relic<GreedyDogRelic>();
         yield return ModelDb.Relic<TortoiseAndHareRelic>();
         yield return ModelDb.Relic<KachiKachiYamaRelic>();
+        yield return ModelDb.Relic<RobinHoodRelic>();
+        yield return ModelDb.Relic<WhiteRabbitOfInabaRelic>();
+        yield return ModelDb.Relic<DaddyLongLegsRelic>();
+        yield return ModelDb.Relic<TheBoyWhoCriedWolfRelic>();
+        yield return ModelDb.Relic<CandyHouseRelic>();
+        yield return ModelDb.Relic<SnowQueenRelic>();
+        yield return ModelDb.Relic<MermaidPrincessRelic>();
     }
 }

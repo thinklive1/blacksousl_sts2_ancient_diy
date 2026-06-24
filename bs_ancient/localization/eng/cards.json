@@ -57,5 +57,13 @@
 	"BS_ANCIENT_CARD_EXECUTIONER_CARD.title": "Executioner",
 	"BS_ANCIENT_CARD_EXECUTIONER_CARD.description": "Deal {Damage:diff()} damage. Trigger [gold]Killing Blow[/gold] [blue]{RemainingPlays}[/blue] more times to add [gold]Executioner Ketch[/gold] to your deck and remove this card.",
 	"BS_ANCIENT_CARD_EXECUTIONER_KETCH_CARD.title": "Executioner Ketch",
-	"BS_ANCIENT_CARD_EXECUTIONER_KETCH_CARD.description": "Remove all [gold]Artifact[/gold] from the enemy. Deal {Damage:diff()} damage."
+	"BS_ANCIENT_CARD_EXECUTIONER_KETCH_CARD.description": "Remove all [gold]Artifact[/gold] from the enemy. Deal {Damage:diff()} damage.",
+	"BS_ANCIENT_CARD_SWEET_CANDY_CARD.title": "Sweet Candy",
+	"BS_ANCIENT_CARD_SWEET_CANDY_CARD.description": "Automatically plays when drawn.\nHeal [green]{Heal}[/green] HP.",
+	"BS_ANCIENT_CARD_BITTER_CANDY_CARD.title": "Bitter Candy",
+	"BS_ANCIENT_CARD_BITTER_CANDY_CARD.description": "Automatically plays when drawn.\nLose {Energy:energyIcons()} this turn.",
+	"BS_ANCIENT_CARD_HALLUCINOGENIC_CANDY_CARD.title": "Hallucinogenic Candy",
+	"BS_ANCIENT_CARD_HALLUCINOGENIC_CANDY_CARD.description": "Automatically plays when drawn.\nFor the rest of this turn, non-X-cost cards drawn into your hand cost a random amount from [blue]0[/blue] to [blue]3[/blue].",
+	"BS_ANCIENT_CARD_MERMAID_TEAR_CARD.title": "Mermaid's Tear",
+	"BS_ANCIENT_CARD_MERMAID_TEAR_CARD.description": "When exhausted, randomly devour a card in your draw pile and lose [red]{HpLoss}[/red] HP. At end of combat, permanently remove the devoured card from your deck."
 }

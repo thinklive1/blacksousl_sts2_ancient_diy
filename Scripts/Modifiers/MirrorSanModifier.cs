@@ -232,14 +232,20 @@ public sealed class MirrorSanModifier : ModModifierTemplate
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? source)
     {
         if (!BlackSouls_RationalActive
-            || card.Type != CardType.Status
+            || !IsStatusCard(card)
             || card.Pile is not { IsCombatPile: true }
             || card.Pile.Type == PileType.Exhaust)
         {
             return;
         }
 
-        await CardPileCmd.RemoveFromCombat([card], skipVisuals: true);
+        await ExhaustStatusCard(card);
+    }
+
+    internal static bool IsStatusCard(CardModel card)
+    {
+        return card.Type == CardType.Status
+            || card.Rarity == CardRarity.Status;
     }
 
     private async Task CheckSanState(Player player)
@@ -252,6 +258,7 @@ public sealed class MirrorSanModifier : ModModifierTemplate
                 await ApplyRationalEntry(player);
             }
 
+            await ExhaustStatusCardsInCombat(player);
             await SyncSanVisualPowers(player);
             return;
         }
@@ -263,6 +270,34 @@ public sealed class MirrorSanModifier : ModModifierTemplate
         }
 
         await SyncSanVisualPowers(player);
+    }
+
+    private static async Task ExhaustStatusCardsInCombat(Player player)
+    {
+        if (player.PlayerCombatState == null)
+        {
+            return;
+        }
+
+        CardModel[] statusCards = player.PlayerCombatState.AllCards
+            .Where(card => IsStatusCard(card)
+                && card.Pile is { IsCombatPile: true }
+                && card.Pile.Type != PileType.Exhaust)
+            .ToArray();
+        if (statusCards.Length == 0)
+        {
+            return;
+        }
+
+        foreach (CardModel statusCard in statusCards)
+        {
+            await ExhaustStatusCard(statusCard);
+        }
+    }
+
+    private static Task ExhaustStatusCard(CardModel card)
+    {
+        return CardPileCmd.Add(card, PileType.Exhaust, CardPilePosition.Bottom);
     }
 
     private async Task SyncSanVisualPowers(Player player)

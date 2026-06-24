@@ -28,6 +28,8 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<DeprecatedAncientMapNodeAssetPathsFallbackPatch>();
         patcher.RegisterPatch<MirrorSanFairyResetPatch>();
         patcher.RegisterPatch<MirrorSanLizardTailResetPatch>();
+        patcher.RegisterPatch<RapunzelPowerSetAmountPatch>();
+        patcher.RegisterPatch<RapunzelPowerRemovePatch>();
         RegisterMercuryCardDescriptionPatch(patcher);
     }
 

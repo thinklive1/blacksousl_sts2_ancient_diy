@@ -31,11 +31,21 @@ public class PrickettAncient : ModAncientEventTemplate
         RunHistoryIconOutlinePath: "res://bs_ancient/assets/images/map/prickett_outline.png"
     );
 
-    private IReadOnlyList<EventOption> Pool1 => [
-        CreateModRelicOption<RedQueenAlbumRelic>(),
-        CreateRedQueenDiceOption(),
-        CreateOldFilmAOption(),
+    private IReadOnlyList<EventOption> CreatePool1(bool isMultiplayer)
+    {
+        List<EventOption> options =
+        [
+            CreateModRelicOption<RedQueenAlbumRelic>(),
+            CreateOldFilmAOption(),
         ];
+
+        if (!isMultiplayer)
+        {
+            options.Insert(1, CreateRedQueenDiceOption());
+        }
+
+        return options;
+    }
 
     private IReadOnlyList<EventOption> CreatePool2(bool isMultiplayer)
     {
@@ -54,7 +64,7 @@ public class PrickettAncient : ModAncientEventTemplate
     }
 
     public override IEnumerable<EventOption> AllPossibleOptions => [
-        .. Pool1,
+        .. CreatePool1(isMultiplayer: false),
         .. CreatePool2(isMultiplayer: false),
         CreateModRelicOption<CovenantOfPrickettRelic>(),
         CreateAliceCurseOption(),
@@ -65,11 +75,12 @@ public class PrickettAncient : ModAncientEventTemplate
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
         bool isMultiplayer = Owner?.RunState.Players.Count > 1;
+        IReadOnlyList<EventOption> pool1 = CreatePool1(isMultiplayer);
         IReadOnlyList<EventOption> pool2 = CreatePool2(isMultiplayer);
 
         List<EventOption> options =
         [
-            Rng.NextItem(Pool1)!,
+            Rng.NextItem(pool1)!,
             Rng.NextItem(pool2)!,
             CreatePool3().GetRandom(Rng),
         ];

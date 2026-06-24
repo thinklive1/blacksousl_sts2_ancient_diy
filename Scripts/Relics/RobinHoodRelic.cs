@@ -1,39 +1,35 @@
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Runs;
-using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
 [RegisterRelic(typeof(EventRelicPool))]
-public sealed class HighJumperRelic : ModRelicTemplate
+public sealed class RobinHoodRelic : ModRelicTemplate
 {
-    private const int FlutterAmount = 2;
-    private const int DamageTurn = 3;
-    private const int DamageAmount = 15;
+    private const int DexterityAmount = 1;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/FairyTaleRelic.png";
 
-    private int _ownerTurnsEnded;
+    private bool _lostHpThisCombat;
 
     public override RelicRarity Rarity => RelicRarity.Event;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<EdithFlutterPower>(FlutterAmount),
-        new DynamicVar("Turn", DamageTurn),
-        new DamageVar(DamageAmount, ValueProp.Move)
+        new PowerVar<DexterityPower>(DexterityAmount)
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<EdithFlutterPower>()
+        HoverTipFactory.FromPower<DexterityPower>()
     ];
 
     public override RelicAssetProfile AssetProfile => new(
@@ -49,42 +45,34 @@ public sealed class HighJumperRelic : ModRelicTemplate
 
     public override Task BeforeCombatStart()
     {
-        _ownerTurnsEnded = 0;
-        return ApplyFlutter();
+        _lostHpThisCombat = false;
+        return Task.CompletedTask;
     }
 
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (side != Owner.Creature.Side)
-        {
-            return;
-        }
-
-        _ownerTurnsEnded++;
-        if (_ownerTurnsEnded != DamageTurn)
+        if (player != Owner || _lostHpThisCombat)
         {
             return;
         }
 
         Flash();
-        await CreatureCmd.Damage(
+        await PowerCmd.Apply<DexterityPower>(
             choiceContext,
             Owner.Creature,
-            DynamicVars["Damage"].BaseValue,
-            ValueProp.Move,
-            Owner.Creature,
-            null);
-    }
-
-    private async Task ApplyFlutter()
-    {
-        Flash();
-        await PowerCmd.Apply<EdithFlutterPower>(
-            new ThrowingPlayerChoiceContext(),
-            Owner.Creature,
-            DynamicVars["EdithFlutterPower"].BaseValue,
+            DynamicVars["DexterityPower"].BaseValue,
             Owner.Creature,
             null,
             false);
+    }
+
+    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
+    {
+        if (creature == Owner?.Creature && delta < 0)
+        {
+            _lostHpThisCombat = true;
+        }
+
+        return Task.CompletedTask;
     }
 }

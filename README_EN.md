@@ -6,7 +6,7 @@ A Slay the Spire 2 Ancient expansion mod. It currently adds 3 map Ancients, repl
 
 ## Requirements
 
-- RitsuLib 0.4.10 or later
+- RitsuLib 0.4.18 or later
 
 ## Ancient Spawn Rules
 
@@ -40,7 +40,7 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
 - `ReplaceNeowAppearance`: replaces Neow's appearance, name, title, and related dialogue with Grand Guignol. If `false`, Neow display returns to vanilla. Requires restarting the game.
 - `EnableModEvents`: enables this mod's random events. If `false`, this mod's new random events will not enter the event pool. Requires restarting the game and starting a new run.
 - `DisableTestingEvents`: disables testing events. If `true`, SAN/hand-mirror related testing events such as Clown and Girl in the Maze will not appear naturally. Requires restarting the game and starting a new run.
-- `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run. Strongly not recommended in multiplayer. In single-player, the character select screen also shows a per-run Fairy Tale Mode toggle, which takes priority over this default setting.
+- `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After winning 4 normal or elite combats, it grants a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run. Strongly not recommended in multiplayer. In single-player, the character select screen also shows a per-run Fairy Tale Mode toggle, which takes priority over this default setting.
 - `GrandGuignolInitialRelicChance`: chance, from 0 to 100, for a Grand Guignol starting relic to replace a positive starting option. Default is 30. Requires restarting the game and starting a new run.
 
 ## Grand Guignol?
@@ -125,22 +125,24 @@ Relics:
 
 ## Fairy Tale Relics
 
-Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining nodes; after every 7 non-Boss/non-Ancient nodes, it grants a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run. In single-player, the character select screen can enable or disable Fairy Tale Mode for the current run, and that toggle takes priority over the config default. Fairy Tale Mode is strongly not recommended in multiplayer.
+Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining combat victories before the next Fairy Tale; after winning 4 normal or elite combats, it grants a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run. In single-player, the character select screen can enable or disable Fairy Tale Mode for the current run, and that toggle takes priority over the config default. Fairy Tale Mode is strongly not recommended in multiplayer.
 
-- Unnamed Fairy Tale Book: obtained at the start of a run when Fairy Tale Mode is enabled. Shows how many nodes remain before the next random Fairy Tale. After every 7 non-Boss/non-Ancient nodes, gain a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run.
+- Unnamed Fairy Tale Book: obtained at the start of a run when Fairy Tale Mode is enabled. Shows how many combat victories remain before the next random Fairy Tale. After winning 4 normal or elite combats, gain a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run.
 - Fairy Tale - Pinocchio: on pickup, choose 1 card with damage or block values and enchant it with Lie. After a Lie card is played, swap its damage and block values. Damage-only cards switch to gaining that much Block and dealing no damage; block-only cards switch to dealing that much damage and gaining no Block.
 - Alice Through the Looking Glass: on pickup, choose 4 cards and enchant them with Ascension. The next act map becomes 3 straight routes with no branches. After 7 non-Ancient nodes, Ascension cards transform into a random card of the next higher rarity; Common cards become Uncommon and Uncommon cards become Rare. They cannot become Ancient cards.
 - Fairy Tale - The Three Little Pigs: the next 3 combats grant no rewards.
 - Fairy Tale - The Emperor's New Clothes: during the second turn of each combat, you cannot gain Block.
 - Fairy Tale - Alicuxel's Dog: at the start of combat, gain 3 Feel No Pain.
 - Fairy Tale - The Singing Bone: at the start of combat, play Elegy.
+- Fairy Tale - The Frog Princess: on pickup, enchant all cards that can be enchanted with Dissolve with Dissolve.
 - Fairy Tale - The Fox and the Sour Grapes: at the start of combat, all creatures gain 1 Envenom. Monsters also gain Envenom; when a monster attack deals HP damage to the player, the player gains Poison.
 - Fairy Tale - The Pied Piper of Hamelin: at the start of combat, gain 4 Poison.
 - Fairy Tale - Jack and the Beanstalk: after each node, lose 5 HP, but this cannot reduce you below 1 HP. When you reach the 6th node, gain Max HP equal to the total HP lost this way, then this relic becomes inactive.
 - Fairy Tale - Aladdin and the Magic Lamp: at the start of turn, gain 3 Vigor.
 - Fairy Tale - Beauty and the Beast: at the start of combat, if you can afford it, spend 20 Gold to gain 3 Strength. If you cannot afford it, lose 3 Strength.
 - Fairy Tale - The Ugly Duckling: on pickup, add an upgraded Sovereign Blade and an upgraded Wrought in War to your deck.
-- Fairy Tale - The High Jumpers: at the start of combat, gain 2 Flutter.
+- Fairy Tale - The High Jumpers: at the start of combat, gain 2 Flutter; at the end of turn 3, take 15 damage.
+- Fairy Tale - Rapunzel: for the first 2 turns, your powers do not lose stacks.
 - Fairy Tale - The Wolf and X Little Goats: for the first three turns, your Block is not removed. At the start of your third turn, deal damage equal to your Block to all creatures.
 - Fairy Tale - My Former Rascal: when you enter the next normal or elite combat, all enemies gain 5 Strength, then this relic becomes inactive.
 - Fairy Tale - Sinbad the Sailor: at the start of combat, gain 1 Slow.
@@ -155,6 +157,13 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Fairy Tale - The Greedy Dog: on pickup, transform one of the highest-rarity non-Ancient cards in your deck into Greed. If multiple cards share that rarity, choose one at random.
 - Fairy Tale - The Tortoise and the Hare: on pickup, choose 2 Attack cards and enchant them with Brutality. After a Brutality card kills any enemy, the next Brutality card you play deals double damage.
 - Fairy Tale - Kachi-kachi Yama: at the start of each of your turns, automatically play Anger a number of times equal to the current turn number.
+- Fairy Tale - Robin Hood: at the start of each turn, if you have not lost HP this combat, gain 1 Dexterity.
+- Fairy Tale - The Black Rabbit of Inaba: on pickup, gain Black Rabbit's Hand Mirror.
+- Fairy Tale - Daddy-Long-Legs: at the start of each of the first three turns of combat, gain 8 Block.
+- Fairy Tale - The Boy Who Cried Wolf: gain 3 Strength on turn 1, gain 5 Strength on turn 2, then lose all Strength on turn 3.
+- Fairy Tale - Candy House: at the start of combat, shuffle Sweet Candy, Bitter Candy, and Hallucinogenic Candy into your draw pile at random positions. Sweet Candy automatically plays when drawn and heals 6 HP; Bitter Candy automatically plays when drawn and makes you lose 2 Energy this turn; Hallucinogenic Candy automatically plays when drawn and makes non-X-cost cards drawn later this turn cost a random amount from 0 to 3.
+- Fairy Tale - The Snow Queen: at the start of combat, apply Slow to all enemies.
+- Fairy Tale - The Mermaid Princess: on pickup, add 1 Mermaid's Tear to your deck. Mermaid's Tear is a Curse with Ethereal and Unplayable; when exhausted, it randomly devours 1 card in your draw pile and makes you lose 3 HP. At end of combat, the devoured card is permanently removed from your deck.
 
 ## Random Events
 

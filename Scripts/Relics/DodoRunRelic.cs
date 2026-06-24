@@ -14,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-[RegisterRelic(typeof(SharedRelicPool))]
+[RegisterRelic(typeof(EventRelicPool))]
 public class DodoRunRelic : ModRelicTemplate
 {
     private const int HealthThreshold = 20;
@@ -22,7 +22,7 @@ public class DodoRunRelic : ModRelicTemplate
     private bool _wasUsed;
     private bool _shouldClearSkippedCombatRewards;
 
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Event;
 
     public override bool IsUsedUp => BlackSouls_WasUsed;
 

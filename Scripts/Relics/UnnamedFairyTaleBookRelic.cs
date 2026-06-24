@@ -1,7 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Map;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rooms;
@@ -15,7 +14,7 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
 {
-    private const int NodesPerReward = 7;
+    private const int NodesPerReward = 4;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/FairyTaleRelic.png";
     private const char ObtainedRelicSeparator = '|';
 
@@ -66,22 +65,12 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         return false;
     }
 
-    public override async Task AfterRoomEntered(AbstractRoom room)
-    {
-        if (IsCombatRoom(room) || IsCurrentPointCombat() || !ShouldCountCurrentPoint())
-        {
-            return;
-        }
-
-        await CountNode();
-    }
-
     public override Task AfterCombatVictory(CombatRoom room)
     {
-        return IsCombatRoom(room) ? CountNode() : Task.CompletedTask;
+        return IsCombatRoom(room) ? CountCombat() : Task.CompletedTask;
     }
 
-    private async Task CountNode()
+    private async Task CountCombat()
     {
         if (Owner == null)
         {
@@ -99,31 +88,9 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         BlackSouls_RemainingNodes = NodesPerReward;
     }
 
-    private bool ShouldCountCurrentPoint()
-    {
-        MapPoint? currentPoint = Owner?.RunState.CurrentMapPoint;
-        return currentPoint is
-        {
-            PointType: not MapPointType.Ancient
-                and not MapPointType.Boss
-                and not MapPointType.Unassigned
-        };
-    }
-
-    private bool IsCurrentPointCombat()
-    {
-        MapPoint? currentPoint = Owner?.RunState.CurrentMapPoint;
-        return currentPoint?.PointType is MapPointType.Monster or MapPointType.Elite;
-    }
-
     private static bool IsCombatRoom(CombatRoom room)
     {
         return room.RoomType is RoomType.Monster or RoomType.Elite;
-    }
-
-    private static bool IsCombatRoom(AbstractRoom room)
-    {
-        return room is CombatRoom || room.RoomType is RoomType.Monster or RoomType.Elite;
     }
 
     private async Task GiveRandomFairyTale()
@@ -176,6 +143,7 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         ModelDb.Relic<EmperorsNewClothesRelic>(),
         ModelDb.Relic<AlicuxelsDogRelic>(),
         ModelDb.Relic<SongOfBoneRelic>(),
+        ModelDb.Relic<FrogPrincessRelic>(),
         ModelDb.Relic<FoxAndSourGrapesRelic>(),
         ModelDb.Relic<PiedPiperOfHamelinRelic>(),
         ModelDb.Relic<JackAndTheBeanstalkRelic>(),
@@ -183,6 +151,7 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         ModelDb.Relic<BeautyAndTheBeastRelic>(),
         ModelDb.Relic<UglyDucklingRelic>(),
         ModelDb.Relic<HighJumperRelic>(),
+        ModelDb.Relic<RapunzelFairyTaleRelic>(),
         ModelDb.Relic<WolfAndLittleGoatsRelic>(),
         ModelDb.Relic<MyFormerRascalRelic>(),
         ModelDb.Relic<SinbadTheSailorRelic>(),
@@ -196,6 +165,13 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         ModelDb.Relic<MonkeyCrabBattleRelic>(),
         ModelDb.Relic<GreedyDogRelic>(),
         ModelDb.Relic<TortoiseAndHareRelic>(),
-        ModelDb.Relic<KachiKachiYamaRelic>()
+        ModelDb.Relic<KachiKachiYamaRelic>(),
+        ModelDb.Relic<RobinHoodRelic>(),
+        ModelDb.Relic<WhiteRabbitOfInabaRelic>(),
+        ModelDb.Relic<DaddyLongLegsRelic>(),
+        ModelDb.Relic<TheBoyWhoCriedWolfRelic>(),
+        ModelDb.Relic<CandyHouseRelic>(),
+        ModelDb.Relic<SnowQueenRelic>(),
+        ModelDb.Relic<MermaidPrincessRelic>()
     ];
 }

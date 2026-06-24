@@ -1,5 +1,6 @@
 using Godot;
 using MegaCrit.Sts2.Core.Events;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -36,6 +37,11 @@ public class GrandGuignolAncient : ModAncientEventTemplate
     }
 
     public override bool IsAllowed(IRunState runState)
+    {
+        return false;
+    }
+
+    public override bool IsValidForAct(ActModel act)
     {
         return false;
     }

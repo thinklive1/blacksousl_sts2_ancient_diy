@@ -15,7 +15,7 @@ public sealed class FlandersTrackingPower : ModPowerTemplate
     private const decimal DamageMultiplier = 2m;
     private const string PowerIconPath = "res://bs_ancient/assets/images/powers/FlandersHuntPower.png";
 
-    public override PowerType Type => PowerType.Buff;
+    public override PowerType Type => PowerType.Debuff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 

@@ -57,5 +57,13 @@
     "BS_ANCIENT_CARD_EXECUTIONER_CARD.title": "Executioner",
     "BS_ANCIENT_CARD_EXECUTIONER_CARD.description": "造成{Damage:diff()}点伤害。[gold]斩杀[/gold][blue]{RemainingPlays}[/blue]次后，将一张[gold]Executioner Ketch[/gold]加入你的牌组并移除本身。",
     "BS_ANCIENT_CARD_EXECUTIONER_KETCH_CARD.title": "Executioner Ketch",
-    "BS_ANCIENT_CARD_EXECUTIONER_KETCH_CARD.description": "移除敌方所有[gold]人工制品[/gold]，造成{Damage:diff()}点伤害。"
+    "BS_ANCIENT_CARD_EXECUTIONER_KETCH_CARD.description": "移除敌方所有[gold]人工制品[/gold]，造成{Damage:diff()}点伤害。",
+    "BS_ANCIENT_CARD_SWEET_CANDY_CARD.title": "甜蜜的糖果",
+    "BS_ANCIENT_CARD_SWEET_CANDY_CARD.description": "抽到时自动打出。\n恢复[green]{Heal}[/green]点生命。",
+    "BS_ANCIENT_CARD_BITTER_CANDY_CARD.title": "苦涩的糖果",
+    "BS_ANCIENT_CARD_BITTER_CANDY_CARD.description": "抽到时自动打出。\n本回合失去{Energy:energyIcons()}。",
+    "BS_ANCIENT_CARD_HALLUCINOGENIC_CANDY_CARD.title": "致幻的糖果",
+    "BS_ANCIENT_CARD_HALLUCINOGENIC_CANDY_CARD.description": "抽到时自动打出。\n本回合之后抽到的非 X 费手牌费用随机变为[blue]0[/blue]到[blue]3[/blue]。",
+    "BS_ANCIENT_CARD_MERMAID_TEAR_CARD.title": "人鱼之泪",
+    "BS_ANCIENT_CARD_MERMAID_TEAR_CARD.description": "被消耗时，随机吞噬一张牌，失去[red]{HpLoss}[/red]点生命。战斗结束后，被吞噬的牌从牌组中永久移除。"
 }

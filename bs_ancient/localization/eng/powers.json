@@ -52,8 +52,8 @@
   "BS_ANCIENT_POWER_TWO_SIDED_VIRTUE_POWER.description": "At the end of combat, choose a card to transform into [gold]Jack the Ripper's Reflection[/gold].",
   "BS_ANCIENT_POWER_TWO_SIDED_VIRTUE_POWER.smartDescription": "At the end of combat, choose a card to transform into [gold]Jack the Ripper's Reflection[/gold].",
   "BS_ANCIENT_POWER_EDITH_FLUTTER_POWER.title": "Flutter",
-  "BS_ANCIENT_POWER_EDITH_FLUTTER_POWER.description": "Reduce attack damage you take by [blue]50%[/blue]. Removed at the start of your second turn.",
-  "BS_ANCIENT_POWER_EDITH_FLUTTER_POWER.smartDescription": "Reduce attack damage you take by [blue]50%[/blue]. Removed at the start of your second turn.",
+  "BS_ANCIENT_POWER_EDITH_FLUTTER_POWER.description": "Reduce attack damage you take by [blue]50%[/blue]. Starting on your second turn, lose [blue]1[/blue] stack each turn.",
+  "BS_ANCIENT_POWER_EDITH_FLUTTER_POWER.smartDescription": "Reduce attack damage you take by [blue]50%[/blue]. Starting on your second turn, lose [blue]1[/blue] stack each turn.",
   "BS_ANCIENT_POWER_SAN_HIGH_POWER.title": "Rationality",
   "BS_ANCIENT_POWER_SAN_HIGH_POWER.description": "All enemies were given [blue]1[/blue] [gold]Vulnerable[/gold] and [gold]Weak[/gold]. You will not gain Status cards during combat.",
   "BS_ANCIENT_POWER_SAN_HIGH_POWER.smartDescription": "All enemies were given [blue]1[/blue] [gold]Vulnerable[/gold] and [gold]Weak[/gold]. You will not gain Status cards during combat.",
@@ -74,5 +74,11 @@
   "BS_ANCIENT_POWER_BRUTALITY_POWER.smartDescription": "The next [gold]Brutality[/gold] card you play deals double damage.",
   "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.title": "Fairy Tale - The Little Prince",
   "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.description": "When the countdown ends, all creatures take [blue]30[/blue] damage.",
-  "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.smartDescription": "[blue]{Amount}[/blue] turns remaining: when the countdown ends, all creatures take [blue]30[/blue] damage."
+  "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.smartDescription": "[blue]{Amount}[/blue] turns remaining: when the countdown ends, all creatures take [blue]30[/blue] damage.",
+  "BS_ANCIENT_POWER_HALLUCINOGENIC_CANDY_POWER.title": "Hallucinogenic Candy",
+  "BS_ANCIENT_POWER_HALLUCINOGENIC_CANDY_POWER.description": "For the rest of this turn, non-X-cost cards drawn into your hand cost a random amount from [blue]0[/blue] to [blue]3[/blue].",
+  "BS_ANCIENT_POWER_HALLUCINOGENIC_CANDY_POWER.smartDescription": "For the rest of this turn, non-X-cost cards drawn into your hand cost a random amount from [blue]0[/blue] to [blue]3[/blue].",
+  "BS_ANCIENT_POWER_MERMAID_TEAR_SWALLOWED_CARDS_POWER.title": "Mermaid's Tear",
+  "BS_ANCIENT_POWER_MERMAID_TEAR_SWALLOWED_CARDS_POWER.description": "At end of combat, permanently remove the devoured cards.",
+  "BS_ANCIENT_POWER_MERMAID_TEAR_SWALLOWED_CARDS_POWER.smartDescription": "At end of combat, permanently remove [blue]{Amount}[/blue] devoured cards."
 }

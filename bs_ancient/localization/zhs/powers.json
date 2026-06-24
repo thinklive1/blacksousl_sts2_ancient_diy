@@ -52,8 +52,8 @@
   "BS_ANCIENT_POWER_TWO_SIDED_VIRTUE_POWER.description": "战斗结束后，强制选择一张牌变化为[gold]开膛手杰克的倒影[/gold]。",
   "BS_ANCIENT_POWER_TWO_SIDED_VIRTUE_POWER.smartDescription": "战斗结束后，强制选择一张牌变化为[gold]开膛手杰克的倒影[/gold]。",
   "BS_ANCIENT_POWER_EDITH_FLUTTER_POWER.title": "振翅",
-  "BS_ANCIENT_POWER_EDITH_FLUTTER_POWER.description": "受到攻击伤害减少[blue]50%[/blue]。第二回合开始时失去。",
-  "BS_ANCIENT_POWER_EDITH_FLUTTER_POWER.smartDescription": "受到攻击伤害减少[blue]50%[/blue]。第二回合开始时失去。",
+  "BS_ANCIENT_POWER_EDITH_FLUTTER_POWER.description": "受到攻击伤害减少[blue]50%[/blue]。第二回合开始时，每回合减少[blue]1[/blue]层。",
+  "BS_ANCIENT_POWER_EDITH_FLUTTER_POWER.smartDescription": "受到攻击伤害减少[blue]50%[/blue]。第二回合开始时，每回合减少[blue]1[/blue]层。",
   "BS_ANCIENT_POWER_SAN_HIGH_POWER.title": "理性",
   "BS_ANCIENT_POWER_SAN_HIGH_POWER.description": "敌方全体被施加[blue]1[/blue]层[gold]易伤[/gold]与[gold]虚弱[/gold]。战斗中不会再获得状态牌。",
   "BS_ANCIENT_POWER_SAN_HIGH_POWER.smartDescription": "敌方全体被施加[blue]1[/blue]层[gold]易伤[/gold]与[gold]虚弱[/gold]。战斗中不会再获得状态牌。",
@@ -74,5 +74,11 @@
   "BS_ANCIENT_POWER_BRUTALITY_POWER.smartDescription": "下一张打出的[gold]残虐[/gold]牌造成的伤害翻倍。",
   "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.title": "童话-小王子",
   "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.description": "倒计时结束时，所有生物受到[blue]30[/blue]点伤害。",
-  "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.smartDescription": "剩余[blue]{Amount}[/blue]回合：倒计时结束时，所有生物受到[blue]30[/blue]点伤害。"
+  "BS_ANCIENT_POWER_LITTLE_PRINCE_COUNTDOWN_POWER.smartDescription": "剩余[blue]{Amount}[/blue]回合：倒计时结束时，所有生物受到[blue]30[/blue]点伤害。",
+  "BS_ANCIENT_POWER_HALLUCINOGENIC_CANDY_POWER.title": "致幻的糖果",
+  "BS_ANCIENT_POWER_HALLUCINOGENIC_CANDY_POWER.description": "本回合之后抽到的非 X 费手牌费用随机变为[blue]0[/blue]到[blue]3[/blue]。",
+  "BS_ANCIENT_POWER_HALLUCINOGENIC_CANDY_POWER.smartDescription": "本回合之后抽到的非 X 费手牌费用随机变为[blue]0[/blue]到[blue]3[/blue]。",
+  "BS_ANCIENT_POWER_MERMAID_TEAR_SWALLOWED_CARDS_POWER.title": "人鱼之泪",
+  "BS_ANCIENT_POWER_MERMAID_TEAR_SWALLOWED_CARDS_POWER.description": "战斗结束后，永久移除被吞噬的牌。",
+  "BS_ANCIENT_POWER_MERMAID_TEAR_SWALLOWED_CARDS_POWER.smartDescription": "战斗结束后，永久移除[blue]{Amount}[/blue]张被吞噬的牌。"
 }

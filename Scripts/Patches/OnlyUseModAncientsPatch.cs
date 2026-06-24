@@ -26,6 +26,8 @@ public class OnlyUseModAncientsPatch : IPatchMethod
 
     public static void Postfix(ActModel __instance, Rng rng, UnlockState unlockState, bool isMultiplayer)
     {
+        RemoveGeneratedGrandGuignol(__instance, rng, unlockState);
+
         if (BsAncientConfig.DisableModAncients)
         {
             RemoveGeneratedModAncient(__instance, rng, unlockState);
@@ -89,6 +91,26 @@ public class OnlyUseModAncientsPatch : IPatchMethod
         }
 
         return false;
+    }
+
+    private static void RemoveGeneratedGrandGuignol(ActModel act, Rng rng, UnlockState unlockState)
+    {
+        RoomSet rooms = RoomsRef(act);
+        if (rooms.Ancient is not GrandGuignolAncient)
+        {
+            return;
+        }
+
+        List<AncientEventModel> candidates = act.GetUnlockedAncients(unlockState)
+            .Concat(SharedAncientSubsetRef(act) ?? [])
+            .Where(ancient => ancient is not GrandGuignolAncient)
+            .ToList();
+
+        AncientEventModel? replacement = rng.NextItem(candidates);
+        if (replacement != null)
+        {
+            rooms.Ancient = replacement;
+        }
     }
 
     private static void RemoveGeneratedModAncient(ActModel act, Rng rng, UnlockState unlockState)

@@ -17,10 +17,11 @@ namespace BlackSouls.Scripts.Cards;
 [RegisterCard(typeof(EventCardPool))]
 public sealed class MercuryCard : ModCardTemplate
 {
-    private SerializableCard? _copiedCard;
+    private List<SerializableCard> _copiedCards = [];
     private string _copiedDescription = "";
     private int _copiedCost = -1;
     private readonly HashSet<CardModel> _autoPlayedCopies = [];
+    private SerializableCard? CopiedCard => BlackSouls_CopiedCards.Count > 0 ? BlackSouls_CopiedCards[0] : null;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Retain,
@@ -36,13 +37,13 @@ public sealed class MercuryCard : ModCardTemplate
     }
 
     [SavedProperty]
-    public SerializableCard? BlackSouls_CopiedCard
+    public List<SerializableCard> BlackSouls_CopiedCards
     {
-        get => _copiedCard;
+        get => _copiedCards;
         set
         {
             AssertMutable();
-            _copiedCard = value;
+            _copiedCards = value ?? [];
         }
     }
 
@@ -76,7 +77,7 @@ public sealed class MercuryCard : ModCardTemplate
             return;
         }
 
-        SerializableCard? copiedCard = BlackSouls_CopiedCard;
+        SerializableCard? copiedCard = CopiedCard;
         if (copiedCard == null)
         {
             CardModel? previousCard = FindPreviousPlayedCard();
@@ -85,7 +86,7 @@ public sealed class MercuryCard : ModCardTemplate
                 return;
             }
 
-            copiedCard = BlackSouls_CopiedCard;
+            copiedCard = CopiedCard;
             if (copiedCard == null)
             {
                 return;
@@ -139,7 +140,7 @@ public sealed class MercuryCard : ModCardTemplate
             return false;
         }
 
-        if (BlackSouls_CopiedCard == null || BlackSouls_CopiedCost < 0)
+        if (CopiedCard == null || BlackSouls_CopiedCost < 0)
         {
             modifiedCost = originalCost;
             return false;
@@ -151,7 +152,7 @@ public sealed class MercuryCard : ModCardTemplate
 
     public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == Owner.Creature.Side && CurrentUpgradeLevel <= 0 && BlackSouls_CopiedCard != null)
+        if (side == Owner.Creature.Side && CurrentUpgradeLevel <= 0 && CopiedCard != null)
         {
             ClearCopiedCard();
         }
@@ -176,7 +177,7 @@ public sealed class MercuryCard : ModCardTemplate
             return false;
         }
 
-        BlackSouls_CopiedCard = card.ToSerializable();
+        BlackSouls_CopiedCards = [card.ToSerializable()];
         BlackSouls_CopiedDescription = card.GetDescriptionForPile(PileType.Hand);
         BlackSouls_CopiedCost = card.EnergyCost.GetWithModifiers(CostModifiers.All);
         return true;
@@ -184,7 +185,7 @@ public sealed class MercuryCard : ModCardTemplate
 
     private void ClearCopiedCard()
     {
-        BlackSouls_CopiedCard = null;
+        BlackSouls_CopiedCards = [];
         BlackSouls_CopiedDescription = "";
         BlackSouls_CopiedCost = -1;
         Owner?.PlayerCombatState?.RecalculateCardValues();

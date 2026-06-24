@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using BlackSouls.Scripts.Cards;
@@ -27,6 +28,11 @@ public class RedQueenDiceRelic : ModRelicTemplate
     private int _rerollIndex;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    public override bool IsAllowed(IRunState runState)
+    {
+        return runState.Players.Count == 1;
+    }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar("RollRange", RollRange),
