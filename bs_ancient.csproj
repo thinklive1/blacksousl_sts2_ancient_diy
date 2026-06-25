@@ -37,12 +37,12 @@
   <Target Name="Copy Mod" AfterTargets="PostBuildEvent">
     <Message Text="Copying mod to Steam Workshop uploader workspace..." Importance="high" />
     <MakeDir Directories="$(WorkshopUploadContentDir)" />
+    <Delete Files="$(WorkshopUploadContentDir)\$(MSBuildProjectName)_config.cfg" TreatErrorsAsWarnings="true" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(WorkshopUploadContentDir)\" />
     <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(WorkshopUploadContentDir)\" />
     <Copy SourceFiles="README.md" DestinationFolder="$(WorkshopUploadContentDir)\" />
     <Copy SourceFiles="README_EN.md" DestinationFolder="$(WorkshopUploadContentDir)\" />
     <Copy SourceFiles="$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName).pck" DestinationFolder="$(WorkshopUploadContentDir)\" Condition="Exists('$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName).pck')" />
-    <Copy SourceFiles="$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName)_config.cfg" DestinationFolder="$(WorkshopUploadContentDir)\" Condition="Exists('$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName)_config.cfg')" />
 
     <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
     <MakeDir Directories="$(Sts2Dir)\mods\" />

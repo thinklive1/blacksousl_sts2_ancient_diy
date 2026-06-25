@@ -15,13 +15,13 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class PeterPanRelic : ModRelicTemplate
 {
-    private const int RecentCards = 5;
+    private const int CardsToRemove = 5;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/FairyTaleRelic.png";
 
     public override RelicRarity Rarity => RelicRarity.Event;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(RecentCards)
+        new CardsVar(CardsToRemove)
     ];
 
     public override RelicAssetProfile AssetProfile => new(
@@ -37,23 +37,30 @@ public sealed class PeterPanRelic : ModRelicTemplate
 
     public override async Task AfterObtained()
     {
-        List<CardModel> recentCards = Owner.Deck.Cards
+        List<CardModel> removableCards = Owner.Deck.Cards
             .Where(card => card.Pile?.Type == PileType.Deck)
-            .TakeLast(RecentCards)
+            .Where(card => card.IsRemovable)
+            .Where(card => !IsStrikeOrDefend(card))
             .ToList();
 
-        if (recentCards.Count == 0)
+        if (removableCards.Count == 0)
         {
+            return;
+        }
+
+        if (removableCards.Count <= CardsToRemove)
+        {
+            Flash();
+            await CardPileCmd.RemoveFromDeck(removableCards);
             return;
         }
 
         List<CardModel> selectedCards = (await CardSelectCmd.FromSimpleGrid(
                 new BlockingPlayerChoiceContext(),
-                recentCards,
+                removableCards,
                 Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 0, recentCards.Count)
+                new CardSelectorPrefs(SelectionScreenPrompt, CardsToRemove, CardsToRemove)
                 {
-                    Cancelable = true,
                     RequireManualConfirmation = true
                 }))
             .ToList();
@@ -65,5 +72,11 @@ public sealed class PeterPanRelic : ModRelicTemplate
 
         Flash();
         await CardPileCmd.RemoveFromDeck(selectedCards);
+    }
+
+    private static bool IsStrikeOrDefend(CardModel card)
+    {
+        return card.Tags.Contains(CardTag.Strike)
+            || card.Tags.Contains(CardTag.Defend);
     }
 }

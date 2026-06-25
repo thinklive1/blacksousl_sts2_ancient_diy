@@ -164,6 +164,8 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Fairy Tale - Candy House: at the start of combat, shuffle Sweet Candy, Bitter Candy, and Hallucinogenic Candy into your draw pile at random positions. Sweet Candy automatically plays when drawn and heals 6 HP; Bitter Candy automatically plays when drawn and makes you lose 2 Energy this turn; Hallucinogenic Candy automatically plays when drawn and makes non-X-cost cards drawn later this turn cost a random amount from 0 to 3.
 - Fairy Tale - The Snow Queen: at the start of combat, apply Slow to all enemies.
 - Fairy Tale - The Mermaid Princess: on pickup, add 1 Mermaid's Tear to your deck. Mermaid's Tear is a Curse with Ethereal and Unplayable; when exhausted, it randomly devours 1 card in your draw pile and makes you lose 3 HP. At end of combat, the devoured card is permanently removed from your deck.
+- Fairy Tale - The North Wind and the Sun: on pickup, transform up to 3 Attack cards into random Skill cards and upgrade them, and up to 3 Skill cards into random Attack cards and upgrade them. After transformation, you cannot restore HP.
+- Fairy Tale - Snow White: the first card you play each combat is copied twice — one copy is added to your draw pile and one to your discard pile.
 
 ## Random Events
 

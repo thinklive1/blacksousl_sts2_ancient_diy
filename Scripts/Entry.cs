@@ -133,7 +133,7 @@ public class Entry
                         "EnableFairyTaleMode",
                         () => BsAncientConfig.EnableFairyTaleMode,
                         value => BsAncientConfig.EnableFairyTaleMode = value),
-                    S("enableFairyTaleMode.description", "开启后，每经过 7 个非 Boss/先古节点，获得一本随机童话。可以重复获得。更改后需要重启游戏并新开一局。"))));
+                    S("enableFairyTaleMode.description", "开启后，每赢得 4 场战斗（包含 Boss 战），获得一本随机童话。更改后需要重启游戏并新开一局。"))));
     }
 
     private static ModSettingsText S(string key, string fallback)

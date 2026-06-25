@@ -90,7 +90,7 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
 
     private static bool IsCombatRoom(CombatRoom room)
     {
-        return room.RoomType is RoomType.Monster or RoomType.Elite;
+        return room.RoomType is RoomType.Monster or RoomType.Elite or RoomType.Boss;
     }
 
     private async Task GiveRandomFairyTale()
@@ -172,6 +172,8 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         ModelDb.Relic<TheBoyWhoCriedWolfRelic>(),
         ModelDb.Relic<CandyHouseRelic>(),
         ModelDb.Relic<SnowQueenRelic>(),
-        ModelDb.Relic<MermaidPrincessRelic>()
+        ModelDb.Relic<MermaidPrincessRelic>(),
+        ModelDb.Relic<NorthWindAndSunRelic>(),
+        ModelDb.Relic<SnowWhiteRelic>()
     ];
 }

@@ -87,8 +87,8 @@
 	"BS_ANCIENT_RELIC_KING_WITH_DONKEY_EARS_RELIC.description": "Your attack damage against bosses is increased by [blue]{BossDamagePercent}%[/blue].",
 	"BS_ANCIENT_RELIC_KING_WITH_DONKEY_EARS_RELIC.flavor": "After executing all his people, the king invited donkeys like himself to replace them. They say he finally founded a kingdom of donkeys, but it perished before it could prosper.",
 	"BS_ANCIENT_RELIC_PETER_PAN_RELIC.title": "Fairy Tale - Peter Pan",
-	"BS_ANCIENT_RELIC_PETER_PAN_RELIC.description": "On pickup, choose any number of the [blue]{Cards}[/blue] most recently obtained cards and remove them.",
-	"BS_ANCIENT_RELIC_PETER_PAN_RELIC.selectionScreenPrompt": "Choose any number of recently obtained cards to remove.",
+	"BS_ANCIENT_RELIC_PETER_PAN_RELIC.description": "On pickup, choose [blue]{Cards}[/blue] non-[gold]Strike[/gold], non-[gold]Defend[/gold] cards and remove them. If fewer than [blue]{Cards}[/blue] are available, remove them all.",
+	"BS_ANCIENT_RELIC_PETER_PAN_RELIC.selectionScreenPrompt": "Choose five non-Strike, non-Defend cards to remove.",
 	"BS_ANCIENT_RELIC_PETER_PAN_RELIC.flavor": "The eternal boy fell out of love. What should he do if he cannot even convey his affection? Right, take them to Neverland.",
 	"BS_ANCIENT_RELIC_MONKEY_CRAB_BATTLE_RELIC.title": "Fairy Tale - The Monkey and the Crab",
 	"BS_ANCIENT_RELIC_MONKEY_CRAB_BATTLE_RELIC.description": "On pickup, add a [gold]Greed[/gold] and an [gold]Injury[/gold] to your deck.",
@@ -352,5 +352,11 @@
 	"BS_ANCIENT_RELIC_EDITH_RING_RELIC.flavor": "She is still waiting.",
 	"BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.title": "Girl's Hand Mirror",
 	"BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.description": "On pickup, add [gold]Liddell's Reflection[/gold] to your deck. The first time you take unblocked damage after combat starts, reflect that much damage to the enemy that dealt it. The counter shows current [gold]SAN[/gold].",
-	"BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.flavor": "There is a road in the mirror that never ends."
-}
+		"BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.flavor": "There is a road in the mirror that never ends.",
+		"BS_ANCIENT_RELIC_NORTH_WIND_AND_SUN_RELIC.title": "Fairy Tale - The North Wind and the Sun",
+		"BS_ANCIENT_RELIC_NORTH_WIND_AND_SUN_RELIC.description": "Upon pickup, transform up to [blue]{Count}[/blue] Attack cards into random Skill cards and upgrade them, and up to [blue]{Count}[/blue] Skill cards into random Attack cards and upgrade them. After transformation, you cannot restore HP.",
+		"BS_ANCIENT_RELIC_NORTH_WIND_AND_SUN_RELIC.flavor": "One day, the North Wind and the Sun had a quarrel. They argued for three days and three nights, unleashing typhoons and scorching heat upon the land, destroying the villages around them.",
+		"BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.title": "Fairy Tale - Snow White",
+		"BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.description": "The first card you play each combat is copied twice — one copy is added to your draw pile and one to your discard pile.",
+		"BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.flavor": "The stepmother queen envied Snow White's beauty and nearly killed her several times. And just like Snow White, she too thought of killing her stepmother to become the fairest in all the land."
+	}

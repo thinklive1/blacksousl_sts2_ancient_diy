@@ -87,8 +87,8 @@
   "BS_ANCIENT_RELIC_KING_WITH_DONKEY_EARS_RELIC.description": "对首领的攻击伤害提高[blue]{BossDamagePercent}%[/blue]。",
   "BS_ANCIENT_RELIC_KING_WITH_DONKEY_EARS_RELIC.flavor": "处死所有民众的国王让和自己一样的驴子移居过来作为国民的替代。据说终于建立起了驴子的王国，但是并没有繁荣起来就灭亡了。",
   "BS_ANCIENT_RELIC_PETER_PAN_RELIC.title": "童话-彼得•潘",
-  "BS_ANCIENT_RELIC_PETER_PAN_RELIC.description": "拾取时，从最近获得的[blue]{Cards}[/blue]张牌中选择任意张移除。",
-  "BS_ANCIENT_RELIC_PETER_PAN_RELIC.selectionScreenPrompt": "从最近获得的牌中选择任意张移除。",
+  "BS_ANCIENT_RELIC_PETER_PAN_RELIC.description": "拾取时，从非[gold]打击[/gold]、[gold]防御[/gold]牌中选择[blue]{Cards}[/blue]张移除。若不足[blue]{Cards}[/blue]张，则全部移除。",
+  "BS_ANCIENT_RELIC_PETER_PAN_RELIC.selectionScreenPrompt": "选择五张非打击、防御牌移除。",
   "BS_ANCIENT_RELIC_PETER_PAN_RELIC.flavor": "永远的少年失恋了。连爱意都无法传达的话到底该怎么办？对了，带到永无乡好了！",
   "BS_ANCIENT_RELIC_MONKEY_CRAB_BATTLE_RELIC.title": "童话-猿蟹合战",
   "BS_ANCIENT_RELIC_MONKEY_CRAB_BATTLE_RELIC.description": "拾取时，将一张[gold]贪婪[/gold]和一张[gold]受伤[/gold]加入你的牌组。",
@@ -352,5 +352,11 @@
   "BS_ANCIENT_RELIC_EDITH_RING_RELIC.flavor": "我会一直，一直……等下去的……",
   "BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.title": "少女的手镜",
   "BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.description": "拾取时，将一张[gold]利德尔的倒影[/gold]加入你的牌组。战斗开始后你第一次受到生命伤害时，将等量伤害反弹给造成伤害的敌人。计数显示当前[gold]SAN[/gold]。",
-  "BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.flavor": "……回去………"
+  "BS_ANCIENT_RELIC_GIRL_HAND_MIRROR_RELIC.flavor": "……回去………",
+  "BS_ANCIENT_RELIC_NORTH_WIND_AND_SUN_RELIC.title": "童话-北风与太阳",
+  "BS_ANCIENT_RELIC_NORTH_WIND_AND_SUN_RELIC.description": "拾取时，将最多[blue]{Count}[/blue]张攻击牌变化为随机技能牌并升级，最多[blue]{Count}[/blue]张技能牌变化为随机攻击牌并升级。变化后，你无法恢复生命。",
+  "BS_ANCIENT_RELIC_NORTH_WIND_AND_SUN_RELIC.flavor": "某一天，北风和太阳吵架了。二者一吵就是三天三夜，令台风和酷热降临这片土地，毁灭了周围的村庄。",
+  "BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.title": "童话-白雪公主",
+  "BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.description": "每场战斗中，你打出的第一张牌会复制两张，分别加入你的抽牌堆与弃牌堆。",
+  "BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.flavor": "作为王妃的继母嫉妒白雪公主的美貌，数次差点将她杀害。和白雪公主也一样，想着杀掉继母令自己成为世上最美丽的人。"
 }
