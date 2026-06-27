@@ -34,5 +34,8 @@
 	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.extraCardText": "Automatically play this card when drawn. Each time it is played, deal damage to yourself equal to [red]20%[/red] of this card's damage value.",
 	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.title": "Brutality",
 	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.description": "Brutality: After a Brutality card kills any enemy, the next Brutality card you play deals double damage.",
-	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.extraCardText": "After a Brutality card kills any enemy, the next Brutality card you play deals double damage."
-}
+		"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.extraCardText": "After a Brutality card kills any enemy, the next Brutality card you play deals double damage.",
+		"BS_ANCIENT_ENCHANTMENT_ASHES_ENCHANTMENT.title": "Ashes",
+		"BS_ANCIENT_ENCHANTMENT_ASHES_ENCHANTMENT.description": "Ashes: Gains [gold]Replay[/gold] 1 and [gold]Exhaust[/gold]. After being played, the card is removed from the deck at the end of combat.",
+		"BS_ANCIENT_ENCHANTMENT_ASHES_ENCHANTMENT.extraCardText": "Gains [gold]Replay[/gold] 1 and [gold]Exhaust[/gold]. After being played, removed from the deck at end of combat."
+	}

@@ -358,5 +358,13 @@
   "BS_ANCIENT_RELIC_NORTH_WIND_AND_SUN_RELIC.flavor": "某一天，北风和太阳吵架了。二者一吵就是三天三夜，令台风和酷热降临这片土地，毁灭了周围的村庄。",
   "BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.title": "童话-白雪公主",
   "BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.description": "每场战斗中，你打出的第一张牌会复制两张，分别加入你的抽牌堆与弃牌堆。",
-  "BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.flavor": "作为王妃的继母嫉妒白雪公主的美貌，数次差点将她杀害。和白雪公主也一样，想着杀掉继母令自己成为世上最美丽的人。"
+  "BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.flavor": "作为王妃的继母嫉妒白雪公主的美貌，数次差点将她杀害。和白雪公主也一样，想着杀掉继母令自己成为世上最美丽的人。",
+  "BS_ANCIENT_RELIC_CINDERELLA_RELIC.title": "童话-灰姑娘",
+  "BS_ANCIENT_RELIC_CINDERELLA_RELIC.description": "拾取时，为你牌组中所有普通牌附魔[gold]灰烬[/gold]。",
+  "BS_ANCIENT_RELIC_CINDERELLA_RELIC.flavor": "披灰之姬出现在憧憬恋爱与地位的女性面前，把她们带往舞踏会。但是她们并不知道，美梦成真的代价，是会被夺走灵魂……",
+  "BS_ANCIENT_RELIC_TURNIP_RELIC.title": "童话-拔萝卜",
+  "BS_ANCIENT_RELIC_TURNIP_RELIC.description": "下一次的卡牌奖励会将所有奖励牌融合加入你的牌组。若可融合牌不足2张，该遗物失效。",
+  "BS_ANCIENT_RELIC_TURNIP_RELIC.fusionDetails.title": "融合",
+  "BS_ANCIENT_RELIC_TURNIP_RELIC.fusionDetails.description": "素材限定为非X费攻击牌和技能牌。融合牌继承素材牌的费用与词条，类型随机决定，并随机保留最多一个附魔。打出融合牌时，会以随机顺序和随机目标打出所有素材牌效果。",
+  "BS_ANCIENT_RELIC_TURNIP_RELIC.flavor": "「用力拔哟，再用力拔哟」将老爷爷和老奶奶和孙女和狗和猫和老鼠和女主角和王和国民全员都卷入其中的萝卜变成了巨大的团块。"
 }

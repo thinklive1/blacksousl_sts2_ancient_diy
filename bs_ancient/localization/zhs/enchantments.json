@@ -34,5 +34,8 @@
 	"BS_ANCIENT_ENCHANTMENT_ARMAMENT_ENCHANTMENT.extraCardText": "抽到时自动打出。每次打出后，对自身造成等同这张牌伤害数值[red]20%[/red]的伤害。",
 	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.title": "残虐",
 	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.description": "残虐: 以残虐牌杀死任意敌人后，你打出的下一张残虐牌伤害翻倍。",
-	"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.extraCardText": "以残虐牌杀死任意敌人后，你打出的下一张残虐牌伤害翻倍。"
-}
+		"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.extraCardText": "以残虐牌杀死任意敌人后，你打出的下一张残虐牌伤害翻倍。",
+		"BS_ANCIENT_ENCHANTMENT_ASHES_ENCHANTMENT.title": "灰烬",
+		"BS_ANCIENT_ENCHANTMENT_ASHES_ENCHANTMENT.description": "灰烬: 获得[gold]重放[/gold]1与[gold]消耗[/gold]。打出后将在战斗结束时从牌组中移出。",
+		"BS_ANCIENT_ENCHANTMENT_ASHES_ENCHANTMENT.extraCardText": "获得[gold]重放[/gold]1与[gold]消耗[/gold]。打出后将在战斗结束时从牌组中移出。"
+	}

@@ -46,5 +46,7 @@ public sealed class FairyTaleRelicPool : RelicPoolModel
         yield return ModelDb.Relic<MermaidPrincessRelic>();
         yield return ModelDb.Relic<NorthWindAndSunRelic>();
         yield return ModelDb.Relic<SnowWhiteRelic>();
+        yield return ModelDb.Relic<CinderellaRelic>();
+        yield return ModelDb.Relic<TurnipRelic>();
     }
 }

@@ -166,6 +166,8 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Fairy Tale - The Mermaid Princess: on pickup, add 1 Mermaid's Tear to your deck. Mermaid's Tear is a Curse with Ethereal and Unplayable; when exhausted, it randomly devours 1 card in your draw pile and makes you lose 3 HP. At end of combat, the devoured card is permanently removed from your deck.
 - Fairy Tale - The North Wind and the Sun: on pickup, transform up to 3 Attack cards into random Skill cards and upgrade them, and up to 3 Skill cards into random Attack cards and upgrade them. After transformation, you cannot restore HP.
 - Fairy Tale - Snow White: the first card you play each combat is copied twice — one copy is added to your draw pile and one to your discard pile.
+- Fairy Tale - Cinderella: upon pickup, enchant all Common cards in your deck with Ashes. Ashes grants the card Replay 1 and Exhaust; after being played, the card is removed from the deck at end of combat.
+- Fairy Tale - The Giant Turnip: your next card reward fuses all reward cards into a single fused card added to your deck. If fewer than 2 fusable cards remain, the relic expires. Fusion mechanics follow Gift of Chaos.
 
 ## Random Events
 

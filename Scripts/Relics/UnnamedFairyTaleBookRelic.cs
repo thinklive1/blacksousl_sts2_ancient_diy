@@ -174,6 +174,8 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         ModelDb.Relic<SnowQueenRelic>(),
         ModelDb.Relic<MermaidPrincessRelic>(),
         ModelDb.Relic<NorthWindAndSunRelic>(),
-        ModelDb.Relic<SnowWhiteRelic>()
+        ModelDb.Relic<SnowWhiteRelic>(),
+        ModelDb.Relic<CinderellaRelic>(),
+        ModelDb.Relic<TurnipRelic>()
     ];
 }

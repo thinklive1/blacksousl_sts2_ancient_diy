@@ -358,5 +358,13 @@
 		"BS_ANCIENT_RELIC_NORTH_WIND_AND_SUN_RELIC.flavor": "One day, the North Wind and the Sun had a quarrel. They argued for three days and three nights, unleashing typhoons and scorching heat upon the land, destroying the villages around them.",
 		"BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.title": "Fairy Tale - Snow White",
 		"BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.description": "The first card you play each combat is copied twice — one copy is added to your draw pile and one to your discard pile.",
-		"BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.flavor": "The stepmother queen envied Snow White's beauty and nearly killed her several times. And just like Snow White, she too thought of killing her stepmother to become the fairest in all the land."
+		"BS_ANCIENT_RELIC_SNOW_WHITE_RELIC.flavor": "The stepmother queen envied Snow White's beauty and nearly killed her several times. And just like Snow White, she too thought of killing her stepmother to become the fairest in all the land.",
+		"BS_ANCIENT_RELIC_CINDERELLA_RELIC.title": "Fairy Tale - Cinderella",
+		"BS_ANCIENT_RELIC_CINDERELLA_RELIC.description": "Upon pickup, enchant all Common cards in your deck with [gold]Ashes[/gold].",
+		"BS_ANCIENT_RELIC_CINDERELLA_RELIC.flavor": "The ash-clad princess appeared before women yearning for love and status, leading them to the ball. But they did not know that the price of a dream come true is the loss of their very soul...",
+		"BS_ANCIENT_RELIC_TURNIP_RELIC.title": "Fairy Tale - The Giant Turnip",
+		"BS_ANCIENT_RELIC_TURNIP_RELIC.description": "Your next card reward will fuse all reward cards into a single fused card added to your deck. If there are fewer than 2 fusable cards, this relic expires.",
+		"BS_ANCIENT_RELIC_TURNIP_RELIC.fusionDetails.title": "Fusion",
+		"BS_ANCIENT_RELIC_TURNIP_RELIC.fusionDetails.description": "Materials are limited to non-X-cost Attack and Skill cards. The fused card inherits the material cards' costs and keywords, randomly determines its type, and randomly keeps up to one enchantment. When played, it plays all material card effects in random order against random targets.",
+		"BS_ANCIENT_RELIC_TURNIP_RELIC.flavor": "\"Pull with all your might, pull harder!\" The giant turnip, having entangled the old man, the old woman, the granddaughter, the dog, the cat, the mouse, the heroine, the king, and all the kingdom's subjects, became an enormous mass."
 	}
