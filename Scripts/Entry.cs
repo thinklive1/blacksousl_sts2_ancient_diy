@@ -126,6 +126,7 @@ public class Entry
                     S("disableTestingEvents.description", "开启后，小丑、迷宫中的少女等 SAN/手镜相关测试事件不会自然出现。更改后需要重启游戏并新开一局。")))
             .AddSection("fairyTales", section => section
                 .WithTitle(S("sections.fairyTales.title", "童话"))
+                .WithDescription(S("sections.fairyTales.description", "童话模式包含大量强负面遗物，可能严重影响游戏体验。建议首次游玩时关闭该模式。"))
                 .AddToggle(
                     "enable_fairy_tale_mode",
                     S("enableFairyTaleMode.title", "童话模式"),
@@ -133,8 +134,59 @@ public class Entry
                         "EnableFairyTaleMode",
                         () => BsAncientConfig.EnableFairyTaleMode,
                         value => BsAncientConfig.EnableFairyTaleMode = value),
-                    S("enableFairyTaleMode.description", "开启后，每赢得 4 场战斗（包含 Boss 战），获得一本随机童话。更改后需要重启游戏并新开一局。"))));
-    }
+                    S("enableFairyTaleMode.description", "开启后，每赢得 4 场战斗（包含 Boss 战），获得一本随机童话。更改后需要重启游戏并新开一局。")))
+            .AddSection("fairyTaleAllowList", section => section
+                .WithTitle(S("sections.fairyTaleAllowList.title", "强负面童话出现开关"))
+                .WithDescription(S("sections.fairyTaleAllowList.description", "以下童话默认不出现，需单独开启。更改后需要重启游戏并新开一局。"))
+                .AddToggle("allow_alice_through_looking_glass",
+                    S("allowAliceThroughLookingGlass.title", "童话-爱丽丝镜中棋缘"),
+                    BoolBinding("AllowAliceThroughLookingGlass", () => BsAncientConfig.AllowAliceThroughLookingGlass, v => BsAncientConfig.AllowAliceThroughLookingGlass = v),
+                    S("allowAliceThroughLookingGlass.description", "变化牌组"))
+                .AddToggle("allow_cinderella",
+                    S("allowCinderella.title", "童话-灰姑娘"),
+                    BoolBinding("AllowCinderella", () => BsAncientConfig.AllowCinderella, v => BsAncientConfig.AllowCinderella = v),
+                    S("allowCinderella.description", "删除牌组"))
+                .AddToggle("allow_frog_princess",
+                    S("allowFrogPrincess.title", "童话-青蛙公主"),
+                    BoolBinding("AllowFrogPrincess", () => BsAncientConfig.AllowFrogPrincess, v => BsAncientConfig.AllowFrogPrincess = v),
+                    S("allowFrogPrincess.description", "删除牌组"))
+                .AddToggle("allow_greedy_dog",
+                    S("allowGreedyDog.title", "童话-贪心的狗"),
+                    BoolBinding("AllowGreedyDog", () => BsAncientConfig.AllowGreedyDog, v => BsAncientConfig.AllowGreedyDog = v),
+                    S("allowGreedyDog.description", "变化牌组"))
+                .AddToggle("allow_mermaid_princess",
+                    S("allowMermaidPrincess.title", "童话-人鱼公主"),
+                    BoolBinding("AllowMermaidPrincess", () => BsAncientConfig.AllowMermaidPrincess, v => BsAncientConfig.AllowMermaidPrincess = v),
+                    S("allowMermaidPrincess.description", "删除牌组"))
+                .AddToggle("allow_monkey_crab_battle",
+                    S("allowMonkeyCrabBattle.title", "童话-猿蟹合战"),
+                    BoolBinding("AllowMonkeyCrabBattle", () => BsAncientConfig.AllowMonkeyCrabBattle, v => BsAncientConfig.AllowMonkeyCrabBattle = v),
+                    S("allowMonkeyCrabBattle.description", "加入诅咒"))
+                .AddToggle("allow_north_wind_and_sun",
+                    S("allowNorthWindAndSun.title", "童话-北风与太阳"),
+                    BoolBinding("AllowNorthWindAndSun", () => BsAncientConfig.AllowNorthWindAndSun, v => BsAncientConfig.AllowNorthWindAndSun = v),
+                    S("allowNorthWindAndSun.description", "变化牌组"))
+                .AddToggle("allow_peter_pan",
+                    S("allowPeterPan.title", "童话-彼得·潘"),
+                    BoolBinding("AllowPeterPan", () => BsAncientConfig.AllowPeterPan, v => BsAncientConfig.AllowPeterPan = v),
+                    S("allowPeterPan.description", "删除牌组"))
+                .AddToggle("allow_ugly_duckling",
+                    S("allowUglyDuckling.title", "童话-丑小鸭"),
+                    BoolBinding("AllowUglyDuckling", () => BsAncientConfig.AllowUglyDuckling, v => BsAncientConfig.AllowUglyDuckling = v),
+                    S("allowUglyDuckling.description", "加入牌组"))
+                .AddToggle("allow_sleep_god_myth",
+                    S("allowSleepGodMyth.title", "神话-睡眠之神"),
+                    BoolBinding("AllowSleepGodMyth", () => BsAncientConfig.AllowSleepGodMyth, v => BsAncientConfig.AllowSleepGodMyth = v),
+                    S("allowSleepGodMyth.description", "附魔牌组"))
+                .AddToggle("allow_lake_god_myth",
+                    S("allowLakeGodMyth.title", "神话-湖栖神"),
+                    BoolBinding("AllowLakeGodMyth", () => BsAncientConfig.AllowLakeGodMyth, v => BsAncientConfig.AllowLakeGodMyth = v),
+                    S("allowLakeGodMyth.description", "战斗负面状态"))
+                .AddToggle("allow_dark_goat_of_the_woods_myth",
+                    S("allowDarkGoatOfTheWoodsMyth.title", "神话-森之黑山羊"),
+                    BoolBinding("AllowDarkGoatOfTheWoodsMyth", () => BsAncientConfig.AllowDarkGoatOfTheWoodsMyth, v => BsAncientConfig.AllowDarkGoatOfTheWoodsMyth = v),
+                    S("allowDarkGoatOfTheWoodsMyth.description", "附魔牌组"))));
+        }
 
     private static ModSettingsText S(string key, string fallback)
     {

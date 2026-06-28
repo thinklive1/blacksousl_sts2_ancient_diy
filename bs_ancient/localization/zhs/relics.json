@@ -366,5 +366,17 @@
   "BS_ANCIENT_RELIC_TURNIP_RELIC.description": "下一次的卡牌奖励会将所有奖励牌融合加入你的牌组。若可融合牌不足2张，该遗物失效。",
   "BS_ANCIENT_RELIC_TURNIP_RELIC.fusionDetails.title": "融合",
   "BS_ANCIENT_RELIC_TURNIP_RELIC.fusionDetails.description": "素材限定为非X费攻击牌和技能牌。融合牌继承素材牌的费用与词条，类型随机决定，并随机保留最多一个附魔。打出融合牌时，会以随机顺序和随机目标打出所有素材牌效果。",
-  "BS_ANCIENT_RELIC_TURNIP_RELIC.flavor": "「用力拔哟，再用力拔哟」将老爷爷和老奶奶和孙女和狗和猫和老鼠和女主角和王和国民全员都卷入其中的萝卜变成了巨大的团块。"
+  "BS_ANCIENT_RELIC_TURNIP_RELIC.flavor": "「用力拔哟，再用力拔哟」将老爷爷和老奶奶和孙女和狗和猫和老鼠和女主角和王和国民全员都卷入其中的萝卜变成了巨大的团块。",
+  "BS_ANCIENT_RELIC_SLEEP_GOD_MYTH_RELIC.title": "神话-睡眠之神",
+  "BS_ANCIENT_RELIC_SLEEP_GOD_MYTH_RELIC.description": "拾取时，选择一张非X费攻击或技能牌，对其附魔等于其费用的[gold]沉睡[/gold]。",
+  "BS_ANCIENT_RELIC_SLEEP_GOD_MYTH_RELIC.selectionScreenPrompt": "选择一张牌附魔沉睡。",
+  "BS_ANCIENT_RELIC_SLEEP_GOD_MYTH_RELIC.flavor": "沉睡于无休无止的幻梦之中。",
+  "BS_ANCIENT_RELIC_LAKE_GOD_MYTH_RELIC.title": "神话-湖栖神",
+  "BS_ANCIENT_RELIC_LAKE_GOD_MYTH_RELIC.description": "每场战斗第[blue]{Turn}[/blue]回合开始时，失去[blue]{DexterityPower}[/blue]点[gold]敏捷[/gold]，获得[blue]{CorruptionPower}[/blue]层[gold]腐化[/gold]。",
+  "BS_ANCIENT_RELIC_LAKE_GOD_MYTH_RELIC.flavor": "它用尖刺改造生灵，妄图将整个幻境化为自己的眷属。",
+  "BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.title": "神话-森之黑山羊",
+  "BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.description": "拾取时，选择[blue]{Select}[/blue]张牌附魔[gold]繁育[/gold]。每回合开始时随机消耗2张繁育卡，生成[blue]{Children}[/blue]张混沌融合子卡，洗入抽牌或弃牌堆。",
+  "BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.breeding.title": "繁育",
+  "BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.breeding.description": "素材限定为攻击牌和技能牌。子代费用随机取自父母之一；每位父母的效果各有[blue]50%[/blue]概率被独立继承。子代类型随机，打出时以随机顺序和随机目标打出继承到的素材效果。",
+  "BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.flavor": "她的力量滋生无尽畸变血肉。"
 }

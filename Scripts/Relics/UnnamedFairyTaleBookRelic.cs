@@ -107,6 +107,7 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
 
         List<RelicModel> candidates = FairyTaleRelics()
             .Where(relic => !obtainedRelicIds.Contains(relic.Id.Entry) && !ownedRelicIds.Contains(relic.Id.Entry))
+            .Where(relic => IsFairyTaleAllowed(relic))
             .ToList();
 
         RelicModel? relic = Owner.RunState.Rng.Niche.NextItem(candidates);
@@ -133,6 +134,36 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         }
 
         BlackSouls_ObtainedFairyTaleRelicIds = string.Join(ObtainedRelicSeparator, obtainedRelicIds.Order(StringComparer.Ordinal));
+    }
+
+    private static bool IsFairyTaleAllowed(RelicModel relic)
+    {
+        if (relic is AliceThroughLookingGlassRelic)
+            return BsAncientConfig.AllowAliceThroughLookingGlass;
+        if (relic is CinderellaRelic)
+            return BsAncientConfig.AllowCinderella;
+        if (relic is FrogPrincessRelic)
+            return BsAncientConfig.AllowFrogPrincess;
+        if (relic is GreedyDogRelic)
+            return BsAncientConfig.AllowGreedyDog;
+        if (relic is MermaidPrincessRelic)
+            return BsAncientConfig.AllowMermaidPrincess;
+        if (relic is MonkeyCrabBattleRelic)
+            return BsAncientConfig.AllowMonkeyCrabBattle;
+        if (relic is NorthWindAndSunRelic)
+            return BsAncientConfig.AllowNorthWindAndSun;
+        if (relic is PeterPanRelic)
+            return BsAncientConfig.AllowPeterPan;
+        if (relic is UglyDucklingRelic)
+            return BsAncientConfig.AllowUglyDuckling;
+        if (relic is SleepGodMythRelic)
+            return BsAncientConfig.AllowSleepGodMyth;
+        if (relic is LakeGodMythRelic)
+            return BsAncientConfig.AllowLakeGodMyth;
+        if (relic is DarkGoatOfTheWoodsMythRelic)
+            return BsAncientConfig.AllowDarkGoatOfTheWoodsMyth;
+
+        return true;
     }
 
     private static List<RelicModel> FairyTaleRelics() =>
@@ -176,6 +207,9 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         ModelDb.Relic<NorthWindAndSunRelic>(),
         ModelDb.Relic<SnowWhiteRelic>(),
         ModelDb.Relic<CinderellaRelic>(),
-        ModelDb.Relic<TurnipRelic>()
+        ModelDb.Relic<TurnipRelic>(),
+        ModelDb.Relic<SleepGodMythRelic>(),
+        ModelDb.Relic<LakeGodMythRelic>(),
+        ModelDb.Relic<DarkGoatOfTheWoodsMythRelic>()
     ];
 }

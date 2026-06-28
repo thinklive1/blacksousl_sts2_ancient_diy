@@ -366,5 +366,17 @@
 		"BS_ANCIENT_RELIC_TURNIP_RELIC.description": "Your next card reward will fuse all reward cards into a single fused card added to your deck. If there are fewer than 2 fusable cards, this relic expires.",
 		"BS_ANCIENT_RELIC_TURNIP_RELIC.fusionDetails.title": "Fusion",
 		"BS_ANCIENT_RELIC_TURNIP_RELIC.fusionDetails.description": "Materials are limited to non-X-cost Attack and Skill cards. The fused card inherits the material cards' costs and keywords, randomly determines its type, and randomly keeps up to one enchantment. When played, it plays all material card effects in random order against random targets.",
-		"BS_ANCIENT_RELIC_TURNIP_RELIC.flavor": "\"Pull with all your might, pull harder!\" The giant turnip, having entangled the old man, the old woman, the granddaughter, the dog, the cat, the mouse, the heroine, the king, and all the kingdom's subjects, became an enormous mass."
+		"BS_ANCIENT_RELIC_TURNIP_RELIC.flavor": "\"Pull with all your might, pull harder!\" The giant turnip, having entangled the old man, the old woman, the granddaughter, the dog, the cat, the mouse, the heroine, the king, and all the kingdom's subjects, became an enormous mass.",
+		"BS_ANCIENT_RELIC_SLEEP_GOD_MYTH_RELIC.title": "Myth - God of Sleep",
+		"BS_ANCIENT_RELIC_SLEEP_GOD_MYTH_RELIC.description": "Upon pickup, choose a non-X-cost Attack or Skill card and enchant it with [gold]Sleep[/gold] equal to its cost.",
+		"BS_ANCIENT_RELIC_SLEEP_GOD_MYTH_RELIC.selectionScreenPrompt": "Choose a card to enchant with Sleep.",
+		"BS_ANCIENT_RELIC_SLEEP_GOD_MYTH_RELIC.flavor": "The God of Sleep grants slumber, and with it, the power that follows awakening.",
+		"BS_ANCIENT_RELIC_LAKE_GOD_MYTH_RELIC.title": "Myth - God of the Lake",
+		"BS_ANCIENT_RELIC_LAKE_GOD_MYTH_RELIC.description": "At the start of turn [blue]{Turn}[/blue] each combat, lose [blue]{DexterityPower}[/blue] [gold]Dexterity[/gold] and gain [blue]{CorruptionPower}[/blue] [gold]Corruption[/gold].",
+		"BS_ANCIENT_RELIC_LAKE_GOD_MYTH_RELIC.flavor": "It transforms living creatures with spines, seeking to make all of Wonderland its own kin.",
+		"BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.title": "Myth - Dark Goat of the Woods",
+		"BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.description": "Upon pickup, choose [blue]{Select}[/blue] cards and enchant them with [gold]Breeding[/gold]. At the start of each turn, randomly Exhaust 2 Breeding cards and create [blue]{Children}[/blue] Chaos Fusion children, shuffled into draw or discard.",
+		"BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.breeding.title": "Breeding",
+		"BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.breeding.description": "Materials are limited to Attack and Skill cards. Each child uses one random parent's cost; each parent's effect has an independent [blue]50%[/blue] chance to be inherited. The child's type is random. When played, it plays the inherited material effects in random order against random targets.",
+		"BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.flavor": "Her power breeds endless distorted flesh."
 	}

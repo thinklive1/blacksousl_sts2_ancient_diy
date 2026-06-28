@@ -37,5 +37,11 @@
 		"BS_ANCIENT_ENCHANTMENT_BRUTALITY_ENCHANTMENT.extraCardText": "After a Brutality card kills any enemy, the next Brutality card you play deals double damage.",
 		"BS_ANCIENT_ENCHANTMENT_ASHES_ENCHANTMENT.title": "Ashes",
 		"BS_ANCIENT_ENCHANTMENT_ASHES_ENCHANTMENT.description": "Ashes: Gains [gold]Replay[/gold] 1 and [gold]Exhaust[/gold]. After being played, the card is removed from the deck at the end of combat.",
-		"BS_ANCIENT_ENCHANTMENT_ASHES_ENCHANTMENT.extraCardText": "Gains [gold]Replay[/gold] 1 and [gold]Exhaust[/gold]. After being played, removed from the deck at end of combat."
+		"BS_ANCIENT_ENCHANTMENT_ASHES_ENCHANTMENT.extraCardText": "Gains [gold]Replay[/gold] 1 and [gold]Exhaust[/gold]. After being played, removed from the deck at end of combat.",
+		"BS_ANCIENT_ENCHANTMENT_SLEEP_ENCHANTMENT.title": "Sleep",
+		"BS_ANCIENT_ENCHANTMENT_SLEEP_ENCHANTMENT.description": "Sleep: The first [blue]{OriginalAmount}[/blue] times drawn, cannot be played. Awakens when drawn for the [blue]{PlayableDraw}[/blue] time. Once awake, gains [gold]Replay[/gold] [blue]{OriginalAmount}[/blue] for this combat.",
+		"BS_ANCIENT_ENCHANTMENT_SLEEP_ENCHANTMENT.extraCardText": "Cannot be played the first [blue]{OriginalAmount}[/blue] times drawn. Awakens on draw [blue]{PlayableDraw}[/blue], then gains [gold]Replay[/gold] [blue]{OriginalAmount}[/blue].",
+		"BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.title": "Breeding",
+		"BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.description": "Breeding: At the start of each turn, randomly Exhaust 2 Breeding cards and create 4 children, shuffled into draw or discard. Each child uses one random parent's cost, and each parent's effect has an independent 50% chance to be inherited.",
+		"BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.extraCardText": "Participates in breeding at the start of each turn. Can be Exhausted to generate children."
 	}

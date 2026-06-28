@@ -100,11 +100,11 @@ public class ChaosFusionCard : ModCardTemplate
     {
     }
 
-    public void ConfigureFrom(IReadOnlyList<CardModel> materials, CardType fusedType)
+    public void ConfigureFrom(IReadOnlyList<CardModel> materials, CardType fusedType, int? fusedCost = null)
     {
         BlackSouls_Materials = materials.Select(card => card.ToSerializable()).ToList();
         BlackSouls_FusedType = fusedType;
-        BlackSouls_FusedCost = materials.Sum(GetMaterialCost);
+        BlackSouls_FusedCost = fusedCost ?? materials.Sum(GetMaterialCost);
         BlackSouls_FusedKeywords = materials
             .SelectMany(card => card.Keywords)
             .Distinct()
