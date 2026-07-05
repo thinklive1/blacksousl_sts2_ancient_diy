@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-[RegisterRelic(typeof(SharedRelicPool))]
+[RegisterRelic(typeof(EventRelicPool))]
 public class PrincessFrogFavorRelic : ModRelicTemplate
 {
     private const int PenaltyChance = 20;

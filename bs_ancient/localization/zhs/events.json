@@ -114,5 +114,9 @@
   "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.INITIAL.options.ALONE.title": "不管两个骑士，孤身前进。",
   "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.INITIAL.options.ALONE.description": "获得诅咒[gold]受伤[/gold]与[gold]爱丽丝的手帕[/gold]。",
   "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.PROTECT.description": "白骑士纵马冲向红骑士。一轮精彩的战斗后, 白骑士成为胜者, 他向你微微点头致意，随后向远处前进",
-  "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.ALONE.description": "你没有理会这场棋局。而是不顾身上的伤势快步离开。白骑士将一方手帕递给你 \"请您成为这局棋盘的王者\" ，随后冲向红方骑士。"
+  "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.ALONE.description": "你没有理会这场棋局。而是不顾身上的伤势快步离开。白骑士将一方手帕递给你 \"请您成为这局棋盘的王者\" ，随后冲向红方骑士。",
+  "BS_ANCIENT_EASTER_EGG_BANKERS_PAGE_OPTION.title": " 银行家的书页 ",
+  "BS_ANCIENT_EASTER_EGG_BANKERS_PAGE_OPTION.description": "你在金币中发现了一张书页， 拾起它后，一切都消失了 ",
+  "BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.title": " 律师的书页 ",
+  "BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.description": "你的眼前出现了一张书页， 拾起它后，一切都消失了 "
 }

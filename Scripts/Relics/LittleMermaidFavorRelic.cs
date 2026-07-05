@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-[RegisterRelic(typeof(SharedRelicPool))]
+[RegisterRelic(typeof(EventRelicPool))]
 public class LittleMermaidFavorRelic : ModRelicTemplate
 {
     private const int MaxHpLoss = 30;

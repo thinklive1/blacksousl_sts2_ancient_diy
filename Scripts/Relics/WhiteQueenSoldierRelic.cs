@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-[RegisterRelic(typeof(SharedRelicPool))]
+[RegisterRelic(typeof(EventRelicPool))]
 public class WhiteQueenSoldierRelic : ModRelicTemplate
 {
     private const int TrialCount = 5;

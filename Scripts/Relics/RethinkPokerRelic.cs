@@ -16,7 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-[RegisterRelic(typeof(SharedRelicPool))]
+[RegisterRelic(typeof(EventRelicPool))]
 public class RethinkPokerRelic : ModRelicTemplate
 {
     private const int CardChoices = 3;

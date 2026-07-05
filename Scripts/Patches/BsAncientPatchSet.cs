@@ -24,8 +24,6 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<UnicornPersonalHiveAfterDamageReceivedPatch>();
         patcher.RegisterPatch<UnlockEnchantmentCanPlayPatch>();
         patcher.RegisterPatch<BaphometFavorCanPlayPatch>();
-        patcher.RegisterPatch<DeprecatedAncientTextureFallbackPatch>();
-        patcher.RegisterPatch<DeprecatedAncientMapNodeAssetPathsFallbackPatch>();
         patcher.RegisterPatch<MirrorSanFairyResetPatch>();
         patcher.RegisterPatch<MirrorSanLizardTailResetPatch>();
         patcher.RegisterPatch<RapunzelPowerSetAmountPatch>();

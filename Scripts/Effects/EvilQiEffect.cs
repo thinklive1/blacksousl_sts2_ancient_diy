@@ -15,15 +15,17 @@ internal static class EvilQiEffect
         return PowerCmd.Apply<EvilQiPendingPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), card.Owner.Creature, 1m, card.Owner.Creature, card, false);
     }
 
-    public static async Task Resolve(PlayerChoiceContext choiceContext, Creature owner, int amount)
+    public static async Task Resolve(Creature owner, int amount)
     {
         if (owner.IsDead || amount <= 0)
         {
             return;
         }
 
+        PlayerChoiceContext effectContext = new ThrowingPlayerChoiceContext();
+
         await CreatureCmd.Damage(
-            choiceContext,
+            effectContext,
             owner,
             amount,
             ValueProp.Unblockable | ValueProp.Unpowered,
@@ -56,14 +58,14 @@ internal static class EvilQiEffect
             return;
         }
 
-        await DrainPower<StrengthPower>(choiceContext, target, owner, amount);
-        await DrainPower<PlatingPower>(choiceContext, target, owner, amount);
+        await DrainPower<StrengthPower>(effectContext, target, owner, amount);
+        await DrainPower<PlatingPower>(effectContext, target, owner, amount);
 
         if (target.IsAlive && target.CurrentHp > 0)
         {
             int hpDrain = Math.Min(amount, target.CurrentHp);
             await CreatureCmd.Damage(
-                choiceContext,
+                effectContext,
                 target,
                 hpDrain,
                 ValueProp.Unblockable | ValueProp.Unpowered,

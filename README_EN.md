@@ -169,6 +169,12 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Fairy Tale - Cinderella: upon pickup, enchant all Common cards in your deck with Ashes. Ashes grants the card Replay 1 and Exhaust; after being played, the card is removed from the deck at end of combat.
 - Fairy Tale - The Giant Turnip: your next card reward fuses all reward cards into a single fused card added to your deck. If fewer than 2 fusable cards remain, the relic expires. Fusion mechanics follow Gift of Chaos.
 
+## Myth Relics
+
+- Sleep God: choose 1 card and enchant it with Sleep. A Sleeping card cannot be played; when drawn, it loses 1 Sleep stack. After waking, it can be played additional times equal to its original cost this combat.
+- Lake God: at the start of turn 3, lose 2 Dexterity and gain 1 Corruption.
+- Dark Goat of the Woods: choose 2 cards and enchant them with Breeding. Each turn, exhaust 2 Breeding cards and create 4 Chaos Fusion children; children also gain Breeding.
+
 ## Random Events
 
 - Wax Dolls: can appear in Acts 1-3. Choose Twin Wax Statue or Lonely Wax Statue. If your deck has no pair of same-name cards, the Twin option is disabled.

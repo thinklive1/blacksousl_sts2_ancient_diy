@@ -29,7 +29,7 @@ public sealed class EvilQiPendingPower : ModPowerTemplate
         }
 
         int amount = Amount;
-        await EvilQiEffect.Resolve(choiceContext, Owner, amount);
+        await EvilQiEffect.Resolve(Owner, amount);
         await PowerCmd.Remove(this);
     }
 }

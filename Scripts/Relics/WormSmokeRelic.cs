@@ -18,7 +18,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-[RegisterRelic(typeof(SharedRelicPool))]
+[RegisterRelic(typeof(EventRelicPool))]
 public class WormSmokeRelic : ModRelicTemplate
 {
     private const int MaxUses = 3;

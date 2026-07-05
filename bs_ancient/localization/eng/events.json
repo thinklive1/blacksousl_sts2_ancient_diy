@@ -114,5 +114,9 @@
   "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.INITIAL.options.ALONE.title": "Ignore both knights and go on alone.",
   "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.INITIAL.options.ALONE.description": "Obtain the curse [gold]Injury[/gold] and [gold]Alice's Handkerchief[/gold].",
   "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.PROTECT.description": "The White Knight bows slightly, then charges toward the Red Knight. You continue onward as crisp sounds of clashing chess pieces echo behind you.",
-  "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.ALONE.description": "You ignore the game. After a moment of silence, the White Knight hands you a handkerchief and disappears into the mist."
+  "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.ALONE.description": "You ignore the game. After a moment of silence, the White Knight hands you a handkerchief and disappears into the mist.",
+  "BS_ANCIENT_EASTER_EGG_BANKERS_PAGE_OPTION.title": " ",
+  "BS_ANCIENT_EASTER_EGG_BANKERS_PAGE_OPTION.description": " ",
+  "BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.title": " ",
+  "BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.description": " "
 }

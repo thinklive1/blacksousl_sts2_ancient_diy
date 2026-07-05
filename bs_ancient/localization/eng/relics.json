@@ -378,5 +378,11 @@
 		"BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.description": "Upon pickup, choose [blue]{Select}[/blue] cards and enchant them with [gold]Breeding[/gold]. At the start of each turn, randomly Exhaust 2 Breeding cards and create [blue]{Children}[/blue] Chaos Fusion children, shuffled into draw or discard.",
 		"BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.breeding.title": "Breeding",
 		"BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.breeding.description": "Materials are limited to Attack and Skill cards. Each child uses one random parent's cost; each parent's effect has an independent [blue]50%[/blue] chance to be inherited. The child's type is random. When played, it plays the inherited material effects in random order against random targets.",
-		"BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.flavor": "Her power breeds endless distorted flesh."
+		"BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.flavor": "Her power breeds endless distorted flesh.",
+		"BS_ANCIENT_RELIC_BARRISTERS_PAGE_RELIC.title": "Barrister's Page",
+		"BS_ANCIENT_RELIC_BARRISTERS_PAGE_RELIC.description": "Enemies begin combat with the intent they would normally use on their second turn.",
+		"BS_ANCIENT_RELIC_BARRISTERS_PAGE_RELIC.flavor": "Judgment came before the trial. With no reason left to live, the Barrister set out on the hunt for the Snark.",
+		"BS_ANCIENT_RELIC_BANKERS_PAGE_RELIC.title": "Banker's Page",
+		"BS_ANCIENT_RELIC_BANKERS_PAGE_RELIC.description": "Card rewards are replaced with [gold]Gold[/gold] equal to the highest shop price among the offered cards.",
+		"BS_ANCIENT_RELIC_BANKERS_PAGE_RELIC.flavor": "Money meant nothing in the Snark's eyes. For that very reason, the Banker hated and feared it beyond measure."
 	}

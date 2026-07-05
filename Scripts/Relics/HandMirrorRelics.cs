@@ -134,7 +134,7 @@ public sealed class JackHandMirrorRelic : HandMirrorRelicBase
     }
 }
 
-[RegisterRelic(typeof(SharedRelicPool))]
+[RegisterRelic(typeof(EventRelicPool))]
 public sealed class EdithRingRelic : ModRelicTemplate
 {
     public override RelicRarity Rarity => RelicRarity.Rare;

@@ -1,7 +1,6 @@
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Potions;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.Relics;
@@ -59,52 +58,6 @@ public class UnicornPersonalHiveAfterDamageReceivedPatch : IPatchMethod
 
     public static bool Prefix() =>
         UnicornCounterattackReceiveEffectPatch.PersonalHiveAfterDamageReceivedPrefix();
-}
-
-public class DeprecatedAncientTextureFallbackPatch : IPatchMethod
-{
-    private const string MapIconPath = "res://bs_ancient/assets/images/map/grand_guignol.png";
-    private const string MapIconOutlinePath = "res://bs_ancient/assets/images/map/grand_guignol_outline.png";
-
-    public static string PatchId => "deprecated_ancient_texture_fallback";
-    public static string Description => "Use existing Grand Guignol textures when a deprecated ancient appears in a saved run.";
-    public static bool IsCritical => false;
-
-    public static ModPatchTarget[] GetTargets() =>
-        [
-            new(typeof(DeprecatedAncientEvent), nameof(DeprecatedAncientEvent.MapIcon), null, true, HarmonyLib.MethodType.Getter),
-            new(typeof(DeprecatedAncientEvent), nameof(DeprecatedAncientEvent.MapIconOutline), null, true, HarmonyLib.MethodType.Getter),
-            new(typeof(DeprecatedAncientEvent), nameof(DeprecatedAncientEvent.RunHistoryIcon), null, true, HarmonyLib.MethodType.Getter),
-            new(typeof(DeprecatedAncientEvent), nameof(DeprecatedAncientEvent.RunHistoryIconOutline), null, true, HarmonyLib.MethodType.Getter),
-        ];
-
-    public static bool Prefix(System.Reflection.MethodBase __originalMethod, ref Godot.Texture2D __result)
-    {
-        string path = __originalMethod.Name.Contains("Outline", StringComparison.Ordinal)
-            ? MapIconOutlinePath
-            : MapIconPath;
-        __result = Godot.ResourceLoader.Load<Godot.Texture2D>(path);
-        return false;
-    }
-}
-
-public class DeprecatedAncientMapNodeAssetPathsFallbackPatch : IPatchMethod
-{
-    private const string MapIconPath = "res://bs_ancient/assets/images/map/grand_guignol.png";
-    private const string MapIconOutlinePath = "res://bs_ancient/assets/images/map/grand_guignol_outline.png";
-
-    public static string PatchId => "deprecated_ancient_map_node_asset_paths_fallback";
-    public static string Description => "Use existing Grand Guignol asset paths when a deprecated ancient appears in a saved run.";
-    public static bool IsCritical => false;
-
-    public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(DeprecatedAncientEvent), nameof(DeprecatedAncientEvent.MapNodeAssetPaths), null, true, HarmonyLib.MethodType.Getter)];
-
-    public static bool Prefix(ref IEnumerable<string> __result)
-    {
-        __result = [MapIconPath, MapIconOutlinePath];
-        return false;
-    }
 }
 
 public class MirrorSanFairyResetPatch : IPatchMethod

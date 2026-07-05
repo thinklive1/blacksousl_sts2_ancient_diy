@@ -378,5 +378,11 @@
   "BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.description": "拾取时，选择[blue]{Select}[/blue]张牌附魔[gold]繁育[/gold]。每回合开始时随机消耗2张繁育卡，生成[blue]{Children}[/blue]张混沌融合子卡，洗入抽牌或弃牌堆。",
   "BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.breeding.title": "繁育",
   "BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.breeding.description": "素材限定为攻击牌和技能牌。子代费用随机取自父母之一；每位父母的效果各有[blue]50%[/blue]概率被独立继承。子代类型随机，打出时以随机顺序和随机目标打出继承到的素材效果。",
-  "BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.flavor": "她的力量滋生无尽畸变血肉。"
+  "BS_ANCIENT_RELIC_DARK_GOAT_OF_THE_WOODS_MYTH_RELIC.flavor": "她的力量滋生无尽畸变血肉。",
+  "BS_ANCIENT_RELIC_BARRISTERS_PAGE_RELIC.title": "律师的书页",
+  "BS_ANCIENT_RELIC_BARRISTERS_PAGE_RELIC.description": "敌人将从第二回合的意图开始行动。",
+  "BS_ANCIENT_RELIC_BARRISTERS_PAGE_RELIC.flavor": "判决先于审判到来，失去生存意义的律师踏上了猎蛇鲨之旅。",
+  "BS_ANCIENT_RELIC_BANKERS_PAGE_RELIC.title": "银行家的书页",
+  "BS_ANCIENT_RELIC_BANKERS_PAGE_RELIC.description": "不再获得卡牌奖励，转为获得等同于奖励牌中最高商店价格的[gold]金币[/gold]。",
+  "BS_ANCIENT_RELIC_BANKERS_PAGE_RELIC.flavor": "在蛇鲨的眼中，金钱毫无意义，正因如此，银行家无比地憎恨并恐惧着它。"
 }

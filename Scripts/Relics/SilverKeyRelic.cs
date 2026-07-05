@@ -15,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-[RegisterRelic(typeof(SharedRelicPool))]
+[RegisterRelic(typeof(EventRelicPool))]
 public sealed class SilverKeyRelic : ModRelicTemplate
 {
     private const string SilverKeyIconPath = "res://bs_ancient/assets/images/relics/SilverKeyRelic.png";

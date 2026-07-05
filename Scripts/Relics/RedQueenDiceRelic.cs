@@ -19,7 +19,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-[RegisterRelic(typeof(SharedRelicPool))]
+[RegisterRelic(typeof(EventRelicPool))]
 public class RedQueenDiceRelic : ModRelicTemplate
 {
     internal const int RollRange = 3;

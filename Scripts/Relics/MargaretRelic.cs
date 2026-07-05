@@ -18,7 +18,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-[RegisterRelic(typeof(SharedRelicPool))]
+[RegisterRelic(typeof(EventRelicPool))]
 public class MargaretRelic : ModRelicTemplate
 {
     private const int RequiredSupplies = 3;

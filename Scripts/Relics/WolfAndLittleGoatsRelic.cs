@@ -87,15 +87,15 @@ public sealed class WolfAndLittleGoatsRelic : ModRelicTemplate
         }
 
         Flash();
-        foreach (Creature creature in Owner.Creature.CombatState.Creatures.Where(creature => creature.IsAlive).ToList())
-        {
-            await CreatureCmd.Damage(
-                choiceContext,
-                creature,
-                damage,
-                ValueProp.Move,
-                Owner.Creature,
-                null);
-        }
+        IReadOnlyList<Creature> targets = Owner.Creature.CombatState.Creatures
+            .Where(creature => creature.IsAlive)
+            .ToList();
+        await CreatureCmd.Damage(
+            new ThrowingPlayerChoiceContext(),
+            targets,
+            damage,
+            ValueProp.Unpowered,
+            Owner.Creature,
+            null);
     }
 }
