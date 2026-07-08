@@ -3,11 +3,13 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Barristers Page relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class BarristersPageRelic : ModRelicTemplate
 {
@@ -20,6 +22,21 @@ public sealed class BarristersPageRelic : ModRelicTemplate
         IconOutlinePath: RelicIconPath,
         BigIconPath: RelicIconPath
     );
+
+    public override bool IsAllowed(IRunState runState)
+    {
+        return !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BarristersPageRelic>(runState);
+    }
+
+    public override Task AfterObtained()
+    {
+        if (Owner != null)
+        {
+            SnarkPageRelicTrackerModifier.MarkAppeared<BarristersPageRelic>(Owner);
+        }
+
+        return Task.CompletedTask;
+    }
 
     public override Task BeforeCombatStart()
     {

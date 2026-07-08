@@ -21,6 +21,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace BlackSouls.Scripts;
 
 #pragma warning disable CS8765, CS8604
+/// <summary>Implements the Suspicious Hat relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class SuspiciousHatRelic : ModRelicTemplate
 {

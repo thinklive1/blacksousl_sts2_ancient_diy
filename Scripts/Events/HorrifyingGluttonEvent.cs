@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Horrifying Glutton event.</summary>
 [RegisterActEvent(typeof(Hive))]
 public sealed class HorrifyingGluttonEvent : ModEventTemplate
 {

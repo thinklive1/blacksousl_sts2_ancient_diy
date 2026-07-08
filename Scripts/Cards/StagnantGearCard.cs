@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Stagnant Gear card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class StagnantGearCard : ModCardTemplate
 {

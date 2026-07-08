@@ -10,6 +10,7 @@ using STS2RitsuLib.Combat.Rewards;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Red Queen Big Success Card reward.</summary>
 public sealed class RedQueenBigSuccessCardReward : Reward, IModSerializableReward
 {
     private const int CardRewardOptions = 3;

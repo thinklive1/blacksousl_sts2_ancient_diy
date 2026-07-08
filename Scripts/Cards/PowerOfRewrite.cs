@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Power of Rewrite card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class PowerOfRewrite : ModCardTemplate
 {

@@ -15,6 +15,7 @@ using STS2RitsuLib.Utils;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Prickett ancient encounter.</summary>
 [RegisterActAncient(typeof(Glory))]
 public class PrickettAncient : ModAncientEventTemplate
 {

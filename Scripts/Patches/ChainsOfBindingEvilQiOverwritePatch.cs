@@ -11,6 +11,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Chains Of Binding Evil Qi Overwrite.</summary>
 public class ChainsOfBindingEvilQiOverwritePatch : IPatchMethod
 {
     public static string PatchId => "chains_of_binding_evil_qi_overwrite";

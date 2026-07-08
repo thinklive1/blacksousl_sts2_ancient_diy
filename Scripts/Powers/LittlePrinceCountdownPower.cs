@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Little Prince Countdown power.</summary>
 [RegisterPower]
 public sealed class LittlePrinceCountdownPower : ModPowerTemplate
 {

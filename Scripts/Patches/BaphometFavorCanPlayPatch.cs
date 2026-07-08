@@ -6,6 +6,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts.Patches;
 
+/// <summary>Applies behavior patches for Baphomet Favor Can Play.</summary>
 public sealed class BaphometFavorCanPlayPatch : IPatchMethod
 {
     public static string PatchId => "baphomet_favor_can_play";

@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Flanders Tracking power.</summary>
 [RegisterPower]
 public sealed class FlandersTrackingPower : ModPowerTemplate
 {

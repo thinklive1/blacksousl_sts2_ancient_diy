@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Unlock enchantment.</summary>
 [RegisterEnchantment]
 public sealed class UnlockEnchantment : ModEnchantmentTemplate, ICardPlayStateContributor
 {

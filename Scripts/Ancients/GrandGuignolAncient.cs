@@ -7,6 +7,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Grand Guignol ancient encounter.</summary>
 [RegisterSharedAncient]
 public class GrandGuignolAncient : ModAncientEventTemplate
 {
@@ -29,6 +30,7 @@ public class GrandGuignolAncient : ModAncientEventTemplate
         CreateModRelicOption<MargaretRelic>(),
         CreateModRelicOption<AngelFeatherRelic>(),
         CreateModRelicOption<MabelSoldierRelic>(),
+        CreateModRelicOption<GuignolsDollRelic>(),
     ];
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()

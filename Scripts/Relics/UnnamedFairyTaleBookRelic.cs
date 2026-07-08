@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Unnamed Fairy Tale Book relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
 {
@@ -105,9 +106,9 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
             .Select(relic => relic.Id.Entry)
             .ToHashSet(StringComparer.Ordinal);
 
-        List<RelicModel> candidates = FairyTaleRelics()
+        List<RelicModel> candidates = FairyTaleRelicCatalog.All()
             .Where(relic => !obtainedRelicIds.Contains(relic.Id.Entry) && !ownedRelicIds.Contains(relic.Id.Entry))
-            .Where(relic => IsFairyTaleAllowed(relic))
+            .Where(FairyTaleRelicCatalog.IsEnabledByConfig)
             .ToList();
 
         RelicModel? relic = Owner.RunState.Rng.Niche.NextItem(candidates);
@@ -136,80 +137,4 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
         BlackSouls_ObtainedFairyTaleRelicIds = string.Join(ObtainedRelicSeparator, obtainedRelicIds.Order(StringComparer.Ordinal));
     }
 
-    private static bool IsFairyTaleAllowed(RelicModel relic)
-    {
-        if (relic is AliceThroughLookingGlassRelic)
-            return BsAncientConfig.AllowAliceThroughLookingGlass;
-        if (relic is CinderellaRelic)
-            return BsAncientConfig.AllowCinderella;
-        if (relic is FrogPrincessRelic)
-            return BsAncientConfig.AllowFrogPrincess;
-        if (relic is GreedyDogRelic)
-            return BsAncientConfig.AllowGreedyDog;
-        if (relic is MermaidPrincessRelic)
-            return BsAncientConfig.AllowMermaidPrincess;
-        if (relic is MonkeyCrabBattleRelic)
-            return BsAncientConfig.AllowMonkeyCrabBattle;
-        if (relic is NorthWindAndSunRelic)
-            return BsAncientConfig.AllowNorthWindAndSun;
-        if (relic is PeterPanRelic)
-            return BsAncientConfig.AllowPeterPan;
-        if (relic is UglyDucklingRelic)
-            return BsAncientConfig.AllowUglyDuckling;
-        if (relic is SleepGodMythRelic)
-            return BsAncientConfig.AllowSleepGodMyth;
-        if (relic is LakeGodMythRelic)
-            return BsAncientConfig.AllowLakeGodMyth;
-        if (relic is DarkGoatOfTheWoodsMythRelic)
-            return BsAncientConfig.AllowDarkGoatOfTheWoodsMyth;
-
-        return true;
-    }
-
-    private static List<RelicModel> FairyTaleRelics() =>
-    [
-        ModelDb.Relic<PinocchioRelic>(),
-        ModelDb.Relic<AliceThroughLookingGlassRelic>(),
-        ModelDb.Relic<ThreeLittlePigsRelic>(),
-        ModelDb.Relic<EmperorsNewClothesRelic>(),
-        ModelDb.Relic<AlicuxelsDogRelic>(),
-        ModelDb.Relic<SongOfBoneRelic>(),
-        ModelDb.Relic<FrogPrincessRelic>(),
-        ModelDb.Relic<FoxAndSourGrapesRelic>(),
-        ModelDb.Relic<PiedPiperOfHamelinRelic>(),
-        ModelDb.Relic<JackAndTheBeanstalkRelic>(),
-        ModelDb.Relic<AladdinAndTheMagicLampRelic>(),
-        ModelDb.Relic<BeautyAndTheBeastRelic>(),
-        ModelDb.Relic<UglyDucklingRelic>(),
-        ModelDb.Relic<HighJumperRelic>(),
-        ModelDb.Relic<RapunzelFairyTaleRelic>(),
-        ModelDb.Relic<WolfAndLittleGoatsRelic>(),
-        ModelDb.Relic<MyFormerRascalRelic>(),
-        ModelDb.Relic<SinbadTheSailorRelic>(),
-        ModelDb.Relic<TownMusiciansOfBremenRelic>(),
-        ModelDb.Relic<IronHansRelic>(),
-        ModelDb.Relic<FlandersDogRelic>(),
-        ModelDb.Relic<LittlePrinceRelic>(),
-        ModelDb.Relic<ArmoredKnightRelic>(),
-        ModelDb.Relic<KingWithDonkeyEarsRelic>(),
-        ModelDb.Relic<PeterPanRelic>(),
-        ModelDb.Relic<MonkeyCrabBattleRelic>(),
-        ModelDb.Relic<GreedyDogRelic>(),
-        ModelDb.Relic<TortoiseAndHareRelic>(),
-        ModelDb.Relic<KachiKachiYamaRelic>(),
-        ModelDb.Relic<RobinHoodRelic>(),
-        ModelDb.Relic<WhiteRabbitOfInabaRelic>(),
-        ModelDb.Relic<DaddyLongLegsRelic>(),
-        ModelDb.Relic<TheBoyWhoCriedWolfRelic>(),
-        ModelDb.Relic<CandyHouseRelic>(),
-        ModelDb.Relic<SnowQueenRelic>(),
-        ModelDb.Relic<MermaidPrincessRelic>(),
-        ModelDb.Relic<NorthWindAndSunRelic>(),
-        ModelDb.Relic<SnowWhiteRelic>(),
-        ModelDb.Relic<CinderellaRelic>(),
-        ModelDb.Relic<TurnipRelic>(),
-        ModelDb.Relic<SleepGodMythRelic>(),
-        ModelDb.Relic<LakeGodMythRelic>(),
-        ModelDb.Relic<DarkGoatOfTheWoodsMythRelic>()
-    ];
 }

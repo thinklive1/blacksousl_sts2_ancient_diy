@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Chaos Fusion card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class ChaosFusionCard : ModCardTemplate
 {

@@ -18,6 +18,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Margaret relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class MargaretRelic : ModRelicTemplate
 {

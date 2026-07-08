@@ -17,6 +17,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Orr Reflection Pending power.</summary>
 [RegisterPower]
 public sealed class OrrReflectionPendingPower : ModPowerTemplate
 {
@@ -47,6 +48,7 @@ public sealed class OrrReflectionPendingPower : ModPowerTemplate
     }
 }
 
+/// <summary>Implements the Orr Reflection power.</summary>
 [RegisterPower]
 public sealed class OrrReflectionPower : ModPowerTemplate
 {
@@ -90,6 +92,7 @@ public sealed class OrrReflectionPower : ModPowerTemplate
     }
 }
 
+/// <summary>Implements the Two Sided Virtue power.</summary>
 [RegisterPower]
 public sealed class TwoSidedVirtuePower : ModPowerTemplate
 {

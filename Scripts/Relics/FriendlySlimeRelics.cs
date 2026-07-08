@@ -16,6 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Provides shared behavior for Friendly Slime relic variants.</summary>
 public abstract class FriendlySlimeRelicBase : ModRelicTemplate
 {
     public override RelicRarity Rarity => RelicRarity.Event;
@@ -70,6 +71,7 @@ public abstract class FriendlySlimeRelicBase : ModRelicTemplate
     }
 }
 
+/// <summary>Implements the Friendly Slime Nod relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class FriendlySlimeNodRelic : FriendlySlimeRelicBase
 {
@@ -78,6 +80,7 @@ public sealed class FriendlySlimeNodRelic : FriendlySlimeRelicBase
     protected override int DamageTaken => 0;
 }
 
+/// <summary>Implements the Friendly Slime Handshake relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class FriendlySlimeHandshakeRelic : FriendlySlimeRelicBase
 {
@@ -86,6 +89,7 @@ public sealed class FriendlySlimeHandshakeRelic : FriendlySlimeRelicBase
     protected override int DamageTaken => 7;
 }
 
+/// <summary>Implements the Friendly Slime Hug relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class FriendlySlimeHugRelic : FriendlySlimeRelicBase
 {

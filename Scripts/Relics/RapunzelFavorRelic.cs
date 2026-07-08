@@ -14,6 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Rapunzel Favor relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class RapunzelFavorRelic : ModRelicTemplate
 {

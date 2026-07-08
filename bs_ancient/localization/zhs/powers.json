@@ -22,8 +22,8 @@
   "BS_ANCIENT_POWER_MYSTERY_OF_NIGHT_SKY_DECISION_POWER.title": "夜空的神秘",
   "BS_ANCIENT_POWER_MYSTERY_OF_NIGHT_SKY_DECISION_POWER.description": "记录本回合第一张牌是否会额外打出一次。",
   "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.title": "暴魔",
-  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.description": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。每回合开始时失去当前生命值[green]50%[/green]的生命值，但不会因此死亡。",
-  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.smartDescription": "无法以任何方式获得[gold]格挡[/gold]。攻击时，回复等同于造成生命伤害的生命。每回合开始时失去当前生命值[green]50%[/green]的生命值，但不会因此死亡。",
+  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.description": "攻击造成生命伤害时回复等量生命。无法获得[gold]格挡[/gold]，打出非攻击牌时，受到最大生命值[green]20%[/green]的伤害。",
+  "BS_ANCIENT_POWER_VIOLENCE_DEMON_POWER.smartDescription": "攻击造成生命伤害时回复等量生命。无法获得[gold]格挡[/gold]，打出非攻击牌时，受到最大生命值[green]20%[/green]的伤害。",
   "BS_ANCIENT_POWER_SURROUNDED_VISUAL_POWER.title": "包围视觉",
   "BS_ANCIENT_POWER_SURROUNDED_VISUAL_POWER.description": "保留包围战斗中的转向视觉。",
   "BS_ANCIENT_POWER_EVIL_QI_PENDING_POWER.title": "邪气",
@@ -80,5 +80,11 @@
   "BS_ANCIENT_POWER_HALLUCINOGENIC_CANDY_POWER.smartDescription": "本回合之后抽到的非 X 费手牌费用随机变为[blue]0[/blue]到[blue]3[/blue]。",
   "BS_ANCIENT_POWER_MERMAID_TEAR_SWALLOWED_CARDS_POWER.title": "人鱼之泪",
   "BS_ANCIENT_POWER_MERMAID_TEAR_SWALLOWED_CARDS_POWER.description": "战斗结束后，永久移除被吞噬的牌。",
-  "BS_ANCIENT_POWER_MERMAID_TEAR_SWALLOWED_CARDS_POWER.smartDescription": "战斗结束后，永久移除[blue]{Amount}[/blue]张被吞噬的牌。"
+  "BS_ANCIENT_POWER_MERMAID_TEAR_SWALLOWED_CARDS_POWER.smartDescription": "战斗结束后，永久移除[blue]{Amount}[/blue]张被吞噬的牌。",
+  "BS_ANCIENT_POWER_GUIGNOLS_APPLAUSE_EXECUTION_POWER.title": "人气爆发",
+  "BS_ANCIENT_POWER_GUIGNOLS_APPLAUSE_EXECUTION_POWER.description": "你的攻击会一击杀死生命低于[blue]{Amount}%[/blue]的敌人。",
+  "BS_ANCIENT_POWER_GUIGNOLS_APPLAUSE_EXECUTION_POWER.smartDescription": "你的攻击会一击杀死生命低于[blue]{Amount}%[/blue]的敌人。",
+  "BS_ANCIENT_POWER_GUIGNOLS_BOO_EXECUTION_POWER.title": "人气低迷",
+  "BS_ANCIENT_POWER_GUIGNOLS_BOO_EXECUTION_POWER.description": "敌人的攻击会一击杀死生命低于[blue]{Amount}%[/blue]的你。",
+  "BS_ANCIENT_POWER_GUIGNOLS_BOO_EXECUTION_POWER.smartDescription": "敌人的攻击会一击杀死生命低于[blue]{Amount}%[/blue]的你。"
 }

@@ -16,6 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Wolf And Little Goats relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class WolfAndLittleGoatsRelic : ModRelicTemplate
 {

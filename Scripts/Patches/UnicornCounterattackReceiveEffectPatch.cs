@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Unicorn Counterattack Receive Effect.</summary>
 public static class UnicornCounterattackReceiveEffectPatch
 {
     public static bool HookBeforeDamageReceivedPrefix(ref Task __result)

@@ -14,6 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Kachi Kachi Yama relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class KachiKachiYamaRelic : ModRelicTemplate
 {

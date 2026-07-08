@@ -15,6 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Executioner Evolution card.</summary>
 public abstract class ExecutionerEvolutionCard<TNext> : ModCardTemplate where TNext : CardModel
 {
     private int _playCount;
@@ -131,6 +132,7 @@ public abstract class ExecutionerEvolutionCard<TNext> : ModCardTemplate where TN
     }
 }
 
+/// <summary>Implements the Wriggling Shadow card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class WrigglingShadowCard : ExecutionerEvolutionCard<XiZhiCard>
 {
@@ -147,6 +149,7 @@ public sealed class WrigglingShadowCard : ExecutionerEvolutionCard<XiZhiCard>
     }
 }
 
+/// <summary>Implements the Xi Zhi card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class XiZhiCard : ExecutionerEvolutionCard<ExecutionerCard>
 {
@@ -163,6 +166,7 @@ public sealed class XiZhiCard : ExecutionerEvolutionCard<ExecutionerCard>
     }
 }
 
+/// <summary>Implements the Executioner card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class ExecutionerCard : ExecutionerEvolutionCard<ExecutionerKetchCard>
 {
@@ -179,6 +183,7 @@ public sealed class ExecutionerCard : ExecutionerEvolutionCard<ExecutionerKetchC
     }
 }
 
+/// <summary>Implements the Executioner Ketch card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class ExecutionerKetchCard : ModCardTemplate
 {

@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the The Boy Who Cried Wolf relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class TheBoyWhoCriedWolfRelic : ModRelicTemplate
 {

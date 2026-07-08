@@ -10,13 +10,14 @@ using MegaCrit.Sts2.Core.Nodes.Events;
 
 namespace BlackSouls.Scripts.Patches;
 
+/// <summary>Applies behavior patches for Barristers Page Hidden Event Option.</summary>
 [HarmonyPatch]
 public static class BarristersPageHiddenEventOptionPatch
 {
     private const string HiddenOptionKey = "BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION";
     private const float HiddenAlpha = 0f;
     private const float HoverAlpha = 0.08f;
-    private const double AppearanceChance = 0.5;
+    private const int AppearanceChancePercent = 50;
 
     private static readonly MethodInfo SetEventFinishedMethod =
         AccessTools.Method(typeof(EventModel), "SetEventFinished", [typeof(LocString)]);
@@ -34,13 +35,14 @@ public static class BarristersPageHiddenEventOptionPatch
         if (options.Count == 0
             || options.Any(option => option.TextKey == HiddenOptionKey)
             || !options.Any(IsDeathOption)
-            || __instance.Owner.GetRelic<BarristersPageRelic>() != null
-            || Random.Shared.NextDouble() >= AppearanceChance)
+            || SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BarristersPageRelic>(__instance.Owner)
+            || __instance.Owner.RunState.Rng.Niche.NextInt(100) >= AppearanceChancePercent)
         {
             eventOptions = options;
             return;
         }
 
+        SnarkPageRelicTrackerModifier.MarkAppeared<BarristersPageRelic>(__instance.Owner);
         options.Add(CreateHiddenOption(__instance));
         eventOptions = options;
     }

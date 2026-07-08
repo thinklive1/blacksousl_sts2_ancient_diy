@@ -6,6 +6,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Knight Chess Piece relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class KnightChessPieceRelic : ModRelicTemplate
 {

@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Mermaid Tear card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class MermaidTearCard : ModCardTemplate
 {
@@ -173,6 +174,7 @@ public sealed class MermaidTearCard : ModCardTemplate
     }
 }
 
+/// <summary>Implements the Mermaid Tear Swallowed Cards power.</summary>
 [RegisterPower]
 public sealed class MermaidTearSwallowedCardsPower : ModPowerTemplate
 {

@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Mystery Of Night Sky Decision power.</summary>
 [RegisterPower]
 public class MysteryOfNightSkyDecisionPower : ModPowerTemplate
 {

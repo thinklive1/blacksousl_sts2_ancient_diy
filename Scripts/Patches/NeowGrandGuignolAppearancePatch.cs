@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Models.Events;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Neow Grand Guignol Appearance.</summary>
 [HarmonyPatch]
 public static class NeowGrandGuignolAppearancePatch
 {

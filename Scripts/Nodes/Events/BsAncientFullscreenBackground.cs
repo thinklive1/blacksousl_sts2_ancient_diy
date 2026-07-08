@@ -2,6 +2,7 @@ using Godot;
 
 namespace BlackSouls.Scripts.Nodes.Events;
 
+/// <summary>Displays fullscreen event background art.</summary>
 public partial class BsAncientFullscreenBackground : Control
 {
     public override void _Ready()

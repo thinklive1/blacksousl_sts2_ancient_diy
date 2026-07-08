@@ -15,6 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Gift Of Chaos relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class GiftOfChaosRelic : ModRelicTemplate
 {

@@ -16,6 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Rethink Poker relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class RethinkPokerRelic : ModRelicTemplate
 {

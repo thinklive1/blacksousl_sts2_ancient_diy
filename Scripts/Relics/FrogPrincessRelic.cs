@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Frog Princess relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class FrogPrincessRelic : ModRelicTemplate
 {

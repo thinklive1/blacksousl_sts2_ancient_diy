@@ -18,26 +18,25 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-// 注册遗物。如果要写自定义池看添加人物的开�?[RegisterRelic(typeof(EventRelicPool))]
-// [RegisterCharacterStarterRelic(typeof(TestCharacter))] // 注册起始遗物
+/// <summary>Implements the Time Queen Blessing relic.</summary>
+[RegisterRelic(typeof(EventRelicPool))]
 public class TimeQueenBlessingRelic : ModRelicTemplate
 {
-    // 稀有度
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
-    // 遗物的数值。这里会替换本地化中的{Cards}�?    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         HoverTipFactory.FromEnchantment<ReplayEnchantment>()
             .Append(HoverTipFactory.FromKeyword(CardKeyword.Retain));
 
     public override RelicAssetProfile AssetProfile => new(
-        // 小图标（原版85x85�?        IconPath: $"res://bs_ancient/assets/images/relics/{GetType().Name}.png",
-        // 轮廓图标（原�?5x85�?        IconOutlinePath: $"res://bs_ancient/assets/images/relics/{GetType().Name}.png",
-        // 大图标（原版256x256�?        BigIconPath: $"res://bs_ancient/assets/images/relics/{GetType().Name}.png"
+        IconPath: $"res://bs_ancient/assets/images/relics/{GetType().Name}.png",
+        IconOutlinePath: $"res://bs_ancient/assets/images/relics/{GetType().Name}.png",
+        BigIconPath: $"res://bs_ancient/assets/images/relics/{GetType().Name}.png"
     );
 
-    // 拾取时， 选择牌组的一张牌，为其添�?重演"
+    // Enchant one deck card with Replay when the relic is obtained.
     public override async Task AfterObtained()
     {
         foreach (CardModel item in await CardSelectCmd.FromDeckForEnchantment(

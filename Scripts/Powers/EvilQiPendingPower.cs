@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Evil Qi Pending power.</summary>
 [RegisterPower]
 public sealed class EvilQiPendingPower : ModPowerTemplate
 {
@@ -29,7 +30,7 @@ public sealed class EvilQiPendingPower : ModPowerTemplate
         }
 
         int amount = Amount;
-        await EvilQiEffect.Resolve(Owner, amount);
+        await EvilQiEffect.Resolve(choiceContext, Owner, amount);
         await PowerCmd.Remove(this);
     }
 }

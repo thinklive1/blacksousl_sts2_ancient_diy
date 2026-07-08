@@ -15,6 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Tortoise And Hare relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class TortoiseAndHareRelic : ModRelicTemplate
 {

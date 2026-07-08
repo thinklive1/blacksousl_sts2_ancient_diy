@@ -15,6 +15,7 @@ using BlackSouls.Scripts.Patches;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Alice Curse card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class AliceCurseCard : ModCardTemplate
 {

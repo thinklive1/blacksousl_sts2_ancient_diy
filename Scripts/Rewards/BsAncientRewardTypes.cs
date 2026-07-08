@@ -3,6 +3,7 @@ using STS2RitsuLib.Combat.Rewards;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Registers custom BS Ancient reward types.</summary>
 public static class BsAncientRewardTypes
 {
     private static bool _registered;

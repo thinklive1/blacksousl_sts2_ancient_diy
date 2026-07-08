@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Hallucinogenic Candy power.</summary>
 [RegisterPower]
 public sealed class HallucinogenicCandyPower : ModPowerTemplate
 {

@@ -15,6 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Lion Royal Crest relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class LionRoyalCrestRelic : ModRelicTemplate
 {

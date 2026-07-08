@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Ascension enchantment.</summary>
 [RegisterEnchantment]
 public sealed class AscensionEnchantment : ModEnchantmentTemplate
 {

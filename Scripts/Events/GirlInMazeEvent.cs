@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Girl In Maze event.</summary>
 [RegisterActEvent(typeof(Glory))]
 public sealed class GirlInMazeEvent : ModEventTemplate
 {

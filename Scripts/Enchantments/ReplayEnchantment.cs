@@ -14,40 +14,25 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Replay enchantment.</summary>
 [RegisterEnchantment]
 public class ReplayEnchantment : ModEnchantmentTemplate
 {
     private const int MaxTriggersPerCombat = 3;
 
-    // 是否在卡牌上显示数值
+    // Replay uses its amount as an internal per-combat counter.
     public override bool ShowAmount => false;
 
-    // 重载这个以改变显示的数字
-    // public override int DisplayAmount => DynamicVars.Cards.IntValue;
-
-    // 是否会添加额外的卡牌描述文本
+    // Adds replay rules text directly to the enchanted card.
     public override bool HasExtraCardText => true;
 
-    // 像卡牌、遗物、药水等一样，可以使用DynamicVars和ExtraHoverTips
+    // Retain is shown because replayed exhaust cards wait in the exhaust pile.
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Retain)];
 
-    // 图标位置。大小1:1就行，原版是64x64
     public override EnchantmentAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/relics/TimeQueenBlessingRelic.png"
     );
-
-    // 决定是否可以附魔到某张卡牌上，这里我们让它只能附魔到获得格挡的卡牌上。
-    /*
-    public override bool CanEnchant(CardModel card)
-    {
-        if (base.CanEnchant(card))
-        {
-            return card.GainsBlock;
-        }
-        return false;
-    }
-    */
 
     public override Task BeforeCombatStart()
     {

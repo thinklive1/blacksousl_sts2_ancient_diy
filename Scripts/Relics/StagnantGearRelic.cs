@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Stagnant Gear relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class StagnantGearRelic : ModRelicTemplate
 {

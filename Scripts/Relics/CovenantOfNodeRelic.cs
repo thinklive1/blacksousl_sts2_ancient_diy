@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Covenant Of Node relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class CovenantOfNodeRelic : ModRelicTemplate
 {

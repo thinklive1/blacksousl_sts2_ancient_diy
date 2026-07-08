@@ -6,6 +6,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the White Queen Promotion relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class WhiteQueenPromotionRelic : ModRelicTemplate
 {

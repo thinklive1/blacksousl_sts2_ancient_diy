@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Bird Singer modifier.</summary>
 public sealed class BirdSingerModifier : ModModifierTemplate
 {
     private const string BirdSingerIconPath = "res://bs_ancient/assets/images/events/BirdSinger.png";

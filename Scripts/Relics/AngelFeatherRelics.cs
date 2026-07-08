@@ -16,6 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Provides shared behavior for Angel Feather relic variants.</summary>
 public abstract class AngelFeatherRelicBase : ModRelicTemplate
 {
     private bool _convertedDamageThisCombat;
@@ -117,6 +118,7 @@ public abstract class AngelFeatherRelicBase : ModRelicTemplate
     }
 }
 
+/// <summary>Implements the Angel Feather relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class AngelFeatherRelic : AngelFeatherRelicBase
 {
@@ -138,6 +140,7 @@ public sealed class AngelFeatherRelic : AngelFeatherRelicBase
     }
 }
 
+/// <summary>Implements the Question Angel Feather relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class QuestionAngelFeatherRelic : AngelFeatherRelicBase
 {
@@ -152,6 +155,7 @@ public sealed class QuestionAngelFeatherRelic : AngelFeatherRelicBase
     }
 }
 
+/// <summary>Implements the Brutalizing Angel Feather relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class BrutalizingAngelFeatherRelic : AngelFeatherRelicBase
 {

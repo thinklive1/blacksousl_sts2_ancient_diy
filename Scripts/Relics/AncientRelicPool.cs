@@ -3,6 +3,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Defines the custom ancient relic pool.</summary>
 [RegisterSharedRelicPool]
 public sealed class AncientRelicPool : RelicPoolModel
 {
@@ -18,6 +19,7 @@ public sealed class AncientRelicPool : RelicPoolModel
         yield return ModelDb.Relic<QuestionAngelFeatherRelic>();
         yield return ModelDb.Relic<BrutalizingAngelFeatherRelic>();
         yield return ModelDb.Relic<MabelSoldierRelic>();
+        yield return ModelDb.Relic<GuignolsDollRelic>();
         // Node
         yield return ModelDb.Relic<NodeRibbonRelic>();
         yield return ModelDb.Relic<DreamOfKadathRelic>();

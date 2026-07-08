@@ -10,13 +10,14 @@ using MegaCrit.Sts2.Core.Nodes.Events;
 
 namespace BlackSouls.Scripts.Patches;
 
+/// <summary>Applies behavior patches for Bankers Page Hidden Event Option.</summary>
 [HarmonyPatch]
 public static class BankersPageHiddenEventOptionPatch
 {
     private const string HiddenOptionKey = "BS_ANCIENT_EASTER_EGG_BANKERS_PAGE_OPTION";
     private const float HiddenAlpha = 0f;
     private const float HoverAlpha = 0.08f;
-    private const double AppearanceChance = 0.3;
+    private const int AppearanceChancePercent = 30;
 
     private static readonly MethodInfo SetEventFinishedMethod =
         AccessTools.Method(typeof(EventModel), "SetEventFinished", [typeof(LocString)]);
@@ -34,13 +35,14 @@ public static class BankersPageHiddenEventOptionPatch
         if (options.Count == 0
             || options.Any(option => option.TextKey == HiddenOptionKey)
             || !options.Any(IsGoldGainOption)
-            || __instance.Owner.GetRelic<BankersPageRelic>() != null
-            || Random.Shared.NextDouble() >= AppearanceChance)
+            || SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BankersPageRelic>(__instance.Owner)
+            || __instance.Owner.RunState.Rng.Niche.NextInt(100) >= AppearanceChancePercent)
         {
             eventOptions = options;
             return;
         }
 
+        SnarkPageRelicTrackerModifier.MarkAppeared<BankersPageRelic>(__instance.Owner);
         options.Add(CreateHiddenOption(__instance));
         eventOptions = options;
     }

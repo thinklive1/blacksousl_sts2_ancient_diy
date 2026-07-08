@@ -18,6 +18,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Dark Goat Of The Woods Myth relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class DarkGoatOfTheWoodsMythRelic : ModRelicTemplate
 {
@@ -45,6 +46,11 @@ public sealed class DarkGoatOfTheWoodsMythRelic : ModRelicTemplate
         IconOutlinePath: RelicIconPath,
         BigIconPath: RelicIconPath
     );
+
+    public override bool IsAllowed(IRunState runState)
+    {
+        return false;
+    }
 
     public override async Task AfterObtained()
     {

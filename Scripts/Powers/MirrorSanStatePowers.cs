@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the San High power.</summary>
 [RegisterPower]
 public sealed class SanHighPower : ModPowerTemplate
 {
@@ -18,6 +19,7 @@ public sealed class SanHighPower : ModPowerTemplate
     );
 }
 
+/// <summary>Implements the San Low power.</summary>
 [RegisterPower]
 public sealed class SanLowPower : ModPowerTemplate
 {

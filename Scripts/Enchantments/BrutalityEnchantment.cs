@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Brutality enchantment.</summary>
 [RegisterEnchantment]
 public sealed class BrutalityEnchantment : ModEnchantmentTemplate
 {

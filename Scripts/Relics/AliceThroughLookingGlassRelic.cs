@@ -17,6 +17,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Alice Through Looking Glass relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class AliceThroughLookingGlassRelic : ModRelicTemplate
 {

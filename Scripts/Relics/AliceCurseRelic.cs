@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Alice Curse relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class AliceCurseRelic : ModRelicTemplate
 {

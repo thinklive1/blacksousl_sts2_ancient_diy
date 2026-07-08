@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Cat Collar Trigger Limit power.</summary>
 [RegisterPower]
 public class CatCollarTriggerLimitPower : ModPowerTemplate
 {

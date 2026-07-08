@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Knight Chess Piece modifier.</summary>
 public sealed class KnightChessPieceModifier : ModModifierTemplate
 {
     private const string ModifierIconPath = "res://bs_ancient/assets/images/relics/KnightChessPieceRelic.png";

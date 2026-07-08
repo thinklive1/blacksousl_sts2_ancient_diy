@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Hlanith Wine relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class HlanithWineRelic : ModRelicTemplate
 {

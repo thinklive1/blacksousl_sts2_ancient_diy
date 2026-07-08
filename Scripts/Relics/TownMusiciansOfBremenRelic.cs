@@ -14,6 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Town Musicians Of Bremen relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class TownMusiciansOfBremenRelic : ModRelicTemplate
 {

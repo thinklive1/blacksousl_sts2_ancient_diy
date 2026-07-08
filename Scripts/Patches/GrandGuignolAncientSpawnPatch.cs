@@ -3,6 +3,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Grand Guignol Ancient Spawn.</summary>
 public class GrandGuignolAncientSpawnPatch : IPatchMethod
 {
     public static string PatchId => "grand_guignol_ancient_spawn_filter";

@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Cat Smile card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class CatSmileCard : ModCardTemplate
 {

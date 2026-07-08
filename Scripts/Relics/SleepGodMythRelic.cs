@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Sleep God Myth relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class SleepGodMythRelic : ModRelicTemplate
 {
@@ -29,6 +30,11 @@ public sealed class SleepGodMythRelic : ModRelicTemplate
         IconOutlinePath: RelicIconPath,
         BigIconPath: RelicIconPath
     );
+
+    public override bool IsAllowed(IRunState runState)
+    {
+        return false;
+    }
 
     public override async Task AfterObtained()
     {

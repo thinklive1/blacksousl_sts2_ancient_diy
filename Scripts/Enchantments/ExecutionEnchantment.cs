@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -10,10 +11,10 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Execution enchantment.</summary>
 [RegisterEnchantment]
 public sealed class ExecutionEnchantment : ModEnchantmentTemplate
 {
-    private const string DebugPrefix = "[ExecutionEnchantment]";
     private bool _returnedThisPlay;
     private readonly HashSet<Creature> _disabledDeathPreventionThisPlay = [];
 
@@ -28,24 +29,15 @@ public sealed class ExecutionEnchantment : ModEnchantmentTemplate
         return cardType == CardType.Attack;
     }
 
-    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(
-        CardModel card,
-        bool isAutoPlay,
-        ResourceInfo resources,
-        PileType pileType,
-        CardPilePosition position)
-    {
-        return (pileType, position);
-    }
-
-    public override async Task BeforeCardPlayed(CardPlay cardPlay)
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
         if (IsThisCard(cardPlay.Card))
         {
             _returnedThisPlay = false;
             _disabledDeathPreventionThisPlay.Clear();
-            DebugLog($"BeforeCardPlayed: card={CardDebugName(cardPlay.Card)}, pile={cardPlay.Card.Pile?.Type.ToString() ?? "null"}");
         }
+
+        return Task.CompletedTask;
     }
 
     public override decimal ModifyDamageMultiplicative(
@@ -70,14 +62,9 @@ public sealed class ExecutionEnchantment : ModEnchantmentTemplate
     {
         if (!IsDamageFromThisCard(dealer, target, cardSource) || (!result.WasTargetKilled && !target.IsDead))
         {
-            DebugLog(
-                $"AfterDamageGiven ignored: source={CardDebugName(cardSource)}, enchantCard={CardDebugName(Card)}, " +
-                $"dealerMatch={dealer == Card.Owner?.Creature}, target={target.LogName}, targetDead={target.IsDead}, " +
-                $"wasKilled={result.WasTargetKilled}, targetSide={target.Side}, dealerSide={dealer?.Side.ToString() ?? "null"}");
             return Task.CompletedTask;
         }
 
-        DebugLog($"AfterDamageGiven kill detected: source={CardDebugName(cardSource)}, target={target.LogName}");
         return HandleSuccessfulKill(choiceContext, target);
     }
 
@@ -89,48 +76,37 @@ public sealed class ExecutionEnchantment : ModEnchantmentTemplate
             || cardPlay.Target.Side == Card.Owner?.Creature.Side
             || !cardPlay.Target.IsDead)
         {
-            DebugLog(
-                $"OnPlay ignored: playCard={CardDebugName(cardPlay?.Card)}, enchantCard={CardDebugName(Card)}, " +
-                $"target={(cardPlay?.Target == null ? "null" : cardPlay.Target.LogName)}, " +
-                $"targetDead={cardPlay?.Target?.IsDead.ToString() ?? "null"}, " +
-                $"targetSide={cardPlay?.Target?.Side.ToString() ?? "null"}, ownerSide={Card.Owner?.Creature.Side.ToString() ?? "null"}");
             return Task.CompletedTask;
         }
 
-        DebugLog($"OnPlay fallback kill detected: card={CardDebugName(cardPlay.Card)}, target={cardPlay.Target.LogName}");
         return HandleSuccessfulKill(choiceContext, cardPlay.Target);
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CardModel playedCard = cardPlay.Card;
-        if (!IsThisCard(playedCard) || !_returnedThisPlay || playedCard.Pile?.Type != PileType.Play)
+        if (!IsThisCard(cardPlay.Card)
+            || !_returnedThisPlay
+            || cardPlay.Card.Pile?.Type != PileType.Play
+            || CombatManager.Instance.IsOverOrEnding)
         {
-            DebugLog(
-                $"AfterCardPlayed no return: playCard={CardDebugName(playedCard)}, enchantCard={CardDebugName(Card)}, " +
-                $"returned={_returnedThisPlay}, pile={playedCard.Pile?.Type.ToString() ?? "null"}");
             return;
         }
 
-        DebugLog($"AfterCardPlayed returning killed card to hand: card={CardDebugName(playedCard)}");
-        await CardPileCmd.Add(playedCard, PileType.Hand, CardPilePosition.Top);
+        await CardPileCmd.Add(cardPlay.Card, PileType.Hand, CardPilePosition.Top);
     }
 
     public async Task HandleSuccessfulKill(PlayerChoiceContext choiceContext, Creature target)
     {
         if (_returnedThisPlay)
         {
-            DebugLog($"HandleSuccessfulKill skipped duplicate: target={target.LogName}");
             return;
         }
 
         _returnedThisPlay = true;
-        DebugLog($"HandleSuccessfulKill marked return: target={target.LogName}, targetAlive={target.IsAlive}, targetDead={target.IsDead}");
         await DisableRevivalPowers(target);
 
         if (target.IsAlive)
         {
-            DebugLog($"HandleSuccessfulKill force killing revival target: target={target.LogName}");
             await CreatureCmd.Kill(target, force: true);
         }
 
@@ -168,17 +144,5 @@ public sealed class ExecutionEnchantment : ModEnchantmentTemplate
     {
         return card != null
             && (card == Card || card.DeckVersion == Card || card == Card.DeckVersion);
-    }
-
-    private static string CardDebugName(CardModel? card)
-    {
-        return card == null
-            ? "null"
-            : $"{card.Id}@{card.GetHashCode():X}[pile={card.Pile?.Type.ToString() ?? "null"}, deck={card.DeckVersion?.GetHashCode().ToString("X") ?? "null"}]";
-    }
-
-    private static void DebugLog(string message)
-    {
-        Entry.Logger.Debug($"{DebugPrefix} {message}");
     }
 }

@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Covenant Of Prickett relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class CovenantOfPrickettRelic : ModRelicTemplate
 {

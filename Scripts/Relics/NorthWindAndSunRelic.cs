@@ -8,18 +8,18 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Runs;
+using STS2RitsuLib.Combat.Healing;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the North Wind And Sun relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
-public sealed class NorthWindAndSunRelic : ModRelicTemplate
+public sealed class NorthWindAndSunRelic : ModRelicTemplate, IHealHookListener
 {
     private const int MaxTransform = 3;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/FairyTaleRelic.png";
-
-    private int _lastKnownMaxHp;
 
     public override RelicRarity Rarity => RelicRarity.Event;
 
@@ -38,6 +38,16 @@ public sealed class NorthWindAndSunRelic : ModRelicTemplate
     public override bool IsAllowed(IRunState runState)
     {
         return false;
+    }
+
+    decimal IHealHookListener.ModifyHealAmount(HealContext context, decimal amount)
+    {
+        return context.Creature == Owner?.Creature ? 0m : amount;
+    }
+
+    public override decimal ModifyRestSiteHealAmount(Creature creature, decimal amount)
+    {
+        return creature == Owner?.Creature ? 0m : amount;
     }
 
     public override async Task AfterObtained()
@@ -71,7 +81,7 @@ public sealed class NorthWindAndSunRelic : ModRelicTemplate
 
         List<CardTransformation> transformations = [];
 
-        // Attack → Skill
+        // Transform selected attacks into upgraded random skills.
         List<CardModel> selectedAttacks = ShuffleTake(attackCards, MaxTransform, selectRng);
         foreach (CardModel original in selectedAttacks)
         {
@@ -82,7 +92,7 @@ public sealed class NorthWindAndSunRelic : ModRelicTemplate
             }
         }
 
-        // Skill → Attack
+        // Transform selected skills into upgraded random attacks.
         List<CardModel> selectedSkills = ShuffleTake(skillCards, MaxTransform, selectRng);
         foreach (CardModel original in selectedSkills)
         {
@@ -97,40 +107,6 @@ public sealed class NorthWindAndSunRelic : ModRelicTemplate
         {
             await CardCmd.Transform(transformations, null);
         }
-    }
-
-    public override Task BeforeCombatStart()
-    {
-        if (Owner?.Creature != null)
-        {
-            _lastKnownMaxHp = Owner.Creature.MaxHp;
-        }
-
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
-    {
-        if (delta <= 0 || creature != Owner?.Creature)
-        {
-            return Task.CompletedTask;
-        }
-
-        int maxHpDelta = creature.MaxHp - _lastKnownMaxHp;
-        _lastKnownMaxHp = creature.MaxHp;
-
-        decimal effectiveHeal = delta - maxHpDelta;
-        if (effectiveHeal > 0)
-        {
-            creature.SetCurrentHpInternal(creature.CurrentHp - effectiveHeal);
-        }
-
-        return Task.CompletedTask;
-    }
-
-    public override decimal ModifyRestSiteHealAmount(Creature creature, decimal amount)
-    {
-        return creature == Owner?.Creature ? 0m : amount;
     }
 
     private static bool TryCreateReplacement(

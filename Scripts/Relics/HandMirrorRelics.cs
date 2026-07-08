@@ -16,6 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Provides shared behavior for Hand Mirror relic variants.</summary>
 public abstract class HandMirrorRelicBase : ModRelicTemplate
 {
     public override RelicRarity Rarity => RelicRarity.Event;
@@ -70,6 +71,7 @@ public abstract class HandMirrorRelicBase : ModRelicTemplate
     ];
 }
 
+/// <summary>Implements the Pumpkin Hand Mirror relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class PumpkinHandMirrorRelic : HandMirrorRelicBase
 {
@@ -86,6 +88,7 @@ public sealed class PumpkinHandMirrorRelic : HandMirrorRelicBase
     }
 }
 
+/// <summary>Implements the Rabbit Hand Mirror relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class RabbitHandMirrorRelic : HandMirrorRelicBase
 {
@@ -102,6 +105,7 @@ public sealed class RabbitHandMirrorRelic : HandMirrorRelicBase
     }
 }
 
+/// <summary>Implements the Jack Hand Mirror relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class JackHandMirrorRelic : HandMirrorRelicBase
 {
@@ -134,6 +138,7 @@ public sealed class JackHandMirrorRelic : HandMirrorRelicBase
     }
 }
 
+/// <summary>Implements the Edith Ring relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class EdithRingRelic : ModRelicTemplate
 {
@@ -154,6 +159,7 @@ public sealed class EdithRingRelic : ModRelicTemplate
     }
 }
 
+/// <summary>Implements the Girl Hand Mirror relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class GirlHandMirrorRelic : HandMirrorRelicBase
 {
@@ -206,6 +212,7 @@ public sealed class GirlHandMirrorRelic : HandMirrorRelicBase
     }
 }
 
+/// <summary>Implements the Jack Hand Mirror Route modifier.</summary>
 public sealed class JackHandMirrorRouteModifier : ModModifierTemplate
 {
     private int _targetActIndex = -1;

@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Encore Next Turn Visual power.</summary>
 [RegisterPower]
 public sealed class EncoreNextTurnVisualPower : ModPowerTemplate
 {

@@ -8,6 +8,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Red Queen Dice Big Success power.</summary>
 [RegisterPower]
 public sealed class RedQueenDiceBigSuccessPower : ModPowerTemplate
 {

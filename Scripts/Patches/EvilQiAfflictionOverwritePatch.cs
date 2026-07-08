@@ -7,6 +7,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Evil Qi Affliction Overwrite.</summary>
 public class EvilQiAfflictionOverwritePatch : IPatchMethod
 {
     public static string PatchId => "evil_qi_affliction_overwrite";

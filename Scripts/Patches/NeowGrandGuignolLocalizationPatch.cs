@@ -5,6 +5,7 @@ using STS2RitsuLib.Utils;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Neow Grand Guignol Localization.</summary>
 [HarmonyPatch]
 public static class NeowGrandGuignolLocalizationPatch
 {

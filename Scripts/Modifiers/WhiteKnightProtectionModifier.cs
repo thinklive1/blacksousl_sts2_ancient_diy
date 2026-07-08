@@ -7,6 +7,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the White Knight Protection modifier.</summary>
 public sealed class WhiteKnightProtectionModifier : ModModifierTemplate
 {
     private const string ModifierIconPath = "res://bs_ancient/assets/images/relics/KnightChessPieceRelic.png";

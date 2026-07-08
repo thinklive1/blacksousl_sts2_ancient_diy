@@ -13,19 +13,15 @@ using STS2RitsuLib.Utils;
 
 namespace BlackSouls.Scripts;
 
-[RegisterActAncient(typeof(Hive))] // 指定只有荣耀这章生成
-// [RegisterSharedAncient] // 如果需要自定义生成条件，可以注册成通用再重载isAllowed
+/// <summary>Implements the Node ancient encounter.</summary>
+[RegisterActAncient(typeof(Hive))]
 public class NodeAncient : ModAncientEventTemplate
 {
-    // 选项按钮颜色
     public override Color ButtonColor => new(0.12f, 0.2f, 0.8f, 0.5f);
-    // 对话框颜色
     public override Color DialogueColor => Colors.White;
 
-    // 自定义场景的路径
     public override string? CustomBackgroundScenePath => "res://bs_ancient/assets/scenes/node_ancient.tscn";
 
-    // 自定义地图图标和轮廓的路径
     public override AncientEventPresentationAssetProfile AncientPresentationAssetProfile => new(
         MapIconPath: "res://bs_ancient/assets/images/map/node.png",
         MapIconOutlinePath: "res://bs_ancient/assets/images/map/node_outline.png",
@@ -33,7 +29,7 @@ public class NodeAncient : ModAncientEventTemplate
         RunHistoryIconOutlinePath: "res://bs_ancient/assets/images/map/node_outline.png"
     );
 
-    // 固定池一和二
+    // The first pool is reused by the run history option list.
     private IReadOnlyList<EventOption> Pool1Base => [
             CreateTimeQueenBlessingOption(),
             CreateWinterBellAllyOption(),
@@ -69,7 +65,7 @@ public class NodeAncient : ModAncientEventTemplate
         return options;
     }
 
-    // 所有可能的选项
+    // Exposes all generated options so the event can build complete hover data.
     public override IEnumerable<EventOption> AllPossibleOptions => [
         .. Pool1Base,
         CreateCatCollarOption(),
@@ -78,7 +74,6 @@ public class NodeAncient : ModAncientEventTemplate
         CreateModRelicOption<WhiteQueenSoldierRelic>()
     ];
 
-    // 生成选项
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
         bool isMultiplayer = Owner?.RunState.Players.Count > 1;
@@ -97,7 +92,7 @@ public class NodeAncient : ModAncientEventTemplate
         return options;
     }
 
-    // 出现条件。这里是只能在第二幕出现（索引为1）
+    // Node is only allowed in act 2, which uses zero-based index 1.
     public override bool IsAllowed(IRunState runState)
     {
         return !BsAncientConfig.DisableModAncients

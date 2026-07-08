@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Breeding enchantment.</summary>
 [RegisterEnchantment]
 public class BreedingEnchantment : ModEnchantmentTemplate
 {

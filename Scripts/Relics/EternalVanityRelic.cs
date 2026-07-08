@@ -16,6 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Eternal Vanity relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class EternalVanityRelic : ModRelicTemplate
 {

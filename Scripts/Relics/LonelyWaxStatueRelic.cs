@@ -15,6 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Lonely Wax Statue relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class LonelyWaxStatueRelic : ModRelicTemplate
 {

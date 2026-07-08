@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the King With Donkey Ears relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class KingWithDonkeyEarsRelic : ModRelicTemplate
 {

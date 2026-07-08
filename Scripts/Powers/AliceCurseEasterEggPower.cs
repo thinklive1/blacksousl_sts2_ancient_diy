@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Alice Curse Easter Egg power.</summary>
 [RegisterPower]
 public sealed class AliceCurseEasterEggPower : ModPowerTemplate
 {

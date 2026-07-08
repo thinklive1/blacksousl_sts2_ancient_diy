@@ -7,6 +7,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Clown event.</summary>
 [RegisterActEvent(typeof(Overgrowth))]
 [RegisterActEvent(typeof(Underdocks))]
 public sealed class ClownEvent : ModEventTemplate

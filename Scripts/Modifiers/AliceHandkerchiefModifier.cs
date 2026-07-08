@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Alice Handkerchief modifier.</summary>
 public sealed class AliceHandkerchiefModifier : ModModifierTemplate
 {
     private const string ModifierIconPath = AliceHandkerchiefRelic.RelicIconPath;

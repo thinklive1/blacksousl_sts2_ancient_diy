@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Nodes;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Centralizes BS Ancient audio resource paths and playback helpers.</summary>
 public static class BsAncientAudio
 {
     public const string Clock = "res://bs_ancient/assets/audio/clock.mp3";
@@ -11,6 +12,7 @@ public static class BsAncientAudio
     public const string Cat = "res://bs_ancient/assets/audio/cat.mp3";
     public const string Shot = "res://bs_ancient/assets/audio/shot.mp3";
     public const string Claps = "res://bs_ancient/assets/audio/claps.wav";
+    public const string Boos = "res://bs_ancient/assets/audio/hiss.mp3";
     public const string StageEnd = "res://bs_ancient/assets/audio/stageend.mp3";
 
     private static AudioStreamPlayer? _stageEndPlayer;

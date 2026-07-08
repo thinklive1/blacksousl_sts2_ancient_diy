@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Mystery Of Night Sky relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class MysteryOfNightSkyRelic : ModRelicTemplate
 {

@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Peter Pan relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class PeterPanRelic : ModRelicTemplate
 {

@@ -8,6 +8,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Hlanith Wine Extra Turn power.</summary>
 [RegisterPower]
 public class HlanithWineExtraTurnPower : ModPowerTemplate
 {

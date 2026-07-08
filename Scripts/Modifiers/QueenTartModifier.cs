@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Saves.Runs;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Queen Tart modifier.</summary>
 public sealed class QueenTartModifier : ModifierModel
 {
     private bool _claimed;

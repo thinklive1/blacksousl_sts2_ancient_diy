@@ -14,11 +14,13 @@ using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Cat Collar relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class CatCollarRelic : ModRelicTemplate
 {
@@ -27,7 +29,11 @@ public class CatCollarRelic : ModRelicTemplate
     private const int MaxTriggersPerTurn = 1;
     private const int PlaysForIntangible = 2;
 
+    private int _triggersRemainingThisTurn;
+
     public override bool AddsPet => true;
+
+    public override bool SpawnsPets => true;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
@@ -46,6 +52,17 @@ public class CatCollarRelic : ModRelicTemplate
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         HoverTipFactory.FromCardWithCardHoverTips<CatSmileCard>()
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<CatBiteCard>());
+
+    [SavedProperty]
+    public int BlackSouls_TriggersRemainingThisTurn
+    {
+        get => _triggersRemainingThisTurn;
+        set
+        {
+            AssertMutable();
+            _triggersRemainingThisTurn = Math.Clamp(value, 0, MaxTriggersPerTurn);
+        }
+    }
 
     public override async Task AfterObtained()
     {
@@ -84,27 +101,26 @@ public class CatCollarRelic : ModRelicTemplate
     public override async Task BeforeCombatStart()
     {
         await EnsureSmileCountdown(PlaysForIntangible);
-        await SetTurnTriggerLimit(MaxTriggersPerTurn);
+        BlackSouls_TriggersRemainingThisTurn = MaxTriggersPerTurn;
         await SummonPet();
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (player == Owner)
+        if (IsOwnerPlayer(player))
         {
-            await SetTurnTriggerLimit(MaxTriggersPerTurn);
+            BlackSouls_TriggersRemainingThisTurn = MaxTriggersPerTurn;
         }
     }
 
     public async Task<bool> TryTriggerCatCardEffect(string animationTrigger)
     {
-        CatCollarTriggerLimitPower? triggerLimit = Owner.Creature.GetPower<CatCollarTriggerLimitPower>();
-        if (triggerLimit == null || triggerLimit.Amount <= 0)
+        if (BlackSouls_TriggersRemainingThisTurn <= 0)
         {
             return false;
         }
 
-        await PowerCmd.Decrement(triggerLimit);
+        BlackSouls_TriggersRemainingThisTurn--;
         Flash();
         BsAncientAudio.PlayOneShot(BsAncientAudio.Cat);
 
@@ -143,7 +159,7 @@ public class CatCollarRelic : ModRelicTemplate
 
     private async Task SummonPet()
     {
-        if (Owner == null)
+        if (Owner?.Creature.CombatState == null || Owner.PlayerCombatState == null)
         {
             return;
         }
@@ -204,20 +220,6 @@ public class CatCollarRelic : ModRelicTemplate
             null);
     }
 
-    private Task SetTurnTriggerLimit(int remainingTriggers)
-    {
-        if (Owner?.Creature == null || !CombatManager.Instance.IsInProgress)
-        {
-            return Task.CompletedTask;
-        }
-
-        return BsPowerCmd.SetAmount<CatCollarTriggerLimitPower>(
-            Owner.Creature,
-            remainingTriggers,
-            Owner.Creature,
-            null);
-    }
-
     private CheshireCatPetVisuals? GetCatVisuals()
     {
         if (Owner?.PlayerCombatState?.GetPet<CheshireCatPet>() is not { } petCreature)
@@ -226,5 +228,10 @@ public class CatCollarRelic : ModRelicTemplate
         }
 
         return NCombatRoom.Instance?.GetCreatureNode(petCreature)?.Visuals as CheshireCatPetVisuals;
+    }
+
+    private bool IsOwnerPlayer(Player player)
+    {
+        return player == Owner || player.NetId == Owner.NetId;
     }
 }

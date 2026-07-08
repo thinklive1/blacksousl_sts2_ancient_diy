@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Gerda card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class GerdaCard : ModCardTemplate
 {

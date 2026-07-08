@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Snow White Favor relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class SnowWhiteFavorRelic : ModRelicTemplate
 {
@@ -43,11 +44,20 @@ public class SnowWhiteFavorRelic : ModRelicTemplate
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner.Creature || dealer is null || dealer.Side == Owner.Creature.Side || !props.IsPoweredAttack())
+        if (!IsOwnerCreature(target)
+            || !props.IsPoweredAttack()
+            || dealer?.Side == target?.Side)
         {
             return 1m;
         }
 
         return EnemyAttackDamageMultiplier;
+    }
+
+    private bool IsOwnerCreature(Creature? target)
+    {
+        return target == Owner.Creature
+            || target?.Player == Owner
+            || target?.Player?.NetId == Owner.NetId;
     }
 }

@@ -13,6 +13,7 @@ using STS2RitsuLib.Utils;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Mabel ancient encounter.</summary>
 [RegisterActAncient(typeof(Hive))]
 [RegisterActAncient(typeof(Glory))]
 public class MabelAncient : ModAncientEventTemplate

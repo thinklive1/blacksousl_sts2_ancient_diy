@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Mermaid Princess relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class MermaidPrincessRelic : ModRelicTemplate
 {

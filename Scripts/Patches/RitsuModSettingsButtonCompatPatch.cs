@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Nodes.Screens.Settings;
 
 namespace BlackSouls.Scripts.Patches;
 
+/// <summary>Applies behavior patches for Ritsu Mod Settings Button Compat.</summary>
 [HarmonyPatch(typeof(NSettingsButton), "ConnectSignals")]
 internal static class RitsuModSettingsButtonCompatPatch
 {

@@ -12,10 +12,11 @@ using STS2RitsuLib.Utils;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Initializes BS Ancient settings, patches, scripts, and content registration.</summary>
 [ModInitializer(nameof(Init))]
 public class Entry
 {
-    // 你的modid
+    // Stable id used for registration, logging, and persisted settings.
     public const string ModId = "bs_ancient";
     public static readonly Logger Logger = RitsuLibFramework.CreateLogger(ModId);
     private static I18N? _settingsLocalization;
@@ -43,7 +44,7 @@ public class Entry
 
         new Harmony($"{ModId}.patches").PatchAll(assembly);
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
-        // 自动注册内容
+        // Register all auto-discovered mod content.
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
     }
 

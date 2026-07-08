@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Feeding enchantment.</summary>
 [RegisterEnchantment]
 public class FeedingEnchantment : ModEnchantmentTemplate
 {

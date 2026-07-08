@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Sinbad The Sailor relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class SinbadTheSailorRelic : ModRelicTemplate
 {

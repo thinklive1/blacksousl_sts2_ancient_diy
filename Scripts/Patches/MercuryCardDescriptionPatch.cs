@@ -7,6 +7,7 @@ using System.Reflection;
 
 namespace BlackSouls.Scripts.Patches;
 
+/// <summary>Applies behavior patches for Mercury Card Description.</summary>
 public static class MercuryCardDescriptionPatch
 {
     public static IEnumerable<MethodBase> TargetMethods()

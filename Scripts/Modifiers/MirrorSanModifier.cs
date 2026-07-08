@@ -18,6 +18,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Mirror San modifier.</summary>
 public sealed class MirrorSanModifier : ModModifierTemplate
 {
     public const int InitialSan = 50;
@@ -381,6 +382,7 @@ public sealed class MirrorSanModifier : ModModifierTemplate
     }
 }
 
+/// <summary>Tracks mirror sanity modifiers and their saved state.</summary>
 public static class MirrorSan
 {
     public static MirrorSanModifier Ensure(Player player)

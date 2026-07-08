@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Fox And Sour Grapes relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class FoxAndSourGrapesRelic : ModRelicTemplate
 {

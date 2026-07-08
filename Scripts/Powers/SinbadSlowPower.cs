@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Sinbad Slow power.</summary>
 [RegisterPower]
 public sealed class SinbadSlowPower : ModPowerTemplate
 {

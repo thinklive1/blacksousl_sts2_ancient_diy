@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Candy House Candy card.</summary>
 public abstract class CandyHouseCandyCard : ModCardTemplate
 {
     private bool _isAutoPlaying;
@@ -52,6 +53,7 @@ public abstract class CandyHouseCandyCard : ModCardTemplate
     }
 }
 
+/// <summary>Implements the Sweet Candy card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class SweetCandyCard : CandyHouseCandyCard
 {
@@ -67,6 +69,7 @@ public sealed class SweetCandyCard : CandyHouseCandyCard
     }
 }
 
+/// <summary>Implements the Bitter Candy card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class BitterCandyCard : CandyHouseCandyCard
 {
@@ -82,6 +85,7 @@ public sealed class BitterCandyCard : CandyHouseCandyCard
     }
 }
 
+/// <summary>Implements the Hallucinogenic Candy card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class HallucinogenicCandyCard : CandyHouseCandyCard
 {

@@ -12,10 +12,11 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Violence Demon power.</summary>
 [RegisterPower]
 public class ViolenceDemonPower : ModPowerTemplate
 {
-    private const int SelfDamagePercent = 50;
+    private const int SelfDamagePercent = 20;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -63,15 +64,14 @@ public class ViolenceDemonPower : ModPowerTemplate
         await CreatureCmd.Heal(Owner, heal);
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (side != Owner.Side || Owner.IsDead)
+        if (cardPlay.Card.Owner?.Creature != Owner || Owner.IsDead || cardPlay.Card.Type == CardType.Attack)
         {
             return;
         }
 
-        decimal selfDamage = Math.Ceiling(Owner.CurrentHp * DynamicVars["SelfDamagePercent"].BaseValue / 100m);
-        selfDamage = Math.Min(selfDamage, Math.Max(Owner.CurrentHp - 1, 0));
+        decimal selfDamage = Math.Ceiling(Owner.MaxHp * DynamicVars["SelfDamagePercent"].BaseValue / 100m);
         if (selfDamage > 0m)
         {
             Flash();

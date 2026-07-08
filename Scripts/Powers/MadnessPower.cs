@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Madness power.</summary>
 [RegisterPower]
 public class MadnessPower : ModPowerTemplate
 {

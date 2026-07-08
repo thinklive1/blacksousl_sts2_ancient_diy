@@ -19,6 +19,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Banai Reflection card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class BanaiReflectionCard : ModCardTemplate
 {
@@ -135,6 +136,7 @@ public sealed class BanaiReflectionCard : ModCardTemplate
     }
 }
 
+/// <summary>Implements the Orr Reflection card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class OrrReflectionCard : ModCardTemplate
 {
@@ -178,6 +180,7 @@ public sealed class OrrReflectionCard : ModCardTemplate
     }
 }
 
+/// <summary>Implements the Holmes Reflection card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class HolmesReflectionCard : ModCardTemplate
 {
@@ -231,6 +234,7 @@ public sealed class HolmesReflectionCard : ModCardTemplate
     }
 }
 
+/// <summary>Implements the Jack The Ripper Reflection card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class JackTheRipperReflectionCard : ModCardTemplate
 {
@@ -381,6 +385,7 @@ public sealed class JackTheRipperReflectionCard : ModCardTemplate
     }
 }
 
+/// <summary>Implements the Liddell Reflection card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class LiddellReflectionCard : ModCardTemplate
 {
@@ -446,6 +451,7 @@ public sealed class LiddellReflectionCard : ModCardTemplate
     }
 }
 
+/// <summary>Implements the Pervasive Malice card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class PervasiveMaliceCard : ModCardTemplate
 {

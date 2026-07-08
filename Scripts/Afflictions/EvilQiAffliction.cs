@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Evil Qi affliction.</summary>
 [RegisterAffliction]
 public sealed class EvilQiAffliction : ModAfflictionTemplate
 {

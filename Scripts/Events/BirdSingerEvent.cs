@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Bird Singer event.</summary>
 [RegisterActEvent(typeof(Hive))]
 public sealed class BirdSingerEvent : ModEventTemplate
 {

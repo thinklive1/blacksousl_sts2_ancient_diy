@@ -8,6 +8,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Hlanith Wine card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class HlanithWineCard : ModCardTemplate
 {

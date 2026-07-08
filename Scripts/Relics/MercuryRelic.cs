@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Mercury relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class MercuryRelic : ModRelicTemplate
 {

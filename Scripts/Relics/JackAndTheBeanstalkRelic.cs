@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Jack And The Beanstalk relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class JackAndTheBeanstalkRelic : ModRelicTemplate
 {

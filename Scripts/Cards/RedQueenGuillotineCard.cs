@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Red Queen Guillotine card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class RedQueenGuillotineCard : ModCardTemplate
 {

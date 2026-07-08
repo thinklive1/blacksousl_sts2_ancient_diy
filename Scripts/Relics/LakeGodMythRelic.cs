@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Lake God Myth relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class LakeGodMythRelic : ModRelicTemplate
 {
@@ -42,6 +43,11 @@ public sealed class LakeGodMythRelic : ModRelicTemplate
         IconOutlinePath: RelicIconPath,
         BigIconPath: RelicIconPath
     );
+
+    public override bool IsAllowed(IRunState runState)
+    {
+        return false;
+    }
 
     public override Task BeforeCombatStart()
     {

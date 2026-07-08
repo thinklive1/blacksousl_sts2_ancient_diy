@@ -1,5 +1,6 @@
 namespace BlackSouls.Scripts;
 
+/// <summary>Stores per-run BS Ancient option overrides.</summary>
 public static class BsAncientRunOptions
 {
     private static bool? _fairyTaleModeOverride;

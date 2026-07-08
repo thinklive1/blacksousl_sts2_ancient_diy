@@ -5,6 +5,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Fairy Tale Mode Character Select.</summary>
 public class FairyTaleModeCharacterSelectPatch : IPatchMethod
 {
     private const string ToggleName = "BsAncientFairyTaleModeToggle";

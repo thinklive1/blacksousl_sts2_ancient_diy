@@ -16,6 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Turnip relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class TurnipRelic : ModRelicTemplate
 {

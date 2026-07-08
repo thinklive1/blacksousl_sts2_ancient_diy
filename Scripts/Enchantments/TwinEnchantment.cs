@@ -8,6 +8,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Twin enchantment.</summary>
 [RegisterEnchantment]
 public class TwinEnchantment : ModEnchantmentTemplate
 {

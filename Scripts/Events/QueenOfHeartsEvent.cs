@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Queen Of Hearts event.</summary>
 [RegisterActEvent(typeof(Hive))]
 public sealed class QueenOfHeartsEvent : ModEventTemplate
 {

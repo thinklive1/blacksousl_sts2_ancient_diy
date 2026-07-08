@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Provides helper methods for Relic Hover Tip Helpers.</summary>
 internal static class RelicHoverTipHelpers
 {
     public static IHoverTip Details(ModRelicTemplate relic, string suffix = "details")

@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Edith Flutter power.</summary>
 [RegisterPower]
 public sealed class EdithFlutterPower : ModPowerTemplate
 {

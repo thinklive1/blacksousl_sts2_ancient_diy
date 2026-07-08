@@ -8,24 +8,28 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Evil Qi visual effect.</summary>
 internal static class EvilQiEffect
 {
     public static Task Apply(PlayerChoiceContext choiceContext, CardModel card)
     {
-        return PowerCmd.Apply<EvilQiPendingPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), card.Owner.Creature, 1m, card.Owner.Creature, card, false);
+        if (CombatManager.Instance.IsOverOrEnding)
+        {
+            return Task.CompletedTask;
+        }
+
+        return PowerCmd.Apply<EvilQiPendingPower>(choiceContext, card.Owner.Creature, 1m, card.Owner.Creature, card, false);
     }
 
-    public static async Task Resolve(Creature owner, int amount)
+    public static async Task Resolve(PlayerChoiceContext choiceContext, Creature owner, int amount)
     {
-        if (owner.IsDead || amount <= 0)
+        if (owner.IsDead || amount <= 0 || CombatManager.Instance.IsOverOrEnding)
         {
             return;
         }
 
-        PlayerChoiceContext effectContext = new ThrowingPlayerChoiceContext();
-
         await CreatureCmd.Damage(
-            effectContext,
+            choiceContext,
             owner,
             amount,
             ValueProp.Unblockable | ValueProp.Unpowered,
@@ -58,14 +62,14 @@ internal static class EvilQiEffect
             return;
         }
 
-        await DrainPower<StrengthPower>(effectContext, target, owner, amount);
-        await DrainPower<PlatingPower>(effectContext, target, owner, amount);
+        await DrainPower<StrengthPower>(choiceContext, target, owner, amount);
+        await DrainPower<PlatingPower>(choiceContext, target, owner, amount);
 
         if (target.IsAlive && target.CurrentHp > 0)
         {
             int hpDrain = Math.Min(amount, target.CurrentHp);
             await CreatureCmd.Damage(
-                effectContext,
+                choiceContext,
                 target,
                 hpDrain,
                 ValueProp.Unblockable | ValueProp.Unpowered,

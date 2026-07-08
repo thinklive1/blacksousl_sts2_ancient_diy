@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Lonely enchantment.</summary>
 [RegisterEnchantment]
 public class LonelyEnchantment : ModEnchantmentTemplate
 {

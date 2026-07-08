@@ -5,6 +5,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts.Patches;
 
+/// <summary>Applies behavior patches for Rapunzel Power Set Amount.</summary>
 public sealed class RapunzelPowerSetAmountPatch : IPatchMethod
 {
     public static string PatchId => "rapunzel_power_set_amount";
@@ -27,6 +28,7 @@ public sealed class RapunzelPowerSetAmountPatch : IPatchMethod
     }
 }
 
+/// <summary>Applies behavior patches for Rapunzel Power Remove.</summary>
 public sealed class RapunzelPowerRemovePatch : IPatchMethod
 {
     public static string PatchId => "rapunzel_power_remove";

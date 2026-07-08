@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Quill Pen relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class QuillPenRelic : ModRelicTemplate
 {

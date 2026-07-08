@@ -3,6 +3,7 @@ using System.Text.Json;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Stores and persists BS Ancient configuration values.</summary>
 public static class BsAncientConfig
 {
     private const string ConfigFileName = "bs_ancient_config.cfg";

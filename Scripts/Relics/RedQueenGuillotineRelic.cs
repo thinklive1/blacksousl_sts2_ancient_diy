@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Red Queen Guillotine relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class RedQueenGuillotineRelic : ModRelicTemplate
 {

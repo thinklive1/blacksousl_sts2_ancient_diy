@@ -1,5 +1,5 @@
 {
 	"BS_ANCIENT_AFFLICTION_EVIL_QI_AFFLICTION.title": "Evil Qi",
-	"BS_ANCIENT_AFFLICTION_EVIL_QI_AFFLICTION.description": "Evil Qi: When this card is played, gain [blue]1[/blue] [gold]Evil Qi[/gold]. At end of turn, lose HP equal to your Evil Qi and drain that much Strength, Plating, and HP from a random enemy.",
-	"BS_ANCIENT_AFFLICTION_EVIL_QI_AFFLICTION.extraCardText": "Gain [blue]1[/blue] [gold]Evil Qi[/gold] when played; resolves at end of turn."
+	"BS_ANCIENT_AFFLICTION_EVIL_QI_AFFLICTION.description": "Evil Qi: When this card is played, gain [blue]1[/blue] [gold]Evil Qi[/gold]. At the end of your turn, lose HP equal to your Evil Qi and drain that much Strength, Plating, and HP from a random enemy.",
+	"BS_ANCIENT_AFFLICTION_EVIL_QI_AFFLICTION.extraCardText": "When played, gain [blue]1[/blue] [gold]Evil Qi[/gold]. Resolves at the end of your turn."
 }

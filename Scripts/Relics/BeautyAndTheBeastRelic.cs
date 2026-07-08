@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Beauty And The Beast relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class BeautyAndTheBeastRelic : ModRelicTemplate
 {

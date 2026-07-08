@@ -5,6 +5,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Worm Smoke Rest Site Icon.</summary>
 public class WormSmokeRestSiteIconPatch : IPatchMethod
 {
     public static string PatchId => "worm_smoke_rest_site_icon";

@@ -12,6 +12,7 @@ using BlackSouls.Scripts;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Stage End card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class StageEndCard : ModCardTemplate
 {

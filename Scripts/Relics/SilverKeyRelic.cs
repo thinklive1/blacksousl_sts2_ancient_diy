@@ -15,6 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Silver Key relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class SilverKeyRelic : ModRelicTemplate
 {

@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Cat Smile Countdown power.</summary>
 [RegisterPower]
 public class CatSmileCountdownPower : ModPowerTemplate
 {

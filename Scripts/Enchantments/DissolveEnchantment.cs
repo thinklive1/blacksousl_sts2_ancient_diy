@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Dissolve enchantment.</summary>
 [RegisterEnchantment]
 public class DissolveEnchantment : ModEnchantmentTemplate
 {

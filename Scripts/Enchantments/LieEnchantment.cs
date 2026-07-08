@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Lie enchantment.</summary>
 [RegisterEnchantment]
 public sealed class LieEnchantment : ModEnchantmentTemplate
 {

@@ -6,6 +6,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts.Patches;
 
+/// <summary>Applies behavior patches for Unlock Enchantment Can Play.</summary>
 public class UnlockEnchantmentCanPlayPatch : IPatchMethod
 {
     public static string PatchId => "unlock_enchantment_can_play";

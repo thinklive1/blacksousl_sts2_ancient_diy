@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Wax Statue event.</summary>
 [RegisterActEvent(typeof(Overgrowth))]
 [RegisterActEvent(typeof(Underdocks))]
 [RegisterActEvent(typeof(Hive))]

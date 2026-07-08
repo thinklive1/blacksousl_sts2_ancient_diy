@@ -7,6 +7,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Cheshire Cat companion combat model.</summary>
 [RegisterMonster]
 public class CheshireCatPet : MonsterModel
 {

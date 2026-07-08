@@ -8,6 +8,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Unicorn Hook Before Damage Received.</summary>
 public class UnicornHookBeforeDamageReceivedPatch : IPatchMethod
 {
     public static string PatchId => "unicorn_hook_before_damage_received";
@@ -21,6 +22,7 @@ public class UnicornHookBeforeDamageReceivedPatch : IPatchMethod
         UnicornCounterattackReceiveEffectPatch.HookBeforeDamageReceivedPrefix(ref __result);
 }
 
+/// <summary>Applies behavior patches for Unicorn Hook After Damage Received.</summary>
 public class UnicornHookAfterDamageReceivedPatch : IPatchMethod
 {
     public static string PatchId => "unicorn_hook_after_damage_received";
@@ -34,6 +36,7 @@ public class UnicornHookAfterDamageReceivedPatch : IPatchMethod
         UnicornCounterattackReceiveEffectPatch.HookAfterDamageReceivedPrefix(ref __result);
 }
 
+/// <summary>Applies behavior patches for Unicorn Thorns Before Damage Received.</summary>
 public class UnicornThornsBeforeDamageReceivedPatch : IPatchMethod
 {
     public static string PatchId => "unicorn_thorns_before_damage_received";
@@ -47,6 +50,7 @@ public class UnicornThornsBeforeDamageReceivedPatch : IPatchMethod
         UnicornCounterattackReceiveEffectPatch.ThornsBeforeDamageReceivedPrefix();
 }
 
+/// <summary>Applies behavior patches for Unicorn Personal Hive After Damage Received.</summary>
 public class UnicornPersonalHiveAfterDamageReceivedPatch : IPatchMethod
 {
     public static string PatchId => "unicorn_personal_hive_after_damage_received";
@@ -60,6 +64,7 @@ public class UnicornPersonalHiveAfterDamageReceivedPatch : IPatchMethod
         UnicornCounterattackReceiveEffectPatch.PersonalHiveAfterDamageReceivedPrefix();
 }
 
+/// <summary>Applies behavior patches for Mirror San Fairy Reset.</summary>
 public class MirrorSanFairyResetPatch : IPatchMethod
 {
     public static string PatchId => "mirror_san_fairy_reset";
@@ -75,6 +80,7 @@ public class MirrorSanFairyResetPatch : IPatchMethod
     }
 }
 
+/// <summary>Applies behavior patches for Mirror San Lizard Tail Reset.</summary>
 public class MirrorSanLizardTailResetPatch : IPatchMethod
 {
     public static string PatchId => "mirror_san_lizard_tail_reset";

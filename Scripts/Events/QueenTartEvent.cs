@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Queen Tart event.</summary>
 [RegisterActEvent(typeof(Overgrowth))]
 [RegisterActEvent(typeof(Underdocks))]
 public sealed class QueenTartEvent : ModEventTemplate

@@ -6,6 +6,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Alice Handkerchief relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class AliceHandkerchiefRelic : ModRelicTemplate
 {

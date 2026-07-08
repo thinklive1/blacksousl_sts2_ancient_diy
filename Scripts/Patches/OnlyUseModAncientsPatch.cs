@@ -9,6 +9,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Only Use Mod Ancients.</summary>
 public class OnlyUseModAncientsPatch : IPatchMethod
 {
     public static string PatchId => "mod_ancient_room_generation_rules";

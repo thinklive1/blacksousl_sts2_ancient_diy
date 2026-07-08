@@ -11,6 +11,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Neow Rethink Poker.</summary>
 public class NeowRethinkPokerPatch : IPatchMethod
 {
     public static string PatchId => "neow_grand_guignol_initial_relic_option";
@@ -47,7 +48,8 @@ public class NeowRethinkPokerPatch : IPatchMethod
                 ModelDb.Relic<WormSmokeRelic>().ToMutable(),
                 ModelDb.Relic<MargaretRelic>().ToMutable(),
                 ModelDb.Relic<AngelFeatherRelic>().ToMutable(),
-                ModelDb.Relic<MabelSoldierRelic>().ToMutable()
+                ModelDb.Relic<MabelSoldierRelic>().ToMutable(),
+                ModelDb.Relic<GuignolsDollRelic>().ToMutable()
             ];
             candidates.RemoveAll(relic => !relic.IsAllowed(__instance.Owner.RunState));
             if (candidates.Count == 0)
@@ -91,11 +93,28 @@ public class NeowRethinkPokerPatch : IPatchMethod
                 return;
             }
 
-            RelicCmd.Obtain<UnnamedFairyTaleBookRelic>(neow.Owner).GetAwaiter().GetResult();
+            _ = ObtainFairyTaleBook(neow);
         }
         finally
         {
             BsAncientRunOptions.ResetFairyTaleModeOverride();
+        }
+    }
+
+    private static async Task ObtainFairyTaleBook(Neow neow)
+    {
+        try
+        {
+            if (neow.Owner == null || neow.Owner.GetRelic<UnnamedFairyTaleBookRelic>() != null)
+            {
+                return;
+            }
+
+            await RelicCmd.Obtain<UnnamedFairyTaleBookRelic>(neow.Owner);
+        }
+        catch (Exception exception)
+        {
+            Console.Error.WriteLine(exception);
         }
     }
 

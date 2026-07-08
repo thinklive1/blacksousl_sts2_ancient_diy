@@ -18,6 +18,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Worm Smoke relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class WormSmokeRelic : ModRelicTemplate
 {
@@ -102,6 +103,7 @@ public class WormSmokeRelic : ModRelicTemplate
     }
 }
 
+/// <summary>Implements the Worm Smoke rest site option.</summary>
 public class WormSmokeRestSiteOption : RestSiteOption
 {
     public const string SmokeIconPath = "res://bs_ancient/assets/images/events/Smoke.png";

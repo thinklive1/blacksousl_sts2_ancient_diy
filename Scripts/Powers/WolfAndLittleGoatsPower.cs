@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Wolf And Little Goats power.</summary>
 [RegisterPower]
 public sealed class WolfAndLittleGoatsPower : ModPowerTemplate
 {

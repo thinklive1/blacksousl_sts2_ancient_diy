@@ -7,11 +7,13 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Bankers Page relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class BankersPageRelic : ModRelicTemplate
 {
@@ -28,6 +30,21 @@ public sealed class BankersPageRelic : ModRelicTemplate
         IconOutlinePath: RelicIconPath,
         BigIconPath: RelicIconPath
     );
+
+    public override bool IsAllowed(IRunState runState)
+    {
+        return !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BankersPageRelic>(runState);
+    }
+
+    public override Task AfterObtained()
+    {
+        if (Owner != null)
+        {
+            SnarkPageRelicTrackerModifier.MarkAppeared<BankersPageRelic>(Owner);
+        }
+
+        return Task.CompletedTask;
+    }
 
     public override bool TryModifyRewardsLate(Player player, List<Reward> rewards, AbstractRoom? room)
     {

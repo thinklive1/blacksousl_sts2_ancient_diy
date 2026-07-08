@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Provides helpers for applying and removing powers.</summary>
 public static class BsPowerCmd
 {
     public static async Task<T> SetAmount<T>(

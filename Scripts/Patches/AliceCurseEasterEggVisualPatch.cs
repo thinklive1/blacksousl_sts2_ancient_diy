@@ -15,6 +15,7 @@ using MegaCrit.Sts2.Core.Nodes.Cards;
 
 namespace BlackSouls.Scripts.Patches;
 
+/// <summary>Applies behavior patches for Alice Curse Easter Egg Visual.</summary>
 [HarmonyPatch]
 public static class AliceCurseEasterEggVisualPatch
 {

@@ -6,6 +6,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Registers BS Ancient patch groups.</summary>
 public sealed class BsAncientPatchSet : IModPatches
 {
     public static void AddTo(ModPatcher patcher)
@@ -28,6 +29,7 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<MirrorSanLizardTailResetPatch>();
         patcher.RegisterPatch<RapunzelPowerSetAmountPatch>();
         patcher.RegisterPatch<RapunzelPowerRemovePatch>();
+        patcher.RegisterPatch<HelmsmansPageRelicPatch>();
         RegisterMercuryCardDescriptionPatch(patcher);
     }
 

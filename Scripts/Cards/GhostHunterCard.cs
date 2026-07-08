@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Ghost Hunter card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class GhostHunterCard : ModCardTemplate
 {

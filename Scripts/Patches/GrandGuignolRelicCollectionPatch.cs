@@ -7,6 +7,7 @@ using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Applies behavior patches for Grand Guignol Relic Collection.</summary>
 public class GrandGuignolRelicCollectionPatch : IPatchMethod
 {
     public static string PatchId => "grand_guignol_relic_collection";

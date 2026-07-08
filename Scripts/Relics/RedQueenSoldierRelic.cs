@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Red Queen Soldier relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class RedQueenSoldierRelic : ModRelicTemplate
 {

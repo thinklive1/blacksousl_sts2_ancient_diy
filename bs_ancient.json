@@ -3,7 +3,7 @@
   "name": "blacksouls先古之民",
   "author": "thinklive, Flinsk",
   "description": "blacksouls 先古之民模组，包含了全新的遗物与卡牌。",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "min_game_version": "0.107.1",
   "has_pck": true,
   "has_dll": true,

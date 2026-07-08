@@ -12,19 +12,17 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Undead power.</summary>
 [RegisterPower]
 public class UndeadPower : ModPowerTemplate
 {
     private const int HealPerStack = 10;
 
-    // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;
-    // 叠加类型，Counter表示可叠加，Single表示不可叠加
     public override PowerStackType StackType => PowerStackType.Counter;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new HealVar(HealPerStack)];
 
-    // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://bs_ancient/assets/images/powers/Undead.png",
         BigIconPath: "res://bs_ancient/assets/images/powers/Undead.png"

@@ -5,6 +5,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Brutalizing Angel power.</summary>
 [RegisterPower]
 public sealed class BrutalizingAngelPower : ModPowerTemplate
 {

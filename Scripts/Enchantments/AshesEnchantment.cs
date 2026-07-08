@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Ashes enchantment.</summary>
 [RegisterEnchantment]
 public class AshesEnchantment : ModEnchantmentTemplate
 {

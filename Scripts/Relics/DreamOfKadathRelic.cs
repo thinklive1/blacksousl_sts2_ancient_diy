@@ -19,6 +19,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Dream Of Kadath relic.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public class DreamOfKadathRelic : ModRelicTemplate
 {

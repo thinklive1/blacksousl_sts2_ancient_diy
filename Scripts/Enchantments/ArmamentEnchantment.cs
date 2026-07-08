@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -10,13 +11,17 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Armament enchantment.</summary>
 [RegisterEnchantment]
 public sealed class ArmamentEnchantment : ModEnchantmentTemplate
 {
     private const decimal SelfDamageRate = 0.2m;
+    private const int AutoPlayCapPerTurn = 9;
     private const string ArmamentIconPath = "res://bs_ancient/assets/images/enchantment/ArmamentEnchantment.png";
 
     private bool _isAutoPlaying;
+    private bool _autoPlayedThisTurn;
+    private int _autoPlaysThisTurn;
 
     public override bool HasExtraCardText => true;
 
@@ -32,7 +37,12 @@ public sealed class ArmamentEnchantment : ModEnchantmentTemplate
 
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        if (card != Card || _isAutoPlaying || CombatManager.Instance.IsOverOrEnding)
+        if (card != Card
+            || card.Pile?.Type != PileType.Hand
+            || _isAutoPlaying
+            || _autoPlayedThisTurn
+            || _autoPlaysThisTurn >= AutoPlayCapPerTurn
+            || CombatManager.Instance.IsOverOrEnding)
         {
             return;
         }
@@ -44,6 +54,8 @@ public sealed class ArmamentEnchantment : ModEnchantmentTemplate
         }
 
         _isAutoPlaying = true;
+        _autoPlayedThisTurn = true;
+        _autoPlaysThisTurn++;
         try
         {
             await CardCmd.AutoPlay(choiceContext, card, target);
@@ -74,6 +86,17 @@ public sealed class ArmamentEnchantment : ModEnchantmentTemplate
             ValueProp.Unblockable | ValueProp.Unpowered,
             owner,
             Card);
+    }
+
+    public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    {
+        if (player == Card.Owner)
+        {
+            _autoPlaysThisTurn = 0;
+            _autoPlayedThisTurn = false;
+        }
+
+        return Task.CompletedTask;
     }
 
     private Creature? GetAutoPlayTarget(CardModel card)

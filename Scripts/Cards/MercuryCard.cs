@@ -14,6 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Mercury card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class MercuryCard : ModCardTemplate
 {

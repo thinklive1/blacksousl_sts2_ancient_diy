@@ -32,7 +32,7 @@
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.title": "Horrifying Glutton",
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.description": "In the bug-infested Spire, you see a strange half-beast creature crouched on the ground, eating a bug corpse.\n\"Not enough! Not enough!\" She notices you and complains, \"Go find something tasty for this great one.\"",
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT.title": "Help her hunt.",
-  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT.description": "Choose an Attack card to enchant with Feeding.",
+  "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT.description": "Choose an Attack card. [gold]Enchant[/gold] it with Feeding.",
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT_LOCKED.title": "Help her hunt. Requires an enchantable Attack card.",
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.HUNT_LOCKED.description": "No enchantable Attack card.",
   "BS_ANCIENT_EVENT_HORRIFYING_GLUTTON_EVENT.pages.INITIAL.options.BUY_FOOD.title": "Buy her food.",

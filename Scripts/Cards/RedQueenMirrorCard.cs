@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts.Cards;
 
+/// <summary>Implements the Red Queen Mirror card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class RedQueenMirrorCard : ModCardTemplate
 {
@@ -107,6 +108,7 @@ public class RedQueenMirrorCard : ModCardTemplate
     }
 }
 
+/// <summary>Implements the Red Queen Mirror Draw To Discard Option card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class RedQueenMirrorDrawToDiscardOptionCard : ModCardTemplate
 {
@@ -125,6 +127,7 @@ public class RedQueenMirrorDrawToDiscardOptionCard : ModCardTemplate
     }
 }
 
+/// <summary>Implements the Red Queen Mirror Discard To Draw Option card.</summary>
 [RegisterCard(typeof(EventCardPool))]
 public class RedQueenMirrorDiscardToDrawOptionCard : ModCardTemplate
 {

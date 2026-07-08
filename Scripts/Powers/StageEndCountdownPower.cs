@@ -12,6 +12,7 @@ using BlackSouls.Scripts.Cards;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Stage End Countdown power.</summary>
 [RegisterPower]
 public class StageEndCountdownPower : ModPowerTemplate
 {

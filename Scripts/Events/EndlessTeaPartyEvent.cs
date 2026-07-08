@@ -13,6 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
+/// <summary>Implements the Endless Tea Party event.</summary>
 [RegisterActEvent(typeof(Overgrowth))]
 [RegisterActEvent(typeof(Underdocks))]
 [RegisterActEvent(typeof(Hive))]
