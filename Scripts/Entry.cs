@@ -135,10 +135,26 @@ public class Entry
                         "EnableFairyTaleMode",
                         () => BsAncientConfig.EnableFairyTaleMode,
                         value => BsAncientConfig.EnableFairyTaleMode = value),
-                    S("enableFairyTaleMode.description", "开启后，每赢得 4 场战斗（包含 Boss 战），获得一本随机童话。更改后需要重启游戏并新开一局。")))
+                    S("enableFairyTaleMode.description", "开启后，每赢得 4 场战斗（包含 Boss 战），获得一本随机童话。更改后需要重启游戏并新开一局。"))
+                .AddToggle(
+                    "enable_positive_fairy_tale_relics",
+                    S("enablePositiveFairyTaleRelics.title", "允许正面童话"),
+                    BoolBinding(
+                        "EnablePositiveFairyTaleRelics",
+                        () => BsAncientConfig.EnablePositiveFairyTaleRelics,
+                        value => BsAncientConfig.EnablePositiveFairyTaleRelics = value),
+                    S("enablePositiveFairyTaleRelics.description", "关闭后，童话模式不会随机获得正面童话遗物。更改后需要重启游戏并新开一局。"))
+                .AddToggle(
+                    "enable_negative_fairy_tale_relics",
+                    S("enableNegativeFairyTaleRelics.title", "允许负面童话"),
+                    BoolBinding(
+                        "EnableNegativeFairyTaleRelics",
+                        () => BsAncientConfig.EnableNegativeFairyTaleRelics,
+                        value => BsAncientConfig.EnableNegativeFairyTaleRelics = value),
+                    S("enableNegativeFairyTaleRelics.description", "关闭后，童话模式不会随机获得负面、破坏性童话、神话和骇闻遗物。此开关优先于其他单个遗物开关。更改后需要重启游戏并新开一局。")))
             .AddSection("fairyTaleAllowList", section => section
-                .WithTitle(S("sections.fairyTaleAllowList.title", "强负面童话出现开关"))
-                .WithDescription(S("sections.fairyTaleAllowList.description", "以下童话默认不出现，需单独开启。更改后需要重启游戏并新开一局。"))
+                .WithTitle(S("sections.fairyTaleAllowList.title", "强负面童话/神话/骇闻出现开关"))
+                .WithDescription(S("sections.fairyTaleAllowList.description", "以下童话、神话、骇闻默认不出现，需单独开启。更改后需要重启游戏并新开一局。"))
                 .AddToggle("allow_alice_through_looking_glass",
                     S("allowAliceThroughLookingGlass.title", "童话-爱丽丝镜中棋缘"),
                     BoolBinding("AllowAliceThroughLookingGlass", () => BsAncientConfig.AllowAliceThroughLookingGlass, v => BsAncientConfig.AllowAliceThroughLookingGlass = v),
@@ -186,7 +202,27 @@ public class Entry
                 .AddToggle("allow_dark_goat_of_the_woods_myth",
                     S("allowDarkGoatOfTheWoodsMyth.title", "神话-森之黑山羊"),
                     BoolBinding("AllowDarkGoatOfTheWoodsMyth", () => BsAncientConfig.AllowDarkGoatOfTheWoodsMyth, v => BsAncientConfig.AllowDarkGoatOfTheWoodsMyth = v),
-                    S("allowDarkGoatOfTheWoodsMyth.description", "附魔牌组"))));
+                    S("allowDarkGoatOfTheWoodsMyth.description", "附魔牌组"))
+                .AddToggle("allow_great_stag_goddess_myth",
+                    S("allowGreatStagGoddessMyth.title", "神话-大鹿的女神"),
+                    BoolBinding("AllowGreatStagGoddessMyth", () => BsAncientConfig.AllowGreatStagGoddessMyth, v => BsAncientConfig.AllowGreatStagGoddessMyth = v),
+                    S("allowGreatStagGoddessMyth.description", "消耗堆循环"))
+                .AddToggle("allow_black_thing_myth",
+                    S("allowBlackThingMyth.title", "神话-黑物"),
+                    BoolBinding("AllowBlackThingMyth", () => BsAncientConfig.AllowBlackThingMyth, v => BsAncientConfig.AllowBlackThingMyth = v),
+                    S("allowBlackThingMyth.description", "地图节点隐藏"))
+                .AddToggle("allow_shadow_demoness_myth",
+                    S("allowShadowDemonessMyth.title", "神话-影之女恶魔"),
+                    BoolBinding("AllowShadowDemonessMyth", () => BsAncientConfig.AllowShadowDemonessMyth, v => BsAncientConfig.AllowShadowDemonessMyth = v),
+                    S("allowShadowDemonessMyth.description", "无法获得额外能量"))
+                .AddToggle("allow_harald_shipman_news",
+                    S("allowHaraldShipmanNews.title", "骇闻-暗医者"),
+                    BoolBinding("AllowHaraldShipmanNews", () => BsAncientConfig.AllowHaraldShipmanNews, v => BsAncientConfig.AllowHaraldShipmanNews = v),
+                    S("allowHaraldShipmanNews.description", "损失最大生命"))
+                .AddToggle("allow_jack_ketch_news",
+                    S("allowJackKetchNews.title", "骇闻-处刑人"),
+                    BoolBinding("AllowJackKetchNews", () => BsAncientConfig.AllowJackKetchNews, v => BsAncientConfig.AllowJackKetchNews = v),
+                    S("allowJackKetchNews.description", "第十回合重击"))));
         }
 
     private static ModSettingsText S(string key, string fallback)

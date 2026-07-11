@@ -182,10 +182,7 @@ public sealed class GuignolsDollRelic : ModRelicTemplate
         Creature target,
         CardModel? cardSource)
     {
-        if (!IsOwnerAttack(dealer)
-            || !IsEnemy(target)
-            || cardSource?.Type != CardType.Attack
-            || !props.IsPoweredAttack())
+        if (!IsEnemy(target) || !IsOwnerApplauseDamage(dealer, props, cardSource))
         {
             return;
         }
@@ -202,7 +199,7 @@ public sealed class GuignolsDollRelic : ModRelicTemplate
             await CountCurrentCardHit(cardSource);
         }
 
-        if (result.UnblockedDamage > 0)
+        if (result.TotalDamage > 0)
         {
             _dealtDamageThisTurn = true;
         }
@@ -285,9 +282,35 @@ public sealed class GuignolsDollRelic : ModRelicTemplate
         return ReactionScore() <= -RequiredReactions;
     }
 
-    private bool IsOwnerAttack(Creature? dealer)
+    private bool IsOwnerApplauseDamage(Creature? dealer, ValueProp props, CardModel? cardSource)
     {
-        return dealer == Owner.Creature || dealer?.PetOwner == Owner;
+        if (cardSource != null)
+        {
+            return cardSource.Type == CardType.Attack
+                && props.IsPoweredAttack()
+                && IsOwnerDamageDealer(dealer);
+        }
+
+        if (dealer == Owner.Osty)
+        {
+            return props.IsPoweredAttack();
+        }
+
+        return IsOwnerOrbDamage(dealer, props);
+    }
+
+    private bool IsOwnerDamageDealer(Creature? dealer)
+    {
+        return dealer == Owner.Creature
+            || dealer == Owner.Osty
+            || dealer?.PetOwner == Owner;
+    }
+
+    private bool IsOwnerOrbDamage(Creature? dealer, ValueProp props)
+    {
+        return dealer == Owner.Creature
+            && props.HasFlag(ValueProp.Unpowered)
+            && !props.HasFlag(ValueProp.Move);
     }
 
     private bool IsEnemy(Creature target)

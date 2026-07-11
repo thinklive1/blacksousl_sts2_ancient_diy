@@ -25,6 +25,8 @@
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.description": "In the bug-infested Spire, you see a strange half-bird creature talking to herself: \"I wonder if my song works on them.\" Your instincts tell you the entire act will be affected by her song. Affected monster nodes have their monsters' HP halved. You decide...",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.WAIT.title": "Wait and see.",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.WAIT.description": "Lose 10 HP and mark nodes affected by the song.",
+  "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.WAIT_LOCKED.title": "Wait and see. Requires more than 10 HP.",
+  "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.WAIT_LOCKED.description": "Not enough HP.",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.FLEE.title": "Turn and run.",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.FLEE.description": "Affected nodes will not be marked.",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.WAIT.description": "Her song strikes your mind like a heavy blow. When you recover, the mysterious creature is gone.",

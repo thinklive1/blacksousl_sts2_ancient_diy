@@ -31,6 +31,8 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
   "EnableModEvents": true,
   "DisableTestingEvents": true,
   "EnableFairyTaleMode": false,
+  "EnablePositiveFairyTaleRelics": true,
+  "EnableNegativeFairyTaleRelics": true,
   "GrandGuignolInitialRelicChance": 30
 }
 ```
@@ -41,6 +43,8 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
 - `EnableModEvents`: enables this mod's random events. If `false`, this mod's new random events will not enter the event pool. Requires restarting the game and starting a new run.
 - `DisableTestingEvents`: disables testing events. If `true`, SAN/hand-mirror related testing events such as Clown and Girl in the Maze will not appear naturally. Requires restarting the game and starting a new run.
 - `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After winning 4 normal or elite combats, it grants a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run. Strongly not recommended in multiplayer. In single-player, the character select screen also shows a per-run Fairy Tale Mode toggle, which takes priority over this default setting.
+- `EnablePositiveFairyTaleRelics`: allows Fairy Tale Mode to randomly grant positive Fairy Tale relics. If `false`, positive Fairy Tales are excluded from the random pool. This takes priority over other individual Fairy Tale relic toggles. Requires restarting the game and starting a new run.
+- `EnableNegativeFairyTaleRelics`: allows Fairy Tale Mode to randomly grant negative, destructive Fairy Tale, Myth, and News relics. If `false`, these relics are excluded from the random pool even when their individual strongly negative toggles are enabled. This takes priority over other individual relic toggles. Requires restarting the game and starting a new run.
 - `GrandGuignolInitialRelicChance`: chance, from 0 to 100, for a Grand Guignol starting relic to replace a positive starting option. Default is 30. Requires restarting the game and starting a new run.
 
 ## Grand Guignol?
@@ -125,7 +129,7 @@ Relics:
 
 ## Fairy Tale Relics
 
-Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining combat victories before the next Fairy Tale; after winning 4 normal or elite combats, it grants a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run. In single-player, the character select screen can enable or disable Fairy Tale Mode for the current run, and that toggle takes priority over the config default. Fairy Tale Mode is strongly not recommended in multiplayer.
+Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining combat victories before the next relic; after winning 4 normal or elite combats, it grants a random Fairy Tale, Myth, or News relic. The same relic cannot be gained twice in one run. In single-player, the character select screen can enable or disable Fairy Tale Mode for the current run, and that toggle takes priority over the config default. `EnablePositiveFairyTaleRelics` and `EnableNegativeFairyTaleRelics` control whether positive and negative relics enter the random pool, and they take priority over individual strongly negative relic toggles. Fairy Tale Mode is strongly not recommended in multiplayer.
 
 - Unnamed Fairy Tale Book: obtained at the start of a run when Fairy Tale Mode is enabled. Shows how many combat victories remain before the next random Fairy Tale. After winning 4 normal or elite combats, gain a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run.
 - Fairy Tale - Pinocchio: on pickup, choose 1 card with damage or block values and enchant it with Lie. After a Lie card is played, swap its damage and block values. Damage-only cards switch to gaining that much Block and dealing no damage; block-only cards switch to dealing that much damage and gaining no Block.
@@ -149,7 +153,7 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Fairy Tale - Town Musicians of Bremen: at the start of the first turn, Stun all enemies and shuffle 5 Dazed into your draw pile or discard pile at random.
 - Fairy Tale - Iron Hans: on pickup, choose 1 card and enchant it with Armament. Armament cards automatically play when drawn. Each time one is played, it deals damage to you equal to 20% of that card's damage value.
 - Fairy Tale - A Dog of Flanders: at the start of combat, gain 1 Hunt. While you have Weak, damage you take is doubled.
-- Fairy Tale - The Little Prince: at the start of turn 5, all creatures take 30 damage.
+- Fairy Tale - The Little Prince: at the end of turn 5, all creatures take 30 damage.
 - Fairy Tale - The Knight in Armor: at the start of combat, gain 6 Plating.
 - Fairy Tale - The King with Donkey Ears: deal 50% more damage to bosses.
 - Fairy Tale - Peter Pan: on pickup, choose any number of the 5 most recently obtained cards and remove them.
@@ -174,6 +178,14 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Sleep God: choose 1 card and enchant it with Sleep. A Sleeping card cannot be played; when drawn, it loses 1 Sleep stack. After waking, it can be played additional times equal to its original cost this combat.
 - Lake God: at the start of turn 3, lose 2 Dexterity and gain 1 Corruption.
 - Dark Goat of the Woods: choose 2 cards and enchant them with Breeding. Each turn, exhaust 2 Breeding cards and create 4 Chaos Fusion children; children also gain Breeding.
+- Goddess of the Great Stag: cards that have entered the Exhaust pile cost 1 more. At the start of your turn, choose 1 card from the Exhaust pile and put it into your draw pile.
+- The Black Thing: all non-boss map nodes appear as Unknown nodes, but their contents remain unchanged.
+- Shadow Demoness: after combat begins, gain 1 Intangible every 4 turns. You cannot gain extra Energy.
+
+## News Relics
+
+- News - The Dark Doctor: when you use a potion, heal 5 HP. At the end of each combat where you did not use a potion, lose 1 Max HP.
+- News - The Executioner: at the start of turn 10, all monsters intend to perform a heavy strike for 54 damage.
 
 ## Random Events
 

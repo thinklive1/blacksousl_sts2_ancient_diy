@@ -50,9 +50,24 @@ public static class FairyTaleRelicCatalog
         yield return ModelDb.Relic<SleepGodMythRelic>();
         yield return ModelDb.Relic<LakeGodMythRelic>();
         yield return ModelDb.Relic<DarkGoatOfTheWoodsMythRelic>();
+        yield return ModelDb.Relic<GreatStagGoddessMythRelic>();
+        yield return ModelDb.Relic<BlackThingMythRelic>();
+        yield return ModelDb.Relic<ShadowDemonessMythRelic>();
+        yield return ModelDb.Relic<HaraldShipmanNewsRelic>();
+        yield return ModelDb.Relic<JackKetchNewsRelic>();
     }
 
     public static bool IsEnabledByConfig(RelicModel relic)
+    {
+        if (IsNegative(relic))
+        {
+            return BsAncientConfig.EnableNegativeFairyTaleRelics && IsEnabledByIndividualConfig(relic);
+        }
+
+        return BsAncientConfig.EnablePositiveFairyTaleRelics;
+    }
+
+    private static bool IsEnabledByIndividualConfig(RelicModel relic)
     {
         if (relic is AliceThroughLookingGlassRelic)
             return BsAncientConfig.AllowAliceThroughLookingGlass;
@@ -78,7 +93,53 @@ public static class FairyTaleRelicCatalog
             return BsAncientConfig.AllowLakeGodMyth;
         if (relic is DarkGoatOfTheWoodsMythRelic)
             return BsAncientConfig.AllowDarkGoatOfTheWoodsMyth;
+        if (relic is GreatStagGoddessMythRelic)
+            return BsAncientConfig.AllowGreatStagGoddessMyth;
+        if (relic is BlackThingMythRelic)
+            return BsAncientConfig.AllowBlackThingMyth;
+        if (relic is ShadowDemonessMythRelic)
+            return BsAncientConfig.AllowShadowDemonessMyth;
+        if (relic is HaraldShipmanNewsRelic)
+            return BsAncientConfig.AllowHaraldShipmanNews;
+        if (relic is JackKetchNewsRelic)
+            return BsAncientConfig.AllowJackKetchNews;
 
         return true;
+    }
+
+    private static bool IsNegative(RelicModel relic)
+    {
+        return relic is AliceThroughLookingGlassRelic
+            or ThreeLittlePigsRelic
+            or EmperorsNewClothesRelic
+            or FrogPrincessRelic
+            or FoxAndSourGrapesRelic
+            or PiedPiperOfHamelinRelic
+            or JackAndTheBeanstalkRelic
+            or BeautyAndTheBeastRelic
+            or UglyDucklingRelic
+            or HighJumperRelic
+            or RapunzelFairyTaleRelic
+            or MyFormerRascalRelic
+            or SinbadTheSailorRelic
+            or IronHansRelic
+            or FlandersDogRelic
+            or LittlePrinceRelic
+            or PeterPanRelic
+            or MonkeyCrabBattleRelic
+            or GreedyDogRelic
+            or TheBoyWhoCriedWolfRelic
+            or CandyHouseRelic
+            or MermaidPrincessRelic
+            or NorthWindAndSunRelic
+            or CinderellaRelic
+            or SleepGodMythRelic
+            or LakeGodMythRelic
+            or DarkGoatOfTheWoodsMythRelic
+            or GreatStagGoddessMythRelic
+            or BlackThingMythRelic
+            or ShadowDemonessMythRelic
+            or HaraldShipmanNewsRelic
+            or JackKetchNewsRelic;
     }
 }

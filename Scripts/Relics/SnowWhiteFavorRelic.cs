@@ -44,7 +44,7 @@ public class SnowWhiteFavorRelic : ModRelicTemplate
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (!IsOwnerCreature(target)
+        if (!IsProtectedTarget(target)
             || !props.IsPoweredAttack()
             || dealer?.Side == target?.Side)
         {
@@ -54,9 +54,11 @@ public class SnowWhiteFavorRelic : ModRelicTemplate
         return EnemyAttackDamageMultiplier;
     }
 
-    private bool IsOwnerCreature(Creature? target)
+    private bool IsProtectedTarget(Creature? target)
     {
         return target == Owner.Creature
+            || target == Owner.Osty
+            || target?.PetOwner == Owner
             || target?.Player == Owner
             || target?.Player?.NetId == Owner.NetId;
     }

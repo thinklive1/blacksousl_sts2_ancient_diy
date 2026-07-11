@@ -31,7 +31,7 @@ public sealed class LittlePrinceCountdownPower : ModPowerTemplate
         BigIconPath: PowerIconPath
     );
 
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (!participants.Contains(Owner))
         {
@@ -41,7 +41,7 @@ public sealed class LittlePrinceCountdownPower : ModPowerTemplate
         if (Amount <= 1)
         {
             Flash();
-            await DamageAllCreatures(combatState);
+            await DamageAllCreatures(Owner.CombatState);
             await PowerCmd.Remove(this);
             return;
         }
@@ -49,8 +49,13 @@ public sealed class LittlePrinceCountdownPower : ModPowerTemplate
         SetAmount(Amount - 1, silent: true);
     }
 
-    private async Task DamageAllCreatures(ICombatState combatState)
+    private async Task DamageAllCreatures(ICombatState? combatState)
     {
+        if (combatState == null)
+        {
+            return;
+        }
+
         foreach (Creature creature in combatState.Creatures.Where(creature => creature.IsAlive).ToList())
         {
             await CreatureCmd.Damage(

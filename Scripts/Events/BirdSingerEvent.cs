@@ -38,11 +38,19 @@ public sealed class BirdSingerEvent : ModEventTemplate
                 && point.coord.row > currentPoint.coord.row);
     }
 
-    protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>
-    [
-        new EventOption(this, Wait, InitialOptionKey("WAIT")).ThatDoesDamage(HpLoss),
-        new EventOption(this, Flee, InitialOptionKey("FLEE")),
-    ];
+    protected override IReadOnlyList<EventOption> GenerateInitialOptions()
+    {
+        bool canPayHp = Owner?.Creature.CurrentHp > HpLoss;
+        string waitKey = InitialOptionKey(canPayHp ? "WAIT" : "WAIT_LOCKED");
+        EventOption waitOption = new EventOption(this, canPayHp ? Wait : null, waitKey)
+            .ThatDoesDamage(HpLoss);
+
+        return
+        [
+            waitOption,
+            new EventOption(this, Flee, InitialOptionKey("FLEE")),
+        ];
+    }
 
     private async Task Wait()
     {
@@ -51,7 +59,7 @@ public sealed class BirdSingerEvent : ModEventTemplate
             new ThrowingPlayerChoiceContext(),
             Owner!.Creature,
             HpLoss,
-            ValueProp.Unblockable | ValueProp.Unpowered,
+            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.SkipHurtAnim,
             null,
             null);
         SetEventFinished(L10NLookup($"{Id.Entry}.pages.WAIT.description"));

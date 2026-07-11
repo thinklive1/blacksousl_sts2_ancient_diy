@@ -16,6 +16,8 @@ public static class BsAncientConfig
     public static bool EnableModEvents = true;
     public static bool DisableTestingEvents = true;
     public static bool EnableFairyTaleMode = false;
+    public static bool EnablePositiveFairyTaleRelics = true;
+    public static bool EnableNegativeFairyTaleRelics = true;
     public static bool HasShownSettingsToast = false;
     public static int GrandGuignolInitialRelicChance = 30;
 
@@ -32,6 +34,11 @@ public static class BsAncientConfig
     public static bool AllowSleepGodMyth = false;
     public static bool AllowLakeGodMyth = false;
     public static bool AllowDarkGoatOfTheWoodsMyth = false;
+    public static bool AllowGreatStagGoddessMyth = false;
+    public static bool AllowBlackThingMyth = false;
+    public static bool AllowShadowDemonessMyth = false;
+    public static bool AllowHaraldShipmanNews = false;
+    public static bool AllowJackKetchNews = false;
 
     public static void Load(Assembly assembly)
     {
@@ -58,6 +65,8 @@ public static class BsAncientConfig
         EnableModEvents = config.EnableModEvents;
         DisableTestingEvents = config.DisableTestingEvents;
         EnableFairyTaleMode = config.EnableFairyTaleMode;
+        EnablePositiveFairyTaleRelics = config.EnablePositiveFairyTaleRelics;
+        EnableNegativeFairyTaleRelics = config.EnableNegativeFairyTaleRelics;
         HasShownSettingsToast = config.HasShownSettingsToast;
         GrandGuignolInitialRelicChance = Math.Clamp(config.GrandGuignolInitialRelicChance, 0, 100);
         AllowAliceThroughLookingGlass = config.AllowAliceThroughLookingGlass;
@@ -72,6 +81,11 @@ public static class BsAncientConfig
         AllowSleepGodMyth = config.AllowSleepGodMyth;
         AllowLakeGodMyth = config.AllowLakeGodMyth;
         AllowDarkGoatOfTheWoodsMyth = config.AllowDarkGoatOfTheWoodsMyth;
+        AllowGreatStagGoddessMyth = config.AllowGreatStagGoddessMyth;
+        AllowBlackThingMyth = config.AllowBlackThingMyth;
+        AllowShadowDemonessMyth = config.AllowShadowDemonessMyth;
+        AllowHaraldShipmanNews = config.AllowHaraldShipmanNews;
+        AllowJackKetchNews = config.AllowJackKetchNews;
 
         if (GrandGuignolInitialRelicChance != config.GrandGuignolInitialRelicChance)
         {
@@ -115,6 +129,8 @@ public static class BsAncientConfig
             EnableModEvents = EnableModEvents,
             DisableTestingEvents = DisableTestingEvents,
             EnableFairyTaleMode = EnableFairyTaleMode,
+            EnablePositiveFairyTaleRelics = EnablePositiveFairyTaleRelics,
+            EnableNegativeFairyTaleRelics = EnableNegativeFairyTaleRelics,
             HasShownSettingsToast = HasShownSettingsToast,
             GrandGuignolInitialRelicChance = GrandGuignolInitialRelicChance,
             AllowAliceThroughLookingGlass = AllowAliceThroughLookingGlass,
@@ -129,6 +145,11 @@ public static class BsAncientConfig
             AllowSleepGodMyth = AllowSleepGodMyth,
             AllowLakeGodMyth = AllowLakeGodMyth,
             AllowDarkGoatOfTheWoodsMyth = AllowDarkGoatOfTheWoodsMyth,
+            AllowGreatStagGoddessMyth = AllowGreatStagGoddessMyth,
+            AllowBlackThingMyth = AllowBlackThingMyth,
+            AllowShadowDemonessMyth = AllowShadowDemonessMyth,
+            AllowHaraldShipmanNews = AllowHaraldShipmanNews,
+            AllowJackKetchNews = AllowJackKetchNews,
         };
         string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(configPath, json);
@@ -144,6 +165,8 @@ public static class BsAncientConfig
             EnableModEvents = EnableModEvents,
             DisableTestingEvents = DisableTestingEvents,
             EnableFairyTaleMode = EnableFairyTaleMode,
+            EnablePositiveFairyTaleRelics = EnablePositiveFairyTaleRelics,
+            EnableNegativeFairyTaleRelics = EnableNegativeFairyTaleRelics,
             HasShownSettingsToast = HasShownSettingsToast,
             GrandGuignolInitialRelicChance = GrandGuignolInitialRelicChance,
             AllowAliceThroughLookingGlass = AllowAliceThroughLookingGlass,
@@ -158,6 +181,11 @@ public static class BsAncientConfig
             AllowSleepGodMyth = AllowSleepGodMyth,
             AllowLakeGodMyth = AllowLakeGodMyth,
             AllowDarkGoatOfTheWoodsMyth = AllowDarkGoatOfTheWoodsMyth,
+            AllowGreatStagGoddessMyth = AllowGreatStagGoddessMyth,
+            AllowBlackThingMyth = AllowBlackThingMyth,
+            AllowShadowDemonessMyth = AllowShadowDemonessMyth,
+            AllowHaraldShipmanNews = AllowHaraldShipmanNews,
+            AllowJackKetchNews = AllowJackKetchNews,
         };
         string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(configPath, json);
@@ -176,6 +204,8 @@ public static class BsAncientConfig
                 && root.TryGetProperty(nameof(FileConfig.EnableModEvents), out _)
                 && root.TryGetProperty(nameof(FileConfig.DisableTestingEvents), out _)
                 && root.TryGetProperty(nameof(FileConfig.EnableFairyTaleMode), out _)
+                && root.TryGetProperty(nameof(FileConfig.EnablePositiveFairyTaleRelics), out _)
+                && root.TryGetProperty(nameof(FileConfig.EnableNegativeFairyTaleRelics), out _)
                 && root.TryGetProperty(nameof(FileConfig.HasShownSettingsToast), out _)
                 && root.TryGetProperty(nameof(FileConfig.GrandGuignolInitialRelicChance), out _)
                 && root.TryGetProperty(nameof(FileConfig.AllowAliceThroughLookingGlass), out _)
@@ -189,7 +219,12 @@ public static class BsAncientConfig
                 && root.TryGetProperty(nameof(FileConfig.AllowUglyDuckling), out _)
                 && root.TryGetProperty(nameof(FileConfig.AllowSleepGodMyth), out _)
                 && root.TryGetProperty(nameof(FileConfig.AllowLakeGodMyth), out _)
-                && root.TryGetProperty(nameof(FileConfig.AllowDarkGoatOfTheWoodsMyth), out _);
+                && root.TryGetProperty(nameof(FileConfig.AllowDarkGoatOfTheWoodsMyth), out _)
+                && root.TryGetProperty(nameof(FileConfig.AllowGreatStagGoddessMyth), out _)
+                && root.TryGetProperty(nameof(FileConfig.AllowBlackThingMyth), out _)
+                && root.TryGetProperty(nameof(FileConfig.AllowShadowDemonessMyth), out _)
+                && root.TryGetProperty(nameof(FileConfig.AllowHaraldShipmanNews), out _)
+                && root.TryGetProperty(nameof(FileConfig.AllowJackKetchNews), out _);
         }
         catch (JsonException)
         {
@@ -210,6 +245,10 @@ public static class BsAncientConfig
         public bool DisableTestingEvents { get; set; } = true;
 
         public bool EnableFairyTaleMode { get; set; } = false;
+
+        public bool EnablePositiveFairyTaleRelics { get; set; } = true;
+
+        public bool EnableNegativeFairyTaleRelics { get; set; } = true;
 
         public bool HasShownSettingsToast { get; set; } = false;
 
@@ -238,5 +277,15 @@ public static class BsAncientConfig
         public bool AllowLakeGodMyth { get; set; } = false;
 
         public bool AllowDarkGoatOfTheWoodsMyth { get; set; } = false;
+
+        public bool AllowGreatStagGoddessMyth { get; set; } = false;
+
+        public bool AllowBlackThingMyth { get; set; } = false;
+
+        public bool AllowShadowDemonessMyth { get; set; } = false;
+
+        public bool AllowHaraldShipmanNews { get; set; } = false;
+
+        public bool AllowJackKetchNews { get; set; } = false;
     }
 }

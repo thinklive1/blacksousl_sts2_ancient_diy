@@ -25,6 +25,8 @@
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.description": "你在虫群肆虐的高塔里看到一只奇异的半人鸟生物，她正在自言自语：\"不知道咱的歌声对它们有没有用。\" 直觉告诉你，整层高塔都会受到她的歌声波及(波及到的怪物节点，怪物生命减少一半)，你决定……",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.WAIT.title": "静待变化。",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.WAIT.description": "失去10点生命，标记受歌声影响的节点。",
+  "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.WAIT_LOCKED.title": "静待变化。需要大于10点生命。",
+  "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.WAIT_LOCKED.description": "生命不足。",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.FLEE.title": "转身就跑。",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.INITIAL.options.FLEE.description": "不会标记受歌声影响的节点。",
   "BS_ANCIENT_EVENT_BIRD_SINGER_EVENT.pages.WAIT.description": "她的歌声让你的脑子似乎挨了一计重锤，恢复清醒时，那个神秘的生物已经不见踪影",
