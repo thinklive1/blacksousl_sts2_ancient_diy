@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Models.Capabilities;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
@@ -39,7 +40,7 @@ public abstract class GuignolsExecutionPowerBase : ModPowerTemplate
 
 /// <summary>Implements the Guignols Applause Execution power.</summary>
 [RegisterPower]
-public sealed class GuignolsApplauseExecutionPower : GuignolsExecutionPowerBase
+public sealed class GuignolsApplauseExecutionPower : GuignolsExecutionPowerBase, ICardGlowContributor
 {
     protected override string PowerIconPath => "res://bs_ancient/assets/images/powers/GuignolsApplauseExecutionPower.png";
 
@@ -63,6 +64,23 @@ public sealed class GuignolsApplauseExecutionPower : GuignolsExecutionPowerBase
         }
 
         return DamageNeededToKill(target, amount);
+    }
+
+    public bool ShouldGlowGold(CardModel card)
+    {
+        return false;
+    }
+
+    public bool ShouldGlowRed(CardModel card)
+    {
+        return card.Owner == Owner.Player
+            && card.Type == CardType.Attack
+            && Owner.CombatState?.Enemies.Any(IsBelowExecutionThreshold) == true;
+    }
+
+    internal static bool ShouldHighlightExecution(CardModel? card)
+    {
+        return card?.Owner?.Creature.GetPower<GuignolsApplauseExecutionPower>()?.ShouldGlowRed(card) == true;
     }
 
     private bool IsOwnerAttack(Creature? dealer)

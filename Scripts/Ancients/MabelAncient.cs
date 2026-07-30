@@ -88,7 +88,10 @@ public class MabelAncient : ModAncientEventTemplate
         { CreateGiftOfChaosOption(), 1 },
     };
 
-    public override IEnumerable<EventOption> AllPossibleOptions => [CreateFavorChoiceOption(false), .. FullPool1, .. FullPool2, .. FullPool3];
+    // The compendium only needs concrete relic options. The favor chooser is a
+    // temporary event option and has no valid event context while the compendium
+    // builds its relic list.
+    public override IEnumerable<EventOption> AllPossibleOptions => [.. FullPool1, .. FullPool2, .. FullPool3];
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {

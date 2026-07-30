@@ -12,6 +12,8 @@ using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -109,6 +111,7 @@ public sealed class GuignolsDollRelic : ModRelicTemplate
         if (player == Owner)
         {
             ResetTurnEvaluationState();
+            RefreshExecutionHandGlow();
         }
 
         return Task.CompletedTask;
@@ -219,6 +222,8 @@ public sealed class GuignolsDollRelic : ModRelicTemplate
             _finalBlowApplaudedThisCombat = true;
             await AddApplause();
         }
+
+        RefreshExecutionHandGlow();
     }
 
     public override async Task AfterDamageReceived(
@@ -257,6 +262,7 @@ public sealed class GuignolsDollRelic : ModRelicTemplate
         Flash();
         BsAncientAudio.PlayOneShot(BsAncientAudio.Claps, 0.8f);
         await SyncExecutionPowers();
+        RefreshExecutionHandGlow();
     }
 
     private async Task AddBoo()
@@ -265,6 +271,7 @@ public sealed class GuignolsDollRelic : ModRelicTemplate
         Flash();
         BsAncientAudio.PlayOneShot(BsAncientAudio.Boos, 0.8f);
         await SyncExecutionPowers();
+        RefreshExecutionHandGlow();
     }
 
     private int ReactionScore()
@@ -386,6 +393,17 @@ public sealed class GuignolsDollRelic : ModRelicTemplate
     private async Task EnsureExecutionPowers()
     {
         await SyncExecutionPowers();
+    }
+
+    private void RefreshExecutionHandGlow()
+    {
+        foreach (NHandCardHolder holder in NPlayerHand.Instance?.ActiveHolders ?? [])
+        {
+            if (holder.CardNode?.Model?.Owner == Owner)
+            {
+                holder.UpdateCard();
+            }
+        }
     }
 
     private async Task SyncExecutionPowers()

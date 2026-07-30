@@ -2,11 +2,11 @@
 
 Note: this English README and the in-game English localization are machine-translated.
 
-A Slay the Spire 2 Ancient expansion mod. It currently adds 3 map Ancients, replaces the starting Neow appearance with Grand Guignol, and adds a separate "Grand Guignol?" compendium category for starting Ancient relics.
+A Slay the Spire 2 Ancient expansion mod. It currently adds 3 map Ancients, replaces the starting Neow appearance with Grand Guignol, and adds a separate "Grand Guignol?" compendium category for starting Ancient relics. It also includes separate Fairy Tale, Myth, and News relic pools, random events, cards, enchantments, afflictions, and special mechanics.
 
 ## Requirements
 
-- RitsuLib 0.4.18 or later
+- RitsuLib 0.4.62 or later
 
 ## Ancient Spawn Rules
 
@@ -19,9 +19,9 @@ A Slay the Spire 2 Ancient expansion mod. It currently adds 3 map Ancients, repl
 
 ## Settings
 
-These settings can be changed in the in-game mod settings UI, or by editing `bs_ancient_config.cfg` in the mod folder. The UI and config file use the same options; pressing Save in the UI writes them back to the config file.
+These settings can be changed in the in-game mod settings UI, or by editing `bs_ancient_config.cfg` in the mod folder. The UI and config file use the same options; pressing Save in the UI writes them back to the config file. Existing config files automatically receive newly added fields on the next launch. Release packages do not include or overwrite this file, so your settings are preserved.
 
-`bs_ancient_config.cfg` is a JSON config file. Default values:
+`bs_ancient_config.cfg` is a JSON config file. The following are the core defaults. Individually controlled destructive Fairy Tale, Myth, and News relics have additional fields, all disabled by default:
 
 ```json
 {
@@ -42,7 +42,7 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
 - `ReplaceNeowAppearance`: replaces Neow's appearance, name, title, and related dialogue with Grand Guignol. If `false`, Neow display returns to vanilla. Requires restarting the game.
 - `EnableModEvents`: enables this mod's random events. If `false`, this mod's new random events will not enter the event pool. Requires restarting the game and starting a new run.
 - `DisableTestingEvents`: disables testing events. If `true`, SAN/hand-mirror related testing events such as Clown and Girl in the Maze will not appear naturally. Requires restarting the game and starting a new run.
-- `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After winning 4 normal or elite combats, it grants a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run. Strongly not recommended in multiplayer. In single-player, the character select screen also shows a per-run Fairy Tale Mode toggle, which takes priority over this default setting.
+- `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After winning 4 normal, elite, or boss combats, it grants a random Fairy Tale, Myth, or News relic. The same relic cannot be gained twice in one run. Strongly not recommended in multiplayer. In single-player, the character select screen also shows a per-run Fairy Tale Mode toggle, which takes priority over this default setting.
 - `EnablePositiveFairyTaleRelics`: allows Fairy Tale Mode to randomly grant positive Fairy Tale relics. If `false`, positive Fairy Tales are excluded from the random pool. This takes priority over other individual Fairy Tale relic toggles. Requires restarting the game and starting a new run.
 - `EnableNegativeFairyTaleRelics`: allows Fairy Tale Mode to randomly grant negative, destructive Fairy Tale, Myth, and News relics. If `false`, these relics are excluded from the random pool even when their individual strongly negative toggles are enabled. This takes priority over other individual relic toggles. Requires restarting the game and starting a new run.
 - `GrandGuignolInitialRelicChance`: chance, from 0 to 100, for a Grand Guignol starting relic to replace a positive starting option. Default is 30. Requires restarting the game and starting a new run.
@@ -56,6 +56,7 @@ This category displays starting Ancient relics. These relics are not shown in th
 - Duchess' Menu: may appear in Grand Guignol's starting options. At card rewards, you may choose to supply the reward. After 3 supplies, gain a reward based on the total quality score of the supplied card sets. Common cards are 1 point, uncommon cards 2 points, rare cards 3 points. 12 or less: 200 Gold and 1 uncommon card reward. 13-18: 300 Gold and 1 rare card reward. 19 or more: 500 Gold and 2 rare card rewards. If you obtain Driftwood, this relic is disabled.
 - Angel's Feather: may appear in Grand Guignol's starting options. The first time you take HP damage each combat, gain that much Vigor. When entering Act 2, it becomes Angel's Feather?. Angel's Feather? grants Vigor whenever you take HP damage. When entering Act 3, it becomes Brutalizing Angel's Feather. Brutalizing Angel's Feather grants Vigor whenever you take HP damage; after the first time you are damaged each combat, attacks that deal HP damage heal you, up to the amount of that first damage. A power icon shows the remaining heal amount.
 - Mabel's Soldier Piece: may appear in Grand Guignol's starting options. During Act 1, all enchantable Common and Uncommon cards in card rewards are enchanted with Ascension. After 7 nodes, an Ascension card transforms into a random card of the next higher rarity: Common to Uncommon, Uncommon to Rare. Rare cards are not enchanted, so this relic does not Ascend cards into Ancient cards.
+- Guignol's Doll: may appear as a Grand Guignol starting Ancient relic. It tracks applause and boos from combat performance, displaying their net total. At 5, Popularity Surge lets Attack cards execute low-HP enemies. At -5, Popularity Slump means you can be executed as well.
 
 ## Node
 
@@ -129,9 +130,9 @@ Relics:
 
 ## Fairy Tale Relics
 
-Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining combat victories before the next relic; after winning 4 normal or elite combats, it grants a random Fairy Tale, Myth, or News relic. The same relic cannot be gained twice in one run. In single-player, the character select screen can enable or disable Fairy Tale Mode for the current run, and that toggle takes priority over the config default. `EnablePositiveFairyTaleRelics` and `EnableNegativeFairyTaleRelics` control whether positive and negative relics enter the random pool, and they take priority over individual strongly negative relic toggles. Fairy Tale Mode is strongly not recommended in multiplayer.
+Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining combat victories before the next relic; after winning 4 normal, elite, or boss combats, it grants a random Fairy Tale, Myth, or News relic. The same relic cannot be gained twice in one run. In single-player, the character select screen can enable or disable Fairy Tale Mode for the current run, and that toggle takes priority over the config default. `EnablePositiveFairyTaleRelics` and `EnableNegativeFairyTaleRelics` control whether positive and negative relics enter the random pool, and they take priority over individual strongly negative relic toggles. Fairy Tale Mode is strongly not recommended in multiplayer.
 
-- Unnamed Fairy Tale Book: obtained at the start of a run when Fairy Tale Mode is enabled. Shows how many combat victories remain before the next random Fairy Tale. After winning 4 normal or elite combats, gain a random Fairy Tale. The same Fairy Tale cannot be gained twice in one run.
+- Unnamed Fairy Tale Book: obtained at the start of a run when Fairy Tale Mode is enabled. Shows how many combat victories remain before the next random relic. After winning 4 normal, elite, or boss combats, gain a random Fairy Tale, Myth, or News relic. The same relic cannot be gained twice in one run.
 - Fairy Tale - Pinocchio: on pickup, choose 1 card with damage or block values and enchant it with Lie. After a Lie card is played, swap its damage and block values. Damage-only cards switch to gaining that much Block and dealing no damage; block-only cards switch to dealing that much damage and gaining no Block.
 - Alice Through the Looking Glass: on pickup, choose 4 cards and enchant them with Ascension. The next act map becomes 3 straight routes with no branches. After 7 non-Ancient nodes, Ascension cards transform into a random card of the next higher rarity; Common cards become Uncommon and Uncommon cards become Rare. They cannot become Ancient cards.
 - Fairy Tale - The Three Little Pigs: the next 3 combats grant no rewards.
@@ -151,12 +152,12 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Fairy Tale - My Former Rascal: when you enter the next normal or elite combat, all enemies gain 5 Strength, then this relic becomes inactive.
 - Fairy Tale - Sinbad the Sailor: at the start of combat, gain 1 Slow.
 - Fairy Tale - Town Musicians of Bremen: at the start of the first turn, Stun all enemies and shuffle 5 Dazed into your draw pile or discard pile at random.
-- Fairy Tale - Iron Hans: on pickup, choose 1 card and enchant it with Armament. Armament cards automatically play when drawn. Each time one is played, it deals damage to you equal to 20% of that card's damage value.
+- Fairy Tale - Iron Hans: on pickup, choose 1 Attack card and enchant it with Armament. Armament cards automatically play when drawn. Each time one is played, it deals damage to you equal to 20% of that card's damage value.
 - Fairy Tale - A Dog of Flanders: at the start of combat, gain 1 Hunt. While you have Weak, damage you take is doubled.
 - Fairy Tale - The Little Prince: at the end of turn 5, all creatures take 30 damage.
 - Fairy Tale - The Knight in Armor: at the start of combat, gain 6 Plating.
 - Fairy Tale - The King with Donkey Ears: deal 50% more damage to bosses.
-- Fairy Tale - Peter Pan: on pickup, choose any number of the 5 most recently obtained cards and remove them.
+- Fairy Tale - Peter Pan: on pickup, remove up to 5 cards from your deck that are neither Strike nor Defend. If fewer than 5 eligible cards exist, remove all of them.
 - Fairy Tale - The Monkey and the Crab: on pickup, add 1 Greed and 1 Injury to your deck.
 - Fairy Tale - The Greedy Dog: on pickup, transform one of the highest-rarity non-Ancient cards in your deck into Greed. If multiple cards share that rarity, choose one at random.
 - Fairy Tale - The Tortoise and the Hare: on pickup, choose 2 Attack cards and enchant them with Brutality. After a Brutality card kills any enemy, the next Brutality card you play deals double damage.
@@ -175,7 +176,9 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 
 ## Myth Relics
 
-- Sleep God: choose 1 card and enchant it with Sleep. A Sleeping card cannot be played; when drawn, it loses 1 Sleep stack. After waking, it can be played additional times equal to its original cost this combat.
+Myth relics enter their own pool only in Fairy Tale Mode. The current Myth relics are all strongly negative and require both "Allow Negative Fairy Tale Relics" and their individual setting to be enabled.
+
+- Sleep God: choose a non-X-cost Attack or Skill card and give it Sleep equal to its cost. It cannot be played for that many draws, then awakens on the following draw. Once awake, it gains Replay equal to its Sleep stacks for this combat.
 - Lake God: at the start of turn 3, lose 2 Dexterity and gain 1 Corruption.
 - Dark Goat of the Woods: choose 2 cards and enchant them with Breeding. Each turn, exhaust 2 Breeding cards and create 4 Chaos Fusion children; children also gain Breeding.
 - Goddess of the Great Stag: cards that have entered the Exhaust pile cost 1 more. At the start of your turn, choose 1 card from the Exhaust pile and put it into your draw pile.
@@ -183,6 +186,8 @@ Fairy Tale relics use a separate relic pool and are not automatically treated as
 - Shadow Demoness: after combat begins, gain 1 Intangible every 4 turns. You cannot gain extra Energy.
 
 ## News Relics
+
+News relics enter their own pool only in Fairy Tale Mode. Availability is controlled by the positive/negative pool toggles and each relic's individual setting. Destructive News relics additionally require both "Allow Negative Fairy Tale Relics" and their individual setting to be enabled.
 
 - News - The Dark Doctor: when you use a potion, heal 5 HP. At the end of each combat where you did not use a potion, lose 1 Max HP.
 - News - The Executioner: at the start of turn 10, all monsters intend to perform a heavy strike for 54 damage.

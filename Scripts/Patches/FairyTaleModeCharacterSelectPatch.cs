@@ -15,15 +15,20 @@ public class FairyTaleModeCharacterSelectPatch : IPatchMethod
     private const string UntickedSfx = "event:/sfx/ui/clicks/ui_checkbox_off";
 
     public static string PatchId => "fairy_tale_mode_character_select_toggle";
-    public static string Description => "Add a singleplayer-only Fairy Tale Mode toggle to character select.";
+    public static string Description => "Add a Fairy Tale Mode toggle to character select (singleplayer and multiplayer).";
     public static bool IsCritical => false;
 
     public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.InitializeSingleplayer), ignoreIfMissing: true)];
+        [
+            new(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.InitializeSingleplayer), ignoreIfMissing: true),
+            new(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.InitializeMultiplayerAsHost), ignoreIfMissing: true),
+            new(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.InitializeMultiplayerAsClient), ignoreIfMissing: true),
+        ];
 
     public static void Postfix(NCharacterSelectScreen __instance)
     {
-        if (__instance.GetNodeOrNull<Button>(ToggleName) != null)
+        if (__instance.GetNodeOrNull<Button>(ToggleName) != null
+            || __instance.GetNodeOrNull<Label>($"{ToggleName}Warning") != null)
         {
             return;
         }
@@ -64,6 +69,18 @@ public class FairyTaleModeCharacterSelectPatch : IPatchMethod
         toggle.Pressed += () => OnTogglePressed(toggle, icon);
         PositionToggle(toggle);
         __instance.AddChild(toggle);
+
+        Label warning = new()
+        {
+            Name = $"{ToggleName}Warning",
+            Text = "多人模式可能存在恶性bug",
+            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = VerticalAlignment.Center,
+            MouseFilter = Control.MouseFilterEnum.Ignore,
+            Modulate = new Color(1f, 0.8f, 0.4f, 0.9f)
+        };
+        PositionWarning(warning);
+        __instance.AddChild(warning);
 
         BsAncientRunOptions.FairyTaleModeForNextRun = toggle.ButtonPressed;
     }
@@ -107,5 +124,14 @@ public class FairyTaleModeCharacterSelectPatch : IPatchMethod
         toggle.OffsetTop = -140f;
         toggle.OffsetRight = -48f;
         toggle.OffsetBottom = -76f;
+    }
+
+    private static void PositionWarning(Label warning)
+    {
+        warning.SetAnchorsPreset(Control.LayoutPreset.BottomRight);
+        warning.OffsetLeft = -360f;
+        warning.OffsetTop = -70f;
+        warning.OffsetRight = -48f;
+        warning.OffsetBottom = -46f;
     }
 }

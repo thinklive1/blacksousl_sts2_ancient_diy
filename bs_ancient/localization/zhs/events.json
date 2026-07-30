@@ -120,5 +120,15 @@
   "BS_ANCIENT_EASTER_EGG_BANKERS_PAGE_OPTION.title": " 银行家的书页 ",
   "BS_ANCIENT_EASTER_EGG_BANKERS_PAGE_OPTION.description": "你在金币中发现了一张书页， 拾起它后，一切都消失了 ",
   "BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.title": " 律师的书页 ",
-  "BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.description": "你的眼前出现了一张书页， 拾起它后，一切都消失了 "
+  "BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.description": "你的眼前出现了一张书页， 拾起它后，一切都消失了 ",
+  "BS_ANCIENT_EASTER_EGG_BAKERS_PAGE_OPTION.title": " 面包师的书页 ",
+  "BS_ANCIENT_EASTER_EGG_BAKERS_PAGE_OPTION.description": "一张写着你不记得的名字的书页，静静躺在那里。",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.title": "博基姆",
+    "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.INITIAL.description": "博基姆突然出现，就在我眼前\n\n先是无声在先\n\n刹那后我消失不见\n\n从此以后在人世间\n\n我们再也无法见面",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.INITIAL.options.CHALLENGE.title": "狩猎博基姆。",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.INITIAL.options.CHALLENGE.description": "[red]警告：与博基姆战斗可能会删除你的部分存档信息。[/red]",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.INITIAL.options.FLEE.title": "忘记这一切。",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.INITIAL.options.FLEE.description": "获得[gold]布茨的书页[/gold]。",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.FLEE.description": "你转身逃离。书页上的字逐一抹去，只剩下一张再也无法读懂的纸。",
+  "BS_ANCIENT_MONSTER_BOOJUM.selectionScreenPrompt": "从记忆中保留一张牌。"
 }

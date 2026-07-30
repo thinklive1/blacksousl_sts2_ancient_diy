@@ -119,6 +119,16 @@
   "BS_ANCIENT_EVENT_LAST_WHITE_KNIGHT_EVENT.pages.ALONE.description": "You ignore the game. After a moment of silence, the White Knight hands you a handkerchief and disappears into the mist.",
   "BS_ANCIENT_EASTER_EGG_BANKERS_PAGE_OPTION.title": " ",
   "BS_ANCIENT_EASTER_EGG_BANKERS_PAGE_OPTION.description": " ",
-  "BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.title": " ",
-  "BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.description": " "
+	"BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.title": " ",
+	"BS_ANCIENT_EASTER_EGG_BARRISTERS_PAGE_OPTION.description": " ",
+	"BS_ANCIENT_EASTER_EGG_BAKERS_PAGE_OPTION.title": " ",
+  "BS_ANCIENT_EASTER_EGG_BAKERS_PAGE_OPTION.description": " ",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.title": "Boojum",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.INITIAL.description": "The pages you have gathered suddenly lose their weight. Names, figures, and courses peel from the paper and fall into the shapeless blank ahead.\n\nSomething waits to be named.",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.INITIAL.options.CHALLENGE.title": "Hunt the Boojum.",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.INITIAL.options.CHALLENGE.description": "[red]Warning: Fighting Boojum may erase some of your saved run history.[/red]",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.INITIAL.options.FLEE.title": "Forget all of it.",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.INITIAL.options.FLEE.description": "Obtain [gold]Boots' Page[/gold].",
+  "BS_ANCIENT_EVENT_BOOJUM_EVENT.pages.FLEE.description": "You turn and flee. The words vanish from the page one by one, leaving a sheet that can never be read again.",
+  "BS_ANCIENT_MONSTER_BOOJUM.selectionScreenPrompt": "Preserve a card from the memories."
 }

@@ -65,5 +65,7 @@
 	"BS_ANCIENT_CARD_HALLUCINOGENIC_CANDY_CARD.title": "Hallucinogenic Candy",
 	"BS_ANCIENT_CARD_HALLUCINOGENIC_CANDY_CARD.description": "Automatically played when drawn.\nFor the rest of this turn, non-X-cost cards drawn into your [gold]Hand[/gold] cost a random amount from [blue]0[/blue] to [blue]3[/blue].",
 	"BS_ANCIENT_CARD_MERMAID_TEAR_CARD.title": "Mermaid's Tear",
-	"BS_ANCIENT_CARD_MERMAID_TEAR_CARD.description": "When exhausted, randomly devour a card in your [gold]Draw Pile[/gold] and lose [red]{HpLoss}[/red] HP. At the end of combat, permanently remove the devoured card from your [gold]Deck[/gold]."
+	"BS_ANCIENT_CARD_MERMAID_TEAR_CARD.description": "When exhausted, randomly devour a card in your [gold]Draw Pile[/gold] and lose [red]{HpLoss}[/red] HP. At the end of combat, permanently remove the devoured card from your [gold]Deck[/gold].",
+	"BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.title": "Memory",
+	"BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.description": "Play every card from the corresponding historical deck."
 }

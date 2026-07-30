@@ -97,7 +97,7 @@ public class OnlyUseModAncientsPatch : IPatchMethod
     private static void RemoveGeneratedGrandGuignol(ActModel act, Rng rng, UnlockState unlockState)
     {
         RoomSet rooms = RoomsRef(act);
-        if (rooms.Ancient is not GrandGuignolAncient)
+        if (!rooms.HasAncient || rooms.Ancient is not GrandGuignolAncient)
         {
             return;
         }
@@ -117,7 +117,7 @@ public class OnlyUseModAncientsPatch : IPatchMethod
     private static void RemoveGeneratedModAncient(ActModel act, Rng rng, UnlockState unlockState)
     {
         RoomSet rooms = RoomsRef(act);
-        if (!IsMapModAncient(rooms.Ancient))
+        if (!rooms.HasAncient || !IsMapModAncient(rooms.Ancient))
         {
             return;
         }

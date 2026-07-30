@@ -65,5 +65,7 @@
     "BS_ANCIENT_CARD_HALLUCINOGENIC_CANDY_CARD.title": "致幻的糖果",
     "BS_ANCIENT_CARD_HALLUCINOGENIC_CANDY_CARD.description": "抽到时自动打出。\n本回合之后抽到的非 X 费手牌费用随机变为[blue]0[/blue]到[blue]3[/blue]。",
     "BS_ANCIENT_CARD_MERMAID_TEAR_CARD.title": "人鱼之泪",
-    "BS_ANCIENT_CARD_MERMAID_TEAR_CARD.description": "被消耗时，随机吞噬一张牌，失去[red]{HpLoss}[/red]点生命。战斗结束后，被吞噬的牌从牌组中永久移除。"
+    "BS_ANCIENT_CARD_MERMAID_TEAR_CARD.description": "被消耗时，随机吞噬一张牌，失去[red]{HpLoss}[/red]点生命。战斗结束后，被吞噬的牌从牌组中永久移除。",
+    "BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.title": "记忆",
+    "BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.description": "自动打出对应历史对局卡组中的所有牌。"
 }

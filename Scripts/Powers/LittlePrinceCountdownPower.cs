@@ -63,7 +63,7 @@ public sealed class LittlePrinceCountdownPower : ModPowerTemplate
                 creature,
                 DynamicVars["MeteorDamage"].BaseValue,
                 ValueProp.Move,
-                Owner,
+                null,
                 null);
         }
     }

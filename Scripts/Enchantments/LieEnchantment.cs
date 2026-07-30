@@ -70,7 +70,8 @@ public sealed class LieEnchantment : ModEnchantmentTemplate
         CardModel? cardSource,
         CardPlay? cardPlay)
     {
-        return BlackSouls_VirtualDamage > 0
+        // This callback observes every block gain in combat, not only this card's effect.
+        return cardSource == Card && BlackSouls_VirtualDamage > 0
             ? -originalBlock
             : 0;
     }

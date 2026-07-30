@@ -402,6 +402,12 @@
   "BS_ANCIENT_RELIC_BELLMANS_PAGE_RELIC.title": "贝尔曼的书页",
   "BS_ANCIENT_RELIC_BELLMANS_PAGE_RELIC.description": "你的牌组将永远保持偶数张同名卡。",
   "BS_ANCIENT_RELIC_BELLMANS_PAGE_RELIC.flavor": "船长对于对称的外观有着极度的偏执，对于完全不符合对称美学的怪物蛇鲨，他发誓要追猎它直到死去。",
+  "BS_ANCIENT_RELIC_BAKERS_PAGE_RELIC.title": "面包师的书页",
+  "BS_ANCIENT_RELIC_BAKERS_PAGE_RELIC.description": "每回合开始时，将战斗中的所有牌随机置入手牌、抽牌堆或弃牌堆。",
+  "BS_ANCIENT_RELIC_BAKERS_PAGE_RELIC.flavor": "蛇鲨的腹中或许有我的记忆，面包师这样相信着。",
+  "BS_ANCIENT_RELIC_BEAVERS_BIOLOGY_CLASS_RELIC.title": "海狸的生物课",
+  "BS_ANCIENT_RELIC_BEAVERS_BIOLOGY_CLASS_RELIC.description": "从第[blue]2[/blue]回合起，敌人行动变为获得等同于你上一回合获得的格挡，并对你造成等同于你上一回合造成总伤害的伤害。",
+  "BS_ANCIENT_RELIC_BEAVERS_BIOLOGY_CLASS_RELIC.flavor": "我在十分钟内学到的东西，远比读上七十年书要多。",
   "BS_ANCIENT_RELIC_HARALD_SHIPMAN_NEWS_RELIC.title": "骇闻-暗医者",
   "BS_ANCIENT_RELIC_HARALD_SHIPMAN_NEWS_RELIC.description": "使用药水时恢复[blue]5[/blue]点生命。每有[blue]1[/blue]场战斗未使用药水，战斗结束时失去[blue]1[/blue]点最大生命。",
   "BS_ANCIENT_RELIC_HARALD_SHIPMAN_NEWS_RELIC.flavor": "20世纪英国连环杀手哈罗德·希普曼，通过注射过量的药物来致使人死亡。",
@@ -410,5 +416,11 @@
   "BS_ANCIENT_RELIC_JACK_KETCH_NEWS_RELIC.flavor": "17世纪的刽子手杰克·凯奇。",
   "BS_ANCIENT_RELIC_HELMSMANS_PAGE_RELIC.title": "舵手的书页",
   "BS_ANCIENT_RELIC_HELMSMANS_PAGE_RELIC.description": "晕眩试图对你说话的敌人一回合。",
-  "BS_ANCIENT_RELIC_HELMSMANS_PAGE_RELIC.flavor": "常含泪水的舵手暗自希望船长死在狩猎蛇鲨的旅途中，这样他就能与人交流了。"
+  "BS_ANCIENT_RELIC_HELMSMANS_PAGE_RELIC.flavor": "常含泪水的舵手暗自希望船长死在狩猎蛇鲨的旅途中，这样他就能与人交流了。",
+  "BS_ANCIENT_RELIC_BUTCHERS_MATH_CLASS_RELIC.title": "屠夫的数学课",
+  "BS_ANCIENT_RELIC_BUTCHERS_MATH_CLASS_RELIC.description": "屠夫根据整局游戏中的策略预测你的下一步出牌。高概率的预测将会降低对应牌效果，反之亦然。",
+  "BS_ANCIENT_RELIC_BUTCHERS_MATH_CLASS_RELIC.flavor": "我很乐意解释所采用的方法，虽然我脑子里很清楚，如果我只有时间，而你只有大脑——那么我们有太多事情要说。",
+  "BS_ANCIENT_RELIC_BOOJUM_PAGE_RELIC.title": "布茨的书页",
+  "BS_ANCIENT_RELIC_BOOJUM_PAGE_RELIC.description": "战斗中，所有卡牌的名称变为空白。",
+  "BS_ANCIENT_RELIC_BOOJUM_PAGE_RELIC.flavor": "bo…………"
 }

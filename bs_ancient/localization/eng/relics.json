@@ -402,6 +402,12 @@
 		"BS_ANCIENT_RELIC_BELLMANS_PAGE_RELIC.title": "Bellman's Page",
 		"BS_ANCIENT_RELIC_BELLMANS_PAGE_RELIC.description": "Your [gold]Deck[/gold] will always contain an even number of each card.",
 		"BS_ANCIENT_RELIC_BELLMANS_PAGE_RELIC.flavor": "The Bellman was obsessed with symmetry. For the Snark, a creature that defied all aesthetics of symmetry, he swore to hunt it until death.",
+		"BS_ANCIENT_RELIC_BAKERS_PAGE_RELIC.title": "Baker's Page",
+		"BS_ANCIENT_RELIC_BAKERS_PAGE_RELIC.description": "At the start of each turn, randomly distribute all combat cards among your [gold]Hand[/gold], [gold]Draw Pile[/gold], and [gold]Discard Pile[/gold].",
+		"BS_ANCIENT_RELIC_BAKERS_PAGE_RELIC.flavor": "Perhaps the Snark keeps my memories in its belly, the Baker believed.",
+		"BS_ANCIENT_RELIC_BEAVERS_BIOLOGY_CLASS_RELIC.title": "The Beaver's Biology Class",
+		"BS_ANCIENT_RELIC_BEAVERS_BIOLOGY_CLASS_RELIC.description": "Starting on turn [blue]2[/blue], each enemy copies your previous turn at the start of its turn: it gains the Block you gained, then deals the damage you dealt to you.",
+		"BS_ANCIENT_RELIC_BEAVERS_BIOLOGY_CLASS_RELIC.flavor": "It had learned in ten minutes far more than all books would have taught it in seventy years.",
 		"BS_ANCIENT_RELIC_HARALD_SHIPMAN_NEWS_RELIC.title": "News - The Dark Doctor",
 		"BS_ANCIENT_RELIC_HARALD_SHIPMAN_NEWS_RELIC.description": "When you use a potion, heal [blue]5[/blue] HP. For each combat where you did not use a potion, lose [blue]1[/blue] Max HP at the end of combat.",
 		"BS_ANCIENT_RELIC_HARALD_SHIPMAN_NEWS_RELIC.flavor": "Harold Shipman, a 20th-century British serial killer, killed his victims by injecting lethal doses of drugs.",
@@ -410,5 +416,11 @@
 		"BS_ANCIENT_RELIC_JACK_KETCH_NEWS_RELIC.flavor": "Jack Ketch, the 17th-century executioner.",
 		"BS_ANCIENT_RELIC_HELMSMANS_PAGE_RELIC.title": "Helmsman's Page",
 		"BS_ANCIENT_RELIC_HELMSMANS_PAGE_RELIC.description": "Stun enemies that attempt to speak to you for 1 turn.",
-		"BS_ANCIENT_RELIC_HELMSMANS_PAGE_RELIC.flavor": "The tearful Helmsman secretly hoped the captain would die during the hunt for the Snark, so that he might finally speak with someone."
-	}
+		"BS_ANCIENT_RELIC_HELMSMANS_PAGE_RELIC.flavor": "The tearful Helmsman secretly hoped the captain would die during the hunt for the Snark, so that he might finally speak with someone.",
+		"BS_ANCIENT_RELIC_BUTCHERS_MATH_CLASS_RELIC.title": "The Butcher's Math Class",
+		"BS_ANCIENT_RELIC_BUTCHERS_MATH_CLASS_RELIC.description": "The Butcher predicts your next play from the patterns of your entire run. Likely predictions weaken the corresponding card's effects, and unlikely predictions do the opposite.",
+  "BS_ANCIENT_RELIC_BUTCHERS_MATH_CLASS_RELIC.flavor": "I shall be happy to explain the method, while I have it so clear in my head, if I had but the time, and you had but the head, we should have a very great deal to say.",
+  "BS_ANCIENT_RELIC_BOOJUM_PAGE_RELIC.title": "Boots' Page",
+  "BS_ANCIENT_RELIC_BOOJUM_PAGE_RELIC.description": "During combat, all card names are blank.",
+  "BS_ANCIENT_RELIC_BOOJUM_PAGE_RELIC.flavor": "Nothing remains to be read."
+}

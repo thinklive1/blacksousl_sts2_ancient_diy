@@ -81,12 +81,16 @@ public class UnicornRoyalCrestRelic : ModRelicTemplate
         Creature? dealer,
         CardModel? cardSource)
     {
-        if (_isCounterattacking || !IsProtectedTarget(target) || !IsEnemyAttack(dealer, props) || result.UnblockedDamage > 0)
+        if (_isCounterattacking
+            || !IsProtectedTarget(target)
+            || !IsEnemyAttack(dealer, props)
+            || !result.WasFullyBlocked)
         {
             return;
         }
 
         decimal counterDamage = GetCounterDamage(target, dealer!, result);
+        _incomingAttacks.Remove((target, dealer!));
         if (counterDamage <= 0m || dealer!.IsDead)
         {
             return;
@@ -101,7 +105,8 @@ public class UnicornRoyalCrestRelic : ModRelicTemplate
                 choiceContext,
                 dealer,
                 counterDamage,
-                ValueProp.Move,
+                // Reflected damage is not a new card or monster attack.
+                ValueProp.Unpowered,
                 Owner.Creature,
                 null);
         }

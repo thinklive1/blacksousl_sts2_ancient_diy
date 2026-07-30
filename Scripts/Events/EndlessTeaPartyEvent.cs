@@ -22,9 +22,11 @@ public sealed class EndlessTeaPartyEvent : ModEventTemplate
 {
     private const int HatGoldCost = 106;
     private const int RestHeal = 15;
+    internal const string PortraitPath = "res://bs_ancient/assets/images/events/EndlessTeaPartyEvent.png";
+    private const string DefaultPortraitPath = "res://images/events/endless_tea_party_event.png";
 
     public override EventAssetProfile AssetProfile => new(
-        InitialPortraitPath: "res://bs_ancient/assets/images/events/EndlessTeaPartyEvent.png"
+        InitialPortraitPath: PortraitPath
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -36,6 +38,14 @@ public sealed class EndlessTeaPartyEvent : ModEventTemplate
     {
         return BsAncientConfig.EnableModEvents
             && runState.CurrentActIndex is >= 0 and <= 2;
+    }
+
+    public override IEnumerable<string> GetAssetPaths(IRunState runState)
+    {
+        return base.GetAssetPaths(runState)
+            .Where(path => path != DefaultPortraitPath)
+            .Append(PortraitPath)
+            .Distinct();
     }
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>
