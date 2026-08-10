@@ -43,5 +43,17 @@
   "BS_ANCIENT_ENCHANTMENT_SLEEP_ENCHANTMENT.extraCardText": "前[blue]{OriginalAmount}[/blue]次抽到时无法打出，第[blue]{PlayableDraw}[/blue]次抽到时醒来。醒来后获得[gold]重放[/gold][blue]{OriginalAmount}[/blue]。",
   "BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.title": "繁育",
   "BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.description": "繁育: 每回合开始时，随机消耗2张繁育卡，生成4张子卡并洗入抽/弃牌堆。子卡费用随机取自父母之一，每位父母的效果各有50%概率被独立继承。",
-  "BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.extraCardText": "每回合开始时参与繁育，可被消耗生成子卡。"
+  "BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.extraCardText": "每回合开始时参与繁育，可被消耗生成子卡。",
+  "BS_ANCIENT_ENCHANTMENT_HEART_SUIT_ENCHANTMENT.title": "红心",
+  "BS_ANCIENT_ENCHANTMENT_HEART_SUIT_ENCHANTMENT.description": "红心：每场战斗首次打出时，回复[green]1[/green]点生命。整局最多触发[blue]{Amount}[/blue]次。",
+  "BS_ANCIENT_ENCHANTMENT_HEART_SUIT_ENCHANTMENT.extraCardText": "剩余[blue]{RemainingTriggers}[/blue]次：回复[green]1[/green]点生命。",
+  "BS_ANCIENT_ENCHANTMENT_DIAMOND_SUIT_ENCHANTMENT.title": "方块",
+  "BS_ANCIENT_ENCHANTMENT_DIAMOND_SUIT_ENCHANTMENT.description": "方块：每场战斗首次打出时，获得[gold]5[/gold]金币。整局最多触发[blue]{Amount}[/blue]次。",
+  "BS_ANCIENT_ENCHANTMENT_DIAMOND_SUIT_ENCHANTMENT.extraCardText": "剩余[blue]{RemainingTriggers}[/blue]次：获得[gold]5[/gold]金币。",
+  "BS_ANCIENT_ENCHANTMENT_CLUB_SUIT_ENCHANTMENT.title": "梅花",
+  "BS_ANCIENT_ENCHANTMENT_CLUB_SUIT_ENCHANTMENT.description": "梅花：每场战斗首次打出时，本回合获得[blue]2[/blue]点[gold]力量[/gold]。整局最多触发[blue]{Amount}[/blue]次。",
+  "BS_ANCIENT_ENCHANTMENT_CLUB_SUIT_ENCHANTMENT.extraCardText": "剩余[blue]{RemainingTriggers}[/blue]次：本回合获得[blue]2[/blue]点[gold]力量[/gold]。",
+  "BS_ANCIENT_ENCHANTMENT_SPADE_SUIT_ENCHANTMENT.title": "黑桃",
+  "BS_ANCIENT_ENCHANTMENT_SPADE_SUIT_ENCHANTMENT.description": "黑桃：每场战斗首次打出时，获得[blue]3[/blue]点[gold]格挡[/gold]。整局最多触发[blue]{Amount}[/blue]次。",
+  "BS_ANCIENT_ENCHANTMENT_SPADE_SUIT_ENCHANTMENT.extraCardText": "剩余[blue]{RemainingTriggers}[/blue]次：获得[blue]3[/blue]点[gold]格挡[/gold]。"
 }

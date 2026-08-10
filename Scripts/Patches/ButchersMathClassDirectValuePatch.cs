@@ -13,25 +13,63 @@ namespace BlackSouls.Scripts;
 /// <summary>Scopes source-less command values to the card currently resolving.</summary>
 internal static class ButchersMathClassExecutionContext
 {
-    private static readonly AsyncLocal<Stack<CardModel>?> ActiveCards = new();
+    private static readonly AsyncLocal<ContextState?> CurrentState = new();
+
+    public static ResolutionScope BeginResolution(CardModel card)
+    {
+        if (card.Owner?.GetRelic<ButchersMathClassRelic>()?.Affects(card) != true)
+        {
+            return ResolutionScope.Empty;
+        }
+
+        ContextState state = CurrentState.Value ??= new ContextState();
+        lock (state.SyncRoot)
+        {
+            long scopeId = ++state.NextScopeId;
+            state.Resolutions.Add(new ResolutionFrame(scopeId, card));
+            return new ResolutionScope(state, scopeId);
+        }
+    }
 
     public static void Push(CardModel card)
     {
-        (ActiveCards.Value ??= new Stack<CardModel>()).Push(card);
+        ContextState? state = CurrentState.Value;
+        if (state == null)
+        {
+            return;
+        }
+
+        lock (state.SyncRoot)
+        {
+            ResolutionFrame? resolution = state.Resolutions.LastOrDefault(frame => frame.Card == card);
+            if (resolution != null)
+            {
+                state.ActiveCards.Add(resolution);
+            }
+        }
     }
 
     public static void Pop(CardModel card)
     {
-        Stack<CardModel>? cards = ActiveCards.Value;
-        if (cards?.TryPeek(out CardModel? activeCard) == true && activeCard == card)
+        ContextState? state = CurrentState.Value;
+        if (state == null)
         {
-            cards.Pop();
+            return;
+        }
+
+        lock (state.SyncRoot)
+        {
+            int index = state.ActiveCards.FindLastIndex(frame => frame.Card == card);
+            if (index >= 0)
+            {
+                state.ActiveCards.RemoveAt(index);
+            }
         }
     }
 
     public static void Scale(Player player, ref decimal amount)
     {
-        CardModel? card = ActiveCards.Value?.TryPeek(out CardModel? activeCard) == true ? activeCard : null;
+        CardModel? card = GetActiveCard();
         ButchersMathClassRelic? relic = card?.Owner == player ? player.GetRelic<ButchersMathClassRelic>() : null;
         if (relic?.Affects(card!) == true)
         {
@@ -48,7 +86,122 @@ internal static class ButchersMathClassExecutionContext
 
     public static bool IsActiveFor(Player player)
     {
-        return ActiveCards.Value?.TryPeek(out CardModel? card) == true && card.Owner == player && card.Owner.GetRelic<ButchersMathClassRelic>()?.Affects(card) == true;
+        CardModel? card = GetActiveCard();
+        return card?.Owner == player && card.Owner.GetRelic<ButchersMathClassRelic>()?.Affects(card) == true;
+    }
+
+    private static CardModel? GetActiveCard()
+    {
+        ContextState? state = CurrentState.Value;
+        if (state == null)
+        {
+            return null;
+        }
+
+        lock (state.SyncRoot)
+        {
+            return state.ActiveCards.LastOrDefault()?.Card;
+        }
+    }
+
+    private sealed class ContextState
+    {
+        public object SyncRoot { get; } = new();
+
+        public List<ResolutionFrame> Resolutions { get; } = [];
+
+        public List<ResolutionFrame> ActiveCards { get; } = [];
+
+        public long NextScopeId { get; set; }
+    }
+
+    private sealed record ResolutionFrame(long ScopeId, CardModel Card);
+
+    internal sealed class ResolutionScope : IDisposable
+    {
+        internal static ResolutionScope Empty { get; } = new(null, 0);
+
+        private ContextState? _state;
+        private readonly long _scopeId;
+
+        internal ResolutionScope(object? state, long scopeId)
+        {
+            _state = state as ContextState;
+            _scopeId = scopeId;
+        }
+
+        public Task Wrap(Task task)
+        {
+            return _state == null ? task : AsyncTaskCleanup.Run(task, Dispose);
+        }
+
+        public void Dispose()
+        {
+            ContextState? state = Interlocked.Exchange(ref _state, null);
+            if (state == null)
+            {
+                return;
+            }
+
+            lock (state.SyncRoot)
+            {
+                state.ActiveCards.RemoveAll(frame => frame.ScopeId == _scopeId);
+                state.Resolutions.RemoveAll(frame => frame.ScopeId == _scopeId);
+                if (state.Resolutions.Count == 0 && ReferenceEquals(CurrentState.Value, state))
+                {
+                    CurrentState.Value = null;
+                }
+            }
+        }
+
+    }
+}
+
+internal static class AsyncTaskCleanup
+{
+    public static async Task Run(Task task, Action cleanup)
+    {
+        try
+        {
+            await task;
+        }
+        finally
+        {
+            cleanup();
+        }
+    }
+}
+
+/// <summary>Guarantees that direct-value scaling is cleared when card resolution exits or fails.</summary>
+[HarmonyPatch(
+    typeof(CardModel),
+    nameof(CardModel.OnPlayWrapper),
+    [typeof(PlayerChoiceContext), typeof(Creature), typeof(bool), typeof(ResourceInfo), typeof(bool)])]
+internal static class ButchersMathClassResolutionScopePatch
+{
+    [HarmonyPrefix]
+    private static void Begin(CardModel __instance, out ButchersMathClassExecutionContext.ResolutionScope __state)
+    {
+        __state = ButchersMathClassExecutionContext.BeginResolution(__instance);
+    }
+
+    [HarmonyPostfix]
+    private static void Complete(ref Task __result, ButchersMathClassExecutionContext.ResolutionScope __state)
+    {
+        __result = __state.Wrap(__result);
+    }
+
+    [HarmonyFinalizer]
+    private static Exception? CleanUpSynchronousFailure(
+        Exception? __exception,
+        ButchersMathClassExecutionContext.ResolutionScope __state)
+    {
+        if (__exception != null)
+        {
+            __state.Dispose();
+        }
+
+        return __exception;
     }
 }
 

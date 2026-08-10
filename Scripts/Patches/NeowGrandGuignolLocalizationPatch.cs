@@ -1,4 +1,3 @@
-using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Localization;
 using STS2RitsuLib.Utils;
@@ -10,8 +9,6 @@ namespace BlackSouls.Scripts;
 public static class NeowGrandGuignolLocalizationPatch
 {
     private const string AncientTableName = "ancients";
-
-    private static readonly FieldInfo TableNameField = AccessTools.Field(typeof(LocTable), "_name");
 
     private static readonly Dictionary<string, string> ChineseReplacements = new()
     {
@@ -94,7 +91,7 @@ public static class NeowGrandGuignolLocalizationPatch
     [HarmonyPostfix]
     public static void GetLocStringsWithPrefixPostfix(LocTable __instance, string keyPrefix, ref IReadOnlyList<LocString> __result)
     {
-        if (!BsAncientConfig.ReplaceNeowAppearance || GetTableName(__instance) != AncientTableName)
+        if (!BsAncientConfig.ReplaceNeowAppearance || !IsAncientTable(__instance))
         {
             return;
         }
@@ -118,13 +115,25 @@ public static class NeowGrandGuignolLocalizationPatch
         replacement = null;
         Dictionary<string, string> replacements = GetCurrentReplacements();
         return BsAncientConfig.ReplaceNeowAppearance
-            && GetTableName(table) == AncientTableName
+            && IsAncientTable(table)
             && replacements.TryGetValue(key, out replacement);
     }
 
-    private static string? GetTableName(LocTable table)
+    private static bool IsAncientTable(LocTable table)
     {
-        return TableNameField.GetValue(table) as string;
+        if (LocManager.Instance == null)
+        {
+            return false;
+        }
+
+        try
+        {
+            return ReferenceEquals(LocManager.Instance.GetTable(AncientTableName), table);
+        }
+        catch (LocException)
+        {
+            return false;
+        }
     }
 
     private static Dictionary<string, string> GetCurrentReplacements()

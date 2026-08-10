@@ -35,14 +35,14 @@ public static class BellmansPageHiddenEventOptionPatch
         if (options.Count == 0
             || options.Any(option => option.TextKey == HiddenOptionKey)
             || !options.Any(IsBellmanEventOption)
-            || SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BellmansPageRelic>(__instance.Owner)
-            || __instance.Owner.RunState.Rng.Niche.NextInt(100) >= AppearanceChancePercent)
+            || !SnarkPageRelicTrackerModifier.ShouldOfferHiddenOption<BellmansPageRelic>(
+                __instance,
+                AppearanceChancePercent))
         {
             eventOptions = options;
             return;
         }
 
-        SnarkPageRelicTrackerModifier.MarkAppeared<BellmansPageRelic>(__instance.Owner);
         options.Add(CreateHiddenOption(__instance));
         eventOptions = options;
     }

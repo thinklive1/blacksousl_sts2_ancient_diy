@@ -18,6 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="tests\**\*.cs" />
+
     <Reference Include="sts2">
       <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
       <Private>true</Private>
@@ -29,12 +31,12 @@
     </Reference>
 
   <!-- 固定 RitsuLib 版本，避免 Version="*" 在发布时绑定到玩家未安装的新程序集版本 -->
-  <PackageReference Include="STS2.RitsuLib" Version="0.4.62" />
+  <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.5.10" />
   <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
   </ItemGroup>
 
   <!-- 自动复制dll、json和README -->
-  <Target Name="Copy Mod" AfterTargets="PostBuildEvent">
+  <Target Name="Copy Mod" AfterTargets="PostBuildEvent" Condition="'$(SkipModDeployment)' != 'true'">
     <Message Text="Copying mod to Steam Workshop uploader workspace..." Importance="high" />
     <MakeDir Directories="$(WorkshopUploadContentDir)" />
     <Delete Files="$(WorkshopUploadContentDir)\$(MSBuildProjectName)_config.cfg" TreatErrorsAsWarnings="true" />

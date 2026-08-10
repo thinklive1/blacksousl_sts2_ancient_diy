@@ -15,6 +15,7 @@ public static class BeaversBiologyClassHiddenEventOptionPatch
 {
     private const string HiddenOptionKey = "BS_ANCIENT_EASTER_EGG_BEVERS_BIOLOGY_CLASS_OPTION";
     private const string ButchersHiddenOptionKey = "BS_ANCIENT_EASTER_EGG_BUTCHERS_MATH_CLASS_OPTION";
+    private const string HiddenLessonRollId = "BS_ANCIENT_HIDDEN_HISTORY_LESSON";
     private const string HistoryCourseOptionKey = "WAR_HISTORIAN_REPY.pages.INITIAL.options.UNLOCK_CAGE";
     private const float HiddenAlpha = 0f;
     private const float HoverAlpha = 0.08f;
@@ -36,26 +37,47 @@ public static class BeaversBiologyClassHiddenEventOptionPatch
         if (options.Count == 0
             || options.Any(option => option.TextKey is HiddenOptionKey or ButchersHiddenOptionKey)
             || !options.Any(option => option.TextKey == HistoryCourseOptionKey)
-            || SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BeaversBiologyClassRelic>(__instance.Owner)
-            || SnarkPageRelicTrackerModifier.HasAppearedOrOwned<ButchersMathClassRelic>(__instance.Owner)
-            || __instance.Owner.RunState.Rng.Niche.NextInt(100) >= AppearanceChancePercent)
+            || __instance.Owner.GetRelic<BeaversBiologyClassRelic>() != null
+            || __instance.Owner.GetRelic<ButchersMathClassRelic>() != null)
         {
             eventOptions = options;
             return;
         }
 
-        bool chooseBiologyClass = __instance.Owner.RunState.Rng.Niche.NextInt(2) == 0;
-        if (chooseBiologyClass)
+        int lesson = SnarkPageRelicTrackerModifier.GetOrCreateHiddenOptionOutcome(
+            __instance,
+            HiddenLessonRollId,
+            () => RollHiddenLesson(__instance));
+        if (lesson == 0)
         {
-            SnarkPageRelicTrackerModifier.MarkAppeared<BeaversBiologyClassRelic>(__instance.Owner);
-        }
-        else
-        {
-            SnarkPageRelicTrackerModifier.MarkAppeared<ButchersMathClassRelic>(__instance.Owner);
+            eventOptions = options;
+            return;
         }
 
+        bool chooseBiologyClass = lesson == 1;
         options.Add(CreateHiddenOption(__instance, chooseBiologyClass));
         eventOptions = options;
+    }
+
+    private static int RollHiddenLesson(EventModel eventModel)
+    {
+        if (eventModel.Owner == null
+            || SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BeaversBiologyClassRelic>(eventModel.Owner)
+            || SnarkPageRelicTrackerModifier.HasAppearedOrOwned<ButchersMathClassRelic>(eventModel.Owner)
+            || eventModel.Owner.RunState.Rng.Niche.NextInt(100) >= AppearanceChancePercent)
+        {
+            return 0;
+        }
+
+        bool chooseBiologyClass = eventModel.Owner.RunState.Rng.Niche.NextInt(2) == 0;
+        if (chooseBiologyClass)
+        {
+            SnarkPageRelicTrackerModifier.MarkAppeared<BeaversBiologyClassRelic>(eventModel.Owner);
+            return 1;
+        }
+
+        SnarkPageRelicTrackerModifier.MarkAppeared<ButchersMathClassRelic>(eventModel.Owner);
+        return 2;
     }
 
     [HarmonyPatch(typeof(NEventOptionButton), nameof(NEventOptionButton._Ready))]

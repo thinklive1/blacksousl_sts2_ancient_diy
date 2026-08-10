@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
+using System.Text.Json;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
@@ -13,6 +14,8 @@ public sealed class SnarkPageRelicTrackerModifier : ModModifierTemplate
     private const char RelicIdSeparator = '|';
     private const string TransparentIconPath = "res://bs_ancient/assets/images/modifiers/TransparentModifier.png";
     private string _appearedRelicIds = string.Empty;
+    private string _hiddenOptionOutcomesSerialized = string.Empty;
+    private Dictionary<string, int>? _hiddenOptionOutcomes;
 
     public override ModifierAssetProfile AssetProfile => new(TransparentIconPath);
 
@@ -24,6 +27,18 @@ public sealed class SnarkPageRelicTrackerModifier : ModModifierTemplate
         {
             AssertMutable();
             _appearedRelicIds = value ?? string.Empty;
+        }
+    }
+
+    [SavedProperty]
+    public string BlackSouls_HiddenSnarkOptionOutcomes
+    {
+        get => _hiddenOptionOutcomesSerialized;
+        set
+        {
+            AssertMutable();
+            _hiddenOptionOutcomesSerialized = value ?? string.Empty;
+            _hiddenOptionOutcomes = null;
         }
     }
 
@@ -45,6 +60,46 @@ public sealed class SnarkPageRelicTrackerModifier : ModModifierTemplate
     public static void MarkAppeared<T>(IRunState runState) where T : RelicModel
     {
         MarkAppeared(runState, ModelDb.Relic<T>().Id.Entry);
+    }
+
+    /// <summary>Rolls one hidden relic option once for each eligible event instance.</summary>
+    public static bool ShouldOfferHiddenOption<T>(EventModel eventModel, int chancePercent) where T : RelicModel
+    {
+        Player? owner = eventModel.Owner;
+        if (owner == null || owner.GetRelic<T>() != null)
+        {
+            return false;
+        }
+
+        string optionId = ModelDb.Relic<T>().Id.Entry;
+        int outcome = GetOrCreateHiddenOptionOutcome(eventModel, optionId, () =>
+        {
+            if (HasAppeared<T>(owner.RunState))
+            {
+                return 0;
+            }
+
+            bool shouldAppear = owner.RunState.Rng.Niche.NextInt(100) < Math.Clamp(chancePercent, 0, 100);
+            if (shouldAppear)
+            {
+                MarkAppeared<T>(owner);
+            }
+
+            return shouldAppear ? 1 : 0;
+        });
+        return outcome == 1;
+    }
+
+    /// <summary>Persists a custom hidden-option outcome for an event and reuses it after page refreshes.</summary>
+    public static int GetOrCreateHiddenOptionOutcome(EventModel eventModel, string optionId, Func<int> createOutcome)
+    {
+        if (eventModel.Owner?.RunState is not { } runState)
+        {
+            return 0;
+        }
+
+        SnarkPageRelicTrackerModifier? tracker = FindOrCreate(runState);
+        return tracker?.GetOrCreateHiddenOptionOutcome(eventModel.Id.Entry, optionId, createOutcome) ?? 0;
     }
 
     private static bool HasAppeared<T>(IRunState runState) where T : RelicModel
@@ -100,5 +155,58 @@ public sealed class SnarkPageRelicTrackerModifier : ModModifierTemplate
         return BlackSouls_AppearedSnarkPageRelicIds
             .Split(RelicIdSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .ToHashSet(StringComparer.Ordinal);
+    }
+
+    private int GetOrCreateHiddenOptionOutcome(string eventId, string optionId, Func<int> createOutcome)
+    {
+        Dictionary<string, int> outcomes = HiddenOptionOutcomes;
+        int outcome = HiddenOptionRollLedger.GetOrCreate(outcomes, eventId, optionId, createOutcome);
+        BlackSouls_HiddenSnarkOptionOutcomes = JsonSerializer.Serialize(
+            outcomes.OrderBy(entry => entry.Key, StringComparer.Ordinal).ToDictionary());
+        _hiddenOptionOutcomes = outcomes;
+        return outcome;
+    }
+
+    private Dictionary<string, int> HiddenOptionOutcomes =>
+        _hiddenOptionOutcomes ??= DeserializeHiddenOptionOutcomes(BlackSouls_HiddenSnarkOptionOutcomes);
+
+    private static Dictionary<string, int> DeserializeHiddenOptionOutcomes(string serialized)
+    {
+        if (string.IsNullOrWhiteSpace(serialized))
+        {
+            return [];
+        }
+
+        try
+        {
+            return JsonSerializer.Deserialize<Dictionary<string, int>>(serialized) ?? [];
+        }
+        catch (JsonException)
+        {
+            return [];
+        }
+    }
+}
+
+/// <summary>Stores deterministic hidden-option outcomes by event and option identity.</summary>
+internal static class HiddenOptionRollLedger
+{
+    private const char KeySeparator = '\u001f';
+
+    public static int GetOrCreate(
+        IDictionary<string, int> outcomes,
+        string eventId,
+        string optionId,
+        Func<int> createOutcome)
+    {
+        string key = $"{eventId}{KeySeparator}{optionId}";
+        if (outcomes.TryGetValue(key, out int existing))
+        {
+            return existing;
+        }
+
+        int outcome = createOutcome();
+        outcomes[key] = outcome;
+        return outcome;
     }
 }

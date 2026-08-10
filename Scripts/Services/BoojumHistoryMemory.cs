@@ -108,12 +108,17 @@ public sealed class BoojumMemoryRecord
 public static class BoojumHistoryPurge
 {
     private const string BackupSuffix = ".boojum.bak";
-    private static bool _eraseCurrentRunHistoryAfterSave;
+    private static readonly object PendingErasureLock = new();
+    private static CurrentRunHistoryTarget? _pendingCurrentRunErasure;
 
-    /// <summary>Retained for callers that begin a Boojum combat; memory erasure is immediate.</summary>
+    /// <summary>Clears any stale loss marker when a new Boojum combat begins.</summary>
     public static void Reset(ICombatState? combatState = null)
     {
         _ = combatState;
+        lock (PendingErasureLock)
+        {
+            _pendingCurrentRunErasure = null;
+        }
     }
 
     /// <summary>Backs up and erases a history as soon as its entire memory segment is consumed.</summary>
@@ -125,22 +130,56 @@ public static class BoojumHistoryPurge
         }
     }
 
-    /// <summary>Marks the current run's final history entry for erasure after a lost Boojum battle.</summary>
-    public static void ArmCurrentRunHistoryErasure()
+    /// <summary>Marks one exact profile and run history for erasure after a lost Boojum battle.</summary>
+    public static void ArmCurrentRunHistoryErasure(int profileId, long runStartTime)
     {
-        _eraseCurrentRunHistoryAfterSave = true;
+        lock (PendingErasureLock)
+        {
+            _pendingCurrentRunErasure = new CurrentRunHistoryTarget(profileId, runStartTime);
+        }
     }
 
     /// <summary>Erases the just-saved current run history only when a Boojum loss armed the marker.</summary>
     public static void PurgeCurrentRunHistoryAfterSave(RunHistory history)
     {
-        if (!_eraseCurrentRunHistoryAfterSave)
+        if (!SaveManager.Instance.IsProfileInitialized)
         {
+            Reset();
+            Entry.Logger.Warn("Boojum cancelled pending run-history erasure because no profile is initialized.");
             return;
         }
 
-        _eraseCurrentRunHistoryAfterSave = false;
+        int profileId = SaveManager.Instance.CurrentProfileId;
+        if (!TryConsumeCurrentRunHistoryErasure(profileId, history.StartTime, out CurrentRunHistoryTarget? expected))
+        {
+            if (expected != null)
+            {
+                Entry.Logger.Warn(
+                    $"Boojum refused to erase mismatched run history. "
+                    + $"Expected profile {expected.Value.ProfileId}, run {expected.Value.RunStartTime}; "
+                    + $"received profile {profileId}, run {history.StartTime}.");
+            }
+
+            return;
+        }
+
         EraseHistoryFile($"{history.StartTime}.run");
+    }
+
+    internal static bool TryConsumeCurrentRunHistoryErasure(
+        int profileId,
+        long runStartTime,
+        out CurrentRunHistoryTarget? expected)
+    {
+        lock (PendingErasureLock)
+        {
+            expected = _pendingCurrentRunErasure;
+            _pendingCurrentRunErasure = null;
+        }
+
+        return expected is { } target
+            && target.ProfileId == profileId
+            && target.RunStartTime == runStartTime;
     }
 
     private static void EraseHistoryFile(string fileName)
@@ -209,3 +248,5 @@ public static class BoojumHistoryPurge
         return field?.GetValue(SaveManager.Instance) as ISaveStore;
     }
 }
+
+internal readonly record struct CurrentRunHistoryTarget(int ProfileId, long RunStartTime);

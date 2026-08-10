@@ -13,6 +13,7 @@ public sealed class AncientRelicPool : RelicPoolModel
     {
         // Grand Guignol
         yield return ModelDb.Relic<RethinkPokerRelic>();
+        yield return ModelDb.Relic<QueenOfHeartsPlayingCardDeckRelic>();
         yield return ModelDb.Relic<WormSmokeRelic>();
         yield return ModelDb.Relic<MargaretRelic>();
         yield return ModelDb.Relic<AngelFeatherRelic>();

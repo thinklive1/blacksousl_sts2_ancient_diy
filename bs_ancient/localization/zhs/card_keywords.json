@@ -11,4 +11,7 @@
 	"BS_ANCIENT_KEYWORD_KILLING_BLOW.title": "斩杀",
 	"BS_ANCIENT_KEYWORD_SAN.description": "手镜系列共用的精神值，初始为[blue]50[/blue]，跨整局保存。受到攻击并失去生命时减少[blue]5[/blue]点，多段攻击每段单独结算；战斗胜利后增加[blue]20[/blue]点，但最多恢复到[blue]80[/blue]。SAN 大于等于[blue]100[/blue]时进入[gold]理性[/gold]状态：敌方全体获得[blue]1[/blue]层[gold]易伤[/gold]与[gold]虚弱[/gold]，战斗中不会再获得状态牌；退出理性状态时，失去[blue]1[/blue]点能量并获得[blue]1[/blue]层[gold]虚弱[/gold]。SAN 小于等于[red]-100[/red]时进入低 SAN 状态：抽到的牌会在本场战斗内随机变化为本职业可获得牌、诅咒或状态，变化牌会升级；你造成和受到的伤害均提高[green]50%[/green]。",
 	"BS_ANCIENT_KEYWORD_SAN.title": "SAN"
+	,
+	"BS_ANCIENT_KEYWORD_TEXAS_HOLDEM_RULES.description": "手牌中拥有花色附魔的牌，以附魔层数作为牌面点数，从[gold]对子[/gold]、[gold]两对[/gold]、[gold]三条[/gold]、[gold]顺子[/gold]、[gold]同花[/gold]、[gold]葫芦[/gold]、[gold]四条[/gold]、[gold]同花顺[/gold]与[gold]皇家同花顺[/gold]中选取最强牌型。A既可作为[blue]1[/blue]，也可用于[blue]10-J-Q-K-A[/blue]。",
+	"BS_ANCIENT_KEYWORD_TEXAS_HOLDEM_RULES.title": "德州扑克规则"
 }

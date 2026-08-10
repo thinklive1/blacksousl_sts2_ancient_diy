@@ -23,36 +23,6 @@ public static class AliceCurseEasterEggVisualPatch
     private const string AliceCursePortraitPath = "res://bs_ancient/assets/images/cards/AliceCurseCard.png";
     private const string CanvasGroupMaskMaterialPath = "res://scenes/cards/card_canvas_group_mask_material.tres";
 
-    private static readonly AccessTools.FieldRef<NCard, TextureRect> AncientBorderRef =
-        AccessTools.FieldRefAccess<NCard, TextureRect>("_ancientBorder");
-
-    private static readonly AccessTools.FieldRef<NCard, Control> AncientBannerRef =
-        AccessTools.FieldRefAccess<NCard, Control>("_ancientBanner");
-
-    private static readonly AccessTools.FieldRef<NCard, TextureRect> AncientPortraitRef =
-        AccessTools.FieldRefAccess<NCard, TextureRect>("_ancientPortrait");
-
-    private static readonly AccessTools.FieldRef<NCard, TextureRect> AncientTextBgRef =
-        AccessTools.FieldRefAccess<NCard, TextureRect>("_ancientTextBg");
-
-    private static readonly AccessTools.FieldRef<NCard, TextureRect> BannerRef =
-        AccessTools.FieldRefAccess<NCard, TextureRect>("_banner");
-
-    private static readonly AccessTools.FieldRef<NCard, TextureRect> FrameRef =
-        AccessTools.FieldRefAccess<NCard, TextureRect>("_frame");
-
-    private static readonly AccessTools.FieldRef<NCard, TextureRect> PortraitRef =
-        AccessTools.FieldRefAccess<NCard, TextureRect>("_portrait");
-
-    private static readonly AccessTools.FieldRef<NCard, TextureRect> PortraitBorderRef =
-        AccessTools.FieldRefAccess<NCard, TextureRect>("_portraitBorder");
-
-    private static readonly AccessTools.FieldRef<NCard, CanvasGroup> PortraitCanvasGroupRef =
-        AccessTools.FieldRefAccess<NCard, CanvasGroup>("_portraitCanvasGroup");
-
-    private static readonly AccessTools.FieldRef<NCard, Material?> CanvasGroupMaskMaterialRef =
-        AccessTools.FieldRefAccess<NCard, Material?>("_canvasGroupMaskMaterial");
-
     private static LocString GarbledLocString => new("powers", GarbledLocKey);
 
     private static string GarbledText => GarbledLocString.GetFormattedText();
@@ -138,21 +108,40 @@ public static class AliceCurseEasterEggVisualPatch
             return;
         }
 
-        PortraitBorderRef(card).Visible = false;
-        PortraitRef(card).Visible = false;
-        FrameRef(card).Visible = false;
-        BannerRef(card).Visible = false;
+        TextureRect? portraitBorder = card.GetNodeOrNull<TextureRect>("%PortraitBorder");
+        TextureRect? portrait = card.GetNodeOrNull<TextureRect>("%Portrait");
+        TextureRect? frame = card.GetNodeOrNull<TextureRect>("%Frame");
+        TextureRect? banner = card.GetNodeOrNull<TextureRect>("%TitleBanner");
+        TextureRect? ancientPortrait = card.GetNodeOrNull<TextureRect>("%AncientPortrait");
+        TextureRect? ancientBorder = card.GetNodeOrNull<TextureRect>("%AncientBorder");
+        TextureRect? ancientTextBg = card.GetNodeOrNull<TextureRect>("%AncientTextBg");
+        Control? ancientBanner = card.GetNodeOrNull<Control>("%AncientBanner");
+        CanvasGroup? portraitCanvasGroup = card.GetNodeOrNull<CanvasGroup>("%PortraitCanvasGroup");
+        if (portraitBorder == null
+            || portrait == null
+            || frame == null
+            || banner == null
+            || ancientPortrait == null
+            || ancientBorder == null
+            || ancientTextBg == null
+            || ancientBanner == null
+            || portraitCanvasGroup == null)
+        {
+            return;
+        }
 
-        AncientPortraitRef(card).Visible = true;
-        AncientBorderRef(card).Visible = true;
-        AncientTextBgRef(card).Visible = true;
-        AncientBannerRef(card).Visible = true;
-        AncientPortraitRef(card).Texture = AliceCursePortrait;
-        AncientTextBgRef(card).Texture = GetAncientTextBg(card.Model.Type);
+        portraitBorder.Visible = false;
+        portrait.Visible = false;
+        frame.Visible = false;
+        banner.Visible = false;
 
-        ref Material? maskMaterial = ref CanvasGroupMaskMaterialRef(card);
-        maskMaterial ??= PreloadManager.Cache.GetMaterial(CanvasGroupMaskMaterialPath);
-        PortraitCanvasGroupRef(card).Material = maskMaterial;
+        ancientPortrait.Visible = true;
+        ancientBorder.Visible = true;
+        ancientTextBg.Visible = true;
+        ancientBanner.Visible = true;
+        ancientPortrait.Texture = AliceCursePortrait;
+        ancientTextBg.Texture = GetAncientTextBg(card.Model.Type);
+        portraitCanvasGroup.Material = PreloadManager.Cache.GetMaterial(CanvasGroupMaskMaterialPath);
     }
 
     private static bool ShouldGarbledCard(CardModel card)

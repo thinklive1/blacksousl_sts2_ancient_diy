@@ -27,8 +27,13 @@ public class FairyTaleModeCharacterSelectPatch : IPatchMethod
 
     public static void Postfix(NCharacterSelectScreen __instance)
     {
-        if (__instance.GetNodeOrNull<Button>(ToggleName) != null
-            || __instance.GetNodeOrNull<Label>($"{ToggleName}Warning") != null)
+        if (__instance.GetNodeOrNull<Button>(ToggleName) is { } existingToggle)
+        {
+            BsAncientRunOptions.FairyTaleModeForNextRun = existingToggle.ButtonPressed;
+            return;
+        }
+
+        if (__instance.GetNodeOrNull<Label>($"{ToggleName}Warning") != null)
         {
             return;
         }

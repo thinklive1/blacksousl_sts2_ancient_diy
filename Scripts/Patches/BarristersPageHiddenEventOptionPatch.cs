@@ -35,14 +35,14 @@ public static class BarristersPageHiddenEventOptionPatch
         if (options.Count == 0
             || options.Any(option => option.TextKey == HiddenOptionKey)
             || !options.Any(IsDeathOption)
-            || SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BarristersPageRelic>(__instance.Owner)
-            || __instance.Owner.RunState.Rng.Niche.NextInt(100) >= AppearanceChancePercent)
+            || !SnarkPageRelicTrackerModifier.ShouldOfferHiddenOption<BarristersPageRelic>(
+                __instance,
+                AppearanceChancePercent))
         {
             eventOptions = options;
             return;
         }
 
-        SnarkPageRelicTrackerModifier.MarkAppeared<BarristersPageRelic>(__instance.Owner);
         options.Add(CreateHiddenOption(__instance));
         eventOptions = options;
     }

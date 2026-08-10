@@ -7,6 +7,8 @@ namespace BlackSouls.Scripts;
 public static class BsAncientConfig
 {
     private const string ConfigFileName = "bs_ancient_config.cfg";
+    private const string CorruptConfigSuffix = ".corrupt";
+    private static readonly JsonSerializerOptions SerializerOptions = new() { WriteIndented = true };
 
     private static string? _configPath;
 
@@ -42,23 +44,74 @@ public static class BsAncientConfig
 
     public static void Load(Assembly assembly)
     {
-        string configPath = GetConfigPath(assembly);
+        LoadFromPath(GetConfigPath(assembly), message => Entry.Logger.Warn(message));
+    }
+
+    internal static void LoadFromPath(string configPath, Action<string>? warn = null)
+    {
         _configPath = configPath;
+        ResetToDefaults();
         if (!File.Exists(configPath))
         {
-            SaveDefault(configPath);
+            TrySaveCurrent(configPath, warn);
             return;
         }
 
-        string json = File.ReadAllText(configPath);
-        bool shouldWriteBack = !HasAllConfigFields(json);
-        FileConfig? config = JsonSerializer.Deserialize<FileConfig>(json);
-        if (config == null)
+        try
         {
-            SaveDefault(configPath);
+            string json = File.ReadAllText(configPath);
+            bool shouldWriteBack = !HasAllConfigFields(json);
+            FileConfig config = JsonSerializer.Deserialize<FileConfig>(json)
+                ?? throw new JsonException("The configuration root was null.");
+
+            Apply(config);
+            if (GrandGuignolInitialRelicChance != config.GrandGuignolInitialRelicChance)
+            {
+                shouldWriteBack = true;
+            }
+
+            if (shouldWriteBack)
+            {
+                TrySaveCurrent(configPath, warn);
+            }
+        }
+        catch (JsonException exception)
+        {
+            RecoverCorruptConfig(configPath, exception, warn);
+        }
+        catch (NotSupportedException exception)
+        {
+            RecoverCorruptConfig(configPath, exception, warn);
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            warn?.Invoke($"Could not read BS Ancient configuration '{configPath}'. Defaults will be used: {exception.Message}");
+        }
+    }
+
+    public static void Save()
+    {
+        if (string.IsNullOrWhiteSpace(_configPath))
+        {
             return;
         }
 
+        TrySaveCurrent(_configPath, message => Entry.Logger.Warn(message));
+    }
+
+    private static string GetConfigPath(Assembly assembly)
+    {
+        string? assemblyDirectory = Path.GetDirectoryName(assembly.Location);
+        if (string.IsNullOrWhiteSpace(assemblyDirectory))
+        {
+            assemblyDirectory = AppContext.BaseDirectory;
+        }
+
+        return Path.Combine(assemblyDirectory, ConfigFileName);
+    }
+
+    private static void Apply(FileConfig config)
+    {
         OnlyUseModAncients = config.OnlyUseModAncients;
         DisableModAncients = config.DisableModAncients;
         ReplaceNeowAppearance = config.ReplaceNeowAppearance;
@@ -86,42 +139,11 @@ public static class BsAncientConfig
         AllowShadowDemonessMyth = config.AllowShadowDemonessMyth;
         AllowHaraldShipmanNews = config.AllowHaraldShipmanNews;
         AllowJackKetchNews = config.AllowJackKetchNews;
-
-        if (GrandGuignolInitialRelicChance != config.GrandGuignolInitialRelicChance)
-        {
-            shouldWriteBack = true;
-        }
-
-        if (shouldWriteBack)
-        {
-            SaveCurrent(configPath);
-        }
     }
 
-    public static void Save()
+    private static FileConfig CaptureCurrent()
     {
-        if (string.IsNullOrWhiteSpace(_configPath))
-        {
-            return;
-        }
-
-        SaveCurrent(_configPath);
-    }
-
-    private static string GetConfigPath(Assembly assembly)
-    {
-        string? assemblyDirectory = Path.GetDirectoryName(assembly.Location);
-        if (string.IsNullOrWhiteSpace(assemblyDirectory))
-        {
-            assemblyDirectory = AppContext.BaseDirectory;
-        }
-
-        return Path.Combine(assemblyDirectory, ConfigFileName);
-    }
-
-    private static void SaveDefault(string configPath)
-    {
-        FileConfig config = new()
+        return new FileConfig
         {
             OnlyUseModAncients = OnlyUseModAncients,
             DisableModAncients = DisableModAncients,
@@ -151,44 +173,77 @@ public static class BsAncientConfig
             AllowHaraldShipmanNews = AllowHaraldShipmanNews,
             AllowJackKetchNews = AllowJackKetchNews,
         };
-        string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(configPath, json);
     }
 
-    private static void SaveCurrent(string configPath)
+    private static void ResetToDefaults()
     {
-        FileConfig config = new()
+        Apply(new FileConfig());
+    }
+
+    private static void RecoverCorruptConfig(string configPath, Exception exception, Action<string>? warn)
+    {
+        string backupPath = GetAvailableCorruptBackupPath(configPath);
+        try
         {
-            OnlyUseModAncients = OnlyUseModAncients,
-            DisableModAncients = DisableModAncients,
-            ReplaceNeowAppearance = ReplaceNeowAppearance,
-            EnableModEvents = EnableModEvents,
-            DisableTestingEvents = DisableTestingEvents,
-            EnableFairyTaleMode = EnableFairyTaleMode,
-            EnablePositiveFairyTaleRelics = EnablePositiveFairyTaleRelics,
-            EnableNegativeFairyTaleRelics = EnableNegativeFairyTaleRelics,
-            HasShownSettingsToast = HasShownSettingsToast,
-            GrandGuignolInitialRelicChance = GrandGuignolInitialRelicChance,
-            AllowAliceThroughLookingGlass = AllowAliceThroughLookingGlass,
-            AllowCinderella = AllowCinderella,
-            AllowFrogPrincess = AllowFrogPrincess,
-            AllowGreedyDog = AllowGreedyDog,
-            AllowMermaidPrincess = AllowMermaidPrincess,
-            AllowMonkeyCrabBattle = AllowMonkeyCrabBattle,
-            AllowNorthWindAndSun = AllowNorthWindAndSun,
-            AllowPeterPan = AllowPeterPan,
-            AllowUglyDuckling = AllowUglyDuckling,
-            AllowSleepGodMyth = AllowSleepGodMyth,
-            AllowLakeGodMyth = AllowLakeGodMyth,
-            AllowDarkGoatOfTheWoodsMyth = AllowDarkGoatOfTheWoodsMyth,
-            AllowGreatStagGoddessMyth = AllowGreatStagGoddessMyth,
-            AllowBlackThingMyth = AllowBlackThingMyth,
-            AllowShadowDemonessMyth = AllowShadowDemonessMyth,
-            AllowHaraldShipmanNews = AllowHaraldShipmanNews,
-            AllowJackKetchNews = AllowJackKetchNews,
-        };
-        string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(configPath, json);
+            File.Move(configPath, backupPath);
+            warn?.Invoke(
+                $"Invalid BS Ancient configuration was moved to '{backupPath}'. "
+                + $"Defaults were restored: {exception.Message}");
+        }
+        catch (Exception backupException) when (backupException is IOException or UnauthorizedAccessException)
+        {
+            warn?.Invoke(
+                $"Invalid BS Ancient configuration could not be backed up. Defaults will replace it: "
+                + $"{backupException.Message}");
+        }
+
+        ResetToDefaults();
+        TrySaveCurrent(configPath, warn);
+    }
+
+    private static string GetAvailableCorruptBackupPath(string configPath)
+    {
+        string candidate = configPath + CorruptConfigSuffix;
+        for (int suffix = 1; File.Exists(candidate); suffix++)
+        {
+            candidate = $"{configPath}{CorruptConfigSuffix}.{suffix}";
+        }
+
+        return candidate;
+    }
+
+    private static bool TrySaveCurrent(string configPath, Action<string>? warn)
+    {
+        string? directory = Path.GetDirectoryName(configPath);
+        string temporaryPath = $"{configPath}.{Guid.NewGuid():N}.tmp";
+        try
+        {
+            if (!string.IsNullOrWhiteSpace(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            string json = JsonSerializer.Serialize(CaptureCurrent(), SerializerOptions);
+            File.WriteAllText(temporaryPath, json);
+            File.Move(temporaryPath, configPath, overwrite: true);
+            return true;
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            warn?.Invoke($"Could not save BS Ancient configuration '{configPath}': {exception.Message}");
+            return false;
+        }
+        finally
+        {
+            try
+            {
+                File.Delete(temporaryPath);
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+            {
+                warn?.Invoke($"Could not remove temporary BS Ancient configuration '{temporaryPath}': {exception.Message}");
+            }
+        }
     }
 
     private static bool HasAllConfigFields(string json)

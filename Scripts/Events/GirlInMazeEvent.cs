@@ -20,18 +20,6 @@ public sealed class GirlInMazeEvent : ModEventTemplate
     private const int MaxHpGain = 8;
     private const string PortraitPath = "res://bs_ancient/assets/images/events/GirlInMazeEvent.png";
     private const string DefaultPortraitPath = "res://images/events/bs_ancient_event_girl_in_maze_event.png";
-    private static readonly System.Reflection.PropertyInfo? EventOptionTextKeyProperty =
-        typeof(EventOption).GetProperty(
-            nameof(EventOption.TextKey),
-            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
-    private static readonly System.Reflection.PropertyInfo? EventOptionTitleProperty =
-        typeof(EventOption).GetProperty(
-            nameof(EventOption.Title),
-            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
-    private static readonly System.Reflection.PropertyInfo? EventOptionDescriptionProperty =
-        typeof(EventOption).GetProperty(
-            nameof(EventOption.Description),
-            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
 
     public override EventAssetProfile AssetProfile => new(
         InitialPortraitPath: PortraitPath
@@ -71,15 +59,12 @@ public sealed class GirlInMazeEvent : ModEventTemplate
     private EventOption PickUpMirrorOption()
     {
         string textKey = InitialOptionKey("PICK_UP");
-        EventOption option = RelicOption<GirlHandMirrorRelic>(PickUpMirror, textKey);
-        RestoreOptionText(option, textKey);
-        return option;
+        return MirrorOption(PickUpMirror, textKey);
     }
 
     private EventOption PlainOption(Func<Task> onChosen, string textKey)
     {
-        EventOption option = RelicOption<GirlHandMirrorRelic>(onChosen, textKey);
-        RestoreOptionText(option, textKey);
+        EventOption option = MirrorOption(onChosen, textKey);
         option.HoverTips = [];
         return option;
     }
@@ -87,23 +72,21 @@ public sealed class GirlInMazeEvent : ModEventTemplate
     private EventOption BreakMirrorOption()
     {
         string textKey = InitialOptionKey("BREAK");
-        EventOption option = RelicOption<GirlHandMirrorRelic>(BreakMirror, textKey);
-        RestoreOptionText(option, textKey);
+        EventOption option = MirrorOption(BreakMirror, textKey);
         option.HoverTips = HoverTipFactory.FromCardWithCardHoverTips<PervasiveMaliceCard>()
             .Append(HoverTipFactory.FromCard<Injury>());
         return option;
     }
 
-    private void RestoreOptionText(EventOption option, string textKey)
+    private EventOption MirrorOption(Func<Task> onChosen, string textKey)
     {
-        string baseKey = textKey.EndsWith(".title", StringComparison.Ordinal)
-            ? textKey[..^".title".Length]
-            : textKey;
-        string titleKey = $"{baseKey}.title";
-        string descriptionKey = $"{baseKey}.description";
-        EventOptionTextKeyProperty?.SetValue(option, titleKey);
-        EventOptionTitleProperty?.SetValue(option, L10NLookup(titleKey));
-        EventOptionDescriptionProperty?.SetValue(option, L10NLookup(descriptionKey));
+        RelicModel relic = ModelDb.Relic<GirlHandMirrorRelic>().ToMutable();
+        if (Owner != null)
+        {
+            relic.Owner = Owner;
+        }
+
+        return EventOption.FromRelic(relic, this, onChosen, textKey);
     }
 
     private async Task PickUpMirror()

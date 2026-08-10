@@ -26,6 +26,7 @@ public class GrandGuignolAncient : ModAncientEventTemplate
 
     public override IEnumerable<EventOption> AllPossibleOptions => [
         CreateModRelicOption<RethinkPokerRelic>(),
+        CreateModRelicOption<QueenOfHeartsPlayingCardDeckRelic>(),
         CreateModRelicOption<WormSmokeRelic>(),
         CreateModRelicOption<MargaretRelic>(),
         CreateModRelicOption<AngelFeatherRelic>(),

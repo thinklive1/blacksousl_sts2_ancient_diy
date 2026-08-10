@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -40,6 +41,7 @@ public sealed class Boojum : MonsterModel
     public override async Task AfterAddedToRoom()
     {
         await base.AfterAddedToRoom();
+        BoojumHistoryPurge.Reset(Creature.CombatState);
 
         await PowerCmd.Apply<StrengthPower>(
             new ThrowingPlayerChoiceContext(),
@@ -56,7 +58,6 @@ public sealed class Boojum : MonsterModel
             int totalMemory = records.Sum(record => record.RemainingCards);
             if (totalMemory > 0)
             {
-                BoojumHistoryPurge.Reset(Creature.CombatState);
                 await PowerCmd.Apply<BoojumMemoryPower>(
                     new ThrowingPlayerChoiceContext(),
                     player.Creature,
@@ -90,10 +91,31 @@ public sealed class Boojum : MonsterModel
     {
         if (Creature.CombatState?.RunState.IsGameOver == true)
         {
-            BoojumHistoryPurge.ArmCurrentRunHistoryErasure();
+            ArmCurrentRunHistoryErasure();
         }
 
         return Task.CompletedTask;
+    }
+
+    private static void ArmCurrentRunHistoryErasure()
+    {
+        if (!SaveManager.Instance.IsProfileInitialized)
+        {
+            Entry.Logger.Warn("Boojum could not arm current run-history erasure because no profile is initialized.");
+            return;
+        }
+
+        try
+        {
+            long runStartTime = RunManager.Instance.ToSave(null).StartTime;
+            BoojumHistoryPurge.ArmCurrentRunHistoryErasure(
+                SaveManager.Instance.CurrentProfileId,
+                runStartTime);
+        }
+        catch (Exception exception)
+        {
+            Entry.Logger.Warn($"Boojum could not identify the lost run history: {exception.Message}");
+        }
     }
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()

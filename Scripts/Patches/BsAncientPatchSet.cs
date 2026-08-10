@@ -17,6 +17,7 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<GrandGuignolRelicCollectionPatch>();
         patcher.RegisterPatch<NeowRethinkPokerPatch>();
         patcher.RegisterPatch<FairyTaleModeCharacterSelectPatch>();
+        patcher.RegisterPatch<FairyTaleModeRunLifecyclePatch>();
         patcher.RegisterPatch<OnlyUseModAncientsPatch>();
         patcher.RegisterPatch<WormSmokeRestSiteIconPatch>();
         patcher.RegisterPatch<UnicornHookBeforeDamageReceivedPatch>();

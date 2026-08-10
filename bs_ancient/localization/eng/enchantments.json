@@ -43,5 +43,17 @@
 		"BS_ANCIENT_ENCHANTMENT_SLEEP_ENCHANTMENT.extraCardText": "Cannot be played the first [blue]{OriginalAmount}[/blue] times it is drawn. Awakens on draw [blue]{PlayableDraw}[/blue], then gains [gold]Replay[/gold] [blue]{OriginalAmount}[/blue].",
 		"BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.title": "Breeding",
 		"BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.description": "Breeding: At the start of each turn, randomly [gold]Exhaust[/gold] 2 Breeding cards and create 4 children, shuffled into your [gold]Draw Pile[/gold] or [gold]Discard Pile[/gold]. Each child uses one random parent's cost, and inherits each parent's effect independently with a 50% chance.",
-		"BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.extraCardText": "Participates in Breeding at the start of each turn. Can be [gold]Exhausted[/gold] to generate children."
+		"BS_ANCIENT_ENCHANTMENT_BREEDING_ENCHANTMENT.extraCardText": "Participates in Breeding at the start of each turn. Can be [gold]Exhausted[/gold] to generate children.",
+		"BS_ANCIENT_ENCHANTMENT_HEART_SUIT_ENCHANTMENT.title": "Hearts",
+		"BS_ANCIENT_ENCHANTMENT_HEART_SUIT_ENCHANTMENT.description": "Hearts: The first time this card is played each combat, heal [green]1[/green] HP. Triggers up to [blue]{Amount}[/blue] times this run.",
+		"BS_ANCIENT_ENCHANTMENT_HEART_SUIT_ENCHANTMENT.extraCardText": "[blue]{RemainingTriggers}[/blue] triggers remaining: heal [green]1[/green] HP.",
+		"BS_ANCIENT_ENCHANTMENT_DIAMOND_SUIT_ENCHANTMENT.title": "Diamonds",
+		"BS_ANCIENT_ENCHANTMENT_DIAMOND_SUIT_ENCHANTMENT.description": "Diamonds: The first time this card is played each combat, gain [gold]5[/gold] Gold. Triggers up to [blue]{Amount}[/blue] times this run.",
+		"BS_ANCIENT_ENCHANTMENT_DIAMOND_SUIT_ENCHANTMENT.extraCardText": "[blue]{RemainingTriggers}[/blue] triggers remaining: gain [gold]5[/gold] Gold.",
+		"BS_ANCIENT_ENCHANTMENT_CLUB_SUIT_ENCHANTMENT.title": "Clubs",
+		"BS_ANCIENT_ENCHANTMENT_CLUB_SUIT_ENCHANTMENT.description": "Clubs: The first time this card is played each combat, gain [blue]2[/blue] [gold]Strength[/gold] this turn. Triggers up to [blue]{Amount}[/blue] times this run.",
+		"BS_ANCIENT_ENCHANTMENT_CLUB_SUIT_ENCHANTMENT.extraCardText": "[blue]{RemainingTriggers}[/blue] triggers remaining: gain [blue]2[/blue] [gold]Strength[/gold] this turn.",
+		"BS_ANCIENT_ENCHANTMENT_SPADE_SUIT_ENCHANTMENT.title": "Spades",
+		"BS_ANCIENT_ENCHANTMENT_SPADE_SUIT_ENCHANTMENT.description": "Spades: The first time this card is played each combat, gain [blue]3[/blue] [gold]Block[/gold]. Triggers up to [blue]{Amount}[/blue] times this run.",
+		"BS_ANCIENT_ENCHANTMENT_SPADE_SUIT_ENCHANTMENT.extraCardText": "[blue]{RemainingTriggers}[/blue] triggers remaining: gain [blue]3[/blue] [gold]Block[/gold]."
 	}
