@@ -30,7 +30,7 @@ public sealed class MercuryCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/MercuryCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/MercuryCard.jpg"
     );
 
     public MercuryCard() : base(0, CardType.Skill, CardRarity.Event, TargetType.Self)

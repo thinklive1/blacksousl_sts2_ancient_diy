@@ -136,7 +136,7 @@ public abstract class ExecutionerEvolutionCard<TNext> : ModCardTemplate where TN
 [RegisterCard(typeof(EventCardPool))]
 public sealed class WrigglingShadowCard : ExecutionerEvolutionCard<XiZhiCard>
 {
-    protected override string CardPortraitPath => "res://bs_ancient/assets/images/cards/WrigglingShadowCard.png";
+    protected override string CardPortraitPath => "res://bs_ancient/assets/images/cards/WrigglingShadowCard.jpg";
 
     protected override int Damage => 6;
 
@@ -153,7 +153,7 @@ public sealed class WrigglingShadowCard : ExecutionerEvolutionCard<XiZhiCard>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class XiZhiCard : ExecutionerEvolutionCard<ExecutionerCard>
 {
-    protected override string CardPortraitPath => "res://bs_ancient/assets/images/cards/XiZhiCard.png";
+    protected override string CardPortraitPath => "res://bs_ancient/assets/images/cards/XiZhiCard.jpg";
 
     protected override int Damage => 18;
 
@@ -170,7 +170,7 @@ public sealed class XiZhiCard : ExecutionerEvolutionCard<ExecutionerCard>
 [RegisterCard(typeof(EventCardPool))]
 public sealed class ExecutionerCard : ExecutionerEvolutionCard<ExecutionerKetchCard>
 {
-    protected override string CardPortraitPath => "res://bs_ancient/assets/images/cards/ExecutionerCard.png";
+    protected override string CardPortraitPath => "res://bs_ancient/assets/images/cards/ExecutionerCard.jpg";
 
     protected override int Damage => 28;
 
@@ -197,7 +197,7 @@ public sealed class ExecutionerKetchCard : ModCardTemplate
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/ExecutionerKetchCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/ExecutionerKetchCard.jpg"
     );
 
     public ExecutionerKetchCard() : base(4, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)

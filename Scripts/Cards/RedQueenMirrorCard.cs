@@ -20,7 +20,7 @@ public class RedQueenMirrorCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenMirrorCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenMirrorCard.jpg"
     );
 
     public RedQueenMirrorCard() : base(0, CardType.Skill, CardRarity.Ancient, TargetType.Self)
@@ -113,7 +113,7 @@ public class RedQueenMirrorCard : ModCardTemplate
 public class RedQueenMirrorDrawToDiscardOptionCard : ModCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenMirrorCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenMirrorCard.jpg"
     );
 
     public RedQueenMirrorDrawToDiscardOptionCard()
@@ -132,7 +132,7 @@ public class RedQueenMirrorDrawToDiscardOptionCard : ModCardTemplate
 public class RedQueenMirrorDiscardToDrawOptionCard : ModCardTemplate
 {
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenMirrorCardMirrored.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenMirrorCardMirrored.jpg"
     );
 
     public RedQueenMirrorDiscardToDrawOptionCard()

@@ -20,7 +20,7 @@ namespace BlackSouls.Scripts.Patches;
 public static class AliceCurseEasterEggVisualPatch
 {
     private const string GarbledLocKey = "BS_ANCIENT_POWER_ALICE_CURSE_EASTER_EGG_POWER.garbled";
-    private const string AliceCursePortraitPath = "res://bs_ancient/assets/images/cards/AliceCurseCard.png";
+    private const string AliceCursePortraitPath = "res://bs_ancient/assets/images/cards/AliceCurseCard.jpg";
     private const string CanvasGroupMaskMaterialPath = "res://scenes/cards/card_canvas_group_mask_material.tres";
 
     private static LocString GarbledLocString => new("powers", GarbledLocKey);

@@ -36,7 +36,7 @@ public class StageEndCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/StageEndCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/StageEndCard.jpg"
     );
 
     public StageEndCard() : base(0, CardType.Skill, CardRarity.Ancient, TargetType.Self)

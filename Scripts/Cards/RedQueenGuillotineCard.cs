@@ -32,7 +32,7 @@ public sealed class RedQueenGuillotineCard : ModCardTemplate
         HoverTipFactory.FromEnchantment<ExecutionEnchantment>();
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenGuillotineCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenGuillotineCard.jpg"
     );
 
     public RedQueenGuillotineCard() : base(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)

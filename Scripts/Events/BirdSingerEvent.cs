@@ -18,7 +18,7 @@ public sealed class BirdSingerEvent : ModEventTemplate
     private const int HpLoss = 10;
 
     public override EventAssetProfile AssetProfile => new(
-        InitialPortraitPath: "res://bs_ancient/assets/images/events/BirdSinger.png"
+        InitialPortraitPath: "res://bs_ancient/assets/images/events/BirdSinger.jpg"
     );
 
     public override bool IsAllowed(IRunState runState)

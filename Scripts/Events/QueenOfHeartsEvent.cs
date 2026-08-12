@@ -24,7 +24,7 @@ public sealed class QueenOfHeartsEvent : ModEventTemplate
     private const int MaxCardsToEnchant = 3;
 
     public override EventAssetProfile AssetProfile => new(
-        InitialPortraitPath: "res://bs_ancient/assets/images/events/QueenOfHeartsEvent.png"
+        InitialPortraitPath: "res://bs_ancient/assets/images/events/QueenOfHeartsEvent.jpg"
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

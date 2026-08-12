@@ -37,7 +37,7 @@ public class ChaosFusionCard : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(3)];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/GiftOfChaosCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/GiftOfChaosCard.jpg"
     );
 
     [SavedProperty]

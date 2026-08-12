@@ -59,7 +59,7 @@ public class AliceCurseCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/AliceCurseCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/AliceCurseCard.jpg"
     );
 
     public AliceCurseCard() : base(0, CardType.Curse, CardRarity.Ancient, TargetType.Self)

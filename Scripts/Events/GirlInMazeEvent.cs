@@ -18,7 +18,7 @@ namespace BlackSouls.Scripts;
 public sealed class GirlInMazeEvent : ModEventTemplate
 {
     private const int MaxHpGain = 8;
-    private const string PortraitPath = "res://bs_ancient/assets/images/events/GirlInMazeEvent.png";
+    private const string PortraitPath = "res://bs_ancient/assets/images/events/GirlInMazeEvent.jpg";
     private const string DefaultPortraitPath = "res://images/events/bs_ancient_event_girl_in_maze_event.png";
 
     public override EventAssetProfile AssetProfile => new(

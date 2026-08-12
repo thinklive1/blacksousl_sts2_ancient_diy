@@ -47,7 +47,7 @@ public sealed class PlayingCardPokerHandEvaluatorTests
     }
 
     [Fact]
-    public void FindsStraightFlushAndGrantsOneExtraPlay()
+    public void FindsStraightFlushAndTriggersSuitEffectsTwice()
     {
         PlayingCardPokerHand<int>? hand = PlayingCardPokerHandEvaluator.FindBestHand([
             Card(1, 4, PlayingCardSuit.Club),
@@ -59,11 +59,11 @@ public sealed class PlayingCardPokerHandEvaluatorTests
 
         Assert.NotNull(hand);
         Assert.Equal(PlayingCardPokerHandRank.StraightFlush, hand.Rank);
-        Assert.Equal(1, hand.ExtraPlayCount);
+        Assert.Equal(2, hand.SuitEffectTriggerCount);
     }
 
     [Fact]
-    public void FindsRoyalFlushAndGrantsTwoExtraPlays()
+    public void FindsRoyalFlushAndTriggersSuitEffectsThreeTimes()
     {
         PlayingCardPokerHand<int>? hand = PlayingCardPokerHandEvaluator.FindBestHand([
             Card(1, 10, PlayingCardSuit.Spade),
@@ -75,7 +75,7 @@ public sealed class PlayingCardPokerHandEvaluatorTests
 
         Assert.NotNull(hand);
         Assert.Equal(PlayingCardPokerHandRank.RoyalFlush, hand.Rank);
-        Assert.Equal(2, hand.ExtraPlayCount);
+        Assert.Equal(3, hand.SuitEffectTriggerCount);
     }
 
     [Fact]
@@ -91,6 +91,43 @@ public sealed class PlayingCardPokerHandEvaluatorTests
 
         Assert.NotNull(hand);
         Assert.Equal(PlayingCardPokerHandRank.FourOfAKind, hand.Rank);
+    }
+
+    [Fact]
+    public void ScoresHighCardUsingOnlyTheHighestSelectedCard()
+    {
+        int score = BalatroPokerScoring.Calculate([
+            Card(1, 2, PlayingCardSuit.Heart),
+            Card(2, 7, PlayingCardSuit.Spade)
+        ]);
+
+        Assert.Equal(12, score);
+    }
+
+    [Fact]
+    public void ScoresPairAsChipsTimesMultiplier()
+    {
+        int score = BalatroPokerScoring.Calculate([
+            Card(1, 7, PlayingCardSuit.Heart),
+            Card(2, 7, PlayingCardSuit.Spade),
+            Card(3, 2, PlayingCardSuit.Club)
+        ]);
+
+        Assert.Equal(48, score);
+    }
+
+    [Fact]
+    public void ScoresRoyalFlushAtEightTimesItsChips()
+    {
+        int score = BalatroPokerScoring.Calculate([
+            Card(1, 10, PlayingCardSuit.Heart),
+            Card(2, 11, PlayingCardSuit.Heart),
+            Card(3, 12, PlayingCardSuit.Heart),
+            Card(4, 13, PlayingCardSuit.Heart),
+            Card(5, 1, PlayingCardSuit.Heart)
+        ]);
+
+        Assert.Equal(1208, score);
     }
 
     private static PlayingCardPokerCard<int> Card(int value, int rank, PlayingCardSuit suit) => new(value, rank, suit);

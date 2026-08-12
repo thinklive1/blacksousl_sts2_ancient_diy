@@ -1,4 +1,10 @@
 {
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_PLAY_LIMIT_POWER.title": "出牌",
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_PLAY_LIMIT_POWER.description": "本场战斗还可以出牌[blue]{Amount}[/blue]次。",
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_PLAY_LIMIT_POWER.smartDescription": "本场战斗还可以出牌[blue]{Amount}[/blue]次。",
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_DISCARD_LIMIT_POWER.title": "弃牌",
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_DISCARD_LIMIT_POWER.description": "本场战斗还可以弃掉[blue]{Amount}[/blue]张牌。",
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_DISCARD_LIMIT_POWER.smartDescription": "本场战斗还可以弃掉[blue]{Amount}[/blue]张牌。",
   "BS_ANCIENT_POWER_UNDEAD_POWER.title": "不死",
   "BS_ANCIENT_POWER_UNDEAD_POWER.description": "受到致命伤害时，保留[blue]1[/blue]点生命。每回合结束时失去[blue]1[/blue]层。战斗结束时，每有[blue]1[/blue]层回复[green]10[/green]点生命。",
   "BS_ANCIENT_POWER_UNDEAD_POWER.smartDescription": "受到致命伤害时，保留[blue]1[/blue]点生命。每回合结束时失去[blue]1[/blue]层。战斗结束时，每有[blue]1[/blue]层回复[green]10[/green]点生命。",

@@ -17,7 +17,7 @@ namespace BlackSouls.Scripts;
 [RegisterActEvent(typeof(Glory))]
 public sealed class GentleGiftEvent : ModEventTemplate
 {
-    private const string PortraitPath = "res://bs_ancient/assets/images/events/GentleGiftEvent.png";
+    private const string PortraitPath = "res://bs_ancient/assets/images/events/GentleGiftEvent.jpg";
     private const string DefaultPortraitPath = "res://images/events/bs_ancient_event_gentle_gift_event.png";
     private const string MiniSnowmanIconPath = "res://bs_ancient/assets/images/relics/MiniSnowmanRelic.png";
     private const string EvilQiIconPath = "res://bs_ancient/assets/images/powers/EvilQiEnchantment.png";

@@ -43,7 +43,7 @@ public sealed class BanaiReflectionCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/BanaiReflectionCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/BanaiReflectionCard.jpg"
     );
 
     public BanaiReflectionCard() : base(1, CardType.Skill, CardRarity.Event, TargetType.Self)
@@ -158,7 +158,7 @@ public sealed class OrrReflectionCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/OrrReflectionCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/OrrReflectionCard.jpg"
     );
 
     public OrrReflectionCard() : base(Cost, CardType.Skill, CardRarity.Event, TargetType.Self)
@@ -195,7 +195,7 @@ public sealed class HolmesReflectionCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/HolmesReflectionCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/HolmesReflectionCard.jpg"
     );
 
     public HolmesReflectionCard() : base(2, CardType.Skill, CardRarity.Event, TargetType.Self)
@@ -260,7 +260,7 @@ public sealed class JackTheRipperReflectionCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/JackTheRipperReflectionCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/JackTheRipperReflectionCard.jpg"
     );
 
     public JackTheRipperReflectionCard() : base(0, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
@@ -398,7 +398,7 @@ public sealed class LiddellReflectionCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/LiddellReflectionCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/LiddellReflectionCard.jpg"
     );
 
     public LiddellReflectionCard() : base(-1, CardType.Curse, CardRarity.Curse, TargetType.None)
@@ -470,7 +470,7 @@ public sealed class PervasiveMaliceCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/PervasiveMaliceCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/PervasiveMaliceCard.jpg"
     );
 
     public PervasiveMaliceCard() : base(0, CardType.Skill, CardRarity.Event, TargetType.Self)

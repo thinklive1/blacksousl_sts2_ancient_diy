@@ -24,7 +24,7 @@ public sealed class FriendlySlimeEvent : ModEventTemplate
     private const int HugDamage = 15;
 
     public override EventAssetProfile AssetProfile => new(
-        InitialPortraitPath: "res://bs_ancient/assets/images/events/FriendlySlime.png"
+        InitialPortraitPath: "res://bs_ancient/assets/images/events/FriendlySlime.jpg"
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

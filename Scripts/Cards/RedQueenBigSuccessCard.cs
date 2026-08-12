@@ -17,7 +17,7 @@ public class RedQueenBigSuccessCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenBigSuccessCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/RedQueenBigSuccessCard.jpg"
     );
 
     public RedQueenBigSuccessCard() : base(0, CardType.Power, CardRarity.Ancient, TargetType.Self)

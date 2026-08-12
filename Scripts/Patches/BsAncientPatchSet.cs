@@ -31,6 +31,13 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<RapunzelPowerSetAmountPatch>();
         patcher.RegisterPatch<RapunzelPowerRemovePatch>();
         patcher.RegisterPatch<HelmsmansPageRelicPatch>();
+        patcher.RegisterPatch<BalatroBeforeHandDrawPatch>();
+        patcher.RegisterPatch<BalatroModifyHandDrawPatch>();
+        patcher.RegisterPatch<BalatroAfterPlayerTurnStartPatch>();
+        patcher.RegisterPatch<BalatroAfterCardDrawnPatch>();
+        patcher.RegisterPatch<BalatroCombatUiPatch>();
+        patcher.RegisterPatch<BalatroDummyTimeLimitPatch>();
+        patcher.RegisterPatch<BalatroDirectCardPlayPatch>();
         RegisterMercuryCardDescriptionPatch(patcher);
     }
 

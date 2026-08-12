@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -44,6 +45,19 @@ public abstract class PlayingCardSuitEnchantment : ModEnchantmentTemplate
     protected abstract string SuitIconPath { get; }
 
     internal abstract PlayingCardSuit PokerSuit { get; }
+
+    /// <summary>Formats face-card ranks without changing their persisted numeric values.</summary>
+    internal static string GetRankDisplayText(int rank)
+    {
+        return rank switch
+        {
+            1 => "A",
+            11 => "J",
+            12 => "Q",
+            13 => "K",
+            _ => rank.ToString(System.Globalization.CultureInfo.InvariantCulture)
+        };
+    }
 
     public override EnchantmentAssetProfile AssetProfile => new(IconPath: SuitIconPath);
 
@@ -115,7 +129,9 @@ public abstract class PlayingCardSuitEnchantment : ModEnchantmentTemplate
             return;
         }
 
-        if (_pokerCardPlay == cardPlay && !_resolvedPokerEffectForCardPlay)
+        if (_pokerCardPlay == cardPlay
+            && !_resolvedPokerEffectForCardPlay
+            && _pokerHandForThisPlay?.Cards.Any(pokerCard => pokerCard.Value == this) == true)
         {
             _resolvedPokerEffectForCardPlay = true;
             await TriggerPokerEffects(choiceContext, owner, cardPlay);
@@ -125,25 +141,16 @@ public abstract class PlayingCardSuitEnchantment : ModEnchantmentTemplate
         await TryTriggerSuitEffect(choiceContext, owner, cardPlay, consumePersistentTrigger: true);
     }
 
-    public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
-    {
-        if (card != Card)
-        {
-            return playCount;
-        }
+    protected abstract Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay? cardPlay);
 
-        PlayingCardPokerHand<PlayingCardSuitEnchantment>? pokerHand = FindPokerHandInHand();
-        return pokerHand is { ExtraPlayCount: > 0 } && pokerHand.Cards.Any(pokerCard => pokerCard.Value == this)
-            ? playCount + pokerHand.ExtraPlayCount
-            : playCount;
-    }
-
-    protected abstract Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay cardPlay);
+    /// <summary>Triggers this suit through the poker-table action without playing the underlying card text.</summary>
+    internal Task TriggerForPokerTraining(PlayerChoiceContext choiceContext, Creature owner) =>
+        TryTriggerSuitEffect(choiceContext, owner, null, consumePersistentTrigger: true);
 
     private async Task TryTriggerSuitEffect(
         PlayerChoiceContext choiceContext,
         Creature owner,
-        CardPlay cardPlay,
+        CardPlay? cardPlay,
         bool consumePersistentTrigger)
     {
         if (_triggeredThisCombat)
@@ -160,19 +167,23 @@ public abstract class PlayingCardSuitEnchantment : ModEnchantmentTemplate
         await TriggerSuitEffect(choiceContext, owner, cardPlay);
     }
 
-    private async Task TriggerPokerEffects(PlayerChoiceContext choiceContext, Creature owner, CardPlay cardPlay)
+    private async Task TriggerPokerEffects(PlayerChoiceContext choiceContext, Creature owner, CardPlay? cardPlay)
     {
         if (_pokerHandForThisPlay == null || !_pokerHandForThisPlay.Cards.Any(pokerCard => pokerCard.Value == this))
         {
             return;
         }
 
-        foreach (PlayingCardSuitEnchantment enchantment in _pokerHandForThisPlay.Cards
-                     .Select(pokerCard => pokerCard.Value)
-                     .Distinct())
+        IEnumerable<PlayingCardSuitEnchantment> enchantments = _pokerHandForThisPlay.Cards
+            .Select(pokerCard => pokerCard.Value)
+            .Distinct();
+        foreach (PlayingCardSuitEnchantment enchantment in enchantments)
         {
-            // A completed poker hand triggers every member without spending its run-wide budget.
-            await enchantment.TryTriggerSuitEffect(choiceContext, owner, cardPlay, consumePersistentTrigger: false);
+            // Poker hands are independent of both run-wide and per-combat Suit trigger limits.
+            for (int triggerIndex = 0; triggerIndex < _pokerHandForThisPlay.SuitEffectTriggerCount; triggerIndex++)
+            {
+                await enchantment.TriggerSuitEffect(choiceContext, owner, cardPlay);
+            }
         }
     }
 
@@ -268,12 +279,48 @@ public abstract class PlayingCardSuitEnchantment : ModEnchantmentTemplate
 public sealed class HeartSuitEnchantment : PlayingCardSuitEnchantment
 {
     private const string HeartIconPath = "res://bs_ancient/assets/images/enchantment/HeartSuitEnchantment.png";
+    private bool _heartJackEventClaimed;
 
     protected override string SuitIconPath => HeartIconPath;
 
     internal override PlayingCardSuit PokerSuit => PlayingCardSuit.Heart;
 
-    protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay cardPlay)
+    [SavedProperty]
+    public bool BlackSouls_HeartJackEventClaimed
+    {
+        get => _heartJackEventClaimed;
+        set
+        {
+            AssertMutable();
+            _heartJackEventClaimed = value;
+        }
+    }
+
+    /// <summary>Redirects the next event once for each Hearts Jack in the persistent deck.</summary>
+    public override EventModel ModifyNextEvent(EventModel currentEvent)
+    {
+        return Amount == 11 && !BlackSouls_HeartJackEventClaimed
+            ? ModelDb.Event<HeartJackEvent>()
+            : currentEvent;
+    }
+
+    /// <summary>Consumes the first unclaimed Hearts Jack belonging to the event owner.</summary>
+    public static bool ClaimNextEvent(Player owner)
+    {
+        HeartSuitEnchantment? heartJack = owner.Deck.Cards
+            .Select(card => card.Enchantment)
+            .OfType<HeartSuitEnchantment>()
+            .FirstOrDefault(enchantment => enchantment.Amount == 11 && !enchantment.BlackSouls_HeartJackEventClaimed);
+        if (heartJack == null)
+        {
+            return false;
+        }
+
+        heartJack.BlackSouls_HeartJackEventClaimed = true;
+        return true;
+    }
+
+    protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay? cardPlay)
     {
         return CreatureCmd.Heal(owner, 1);
     }
@@ -289,7 +336,7 @@ public sealed class DiamondSuitEnchantment : PlayingCardSuitEnchantment
 
     internal override PlayingCardSuit PokerSuit => PlayingCardSuit.Diamond;
 
-    protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay cardPlay)
+    protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay? cardPlay)
     {
         return PlayerCmd.GainGold(5, owner.Player!);
     }
@@ -305,7 +352,7 @@ public sealed class ClubSuitEnchantment : PlayingCardSuitEnchantment
 
     internal override PlayingCardSuit PokerSuit => PlayingCardSuit.Club;
 
-    protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay cardPlay)
+    protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay? cardPlay)
     {
         return PowerCmd.Apply<FlexPotionPower>(choiceContext, owner, 2, owner, Card, false);
     }
@@ -321,7 +368,7 @@ public sealed class SpadeSuitEnchantment : PlayingCardSuitEnchantment
 
     internal override PlayingCardSuit PokerSuit => PlayingCardSuit.Spade;
 
-    protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay cardPlay)
+    protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay? cardPlay)
     {
         return CreatureCmd.GainBlock(owner, 3, ValueProp.Move, cardPlay);
     }

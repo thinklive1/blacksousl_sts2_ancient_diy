@@ -16,7 +16,7 @@ namespace BlackSouls.Scripts;
 /// <summary>Implements the Bird Singer modifier.</summary>
 public sealed class BirdSingerModifier : ModModifierTemplate
 {
-    private const string BirdSingerIconPath = "res://bs_ancient/assets/images/events/BirdSinger.png";
+    private const string BirdSingerIconPath = "res://bs_ancient/assets/images/events/BirdSinger.jpg";
     private const int AffectedNodeCount = 7;
     private const decimal HealthMultiplier = 0.5m;
 

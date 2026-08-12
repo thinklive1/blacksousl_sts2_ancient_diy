@@ -17,7 +17,7 @@ public sealed class QueenTartEvent : ModEventTemplate
     private const int MaxHpGain = 8;
 
     public override EventAssetProfile AssetProfile => new(
-        InitialPortraitPath: "res://bs_ancient/assets/images/events/QueenTartEvent.png"
+        InitialPortraitPath: "res://bs_ancient/assets/images/events/QueenTartEvent.jpg"
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new MaxHpVar(MaxHpGain)];

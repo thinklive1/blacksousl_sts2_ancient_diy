@@ -1,4 +1,6 @@
 {
   "BS_ANCIENT_ENCOUNTER_BOOJUM_EVENT_ENCOUNTER.title": "The Boojum",
-  "BS_ANCIENT_ENCOUNTER_BOOJUM_EVENT_ENCOUNTER.loss": "You remembered far too much."
+  "BS_ANCIENT_ENCOUNTER_BOOJUM_EVENT_ENCOUNTER.loss": "You remembered far too much.",
+  "BS_ANCIENT_ENCOUNTER_BALATRO_TRAINING_DUMMY_ENCOUNTER.title": "Card Table Dummy",
+  "BS_ANCIENT_ENCOUNTER_BALATRO_TRAINING_DUMMY_ENCOUNTER.loss": "The training ends before you can continue."
 }

@@ -35,7 +35,7 @@ public class CatSmileCard : ModCardTemplate
     public override bool GainsBlock => true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/CatSmileCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/CatSmileCard.jpg"
     );
 
     public CatSmileCard() : base(0, CardType.Skill, CardRarity.Ancient, TargetType.Self)

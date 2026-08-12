@@ -9,7 +9,7 @@ namespace BlackSouls.Scripts;
 [RegisterOwnedCardKeyword(nameof(ForceDeath), IconPath = "res://bs_ancient/assets/images/relics/StageEndRelic.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 [RegisterOwnedCardKeyword(nameof(Kill), IconPath = "res://bs_ancient/assets/images/relics/NodeRibbonRelic.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 [RegisterOwnedCardKeyword(nameof(Encore), IconPath = "res://bs_ancient/assets/images/relics/StagnantGearRelic.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
-[RegisterOwnedCardKeyword(nameof(KillingBlow), IconPath = "res://bs_ancient/assets/images/cards/WrigglingShadowCard.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
+[RegisterOwnedCardKeyword(nameof(KillingBlow), IconPath = "res://bs_ancient/assets/images/cards/WrigglingShadowCard.jpg", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 [RegisterOwnedCardKeyword(nameof(San), IconPath = "res://bs_ancient/assets/images/powers/SanHighPower.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 [RegisterOwnedCardKeyword(nameof(TexasHoldemRules), IconPath = "res://bs_ancient/assets/images/enchantment/SpadeSuitEnchantment.png", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 public class MyKeywords

@@ -106,7 +106,7 @@ public class WormSmokeRelic : ModRelicTemplate
 /// <summary>Implements the Worm Smoke rest site option.</summary>
 public class WormSmokeRestSiteOption : RestSiteOption
 {
-    public const string SmokeIconPath = "res://bs_ancient/assets/images/events/Smoke.png";
+    public const string SmokeIconPath = "res://bs_ancient/assets/images/events/Smoke.jpg";
 
     public override string OptionId => "TOKE";
 

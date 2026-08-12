@@ -21,7 +21,7 @@ public sealed class WaxStatueEvent : ModEventTemplate
     private const int TwinRequiredCount = 2;
 
     public override EventAssetProfile AssetProfile => new(
-        InitialPortraitPath: "res://bs_ancient/assets/images/events/TwinInWard.png"
+        InitialPortraitPath: "res://bs_ancient/assets/images/events/TwinInWard.jpg"
     );
 
     public override bool IsAllowed(IRunState runState)

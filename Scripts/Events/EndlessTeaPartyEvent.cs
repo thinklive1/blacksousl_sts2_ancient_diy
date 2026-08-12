@@ -22,7 +22,7 @@ public sealed class EndlessTeaPartyEvent : ModEventTemplate
 {
     private const int HatGoldCost = 106;
     private const int RestHeal = 15;
-    internal const string PortraitPath = "res://bs_ancient/assets/images/events/EndlessTeaPartyEvent.png";
+    internal const string PortraitPath = "res://bs_ancient/assets/images/events/EndlessTeaPartyEvent.jpg";
     private const string DefaultPortraitPath = "res://images/events/endless_tea_party_event.png";
 
     public override EventAssetProfile AssetProfile => new(

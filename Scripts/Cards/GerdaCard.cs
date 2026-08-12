@@ -31,7 +31,7 @@ public class GerdaCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/GerdaCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/GerdaCard.jpg"
     );
 
     public GerdaCard() : base(-1, CardType.Skill, CardRarity.Ancient, TargetType.None)

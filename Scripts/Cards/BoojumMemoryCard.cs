@@ -26,7 +26,7 @@ public sealed class BoojumMemoryCard : ModCardTemplate
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/BoojumMemoryCard.png");
+        PortraitPath: "res://bs_ancient/assets/images/cards/BoojumMemoryCard.jpg");
 
     public override string Title => FormatMemoryTitle(BlackSouls_HistoryStartTime);
 

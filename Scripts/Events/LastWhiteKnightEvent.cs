@@ -25,7 +25,7 @@ public sealed class LastWhiteKnightEvent : ModEventTemplate
     public override bool IsShared => true;
 
     public override EventAssetProfile AssetProfile => new(
-        InitialPortraitPath: "res://bs_ancient/assets/images/events/LastWhiteKnightEvent.png"
+        InitialPortraitPath: "res://bs_ancient/assets/images/events/LastWhiteKnightEvent.jpg"
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

@@ -67,5 +67,7 @@
 	"BS_ANCIENT_CARD_MERMAID_TEAR_CARD.title": "Mermaid's Tear",
 	"BS_ANCIENT_CARD_MERMAID_TEAR_CARD.description": "When exhausted, randomly devour a card in your [gold]Draw Pile[/gold] and lose [red]{HpLoss}[/red] HP. At the end of combat, permanently remove the devoured card from your [gold]Deck[/gold].",
 	"BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.title": "Memory",
-	"BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.description": "Play every card from the corresponding historical deck."
+	"BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.description": "Play every card from the corresponding historical deck.",
+	"BS_ANCIENT_CARD_BALATRO_PLAYING_CARD.title": "Playing Card",
+	"BS_ANCIENT_CARD_BALATRO_PLAYING_CARD.description": "A temporary playing card used at the training dummy's table."
 }

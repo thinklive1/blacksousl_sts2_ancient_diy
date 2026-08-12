@@ -25,7 +25,7 @@ public class StagnantGearCard : ModCardTemplate
         [HoverTipFactory.FromKeyword(MyKeywords.Encore)];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/StagnantGearCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/StagnantGearCard.jpg"
     );
 
     public StagnantGearCard() : base(1, CardType.Skill, CardRarity.Ancient, TargetType.Self)

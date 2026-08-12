@@ -25,7 +25,7 @@ public class CatBiteCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/CardBiteCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/CardBiteCard.jpg"
     );
 
     public CatBiteCard() : base(0, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)

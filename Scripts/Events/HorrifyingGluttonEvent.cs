@@ -20,7 +20,7 @@ public sealed class HorrifyingGluttonEvent : ModEventTemplate
     private const int FoodGoldCost = 100;
 
     public override EventAssetProfile AssetProfile => new(
-        InitialPortraitPath: "res://bs_ancient/assets/images/events/HorrifyingGluttonEvent.png"
+        InitialPortraitPath: "res://bs_ancient/assets/images/events/HorrifyingGluttonEvent.jpg"
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new GoldVar(FoodGoldCost)];

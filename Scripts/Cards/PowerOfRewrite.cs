@@ -30,7 +30,7 @@ public class PowerOfRewrite : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/PowerOfRewrite.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/PowerOfRewrite.jpg"
     );
 
     public PowerOfRewrite() : base(3, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)

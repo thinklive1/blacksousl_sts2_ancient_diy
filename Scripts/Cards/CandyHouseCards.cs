@@ -57,7 +57,7 @@ public abstract class CandyHouseCandyCard : ModCardTemplate
 [RegisterCard(typeof(EventCardPool))]
 public sealed class SweetCandyCard : CandyHouseCandyCard
 {
-    protected override string CandyPortraitPath => "res://bs_ancient/assets/images/cards/SweetCandyCard.png";
+    protected override string CandyPortraitPath => "res://bs_ancient/assets/images/cards/SweetCandyCard.jpg";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new HealVar(6)
@@ -73,7 +73,7 @@ public sealed class SweetCandyCard : CandyHouseCandyCard
 [RegisterCard(typeof(EventCardPool))]
 public sealed class BitterCandyCard : CandyHouseCandyCard
 {
-    protected override string CandyPortraitPath => "res://bs_ancient/assets/images/cards/BitterCandyCard.png";
+    protected override string CandyPortraitPath => "res://bs_ancient/assets/images/cards/BitterCandyCard.jpg";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(2)
@@ -89,7 +89,7 @@ public sealed class BitterCandyCard : CandyHouseCandyCard
 [RegisterCard(typeof(EventCardPool))]
 public sealed class HallucinogenicCandyCard : CandyHouseCandyCard
 {
-    protected override string CandyPortraitPath => "res://bs_ancient/assets/images/cards/HallucinogenicCandyCard.png";
+    protected override string CandyPortraitPath => "res://bs_ancient/assets/images/cards/HallucinogenicCandyCard.jpg";
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

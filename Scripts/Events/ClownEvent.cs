@@ -12,7 +12,7 @@ namespace BlackSouls.Scripts;
 [RegisterActEvent(typeof(Underdocks))]
 public sealed class ClownEvent : ModEventTemplate
 {
-    private const string PortraitPath = "res://bs_ancient/assets/images/events/ClownEvent.png";
+    private const string PortraitPath = "res://bs_ancient/assets/images/events/ClownEvent.jpg";
     private const string DefaultPortraitPath = "res://images/events/bs_ancient_event_clown_event.png";
 
     public override EventAssetProfile AssetProfile => new(

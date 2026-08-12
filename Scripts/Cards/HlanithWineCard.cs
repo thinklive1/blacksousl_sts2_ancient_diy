@@ -20,7 +20,7 @@ public class HlanithWineCard : ModCardTemplate
     ];
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: "res://bs_ancient/assets/images/cards/HlanithWineCard.png"
+        PortraitPath: "res://bs_ancient/assets/images/cards/HlanithWineCard.jpg"
     );
 
     public HlanithWineCard() : base(Cost, CardType.Power, CardRarity.Ancient, TargetType.Self)

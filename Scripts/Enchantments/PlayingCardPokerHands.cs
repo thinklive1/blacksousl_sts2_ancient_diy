@@ -29,11 +29,12 @@ internal enum PlayingCardPokerHandRank
 /// <summary>Describes the strongest poker group currently available in a hand.</summary>
 internal sealed record PlayingCardPokerHand<T>(PlayingCardPokerHandRank Rank, IReadOnlyList<PlayingCardPokerCard<T>> Cards)
 {
-    public int ExtraPlayCount => Rank switch
+    /// <summary>Gets how many times every member's Suit effect resolves for this hand.</summary>
+    public int SuitEffectTriggerCount => Rank switch
     {
-        PlayingCardPokerHandRank.StraightFlush => 1,
-        PlayingCardPokerHandRank.RoyalFlush => 2,
-        _ => 0
+        PlayingCardPokerHandRank.StraightFlush => 2,
+        PlayingCardPokerHandRank.RoyalFlush => 3,
+        _ => 1
     };
 }
 
@@ -165,6 +166,7 @@ internal static class PlayingCardPokerHandEvaluator
             }
         }
 
+        // Ace may also be used as the low card in A-2-3-4-5.
         return SelectRanks(source, [1, 2, 3, 4, 5]);
     }
 
@@ -198,6 +200,54 @@ internal static class PlayingCardPokerHandEvaluator
             .GroupBy(card => card.Rank)
             .OrderByDescending(group => RankValue(group.Key))
             .ToList();
+    }
+
+    private static int RankValue(int rank) => rank == 1 ? 14 : rank;
+}
+
+/// <summary>Calculates Balatro-style chips times multiplier for a selected poker hand.</summary>
+internal static class BalatroPokerScoring
+{
+    public static int Calculate<T>(IReadOnlyList<PlayingCardPokerCard<T>> pokerCards)
+    {
+        if (pokerCards.Count == 0)
+        {
+            return 0;
+        }
+
+        PlayingCardPokerHand<T>? hand = PlayingCardPokerHandEvaluator.FindBestHand(pokerCards);
+        IReadOnlyList<PlayingCardPokerCard<T>> scoringCards;
+        int baseChips;
+        int multiplier;
+        if (hand == null)
+        {
+            scoringCards = [pokerCards.OrderByDescending(card => RankValue(card.Rank)).First()];
+            (baseChips, multiplier) = (5, 1);
+        }
+        else
+        {
+            scoringCards = hand.Cards;
+            (baseChips, multiplier) = hand.Rank switch
+            {
+                PlayingCardPokerHandRank.Pair => (10, 2),
+                PlayingCardPokerHandRank.TwoPair => (20, 2),
+                PlayingCardPokerHandRank.ThreeOfAKind => (30, 3),
+                PlayingCardPokerHandRank.Straight => (30, 4),
+                PlayingCardPokerHandRank.Flush => (35, 4),
+                PlayingCardPokerHandRank.FullHouse => (40, 4),
+                PlayingCardPokerHandRank.FourOfAKind => (60, 7),
+                PlayingCardPokerHandRank.StraightFlush or PlayingCardPokerHandRank.RoyalFlush => (100, 8),
+                _ => (5, 1),
+            };
+        }
+
+        int cardChips = scoringCards.Sum(card => card.Rank switch
+        {
+            1 => 11,
+            >= 11 => 10,
+            _ => card.Rank,
+        });
+        return (baseChips + cardChips) * multiplier;
     }
 
     private static int RankValue(int rank) => rank == 1 ? 14 : rank;

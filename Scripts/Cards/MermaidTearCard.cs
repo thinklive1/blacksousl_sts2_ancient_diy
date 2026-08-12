@@ -17,7 +17,7 @@ namespace BlackSouls.Scripts.Cards;
 public sealed class MermaidTearCard : ModCardTemplate
 {
     private const int HpLoss = 3;
-    private const string CardPortraitPath = "res://bs_ancient/assets/images/cards/MermaidTearCard.png";
+    private const string CardPortraitPath = "res://bs_ancient/assets/images/cards/MermaidTearCard.jpg";
 
     private readonly List<CardModel> _swallowedDeckCards = [];
 

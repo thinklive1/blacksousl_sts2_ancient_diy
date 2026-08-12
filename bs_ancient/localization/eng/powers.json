@@ -1,4 +1,10 @@
 {
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_PLAY_LIMIT_POWER.title": "Plays",
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_PLAY_LIMIT_POWER.description": "You may play [blue]{Amount}[/blue] more hands this combat.",
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_PLAY_LIMIT_POWER.smartDescription": "You may play [blue]{Amount}[/blue] more hands this combat.",
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_DISCARD_LIMIT_POWER.title": "Discards",
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_DISCARD_LIMIT_POWER.description": "You may discard [blue]{Amount}[/blue] more cards this combat.",
+  "BS_ANCIENT_POWER_BALATRO_TRAINING_DISCARD_LIMIT_POWER.smartDescription": "You may discard [blue]{Amount}[/blue] more cards this combat.",
   "BS_ANCIENT_POWER_UNDEAD_POWER.title": "Undead",
   "BS_ANCIENT_POWER_UNDEAD_POWER.description": "When you would take fatal damage, remain at [blue]1[/blue] HP. Lose [blue]1[/blue] stack at the end of your turn. At the end of combat, heal [green]10[/green] HP for each stack.",
   "BS_ANCIENT_POWER_UNDEAD_POWER.smartDescription": "When you would take fatal damage, remain at [blue]1[/blue] HP. Lose [blue]1[/blue] stack at the end of your turn. At the end of combat, heal [green]10[/green] HP for each stack.",
