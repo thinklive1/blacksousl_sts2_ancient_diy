@@ -96,6 +96,7 @@ public class NodeAncient : ModAncientEventTemplate
     public override bool IsAllowed(IRunState runState)
     {
         return !BsAncientConfig.DisableModAncients
+            && BsAncientConfig.EnableNodeAncient
             && runState.CurrentActIndex == 1;
     }
 

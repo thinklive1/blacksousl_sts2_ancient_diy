@@ -1,4 +1,10 @@
 {
+  "BS_ANCIENT_ANCIENT_LORINA_ANCIENT.title": "Lorina",
+  "BS_ANCIENT_ANCIENT_LORINA_ANCIENT.epithet": "Queen of Hearts",
+  "BS_ANCIENT_ANCIENT_LORINA_ANCIENT.pages.INITIAL.description": "Queen of Hearts Lorina sits listlessly upon her throne.",
+  "BS_ANCIENT_EVENT_LORINA_ANCIENT.title": "Lorina",
+  "BS_ANCIENT_EVENT_LORINA_ANCIENT.epithet": "Queen of Hearts",
+  "BS_ANCIENT_EVENT_LORINA_ANCIENT.talk.ANY.0-0r.ancient": "How boring. Are you here to play cards with me?",
   "BS_ANCIENT_ANCIENT_GRAND_GUIGNOL_ANCIENT.title": "Grand Guignol?",
   "BS_ANCIENT_ANCIENT_GRAND_GUIGNOL_ANCIENT.epithet": "Dark Stage Device",
   "BS_ANCIENT_ANCIENT_GRAND_GUIGNOL_ANCIENT.pages.INITIAL.description": "The curtain rises. Grand Guignol awaits your choice.",

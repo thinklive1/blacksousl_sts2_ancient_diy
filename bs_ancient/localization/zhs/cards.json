@@ -69,5 +69,13 @@
 	"BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.title": "记忆",
 	"BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.description": "自动打出对应历史对局卡组中的所有牌。",
 	"BS_ANCIENT_CARD_BALATRO_PLAYING_CARD.title": "扑克牌",
-	"BS_ANCIENT_CARD_BALATRO_PLAYING_CARD.description": "用于训练木偶牌桌的临时扑克牌。"
+	"BS_ANCIENT_CARD_BALATRO_PLAYING_CARD.description": "用于训练木偶牌桌的临时扑克牌。",
+	"BS_ANCIENT_CARD_LAST_ACE_CARD.title": "最后的王牌",
+	"BS_ANCIENT_CARD_LAST_ACE_CARD.description": "单独打出时，触发所有花色效果两次。参与牌型判定时，可视为任意花色和点数。",
+	"BS_ANCIENT_CARD_LAST_ACE_CARD.flavor": "我的回合, 抽卡",
+	"BS_ANCIENT_CARD_REVERSED_ACE_CARD.title": "倒扣的王牌",
+	"BS_ANCIENT_CARD_REVERSED_ACE_CARD.description": "保留。战斗结束时，若此牌仍在手牌中，可选择两张牌并为其附魔随机花色。",
+	"BS_ANCIENT_CARD_REVERSED_ACE_CARD.selectionScreenPrompt": "选择至多两张牌附魔随机花色。",
+	"BS_ANCIENT_CARD_QUEEN_OF_HEARTS_CROQUET_MALLET_CARD.title": "槌球杆",
+	"BS_ANCIENT_CARD_QUEEN_OF_HEARTS_CROQUET_MALLET_CARD.description": "这张牌固定位于手牌中央。打出其一侧的攻击牌时，自动打出另一侧最近的攻击牌。每回合最多触发3次。"
 }

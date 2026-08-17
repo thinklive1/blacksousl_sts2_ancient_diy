@@ -28,6 +28,7 @@ public class OnlyUseModAncientsPatch : IPatchMethod
     public static void Postfix(ActModel __instance, Rng rng, UnlockState unlockState, bool isMultiplayer)
     {
         RemoveGeneratedGrandGuignol(__instance, rng, unlockState);
+        RemoveGeneratedDisabledModAncient(__instance, rng, unlockState);
 
         if (BsAncientConfig.DisableModAncients)
         {
@@ -43,12 +44,10 @@ public class OnlyUseModAncientsPatch : IPatchMethod
         List<AncientEventModel> candidates = __instance switch
         {
             Hive => [
-                ModelDb.AncientEvent<NodeAncient>(),
-                ModelDb.AncientEvent<MabelAncient>(),
+                .. GetEnabledHiveAncients(),
             ],
             Glory => [
-                ModelDb.AncientEvent<PrickettAncient>(),
-                ModelDb.AncientEvent<MabelAncient>(),
+                .. GetEnabledGloryAncients(),
             ],
             _ => [],
         };
@@ -136,6 +135,69 @@ public class OnlyUseModAncientsPatch : IPatchMethod
 
     private static bool IsMapModAncient(AncientEventModel ancient)
     {
-        return ancient is NodeAncient or PrickettAncient or MabelAncient;
+        return ancient is NodeAncient or PrickettAncient or MabelAncient or LorinaAncient;
+    }
+
+    private static void RemoveGeneratedDisabledModAncient(ActModel act, Rng rng, UnlockState unlockState)
+    {
+        RoomSet rooms = RoomsRef(act);
+        if (!rooms.HasAncient || !IsMapModAncient(rooms.Ancient) || IsEnabledMapModAncient(rooms.Ancient))
+        {
+            return;
+        }
+
+        List<AncientEventModel> candidates = act.GetUnlockedAncients(unlockState)
+            .Concat(SharedAncientSubsetRef(act) ?? [])
+            .Where(ancient => !IsMapModAncient(ancient) || IsEnabledMapModAncient(ancient))
+            .ToList();
+
+        AncientEventModel? replacement = rng.NextItem(candidates);
+        if (replacement != null)
+        {
+            rooms.Ancient = replacement;
+        }
+    }
+
+    private static bool IsEnabledMapModAncient(AncientEventModel ancient)
+    {
+        return ancient switch
+        {
+            NodeAncient => BsAncientConfig.EnableNodeAncient,
+            PrickettAncient => BsAncientConfig.EnablePrickettAncient,
+            MabelAncient => BsAncientConfig.EnableMabelAncient,
+            LorinaAncient => BsAncientConfig.EnableLorinaAncient,
+            _ => true,
+        };
+    }
+
+    private static IEnumerable<AncientEventModel> GetEnabledHiveAncients()
+    {
+        if (BsAncientConfig.EnableNodeAncient)
+        {
+            yield return ModelDb.AncientEvent<NodeAncient>();
+        }
+
+        if (BsAncientConfig.EnableMabelAncient)
+        {
+            yield return ModelDb.AncientEvent<MabelAncient>();
+        }
+
+        if (BsAncientConfig.EnableLorinaAncient)
+        {
+            yield return ModelDb.AncientEvent<LorinaAncient>();
+        }
+    }
+
+    private static IEnumerable<AncientEventModel> GetEnabledGloryAncients()
+    {
+        if (BsAncientConfig.EnablePrickettAncient)
+        {
+            yield return ModelDb.AncientEvent<PrickettAncient>();
+        }
+
+        if (BsAncientConfig.EnableMabelAncient)
+        {
+            yield return ModelDb.AncientEvent<MabelAncient>();
+        }
     }
 }

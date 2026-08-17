@@ -97,6 +97,7 @@ public class PrickettAncient : ModAncientEventTemplate
     public override bool IsAllowed(IRunState runState)
     {
         return !BsAncientConfig.DisableModAncients
+            && BsAncientConfig.EnablePrickettAncient
             && runState.CurrentActIndex == 2;
     }
 

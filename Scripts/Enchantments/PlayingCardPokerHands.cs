@@ -10,7 +10,11 @@ internal enum PlayingCardSuit
 }
 
 /// <summary>Stores a card's suit-enchantment rank and suit for poker evaluation.</summary>
-internal readonly record struct PlayingCardPokerCard<T>(T Value, int Rank, PlayingCardSuit Suit);
+internal readonly record struct PlayingCardPokerCard<T>(
+    T Value,
+    int Rank,
+    PlayingCardSuit Suit,
+    bool IsWildcard = false);
 
 /// <summary>Lists the supported Texas Hold'em hand categories in strength order.</summary>
 internal enum PlayingCardPokerHandRank
@@ -44,8 +48,69 @@ internal static class PlayingCardPokerHandEvaluator
     public static PlayingCardPokerHand<T>? FindBestHand<T>(IReadOnlyList<PlayingCardPokerCard<T>> cards)
     {
         List<PlayingCardPokerCard<T>> normalized = cards
-            .Where(card => card.Rank is >= PlayingCardSuitEnchantment.MinTriggersPerCombat and <= PlayingCardSuitEnchantment.MaxTriggersPerCombat)
+            .Where(card => card.IsWildcard
+                || card.Rank is >= PlayingCardSuitEnchantment.MinTriggersPerCombat
+                    and <= PlayingCardSuitEnchantment.MaxTriggersPerCombat)
             .ToList();
+
+        List<PlayingCardPokerCard<T>> wildcards = normalized.Where(card => card.IsWildcard).ToList();
+        if (wildcards.Count > 0)
+        {
+            return FindBestHandWithWildcards(normalized, wildcards);
+        }
+
+        return FindBestHandWithoutWildcards(normalized);
+    }
+
+    private static PlayingCardPokerHand<T>? FindBestHandWithWildcards<T>(
+        IReadOnlyList<PlayingCardPokerCard<T>> cards,
+        IReadOnlyList<PlayingCardPokerCard<T>> wildcards)
+    {
+        List<PlayingCardPokerCard<T>> assigned = cards
+            .Where(card => !card.IsWildcard)
+            .ToList();
+        PlayingCardPokerHand<T>? best = null;
+
+        SearchWildcardAssignments(cards, wildcards, 0, assigned, ref best);
+        return best;
+    }
+
+    private static void SearchWildcardAssignments<T>(
+        IReadOnlyList<PlayingCardPokerCard<T>> originalCards,
+        IReadOnlyList<PlayingCardPokerCard<T>> wildcards,
+        int wildcardIndex,
+        List<PlayingCardPokerCard<T>> assigned,
+        ref PlayingCardPokerHand<T>? best)
+    {
+        if (wildcardIndex == wildcards.Count)
+        {
+            PlayingCardPokerHand<T>? candidate = FindBestHandWithoutWildcards(assigned);
+            if (candidate != null
+                && (best == null || candidate.Rank > best.Rank))
+            {
+                best = candidate;
+            }
+
+            return;
+        }
+
+        PlayingCardPokerCard<T> wildcard = wildcards[wildcardIndex];
+        foreach (PlayingCardSuit suit in Enum.GetValues<PlayingCardSuit>())
+        {
+            for (int rank = PlayingCardSuitEnchantment.MinTriggersPerCombat;
+                 rank <= PlayingCardSuitEnchantment.MaxTriggersPerCombat;
+                 rank++)
+            {
+                assigned.Add(wildcard with { Rank = rank, Suit = suit, IsWildcard = true });
+                SearchWildcardAssignments(originalCards, wildcards, wildcardIndex + 1, assigned, ref best);
+                assigned.RemoveAt(assigned.Count - 1);
+            }
+        }
+    }
+
+    private static PlayingCardPokerHand<T>? FindBestHandWithoutWildcards<T>(
+        IReadOnlyList<PlayingCardPokerCard<T>> normalized)
+    {
 
         return FindRoyalFlush(normalized)
             ?? FindStraightFlush(normalized)

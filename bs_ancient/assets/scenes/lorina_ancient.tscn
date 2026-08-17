@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://bs_ancient/assets/images/map/lorina_bg.png" id="1_lorina_bg"]
+[ext_resource type="Script" path="res://Scripts/Nodes/Events/BsAncientFullscreenBackground.cs" id="2_fullscreen"]
+
+[node name="LorinaAncient" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_fullscreen")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_lorina_bg")
+expand_mode = 1
+stretch_mode = 0

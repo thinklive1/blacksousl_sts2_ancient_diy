@@ -95,5 +95,7 @@
   "BS_ANCIENT_POWER_GUIGNOLS_BOO_EXECUTION_POWER.smartDescription": "敌人的攻击会一击杀死生命低于[blue]{Amount}%[/blue]的你。",
   "BS_ANCIENT_POWER_BOOJUM_MEMORY_POWER.title": "记忆",
   "BS_ANCIENT_POWER_BOOJUM_MEMORY_POWER.description": "优先承受你受到的伤害。每耗尽一段记忆，便遗忘一局已结束的单人对局。",
-  "BS_ANCIENT_POWER_BOOJUM_MEMORY_POWER.smartDescription": "剩余[blue]{Amount}[/blue]点记忆，优先承受你受到的伤害。"
+  "BS_ANCIENT_POWER_BOOJUM_MEMORY_POWER.smartDescription": "剩余[blue]{Amount}[/blue]点记忆，优先承受你受到的伤害。",
+  "BS_ANCIENT_POWER_POKER_HAND_ANNOUNCEMENT_POWER.title": "牌型提示",
+  "BS_ANCIENT_POWER_POKER_HAND_ANNOUNCEMENT_POWER.description": "显示本次触发的扑克牌型。"
 }

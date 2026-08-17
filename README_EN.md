@@ -6,7 +6,7 @@ A Slay the Spire 2 Ancient expansion mod. It currently adds 3 map Ancients, repl
 
 ## Requirements
 
-- RitsuLib 0.5.6 or later (game 0.107.1 compatibility branch)
+- RitsuLib 0.5.13 or later (game 0.107.1 compatibility branch)
 
 ## Ancient Spawn Rules
 

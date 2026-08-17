@@ -1,10 +1,16 @@
 using System.Reflection;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
+using STS2RitsuLib.Interactions.RightClick;
 using STS2RitsuLib.Patching.Core;
+using STS2RitsuLib.Scaffolding.Cards.HandOutline;
 using STS2RitsuLib.Settings;
 using STS2RitsuLib.Ui.Toast;
 using STS2RitsuLib.Utils.Persistence;
@@ -20,6 +26,7 @@ public class Entry
     public const string ModId = "bs_ancient";
     public static readonly Logger Logger = RitsuLibFramework.CreateLogger(ModId);
     private static I18N? _settingsLocalization;
+    private static IDisposable? _queenOfHeartsRedDeckRightClick;
 
     public static void Init()
     {
@@ -37,6 +44,8 @@ public class Entry
             ["res://bs_ancient/i18n/settings"],
             assembly);
         RegisterSettings();
+        RegisterQueenOfHeartsRedDeckRightClick();
+        RegisterPlayingCardPokerHandOutline();
         RegisterFirstLaunchToast();
         ModPatcher patcher = RitsuLibFramework.CreatePatcher(ModId, "core-patches");
         patcher.RegisterPatches<BsAncientPatchSet>();
@@ -49,6 +58,44 @@ public class Entry
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         // Register all auto-discovered mod content.
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+    }
+
+    private static void RegisterPlayingCardPokerHandOutline()
+    {
+        ModCardHandOutlineRegistry.Register<CardModel>(
+            ModCardHandOutlineRules.Dynamic(
+                PlayingCardSuitEnchantment.IsCurrentPokerHandMember,
+                _ => Godot.Colors.White,
+                priority: 100,
+                visibleWhenUnplayable: true));
+    }
+
+    private static void RegisterQueenOfHeartsRedDeckRightClick()
+    {
+        _queenOfHeartsRedDeckRightClick = ModRightClickRegistry.Register<CardModel>(
+            ModId,
+            "queen_of_hearts_red_deck_discard",
+            execute: context =>
+            {
+                if (context.Model is not CardModel card
+                    || card.Owner?.GetRelic<QueenOfHeartsRedDeckRelic>() is not { } relic)
+                {
+                    return Task.CompletedTask;
+                }
+
+                return relic.TryDiscardAndDraw(
+                    card,
+                    (PlayerChoiceContext?)context.PlayerChoiceContext ?? new ThrowingPlayerChoiceContext());
+            },
+            priority: 10,
+            canHandleLocal: context =>
+                context.Model is CardModel card
+                && card.Owner?.GetRelic<QueenOfHeartsRedDeckRelic>() != null
+                && card.Pile?.Type == PileType.Hand,
+            canExecute: context =>
+                context.Model is CardModel card
+                && card.Owner?.GetRelic<QueenOfHeartsRedDeckRelic>() is { } relic
+                && relic.CanDiscardAndDraw(card));
     }
 
     private static void RegisterFirstLaunchToast()
@@ -89,7 +136,39 @@ public class Entry
                         "DisableModAncients",
                         () => BsAncientConfig.DisableModAncients,
                         value => BsAncientConfig.DisableModAncients = value),
-                    S("disableModAncients.description", "开启后，诺登、普利凯特、梅贝尔不会出现在地图中。此项优先于“只生成 Mod 先古之民”。更改后需要重启游戏并新开一局。"))
+                    S("disableModAncients.description", "开启后，诺登、普利凯特、梅贝尔、罗丽娜不会出现在地图中。此项优先于“只生成 Mod 先古之民”。更改后需要重启游戏并新开一局。"))
+                .AddToggle(
+                    "enable_node_ancient",
+                    S("enableNodeAncient.title", "允许诺登出现"),
+                    BoolBinding(
+                        "EnableNodeAncient",
+                        () => BsAncientConfig.EnableNodeAncient,
+                        value => BsAncientConfig.EnableNodeAncient = value),
+                    S("enableNodeAncient.description", "关闭后，诺登不会出现在第 2 层先古节点。更改后需要重启游戏并新开一局。"))
+                .AddToggle(
+                    "enable_prickett_ancient",
+                    S("enablePrickettAncient.title", "允许普利凯特出现"),
+                    BoolBinding(
+                        "EnablePrickettAncient",
+                        () => BsAncientConfig.EnablePrickettAncient,
+                        value => BsAncientConfig.EnablePrickettAncient = value),
+                    S("enablePrickettAncient.description", "关闭后，普利凯特不会出现在第 3 层先古节点。更改后需要重启游戏并新开一局。"))
+                .AddToggle(
+                    "enable_mabel_ancient",
+                    S("enableMabelAncient.title", "允许梅贝尔出现"),
+                    BoolBinding(
+                        "EnableMabelAncient",
+                        () => BsAncientConfig.EnableMabelAncient,
+                        value => BsAncientConfig.EnableMabelAncient = value),
+                    S("enableMabelAncient.description", "关闭后，梅贝尔不会出现在第 2、3 层先古节点。更改后需要重启游戏并新开一局。"))
+                .AddToggle(
+                    "enable_lorina_ancient",
+                    S("enableLorinaAncient.title", "允许罗丽娜出现"),
+                    BoolBinding(
+                        "EnableLorinaAncient",
+                        () => BsAncientConfig.EnableLorinaAncient,
+                        value => BsAncientConfig.EnableLorinaAncient = value),
+                    S("enableLorinaAncient.description", "关闭后，罗丽娜不会出现在第 2 层先古节点。更改后需要重启游戏并新开一局。"))
                 .AddToggle(
                     "replace_neow_appearance",
                     S("replaceNeowAppearance.title", "替换涅奥外观"),

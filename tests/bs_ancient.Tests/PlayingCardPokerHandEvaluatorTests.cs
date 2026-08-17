@@ -79,6 +79,32 @@ public sealed class PlayingCardPokerHandEvaluatorTests
     }
 
     [Fact]
+    public void WildcardAceCanCompleteRoyalFlush()
+    {
+        PlayingCardPokerHand<int>? hand = PlayingCardPokerHandEvaluator.FindBestHand([
+            Card(1, 10, PlayingCardSuit.Heart),
+            Card(2, 11, PlayingCardSuit.Heart),
+            Card(3, 12, PlayingCardSuit.Heart),
+            Card(4, 13, PlayingCardSuit.Heart),
+            new PlayingCardPokerCard<int>(5, 1, PlayingCardSuit.Spade, IsWildcard: true)
+        ]);
+
+        Assert.NotNull(hand);
+        Assert.Equal(PlayingCardPokerHandRank.RoyalFlush, hand.Rank);
+        Assert.Contains(hand.Cards, card => card.Value == 5 && card.IsWildcard);
+    }
+
+    [Fact]
+    public void LoneWildcardDoesNotBecomeAPokerHand()
+    {
+        PlayingCardPokerHand<int>? hand = PlayingCardPokerHandEvaluator.FindBestHand([
+            new PlayingCardPokerCard<int>(1, 1, PlayingCardSuit.Heart, IsWildcard: true)
+        ]);
+
+        Assert.Null(hand);
+    }
+
+    [Fact]
     public void PrefersTheHighestAvailableHand()
     {
         PlayingCardPokerHand<int>? hand = PlayingCardPokerHandEvaluator.FindBestHand([

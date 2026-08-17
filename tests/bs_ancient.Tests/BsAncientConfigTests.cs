@@ -50,6 +50,10 @@ public sealed class BsAncientConfigTests : IDisposable
         Assert.Equal(100, BsAncientConfig.GrandGuignolInitialRelicChance);
         using JsonDocument document = JsonDocument.Parse(File.ReadAllText(path));
         Assert.True(document.RootElement.TryGetProperty("AllowJackKetchNews", out _));
+        Assert.True(document.RootElement.GetProperty("EnableNodeAncient").GetBoolean());
+        Assert.True(document.RootElement.GetProperty("EnablePrickettAncient").GetBoolean());
+        Assert.True(document.RootElement.GetProperty("EnableMabelAncient").GetBoolean());
+        Assert.True(document.RootElement.GetProperty("EnableLorinaAncient").GetBoolean());
         Assert.Equal(100, document.RootElement.GetProperty("GrandGuignolInitialRelicChance").GetInt32());
     }
 

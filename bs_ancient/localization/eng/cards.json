@@ -69,5 +69,13 @@
 	"BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.title": "Memory",
 	"BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD.description": "Play every card from the corresponding historical deck.",
 	"BS_ANCIENT_CARD_BALATRO_PLAYING_CARD.title": "Playing Card",
-	"BS_ANCIENT_CARD_BALATRO_PLAYING_CARD.description": "A temporary playing card used at the training dummy's table."
+	"BS_ANCIENT_CARD_BALATRO_PLAYING_CARD.description": "A temporary playing card used at the training dummy's table.",
+	"BS_ANCIENT_CARD_LAST_ACE_CARD.title": "The Last Ace",
+	"BS_ANCIENT_CARD_LAST_ACE_CARD.description": "When played alone, trigger all Suit effects twice. When used in a poker hand, this card can be any suit and rank.",
+	"BS_ANCIENT_CARD_LAST_ACE_CARD.flavor": "My turn. Draw a card.",
+	"BS_ANCIENT_CARD_REVERSED_ACE_CARD.title": "The Inverted Ace",
+	"BS_ANCIENT_CARD_REVERSED_ACE_CARD.description": "Retain. At the end of combat, if this card is still in your Hand, choose two cards to enchant with a random Suit.",
+	"BS_ANCIENT_CARD_REVERSED_ACE_CARD.selectionScreenPrompt": "Choose up to two cards to enchant with a random Suit.",
+	"BS_ANCIENT_CARD_QUEEN_OF_HEARTS_CROQUET_MALLET_CARD.title": "Croquet Mallet",
+	"BS_ANCIENT_CARD_QUEEN_OF_HEARTS_CROQUET_MALLET_CARD.description": "This card stays in the center of your Hand. When an Attack card on either side is played, play the nearest Attack card on the opposite side. Triggers up to 3 times per turn."
 }

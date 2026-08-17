@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Entities.Rewards;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rewards;
@@ -21,6 +22,13 @@ public sealed class QueenOfHeartsPlayingCardDeckRelic : ModRelicTemplate
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/QueenOfHeartsPlayingCardDeckRelic.png";
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        ..HoverTipFactory.FromEnchantment<HeartSuitEnchantment>(),
+        ..HoverTipFactory.FromEnchantment<DiamondSuitEnchantment>(),
+        ..HoverTipFactory.FromEnchantment<ClubSuitEnchantment>(),
+        ..HoverTipFactory.FromEnchantment<SpadeSuitEnchantment>()
+    ];
 
     public override RelicAssetProfile AssetProfile => new(
         IconPath: RelicIconPath,

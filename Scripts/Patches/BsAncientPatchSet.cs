@@ -35,9 +35,15 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<BalatroModifyHandDrawPatch>();
         patcher.RegisterPatch<BalatroAfterPlayerTurnStartPatch>();
         patcher.RegisterPatch<BalatroAfterCardDrawnPatch>();
+        patcher.RegisterPatch<CroquetMalletAfterCardDrawnPatch>();
+        patcher.RegisterPatch<CroquetMalletBeforeCardPlayWrapperPatch>();
+        patcher.RegisterPatch<CroquetMalletAfterCardPlayedPatch>();
+        patcher.RegisterPatch<CroquetMalletAfterPlayerTurnStartPatch>();
         patcher.RegisterPatch<BalatroCombatUiPatch>();
         patcher.RegisterPatch<BalatroDummyTimeLimitPatch>();
         patcher.RegisterPatch<BalatroDirectCardPlayPatch>();
+        patcher.RegisterPatch<QueenOfHeartsNebulaDeckRewardPatch>();
+        patcher.RegisterPatch<QueenOfHeartsNebulaDeckCardRewardCountPatch>();
         RegisterMercuryCardDescriptionPatch(patcher);
     }
 

@@ -132,6 +132,7 @@ public class MabelAncient : ModAncientEventTemplate
     public override bool IsAllowed(IRunState runState)
     {
         return !BsAncientConfig.DisableModAncients
+            && BsAncientConfig.EnableMabelAncient
             && runState.CurrentActIndex is 1 or 2;
     }
 

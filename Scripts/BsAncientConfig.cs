@@ -14,6 +14,10 @@ public static class BsAncientConfig
 
     public static bool OnlyUseModAncients = true;
     public static bool DisableModAncients = false;
+    public static bool EnableNodeAncient = true;
+    public static bool EnablePrickettAncient = true;
+    public static bool EnableMabelAncient = true;
+    public static bool EnableLorinaAncient = true;
     public static bool ReplaceNeowAppearance = true;
     public static bool EnableModEvents = true;
     public static bool DisableTestingEvents = true;
@@ -114,6 +118,10 @@ public static class BsAncientConfig
     {
         OnlyUseModAncients = config.OnlyUseModAncients;
         DisableModAncients = config.DisableModAncients;
+        EnableNodeAncient = config.EnableNodeAncient;
+        EnablePrickettAncient = config.EnablePrickettAncient;
+        EnableMabelAncient = config.EnableMabelAncient;
+        EnableLorinaAncient = config.EnableLorinaAncient;
         ReplaceNeowAppearance = config.ReplaceNeowAppearance;
         EnableModEvents = config.EnableModEvents;
         DisableTestingEvents = config.DisableTestingEvents;
@@ -147,6 +155,10 @@ public static class BsAncientConfig
         {
             OnlyUseModAncients = OnlyUseModAncients,
             DisableModAncients = DisableModAncients,
+            EnableNodeAncient = EnableNodeAncient,
+            EnablePrickettAncient = EnablePrickettAncient,
+            EnableMabelAncient = EnableMabelAncient,
+            EnableLorinaAncient = EnableLorinaAncient,
             ReplaceNeowAppearance = ReplaceNeowAppearance,
             EnableModEvents = EnableModEvents,
             DisableTestingEvents = DisableTestingEvents,
@@ -255,6 +267,10 @@ public static class BsAncientConfig
             return root.ValueKind == JsonValueKind.Object
                 && root.TryGetProperty(nameof(FileConfig.OnlyUseModAncients), out _)
                 && root.TryGetProperty(nameof(FileConfig.DisableModAncients), out _)
+                && root.TryGetProperty(nameof(FileConfig.EnableNodeAncient), out _)
+                && root.TryGetProperty(nameof(FileConfig.EnablePrickettAncient), out _)
+                && root.TryGetProperty(nameof(FileConfig.EnableMabelAncient), out _)
+                && root.TryGetProperty(nameof(FileConfig.EnableLorinaAncient), out _)
                 && root.TryGetProperty(nameof(FileConfig.ReplaceNeowAppearance), out _)
                 && root.TryGetProperty(nameof(FileConfig.EnableModEvents), out _)
                 && root.TryGetProperty(nameof(FileConfig.DisableTestingEvents), out _)
@@ -292,6 +308,14 @@ public static class BsAncientConfig
         public bool OnlyUseModAncients { get; set; } = true;
 
         public bool DisableModAncients { get; set; } = false;
+
+        public bool EnableNodeAncient { get; set; } = true;
+
+        public bool EnablePrickettAncient { get; set; } = true;
+
+        public bool EnableMabelAncient { get; set; } = true;
+
+        public bool EnableLorinaAncient { get; set; } = true;
 
         public bool ReplaceNeowAppearance { get; set; } = true;
 
