@@ -1,4 +1,4 @@
 {
   "OPTION_TOKE.name": "Smoke",
-  "OPTION_TOKE.description": "Lose [red]{MaxHp}[/red] Max HP to choose and [gold]Upgrade[/gold] a card. This does not consume your rest-site option. [blue]{Uses}[/blue] uses remaining."
+  "OPTION_TOKE.description": "Lose [red]{MaxHp}[/red] Max HP. Choose a card to [gold]Upgrade[/gold]. This does not consume your rest-site option. [blue]{Uses}[/blue] uses remaining."
 }

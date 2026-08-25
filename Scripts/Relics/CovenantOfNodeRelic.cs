@@ -17,7 +17,7 @@ namespace BlackSouls.Scripts;
 public class CovenantOfNodeRelic : ModRelicTemplate
 {
     private const int EnergyGain = 1;
-    private const int RegenGain = 3;
+    private const int RegenGain = 4;
 
     private bool _hasTriggeredThisCombat;
 

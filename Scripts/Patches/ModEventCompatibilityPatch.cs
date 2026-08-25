@@ -6,21 +6,26 @@ using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using BlackSouls.Scripts;
+using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts.Patches;
 
-/// <summary>Guards custom events against missing character data and legacy localization keys.</summary>
-[HarmonyPatch]
-public static class ModEventCompatibilityPatch
+/// <summary>Guards tea-party option localization without replacing other events' initialization.</summary>
+public sealed class TeaPartyEventOptionLocVarsPatch : IPatchMethod
 {
-    private const string EventTable = "events";
-    private const string ModEventPrefix = "BS_ANCIENT_EVENT_";
+    public static string PatchId => "tea_party_event_option_loc_vars";
+    public static string Description => "Tolerate incomplete third-party character data in the tea party event.";
+    public static bool IsCritical => false;
+    public static ModPatchTarget[] GetTargets() =>
+        [new(typeof(EventOption), "AddLocVars", [typeof(EventModel)], ignoreIfMissing: true)];
 
-    /// <summary>Skips character variables when a third-party character is not fully initialized.</summary>
-    [HarmonyPatch(typeof(EventOption), "AddLocVars")]
-    [HarmonyPrefix]
-    private static bool AddLocVarsPrefix(EventOption __instance, EventModel eventModel)
+    public static bool Prefix(EventOption __instance, EventModel eventModel)
     {
+        if (eventModel is not EndlessTeaPartyEvent)
+        {
+            return true;
+        }
+
         Player? owner = eventModel.Owner;
         try
         {
@@ -31,9 +36,35 @@ public static class ModEventCompatibilityPatch
             // A malformed external character must not prevent the event from being displayed.
         }
 
-        __instance.Description.Add("IsMultiplayer", owner != null && owner.RunState.Players.Count > 1);
+        __instance.Description.Add("IsMultiplayer", owner?.RunState?.Players.Count > 1);
         return false;
     }
+}
+
+/// <summary>Guards custom events against missing character data and legacy localization keys.</summary>
+[HarmonyPatch]
+public static class ModEventCompatibilityPatch
+{
+    private const string EventTable = "events";
+    private const string ModEventPrefix = "BS_ANCIENT_EVENT_";
+    private static readonly HashSet<string> LegacyEventRoots = new(StringComparer.Ordinal)
+    {
+        "BALATRO_TRAINING_DUMMY_EVENT",
+        "BIRD_SINGER_EVENT",
+        "BOOJUM_EVENT",
+        "CLOWN_EVENT",
+        "ENDLESS_TEA_PARTY_EVENT",
+        "FRIENDLY_SLIME_EVENT",
+        "GENTLE_GIFT_EVENT",
+        "GIRL_IN_MAZE_EVENT",
+        "HEART_JACK_EVENT",
+        "HORRIFYING_GLUTTON_EVENT",
+        "LAST_WHITE_KNIGHT_EVENT",
+        "PLAYING_CARD_GARDENERS_EVENT",
+        "QUEEN_OF_HEARTS_EVENT",
+        "QUEEN_TART_EVENT",
+        "WAX_STATUE_EVENT",
+    };
 
     /// <summary>Uses the existing prefixed entries while older localization files are being migrated.</summary>
     [HarmonyPatch(typeof(LocString), nameof(LocString.GetRawText))]
@@ -42,7 +73,8 @@ public static class ModEventCompatibilityPatch
     private static bool GetRawTextPrefix(LocString __instance, ref string __result)
     {
         if (__instance.LocTable != EventTable
-            || __instance.LocEntryKey.StartsWith(ModEventPrefix, StringComparison.Ordinal))
+            || __instance.LocEntryKey.StartsWith(ModEventPrefix, StringComparison.Ordinal)
+            || !IsKnownLegacyEventKey(__instance.LocEntryKey))
         {
             return true;
         }
@@ -55,6 +87,13 @@ public static class ModEventCompatibilityPatch
 
         __result = new LocString(EventTable, fallbackKey).GetRawText();
         return false;
+    }
+
+    internal static bool IsKnownLegacyEventKey(string key)
+    {
+        int separatorIndex = key.IndexOf('.', StringComparison.Ordinal);
+        string eventRoot = separatorIndex < 0 ? key : key[..separatorIndex];
+        return LegacyEventRoots.Contains(eventRoot);
     }
 
     /// <summary>Returns the tea party portrait directly when RitsuLib leaves the vanilla path behind.</summary>

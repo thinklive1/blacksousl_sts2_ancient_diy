@@ -39,57 +39,6 @@ public sealed class BalatroModifyHandDrawPatch : IPatchMethod
         __result = BalatroTrainingCombatService.ModifyHandDraw(combatState, player, __result);
 }
 
-public sealed class BalatroAfterPlayerTurnStartPatch : IPatchMethod
-{
-    public static string PatchId => "balatro_training_sort_initial_hand";
-    public static string Description => "Sort the poker hand after the initial hand draw completes.";
-    public static bool IsCritical => false;
-    public static ModPatchTarget[] GetTargets() => [new(typeof(Hook), nameof(Hook.AfterPlayerTurnStart))];
-
-    public static void Postfix(
-        ICombatState combatState,
-        PlayerChoiceContext choiceContext,
-        Player player,
-        ref Task __result) =>
-        __result = Continue(__result, combatState, player);
-
-    private static async Task Continue(Task original, ICombatState combatState, Player player)
-    {
-        await original;
-        if (BalatroTrainingCombatService.IsActive(combatState))
-        {
-            BalatroTrainingCombatService.SortPokerHand(player);
-        }
-    }
-}
-
-public sealed class BalatroAfterCardDrawnPatch : IPatchMethod
-{
-    public static string PatchId => "balatro_training_sort_after_draw";
-    public static string Description => "Keep the poker hand sorted after every draw.";
-    public static bool IsCritical => false;
-    public static ModPatchTarget[] GetTargets() => [new(typeof(Hook), nameof(Hook.AfterCardDrawn))];
-
-    public static void Postfix(
-        ICombatState combatState,
-        PlayerChoiceContext choiceContext,
-        CardModel card,
-        bool fromHandDraw,
-        ref Task __result) =>
-        __result = Continue(__result, combatState, card);
-
-    private static async Task Continue(Task original, ICombatState combatState, CardModel card)
-    {
-        await original;
-        if (BalatroTrainingCombatService.IsActive(combatState)
-            && card.Owner is Player player
-            && card.Pile?.Type == PileType.Hand)
-        {
-            BalatroTrainingCombatService.SortPokerHand(player);
-        }
-    }
-}
-
 public sealed class BalatroCombatUiPatch : IPatchMethod
 {
     public static string PatchId => "balatro_training_combat_controls";

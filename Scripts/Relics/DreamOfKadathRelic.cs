@@ -24,7 +24,7 @@ namespace BlackSouls.Scripts;
 public class DreamOfKadathRelic : ModRelicTemplate
 {
     private const decimal ExtraRestHealPercent = 0.3m;
-    private const int UpgradeCount = 3;
+    private const int UpgradeCount = 2;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 

@@ -15,7 +15,7 @@ public class GrandGuignolRelicCollectionPatch : IPatchMethod
     public static bool IsCritical => false;
 
     public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(NRelicCollectionCategory), nameof(NRelicCollectionCategory.LoadRelics))];
+        [new(typeof(NRelicCollectionCategory), nameof(NRelicCollectionCategory.LoadRelics), ignoreIfMissing: true)];
 
     public static void Prefix(RelicRarity relicRarity, UnlockState unlockState)
     {

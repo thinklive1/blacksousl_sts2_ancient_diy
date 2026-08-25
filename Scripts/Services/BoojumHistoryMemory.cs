@@ -109,7 +109,13 @@ public static class BoojumHistoryPurge
 {
     private const string BackupSuffix = ".boojum.bak";
     private static readonly object PendingErasureLock = new();
+    private static readonly FieldInfo? SaveStoreField = typeof(SaveManager).GetField(
+        "_saveStore",
+        BindingFlags.Instance | BindingFlags.NonPublic);
     private static CurrentRunHistoryTarget? _pendingCurrentRunErasure;
+    private static bool _saveStoreWarningLogged;
+
+    internal static bool HasSaveStoreAccess => SaveStoreField != null;
 
     /// <summary>Clears any stale loss marker when a new Boojum combat begins.</summary>
     public static void Reset(ICombatState? combatState = null)
@@ -226,6 +232,13 @@ public static class BoojumHistoryPurge
 
             // Preserve a recoverable copy beside the history before erasing the original run.
             saveStore.WriteFile(backupPath, content);
+            string? backupContent = saveStore.ReadFile(backupPath);
+            if (!string.Equals(backupContent, content, StringComparison.Ordinal))
+            {
+                Entry.Logger.Warn($"Boojum refused to erase run history '{fileName}' because its backup could not be verified.");
+                return;
+            }
+
             saveStore.DeleteFile(path);
             if (saveStore.FileExists(path) || !saveStore.FileExists(backupPath))
             {
@@ -243,9 +256,33 @@ public static class BoojumHistoryPurge
 
     private static ISaveStore? GetSaveStore()
     {
-        const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
-        FieldInfo? field = typeof(SaveManager).GetField("_saveStore", flags);
-        return field?.GetValue(SaveManager.Instance) as ISaveStore;
+        try
+        {
+            ISaveStore? saveStore = SaveStoreField?.GetValue(SaveManager.Instance) as ISaveStore;
+            if (saveStore != null)
+            {
+                return saveStore;
+            }
+        }
+        catch (Exception exception)
+        {
+            LogSaveStoreWarning(exception.Message);
+            return null;
+        }
+
+        LogSaveStoreWarning("SaveManager._saveStore is unavailable");
+        return null;
+    }
+
+    private static void LogSaveStoreWarning(string reason)
+    {
+        if (_saveStoreWarningLogged)
+        {
+            return;
+        }
+
+        _saveStoreWarningLogged = true;
+        Entry.Logger.Warn($"Boojum history deletion was disabled: {reason}.");
     }
 }
 

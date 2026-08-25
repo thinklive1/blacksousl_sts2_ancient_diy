@@ -34,6 +34,9 @@ public class LorinaAncient : ModAncientEventTemplate
         CreateFlippedAceOption(),
         CreateReversedAceOption(),
         CreateModRelicOption<QueenOfHeartsExecutionOrderRelic>(),
+        CreateCroquetMalletOption(),
+        CreateModRelicOption<QueenOfHeartsJudgmentOrderRelic>(),
+        CreateModRelicOption<RoyalChipRelic>(),
     ];
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
@@ -41,11 +44,13 @@ public class LorinaAncient : ModAncientEventTemplate
         IReadOnlyList<EventOption> deckPool = CreateDeckPool();
         IReadOnlyList<EventOption> acePool = CreateAcePool();
         IReadOnlyList<EventOption> executionPool = CreateExecutionPool();
+        IReadOnlyList<EventOption> gamblePool = [CreateModRelicOption<RoyalChipRelic>()];
 
         return [
             Rng.NextItem(deckPool)!,
             Rng.NextItem(acePool)!,
             Rng.NextItem(executionPool)!,
+            Rng.NextItem(gamblePool)!,
         ];
     }
 
@@ -71,7 +76,8 @@ public class LorinaAncient : ModAncientEventTemplate
     {
         return [
             CreateModRelicOption<QueenOfHeartsExecutionOrderRelic>(),
-            CreateCroquetMalletOption()
+            CreateCroquetMalletOption(),
+            CreateModRelicOption<QueenOfHeartsJudgmentOrderRelic>()
         ];
     }
 

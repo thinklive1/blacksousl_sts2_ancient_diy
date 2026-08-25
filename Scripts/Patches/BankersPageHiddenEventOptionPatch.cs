@@ -1,29 +1,16 @@
-using System.Reflection;
 using BlackSouls.Scripts;
-using Godot;
-using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Events;
-using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Nodes.Events;
 
 namespace BlackSouls.Scripts.Patches;
 
 /// <summary>Applies behavior patches for Bankers Page Hidden Event Option.</summary>
-[HarmonyPatch]
 public static class BankersPageHiddenEventOptionPatch
 {
     private const string HiddenOptionKey = "BS_ANCIENT_EASTER_EGG_BANKERS_PAGE_OPTION";
-    private const float HiddenAlpha = 0f;
-    private const float HoverAlpha = 0.08f;
     private const int AppearanceChancePercent = 30;
 
-    private static readonly MethodInfo SetEventFinishedMethod =
-        AccessTools.Method(typeof(EventModel), "SetEventFinished", [typeof(LocString)]);
-
-    [HarmonyPatch(typeof(EventModel), "SetEventState")]
-    [HarmonyPrefix]
     public static void SetEventStatePrefix(EventModel __instance, ref IEnumerable<EventOption> eventOptions)
     {
         if (__instance.Owner == null || __instance.IsFinished)
@@ -32,7 +19,8 @@ public static class BankersPageHiddenEventOptionPatch
         }
 
         List<EventOption> options = eventOptions.ToList();
-        if (options.Count == 0
+        if (!HiddenEventOptionSupport.CanFinishEvents
+            || options.Count == 0
             || options.Any(option => option.TextKey == HiddenOptionKey)
             || !options.Any(IsGoldGainOption)
             || !SnarkPageRelicTrackerModifier.ShouldOfferHiddenOption<BankersPageRelic>(
@@ -45,34 +33,6 @@ public static class BankersPageHiddenEventOptionPatch
 
         options.Add(CreateHiddenOption(__instance));
         eventOptions = options;
-    }
-
-    [HarmonyPatch(typeof(NEventOptionButton), nameof(NEventOptionButton._Ready))]
-    [HarmonyPostfix]
-    public static void EventOptionButtonReadyPostfix(NEventOptionButton __instance)
-    {
-        ApplyHiddenVisuals(__instance, HiddenAlpha);
-    }
-
-    [HarmonyPatch(typeof(NEventOptionButton), nameof(NEventOptionButton.EnableButton))]
-    [HarmonyPostfix]
-    public static void EventOptionButtonEnablePostfix(NEventOptionButton __instance)
-    {
-        ApplyHiddenVisuals(__instance, HiddenAlpha);
-    }
-
-    [HarmonyPatch(typeof(NEventOptionButton), "OnFocus")]
-    [HarmonyPostfix]
-    public static void EventOptionButtonFocusPostfix(NEventOptionButton __instance)
-    {
-        ApplyHiddenVisuals(__instance, HoverAlpha);
-    }
-
-    [HarmonyPatch(typeof(NEventOptionButton), "OnUnfocus")]
-    [HarmonyPostfix]
-    public static void EventOptionButtonUnfocusPostfix(NEventOptionButton __instance)
-    {
-        ApplyHiddenVisuals(__instance, HiddenAlpha);
     }
 
     private static EventOption CreateHiddenOption(EventModel eventModel)
@@ -96,28 +56,12 @@ public static class BankersPageHiddenEventOptionPatch
     {
         if (eventModel.Owner == null || eventModel.Owner.GetRelic<BankersPageRelic>() != null)
         {
-            FinishEvent(eventModel);
+            HiddenEventOptionSupport.FinishEvent(eventModel);
             return;
         }
 
         await RelicCmd.Obtain<BankersPageRelic>(eventModel.Owner);
-        FinishEvent(eventModel);
-    }
-
-    private static void FinishEvent(EventModel eventModel)
-    {
-        LocString description = eventModel.Description ?? eventModel.InitialDescription;
-        SetEventFinishedMethod.Invoke(eventModel, [description]);
-    }
-
-    private static void ApplyHiddenVisuals(NEventOptionButton button, float alpha)
-    {
-        if (button.Option.TextKey != HiddenOptionKey)
-        {
-            return;
-        }
-
-        button.Modulate = new Color(1f, 1f, 1f, alpha);
+        HiddenEventOptionSupport.FinishEvent(eventModel);
     }
 
     private static bool IsGoldGainOption(EventOption option)

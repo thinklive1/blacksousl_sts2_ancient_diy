@@ -4,9 +4,12 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ancients;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Events;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
+using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
@@ -23,16 +26,30 @@ public class NeowRethinkPokerPatch : IPatchMethod
 
     private const int PositiveOptionCount = 2;
 
-    private static readonly MethodInfo RelicOptionMethod =
+    private static readonly MethodInfo? RelicOptionMethod =
         AccessTools.Method(
             typeof(AncientEventModel),
             "RelicOption",
             [typeof(RelicModel), typeof(string), typeof(string)]);
+    private static bool _missingRelicOptionLogged;
+
+    internal static bool CanCreateRelicOption => RelicOptionMethod != null;
 
     public static void Postfix(Neow __instance, ref IReadOnlyList<EventOption> __result)
     {
         try
         {
+            if (RelicOptionMethod == null)
+            {
+                if (!_missingRelicOptionLogged)
+                {
+                    _missingRelicOptionLogged = true;
+                    Entry.Logger.Warn("Grand Guignol's Neow option was disabled because AncientEventModel.RelicOption is unavailable.");
+                }
+
+                return;
+            }
+
             if (__instance.Owner == null || __instance.Owner.RunState.Modifiers.Count > 0)
             {
                 return;
@@ -73,48 +90,51 @@ public class NeowRethinkPokerPatch : IPatchMethod
             options[replacementIndex] = CreateRethinkPokerOption(__instance, relic);
             __result = options;
         }
-        finally
-        {
-            if (__instance.Owner != null)
-            {
-                TryObtainFairyTaleBook(__instance);
-            }
-        }
-    }
-
-    private static void TryObtainFairyTaleBook(Neow neow)
-    {
-        if (neow.Owner == null
-            || !BsAncientRunOptions.IsFairyTaleModeEnabled(neow.Owner.RunState)
-            || neow.Owner.GetRelic<UnnamedFairyTaleBookRelic>() != null)
-        {
-            return;
-        }
-
-        _ = ObtainFairyTaleBook(neow);
-    }
-
-    private static async Task ObtainFairyTaleBook(Neow neow)
-    {
-        try
-        {
-            if (neow.Owner == null || neow.Owner.GetRelic<UnnamedFairyTaleBookRelic>() != null)
-            {
-                return;
-            }
-
-            await RelicCmd.Obtain<UnnamedFairyTaleBookRelic>(neow.Owner);
-        }
         catch (Exception exception)
         {
-            Console.Error.WriteLine(exception);
+            Entry.Logger.Warn($"Grand Guignol's Neow option was left unchanged: {exception.Message}");
         }
     }
 
     private static EventOption CreateRethinkPokerOption(Neow neow, RelicModel relic)
     {
-        return (EventOption)RelicOptionMethod.Invoke(
+        return (EventOption)RelicOptionMethod!.Invoke(
             neow,
             [relic, "INITIAL", "NEOW.pages.DONE.POSITIVE.description"])!;
+    }
+}
+
+/// <summary>Obtains the Fairy Tale Book before Neow starts instead of launching an unobserved task.</summary>
+public sealed class FairyTaleBookBeforeNeowPatch : IPatchMethod
+{
+    public static string PatchId => "fairy_tale_book_before_neow";
+    public static string Description => "Await Fairy Tale Book acquisition before entering Neow's event.";
+    public static bool IsCritical => false;
+    public static ModPatchTarget[] GetTargets() =>
+        [new(
+            typeof(Hook),
+            nameof(Hook.BeforeRoomEntered),
+            [typeof(IRunState), typeof(AbstractRoom)],
+            ignoreIfMissing: true)];
+
+    public static void Postfix(IRunState runState, AbstractRoom room, ref Task __result) =>
+        __result = Continue(__result, runState, room);
+
+    private static async Task Continue(Task original, IRunState runState, AbstractRoom room)
+    {
+        await original;
+        if (room is not EventRoom { CanonicalEvent: Neow }
+            || !BsAncientRunOptions.IsFairyTaleModeEnabled(runState))
+        {
+            return;
+        }
+
+        foreach (var player in runState.Players)
+        {
+            if (player.GetRelic<UnnamedFairyTaleBookRelic>() == null)
+            {
+                await RelicCmd.Obtain<UnnamedFairyTaleBookRelic>(player);
+            }
+        }
     }
 }

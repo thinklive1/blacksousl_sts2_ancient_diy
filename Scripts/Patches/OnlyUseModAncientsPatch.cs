@@ -1,3 +1,4 @@
+using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Acts;
@@ -17,13 +18,19 @@ public class OnlyUseModAncientsPatch : IPatchMethod
     public static bool IsCritical => false;
 
     public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(ActModel), nameof(ActModel.GenerateRooms))];
+        [new(
+            typeof(ActModel),
+            nameof(ActModel.GenerateRooms),
+            [typeof(Rng), typeof(UnlockState), typeof(bool)],
+            ignoreIfMissing: true)];
 
-    private static readonly AccessTools.FieldRef<ActModel, RoomSet> RoomsRef =
-        AccessTools.FieldRefAccess<ActModel, RoomSet>("_rooms");
+    private static readonly FieldInfo? RoomsField = AccessTools.Field(typeof(ActModel), "_rooms");
+    private static readonly FieldInfo? SharedAncientSubsetField = AccessTools.Field(typeof(ActModel), "_sharedAncientSubset");
+    private static bool _missingRoomsFieldLogged;
+    private static bool _missingSharedAncientSubsetFieldLogged;
 
-    private static readonly AccessTools.FieldRef<ActModel, List<AncientEventModel>?> SharedAncientSubsetRef =
-        AccessTools.FieldRefAccess<ActModel, List<AncientEventModel>?>("_sharedAncientSubset");
+    internal static bool HasRoomAccess => RoomsField != null;
+    internal static bool HasSharedAncientSubsetAccess => SharedAncientSubsetField != null;
 
     public static void Postfix(ActModel __instance, Rng rng, UnlockState unlockState, bool isMultiplayer)
     {
@@ -63,9 +70,9 @@ public class OnlyUseModAncientsPatch : IPatchMethod
         }
 
         AncientEventModel? ancient = rng.NextItem(candidates);
-        if (ancient != null)
+        if (ancient != null && TryGetRooms(__instance, out RoomSet rooms))
         {
-            RoomsRef(__instance).Ancient = ancient;
+            rooms.Ancient = ancient;
         }
     }
 
@@ -84,7 +91,9 @@ public class OnlyUseModAncientsPatch : IPatchMethod
                 return false;
             }
 
-            if (RoomsRef(act).HasAncient && RoomsRef(act).Ancient is MabelAncient)
+            if (TryGetRooms(act, out RoomSet rooms)
+                && rooms.HasAncient
+                && rooms.Ancient is MabelAncient)
             {
                 return true;
             }
@@ -95,14 +104,15 @@ public class OnlyUseModAncientsPatch : IPatchMethod
 
     private static void RemoveGeneratedGrandGuignol(ActModel act, Rng rng, UnlockState unlockState)
     {
-        RoomSet rooms = RoomsRef(act);
-        if (!rooms.HasAncient || rooms.Ancient is not GrandGuignolAncient)
+        if (!TryGetRooms(act, out RoomSet rooms)
+            || !rooms.HasAncient
+            || rooms.Ancient is not GrandGuignolAncient)
         {
             return;
         }
 
         List<AncientEventModel> candidates = act.GetUnlockedAncients(unlockState)
-            .Concat(SharedAncientSubsetRef(act) ?? [])
+            .Concat(GetSharedAncientSubset(act))
             .Where(ancient => ancient is not GrandGuignolAncient)
             .ToList();
 
@@ -115,14 +125,15 @@ public class OnlyUseModAncientsPatch : IPatchMethod
 
     private static void RemoveGeneratedModAncient(ActModel act, Rng rng, UnlockState unlockState)
     {
-        RoomSet rooms = RoomsRef(act);
-        if (!rooms.HasAncient || !IsMapModAncient(rooms.Ancient))
+        if (!TryGetRooms(act, out RoomSet rooms)
+            || !rooms.HasAncient
+            || !IsMapModAncient(rooms.Ancient))
         {
             return;
         }
 
         List<AncientEventModel> candidates = act.GetUnlockedAncients(unlockState)
-            .Concat(SharedAncientSubsetRef(act) ?? [])
+            .Concat(GetSharedAncientSubset(act))
             .Where(ancient => !IsMapModAncient(ancient))
             .ToList();
 
@@ -140,14 +151,16 @@ public class OnlyUseModAncientsPatch : IPatchMethod
 
     private static void RemoveGeneratedDisabledModAncient(ActModel act, Rng rng, UnlockState unlockState)
     {
-        RoomSet rooms = RoomsRef(act);
-        if (!rooms.HasAncient || !IsMapModAncient(rooms.Ancient) || IsEnabledMapModAncient(rooms.Ancient))
+        if (!TryGetRooms(act, out RoomSet rooms)
+            || !rooms.HasAncient
+            || !IsMapModAncient(rooms.Ancient)
+            || IsEnabledMapModAncient(rooms.Ancient))
         {
             return;
         }
 
         List<AncientEventModel> candidates = act.GetUnlockedAncients(unlockState)
-            .Concat(SharedAncientSubsetRef(act) ?? [])
+            .Concat(GetSharedAncientSubset(act))
             .Where(ancient => !IsMapModAncient(ancient) || IsEnabledMapModAncient(ancient))
             .ToList();
 
@@ -199,5 +212,72 @@ public class OnlyUseModAncientsPatch : IPatchMethod
         {
             yield return ModelDb.AncientEvent<MabelAncient>();
         }
+    }
+
+    private static bool TryGetRooms(ActModel act, out RoomSet rooms)
+    {
+        try
+        {
+            if (RoomsField?.GetValue(act) is RoomSet resolvedRooms)
+            {
+                rooms = resolvedRooms;
+                return true;
+            }
+        }
+        catch (Exception exception)
+        {
+            LogMissingRoomsField(exception.Message);
+            rooms = null!;
+            return false;
+        }
+
+        LogMissingRoomsField("field unavailable");
+        rooms = null!;
+        return false;
+    }
+
+    private static IEnumerable<AncientEventModel> GetSharedAncientSubset(ActModel act)
+    {
+        try
+        {
+            if (SharedAncientSubsetField?.GetValue(act) is List<AncientEventModel> subset)
+            {
+                return subset;
+            }
+        }
+        catch (Exception exception)
+        {
+            LogMissingSharedAncientSubset(exception.Message);
+            return [];
+        }
+
+        if (SharedAncientSubsetField == null)
+        {
+            LogMissingSharedAncientSubset("field unavailable");
+        }
+
+        return [];
+    }
+
+    private static void LogMissingRoomsField(string reason)
+    {
+        if (_missingRoomsFieldLogged)
+        {
+            return;
+        }
+
+        _missingRoomsFieldLogged = true;
+        Entry.Logger.Warn($"Ancient room filtering was disabled because ActModel._rooms is unavailable: {reason}.");
+    }
+
+    private static void LogMissingSharedAncientSubset(string reason)
+    {
+        if (_missingSharedAncientSubsetFieldLogged)
+        {
+            return;
+        }
+
+        _missingSharedAncientSubsetFieldLogged = true;
+        Entry.Logger.Warn($"Shared Ancient replacements will use act-local candidates because ActModel._sharedAncientSubset is unavailable: {reason}.");
     }
 }

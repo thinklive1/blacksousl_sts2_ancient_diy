@@ -48,6 +48,8 @@ internal static class CroquetMalletCombatService
 
     internal static void QueueTrigger(CardModel playedCard, bool isAutoPlay)
     {
+        PendingTriggers.Remove(playedCard);
+
         Player? player = playedCard.Owner;
         if (isAutoPlay
             || playedCard.Type != CardType.Attack
@@ -108,25 +110,35 @@ internal static class CroquetMalletCombatService
             return;
         }
 
-        foreach (PendingTrigger trigger in triggers)
+        try
         {
-            QueenOfHeartsCroquetMalletCard mallet = trigger.Mallet;
-            CardModel oppositeAttack = trigger.OppositeAttack;
-            if (!mallet.CanTrigger
-                || mallet.Pile?.Type != PileType.Hand
-                || oppositeAttack.Pile?.Type != PileType.Hand
-                || oppositeAttack.Owner?.Creature.IsDead != false)
+            foreach (PendingTrigger trigger in triggers)
             {
-                Entry.Logger.Info($"Croquet Mallet skipped cached target {oppositeAttack.Id.Entry}: it was no longer playable from hand.");
-                continue;
+                QueenOfHeartsCroquetMalletCard mallet = trigger.Mallet;
+                CardModel oppositeAttack = trigger.OppositeAttack;
+                if (!mallet.CanTrigger
+                    || mallet.Pile?.Type != PileType.Hand
+                    || oppositeAttack.Pile?.Type != PileType.Hand
+                    || oppositeAttack.Owner?.Creature.IsDead != false)
+                {
+                    Entry.Logger.Info($"Croquet Mallet skipped cached target {oppositeAttack.Id.Entry}: it was no longer playable from hand.");
+                    continue;
+                }
+
+                mallet.MarkTriggered();
+                Entry.Logger.Info($"Croquet Mallet auto-playing {oppositeAttack.Id.Entry}.");
+                await CardCmd.AutoPlay(choiceContext, oppositeAttack, GetAutoPlayTarget(oppositeAttack));
             }
-
-            mallet.MarkTriggered();
-            Entry.Logger.Info($"Croquet Mallet auto-playing {oppositeAttack.Id.Entry}.");
-            await CardCmd.AutoPlay(choiceContext, oppositeAttack, GetAutoPlayTarget(oppositeAttack));
         }
+        finally
+        {
+            RecenterHand(cardPlay.Card.Owner);
+        }
+    }
 
-        RecenterHand(cardPlay.Card.Owner);
+    internal static void ResetCombat()
+    {
+        PendingTriggers.Clear();
     }
 
     private static IEnumerable<QueenOfHeartsCroquetMalletCard> GetCombatMallets(Player player)

@@ -31,7 +31,7 @@
     </Reference>
 
   <!-- 固定 RitsuLib 版本，避免 Version="*" 在发布时绑定到玩家未安装的新程序集版本 -->
-  <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.5.13" />
+  <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.5.14" />
   <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
   </ItemGroup>
 

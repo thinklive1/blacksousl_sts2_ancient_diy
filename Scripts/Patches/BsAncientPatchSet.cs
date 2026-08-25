@@ -16,6 +16,7 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<GrandGuignolAncientSpawnPatch>();
         patcher.RegisterPatch<GrandGuignolRelicCollectionPatch>();
         patcher.RegisterPatch<NeowRethinkPokerPatch>();
+        patcher.RegisterPatch<FairyTaleBookBeforeNeowPatch>();
         patcher.RegisterPatch<FairyTaleModeCharacterSelectPatch>();
         patcher.RegisterPatch<FairyTaleModeRunLifecyclePatch>();
         patcher.RegisterPatch<OnlyUseModAncientsPatch>();
@@ -24,26 +25,28 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<UnicornHookAfterDamageReceivedPatch>();
         patcher.RegisterPatch<UnicornThornsBeforeDamageReceivedPatch>();
         patcher.RegisterPatch<UnicornPersonalHiveAfterDamageReceivedPatch>();
-        patcher.RegisterPatch<UnlockEnchantmentCanPlayPatch>();
-        patcher.RegisterPatch<BaphometFavorCanPlayPatch>();
+        patcher.RegisterPatch<CardCanPlayCompatibilityPatch>();
         patcher.RegisterPatch<MirrorSanFairyResetPatch>();
         patcher.RegisterPatch<MirrorSanLizardTailResetPatch>();
         patcher.RegisterPatch<RapunzelPowerSetAmountPatch>();
         patcher.RegisterPatch<RapunzelPowerRemovePatch>();
         patcher.RegisterPatch<HelmsmansPageRelicPatch>();
+        patcher.RegisterPatch<HiddenEventOptionInjectionPatch>();
+        patcher.RegisterPatch<HiddenEventOptionVisualPatch>();
+        patcher.RegisterPatch<TeaPartyEventOptionLocVarsPatch>();
         patcher.RegisterPatch<BalatroBeforeHandDrawPatch>();
         patcher.RegisterPatch<BalatroModifyHandDrawPatch>();
-        patcher.RegisterPatch<BalatroAfterPlayerTurnStartPatch>();
-        patcher.RegisterPatch<BalatroAfterCardDrawnPatch>();
-        patcher.RegisterPatch<CroquetMalletAfterCardDrawnPatch>();
-        patcher.RegisterPatch<CroquetMalletBeforeCardPlayWrapperPatch>();
+        patcher.RegisterPatch<SharedAfterPlayerTurnStartPatch>();
+        patcher.RegisterPatch<SharedAfterCardDrawnPatch>();
+        patcher.RegisterPatch<SharedCardPlayWrapperPatch>();
         patcher.RegisterPatch<CroquetMalletAfterCardPlayedPatch>();
-        patcher.RegisterPatch<CroquetMalletAfterPlayerTurnStartPatch>();
+        patcher.RegisterPatch<CroquetMalletAfterCombatEndPatch>();
         patcher.RegisterPatch<BalatroCombatUiPatch>();
         patcher.RegisterPatch<BalatroDummyTimeLimitPatch>();
         patcher.RegisterPatch<BalatroDirectCardPlayPatch>();
         patcher.RegisterPatch<QueenOfHeartsNebulaDeckRewardPatch>();
         patcher.RegisterPatch<QueenOfHeartsNebulaDeckCardRewardCountPatch>();
+        patcher.RegisterPatch<RoyalChipMapHoverPatch>();
         RegisterMercuryCardDescriptionPatch(patcher);
     }
 

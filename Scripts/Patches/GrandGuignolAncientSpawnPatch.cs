@@ -11,7 +11,11 @@ public class GrandGuignolAncientSpawnPatch : IPatchMethod
     public static bool IsCritical => false;
 
     public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(ActModel), nameof(ActModel.SetSharedAncientSubset))];
+        [new(
+            typeof(ActModel),
+            nameof(ActModel.SetSharedAncientSubset),
+            [typeof(List<AncientEventModel>)],
+            ignoreIfMissing: true)];
 
     public static void Prefix(List<AncientEventModel> sharedAncientSubset)
     {

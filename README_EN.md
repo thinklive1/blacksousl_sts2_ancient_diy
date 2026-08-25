@@ -2,20 +2,21 @@
 
 Note: this English README and the in-game English localization are machine-translated.
 
-A Slay the Spire 2 Ancient expansion mod. It currently adds 3 map Ancients, replaces the starting Neow appearance with Grand Guignol, and adds a separate "Grand Guignol?" compendium category for starting Ancient relics. It also includes separate Fairy Tale, Myth, and News relic pools, random events, cards, enchantments, afflictions, and special mechanics.
+A Slay the Spire 2 Ancient expansion mod. It currently adds 4 map Ancients, replaces the starting Neow appearance with Grand Guignol, and adds a separate "Grand Guignol?" compendium category for starting Ancient relics. It also includes separate Fairy Tale, Myth, and News relic pools, random events, cards, enchantments, afflictions, and special mechanics.
 
 ## Requirements
 
-- RitsuLib 0.5.13 or later (game 0.107.1 compatibility branch)
+- RitsuLib 0.5.14 or later (game 0.107.1 compatibility branch)
 
 ## Ancient Spawn Rules
 
 - Node: appears in Act 2.
 - Prickett: appears in Act 3.
 - Mabel: appears in Act 2 or Act 3, at most once per run.
+- Lorina: appears in Act 2 and can be disabled separately in the settings.
 - Grand Guignol: replaces Neow's starting appearance and text.
 - Grand Guignol?: compendium-only category. It does not appear on the map.
-- If "Only Use Mod Ancients" is enabled, Act 2 randomly chooses between Node and Mabel, while Act 3 randomly chooses between Prickett and Mabel.
+- If "Only Use Mod Ancients" is enabled, Act 2 randomly chooses between Node, Mabel, and Lorina, while Act 3 randomly chooses between Prickett and Mabel.
 
 ## Settings
 
@@ -28,6 +29,7 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
   "OnlyUseModAncients": true,
   "DisableModAncients": false,
   "ReplaceNeowAppearance": true,
+  "EnableLorinaAncient": true,
   "EnableModEvents": true,
   "DisableTestingEvents": true,
   "EnableFairyTaleMode": false,
@@ -37,9 +39,10 @@ These settings can be changed in the in-game mod settings UI, or by editing `bs_
 }
 ```
 
-- `OnlyUseModAncients`: whether only this mod's map Ancients can spawn. If `true`, Act 2 only chooses from Node/Mabel and Act 3 only chooses from Prickett/Mabel. If `false`, the new Ancients enter the candidate pool without blocking vanilla or other modded Ancients. Requires restarting the game and starting a new run.
-- `DisableModAncients`: completely disables this mod's map Ancients. If `true`, Node, Prickett, and Mabel will not appear on the map. This takes priority over `OnlyUseModAncients`. Requires restarting the game and starting a new run.
+- `OnlyUseModAncients`: whether only this mod's map Ancients can spawn. If `true`, Act 2 only chooses from Node/Mabel/Lorina and Act 3 only chooses from Prickett/Mabel. If `false`, the new Ancients enter the candidate pool without blocking vanilla or other modded Ancients. Requires restarting the game and starting a new run.
+- `DisableModAncients`: completely disables this mod's map Ancients. If `true`, Node, Prickett, Mabel, and Lorina will not appear on the map. This takes priority over `OnlyUseModAncients`. Requires restarting the game and starting a new run.
 - `ReplaceNeowAppearance`: replaces Neow's appearance, name, title, and related dialogue with Grand Guignol. If `false`, Neow display returns to vanilla. Requires restarting the game.
+- `EnableLorinaAncient`: allows Lorina to appear as an Act 2 Ancient. Enabled by default. Requires restarting the game and starting a new run.
 - `EnableModEvents`: enables this mod's random events. If `false`, this mod's new random events will not enter the event pool. Requires restarting the game and starting a new run.
 - `DisableTestingEvents`: disables testing events. If `true`, SAN/hand-mirror related testing events such as Clown and Girl in the Maze will not appear naturally. Requires restarting the game and starting a new run.
 - `EnableFairyTaleMode`: enables Fairy Tale Mode. If `true`, you start with Unnamed Fairy Tale Book. After winning 4 normal, elite, or boss combats, it grants a random Fairy Tale, Myth, or News relic. The same relic cannot be gained twice in one run. Strongly not recommended in multiplayer. In single-player, the character select screen also shows a per-run Fairy Tale Mode toggle, which takes priority over this default setting.
@@ -73,7 +76,7 @@ Relics:
 - Winter Bell Covenant: at the start of combat, shuffle Gerda, Florence, and Ghost Hunter into the draw pile. When drawn, Gerda grants 1 Undying and exhausts; Florence grants 3 Regen, draws 3 cards, and exhausts; Ghost Hunter grants 3 Strength, draws 3 cards, and exhausts.
 - Stagnant Gear: on pickup, gain 1 matching card. Stagnant Gear is a 1-cost Ancient Skill with Exhaust. Choose 1 card in hand and add Encore to it; upgraded version has Retain. After you manually play an Encore card this turn, at the start of next turn it is automatically played a number of times equal to how many times it has been played this combat. Automatic plays count as plays, but do not independently trigger Encore for the next turn.
 - Pet Cat's Collar: on pickup, choose 2 cards in your deck to transform into Cheshire Cat's Smile and Dinah's Bite. Smile is a 0-cost Skill that grants 4 Block, upgraded to 6; every 2 triggers grants 1 Intangible. Bite is a 0-cost Attack that removes all enemy Block and deals 15 damage, upgraded to 20. The two cat cards can trigger at most once total each turn.
-- Dream of Kadath: rest sites only allow resting. Resting heals an additional 30% max HP and randomly upgrades 3 cards.
+- Dream of Kadath: rest sites only allow resting. Resting heals an additional 30% max HP and randomly upgrades 2 cards.
 - Fairy-Tale Writer's Quill Pen: gain 1 Power of Rewrite. Power of Rewrite is a 3-cost Attack with Retain. It deals 39 damage, removes all debuffs from you, and exhausts; upgraded version deals 48 damage.
 - White Rabbit's Hairband: at end of turn, if the enemy's total attack damage is at least your current HP, Block, Plated Armor, and Osty current HP combined, immediately gain 1 extra turn. Once per combat.
 - Unicorn Royal Crest: gain 2 Dexterity at the start of combat. Whenever an enemy attack deals no HP damage to you, immediately deal equal counterattack damage to that enemy.
@@ -127,6 +130,21 @@ Relics:
 - Eternal Void: at the start of combat, give Void to all cards in your deck; each turn, gain 1 random class card with Void.
 - Mystery of the Night Sky: each turn, 50% chance for the first card you play to be played one additional time.
 - Gift of Chaos: choose up to 3 non-X-cost Attack or Skill cards and fuse them into 1 Chaos Fusion. The fused card inherits material costs, keywords, and tags; its type is random, and it keeps at most 1 random enchantment. When played, it plays all material effects in random order against random targets. Fusion cards cannot be upgraded.
+
+## Lorina
+
+Lorina is an Act 2 Ancient. Her first three options randomly offer one relic from the Deck, Ace, or Queen's Command pool; the fourth option always offers Royal Chip. The first three pools currently contain 3, 3, and 3 relics, while the Royal Chip pool contains 1 relic. Lorina's relics do not enter random event relic pools and can only be obtained through Lorina's Ancient options.
+
+- The Red Deck of the Queen of Hearts: in each combat, up to 4 times, right-click a card in your Hand to discard it and draw 1 card.
+- The Yellow Deck of the Queen of Hearts: gain 100 Gold on pickup; after each combat victory, gain interest equal to 20% of your current Gold, up to 50 Gold.
+- The Nebula Deck of the Queen of Hearts: card rewards offer 3 additional choices and add Colorless cards to the reward pool; cards you leave unchosen will not appear in later card rewards.
+- The Last Ace: add 1 Last Ace to your deck. It is a 0-cost, Retain, Exhaust Ancient Skill; when played alone, it triggers all Suit effects twice, and when used in a poker hand it can count as any suit and rank, then draws 1 card.
+- The Flipped Ace: on pickup, enchant basic cards tagged as Strike or Defend with a random Suit and a random rank from 8-13.
+- The Inverted Ace: add 1 Inverted Ace to your deck. It is a 0-cost Retain Ancient Skill; at the end of combat, if it remains in your Hand, choose 2 cards to enchant with a random Suit.
+- The Queen of Hearts' Execution Order: on pickup, choose 4 Attack cards to gain Retain and the Execution enchantment.
+- The Queen of Hearts' Croquet Mallet: on pickup, add 1 Croquet Mallet to your deck. Croquet Mallet is a 0-cost, Retain, non-upgradable Ancient Attack that stays centered in your Hand; when an Attack card on one side is played, it automatically plays the nearest ordinary Attack card on the opposite side, up to 3 times per turn. Attacks with additional play conditions, such as Grand Finale, are not automatically played by the mallet.
+- The Queen of Hearts' Judgment Order: at the start of combat, take 1 extra turn. Attacks are delayed until the start of your next player turn; manually played cards still spend their resources immediately.
+- Royal Chip: upon pickup, mark up to 12 random combat nodes in the current act. Each node has a fixed wager, penalty, condition, and reward; fulfill the condition to claim the reward, otherwise suffer the penalty. Wagers include half your current Gold, 3 Max HP, a random upgraded card, or a random non-Ancient Relic. Rewards include twice the Gold wager, 6 Max HP, two upgrade opportunities, two Common Relics, a Potion slot, card removal, card duplication, or choosing 3 cards to gain random Suit enchantments.
 
 ## Fairy Tale Relics
 

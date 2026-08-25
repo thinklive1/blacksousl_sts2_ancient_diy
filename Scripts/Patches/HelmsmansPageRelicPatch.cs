@@ -17,12 +17,17 @@ public sealed class HelmsmansPageRelicPatch : IPatchMethod
 {
     private const string StunnedMoveId = "STUNNED";
 
-    private static readonly FieldInfo OnPerformField =
+    private static readonly FieldInfo? OnPerformField =
         AccessTools.Field(typeof(MoveState), "_onPerform");
 
     private static readonly Dictionary<MethodBase, bool> TalksToPlayerCache = [];
 
     private static readonly Dictionary<ushort, OpCode> OpCodesByValue = BuildOpCodeLookup();
+    private static bool _missingOnPerformFieldLogged;
+    private static bool _moveInspectionFailureLogged;
+    private static bool _nextMoveFailureLogged;
+
+    internal static bool CanInspectMoves => OnPerformField != null;
 
     public static string PatchId => "helmsmans_page_relic_enemy_take_turn";
     public static string Description => "Stun enemies whose current move attempts to talk while Helmsman's Page is owned.";
@@ -103,28 +108,58 @@ public sealed class HelmsmansPageRelicPatch : IPatchMethod
         {
             return skippedMove.GetNextState(enemy, monster.RunRng.MonsterAi);
         }
-        catch
+        catch (Exception exception)
         {
+            if (!_nextMoveFailureLogged)
+            {
+                _nextMoveFailureLogged = true;
+                Entry.Logger.Warn($"Helmsman's Page could not predict the move after a stun and will keep the current move id: {exception.Message}");
+            }
+
             return skippedMove.Id;
         }
     }
 
     private static bool MoveAttemptsToTalk(MoveState move)
     {
-        if (OnPerformField.GetValue(move) is not Delegate onPerform)
+        if (OnPerformField == null)
         {
+            if (!_missingOnPerformFieldLogged)
+            {
+                _missingOnPerformFieldLogged = true;
+                Entry.Logger.Warn("Helmsman's Page was disabled because MoveState._onPerform is unavailable.");
+            }
+
             return false;
         }
 
-        MethodInfo method = onPerform.Method;
-        if (TalksToPlayerCache.TryGetValue(method, out bool cached))
+        try
         {
-            return cached;
-        }
+            if (OnPerformField.GetValue(move) is not Delegate onPerform)
+            {
+                return false;
+            }
 
-        bool result = MethodCallsTalkCmdPlay(method) || AsyncMoveNextCallsTalkCmdPlay(method);
-        TalksToPlayerCache[method] = result;
-        return result;
+            MethodInfo method = onPerform.Method;
+            if (TalksToPlayerCache.TryGetValue(method, out bool cached))
+            {
+                return cached;
+            }
+
+            bool result = MethodCallsTalkCmdPlay(method) || AsyncMoveNextCallsTalkCmdPlay(method);
+            TalksToPlayerCache[method] = result;
+            return result;
+        }
+        catch (Exception exception)
+        {
+            if (!_moveInspectionFailureLogged)
+            {
+                _moveInspectionFailureLogged = true;
+                Entry.Logger.Warn($"Helmsman's Page could not inspect an enemy move and will leave it unchanged: {exception.Message}");
+            }
+
+            return false;
+        }
     }
 
     private static bool AsyncMoveNextCallsTalkCmdPlay(MethodInfo method)
