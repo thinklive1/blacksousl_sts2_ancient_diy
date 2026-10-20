@@ -17,6 +17,11 @@
 
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="BSchneppe.Sts2.ReferenceAssemblies"
+                      Version="0.107.1"
+                      PrivateAssets="all"
+                      GeneratePathProperty="true" />
+    <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.6.9" />
     <PackageReference Include="Godot.SourceGenerators" Version="4.5.1" ExcludeAssets="all" PrivateAssets="all" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,20 +30,33 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="sts2">
-      <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
+    <ProjectReference Include="..\..\bs_ancient.csproj" AdditionalProperties="SkipModDeployment=true;SkipCompatibilityBundle=true" />
+    <ProjectReference Include="..\..\compat\bs_ancient.Loader\bs_ancient.Loader.csproj" />
+    <Reference Include="SmartFormat">
+      <HintPath>$(Sts2DataDir)\SmartFormat.dll</HintPath>
       <Private>true</Private>
     </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\bs_ancient.csproj" AdditionalProperties="SkipModDeployment=true" />
   </ItemGroup>
 
   <!-- Lets solution-wide ExportPck builds skip the test assembly. -->
   <Target Name="ExportPck" />
+
+  <!-- Reference assemblies cannot execute. Runtime tests use the locally
+       installed game assembly while the mod itself remains compiled against
+       the stable 0.107.1 reference package. -->
+  <Target Name="CopyInstalledGameRuntimeAssemblies" AfterTargets="Build">
+    <Delete Files="$(OutDir)hostfxr.dll;$(OutDir)hostpolicy.dll;$(OutDir)coreclr.dll" />
+    <ItemGroup>
+      <_InstalledGameRuntime Include="$(Sts2DataDir)\sts2.dll" />
+      <_InstalledGameRuntime Include="$(Sts2DataDir)\0Harmony.dll" />
+      <_InstalledGameRuntime Include="$(Sts2DataDir)\Sentry*.dll" />
+      <_InstalledGameRuntime Include="$(Sts2DataDir)\JetBrains.Annotations.dll" />
+      <_InstalledGameRuntime Include="$(Sts2DataDir)\MonoMod.*.dll" />
+      <_InstalledGameRuntime Include="$(Sts2DataDir)\SmartFormat*.dll" />
+      <_InstalledGameRuntime Include="$(Sts2DataDir)\Steamworks.NET.dll" />
+      <_InstalledGameRuntime Include="$(Sts2DataDir)\SharpGen.Runtime*.dll" />
+      <_InstalledGameRuntime Include="$(Sts2DataDir)\Vortice.*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_InstalledGameRuntime)" DestinationFolder="$(OutDir)" />
+  </Target>
 </Project>

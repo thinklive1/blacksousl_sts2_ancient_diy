@@ -92,7 +92,7 @@ public class AliceCurseCard : ModCardTemplate
             return;
         }
 
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             choiceContext,
             Owner.Creature,
             DynamicVars.Damage.BaseValue,

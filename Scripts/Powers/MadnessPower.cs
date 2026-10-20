@@ -32,7 +32,16 @@ public class MadnessPower : ModPowerTemplate
         BigIconPath: "res://bs_ancient/assets/images/powers/Madness.png"
     );
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(
+        Creature? target,
+        decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource
+#if BS_BETA_1110
+        , MegaCrit.Sts2.Core.Entities.Cards.CardPlay? cardPlay
+#endif
+        )
     {
         if ((dealer != Owner && dealer != Owner.Player?.Osty) || !props.IsPoweredAttack())
         {
@@ -58,7 +67,7 @@ public class MadnessPower : ModPowerTemplate
         }
 
         Flash();
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             new ThrowingPlayerChoiceContext(),
             Owner,
             selfDamage,

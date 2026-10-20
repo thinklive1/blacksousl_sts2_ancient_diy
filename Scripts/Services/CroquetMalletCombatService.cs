@@ -1,4 +1,6 @@
 using System.Reflection;
+using System.Collections.Concurrent;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -13,6 +15,7 @@ namespace BlackSouls.Scripts.Services;
 internal static class CroquetMalletCombatService
 {
     private static readonly Dictionary<CardModel, List<PendingTrigger>> PendingTriggers = [];
+    private static readonly ConcurrentDictionary<Type, bool> AdditionalPlayConditions = new();
 
     internal static void RecenterHand(Player? player)
     {
@@ -117,17 +120,27 @@ internal static class CroquetMalletCombatService
                 QueenOfHeartsCroquetMalletCard mallet = trigger.Mallet;
                 CardModel oppositeAttack = trigger.OppositeAttack;
                 if (!mallet.CanTrigger
+                    || CombatManager.Instance.IsOverOrEnding
                     || mallet.Pile?.Type != PileType.Hand
                     || oppositeAttack.Pile?.Type != PileType.Hand
-                    || oppositeAttack.Owner?.Creature.IsDead != false)
+                    || oppositeAttack.Owner != mallet.Owner
+                    || oppositeAttack.Owner?.Creature.IsDead != false
+                    || oppositeAttack.CombatState?.ContainsCard(oppositeAttack) != true
+                    || !IsEligibleAutoPlayAttack(oppositeAttack))
                 {
                     Entry.Logger.Info($"Croquet Mallet skipped cached target {oppositeAttack.Id.Entry}: it was no longer playable from hand.");
                     continue;
                 }
 
+                Creature? target = GetAutoPlayTarget(oppositeAttack);
+                if (oppositeAttack.TargetType is TargetType.AnyEnemy or TargetType.RandomEnemy && target == null)
+                {
+                    continue;
+                }
+
                 mallet.MarkTriggered();
                 Entry.Logger.Info($"Croquet Mallet auto-playing {oppositeAttack.Id.Entry}.");
-                await CardCmd.AutoPlay(choiceContext, oppositeAttack, GetAutoPlayTarget(oppositeAttack));
+                await CardCmd.AutoPlay(choiceContext, oppositeAttack, target);
             }
         }
         finally
@@ -168,13 +181,17 @@ internal static class CroquetMalletCombatService
             && !HasAdditionalPlayCondition(card);
     }
 
-    private static bool HasAdditionalPlayCondition(CardModel card)
+    internal static bool HasAdditionalPlayCondition(CardModel card)
     {
-        MethodInfo? getter = card.GetType().GetMethod(
-            "get_IsPlayable",
-            BindingFlags.Instance | BindingFlags.NonPublic);
+        return AdditionalPlayConditions.GetOrAdd(card.GetType(), static type =>
+        {
+            MethodInfo? getter = type.GetMethod(
+                "get_IsPlayable",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-        return getter?.DeclaringType != typeof(CardModel);
+            // Unknown APIs remain ineligible rather than bypassing a card's restrictions.
+            return getter?.DeclaringType != typeof(CardModel);
+        });
     }
 
     private sealed record PendingTrigger(

@@ -19,7 +19,13 @@ public sealed class MermaidTearCard : ModCardTemplate
     private const int HpLoss = 3;
     private const string CardPortraitPath = "res://bs_ancient/assets/images/cards/MermaidTearCard.jpg";
 
-    private readonly List<CardModel> _swallowedDeckCards = [];
+    private List<CardModel> _swallowedDeckCards = [];
+
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _swallowedDeckCards = [];
+    }
 
     public override int MaxUpgradeLevel => 0;
 
@@ -48,17 +54,19 @@ public sealed class MermaidTearCard : ModCardTemplate
         }
 
         await SwallowRandomDrawPileCard(choiceContext);
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             choiceContext,
             Owner.Creature,
             DynamicVars.HpLoss.BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
+            Owner.Creature,
             this);
     }
 
     public override async Task AfterCombatEnd(CombatRoom room)
     {
-        await RemoveSwallowedDeckCards();
+        // Combat copies record removals on their permanent deck card, not on other Tears.
+        await (DeckVersion as MermaidTearCard ?? this).RemoveSwallowedDeckCards();
     }
 
     private async Task SwallowRandomDrawPileCard(PlayerChoiceContext choiceContext)

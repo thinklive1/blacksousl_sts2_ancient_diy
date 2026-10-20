@@ -68,7 +68,7 @@ public sealed class HighJumperRelic : ModRelicTemplate
         }
 
         Flash();
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             choiceContext,
             Owner.Creature,
             DynamicVars["Damage"].BaseValue,

@@ -136,7 +136,7 @@ public sealed class Boojum : MonsterModel
 
     private Task Attack(IReadOnlyList<Creature> targets)
     {
-        return CreatureCmd.Damage(
+        return GameApiCompat.Damage(
             new ThrowingPlayerChoiceContext(),
             targets,
             BaseAttackDamage,

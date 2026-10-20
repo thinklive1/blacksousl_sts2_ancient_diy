@@ -132,7 +132,7 @@ public sealed class JackKetchNewsRelic : ModRelicTemplate
         }
 
         await CreatureCmd.TriggerAnim(monster.Creature, "Attack", 0.6f);
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             new ThrowingPlayerChoiceContext(),
             target,
             DynamicVars["SlamDamage"].BaseValue,

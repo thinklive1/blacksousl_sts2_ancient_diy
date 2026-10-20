@@ -286,13 +286,14 @@ public sealed class JackTheRipperReflectionCard : ModCardTemplate
             return;
         }
 
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             choiceContext,
             cardPlay.Target,
             DynamicVars.Damage.BaseValue,
             DynamicVars.Damage.Props,
             Owner.Creature,
-            this);
+            this,
+            cardPlay);
 
         GainDamageBonus(DamageGainPerPlay);
         if (ShouldQueueTwoSidedVirtue())

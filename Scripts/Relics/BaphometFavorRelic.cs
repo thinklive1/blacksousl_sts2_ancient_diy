@@ -70,12 +70,14 @@ public sealed class BaphometFavorRelic : ModRelicTemplate
         }
 
         Flash();
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             choiceContext,
             Owner.Creature,
             hpCost,
             ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
-            cardPlay.Card
+            Owner.Creature,
+            cardPlay.Card,
+            cardPlay
         );
     }
 

@@ -1,68 +1,10 @@
-using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Potions;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.Relics;
 using STS2RitsuLib.Patching.Models;
 
 namespace BlackSouls.Scripts;
-
-/// <summary>Applies behavior patches for Unicorn Hook Before Damage Received.</summary>
-public class UnicornHookBeforeDamageReceivedPatch : IPatchMethod
-{
-    public static string PatchId => "unicorn_hook_before_damage_received";
-    public static string Description => "Skip generic before-damage receive hooks during Unicorn counterattack.";
-    public static bool IsCritical => false;
-
-    public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(Hook), nameof(Hook.BeforeDamageReceived), ignoreIfMissing: true)];
-
-    public static bool Prefix(ref Task __result) =>
-        UnicornCounterattackReceiveEffectPatch.HookBeforeDamageReceivedPrefix(ref __result);
-}
-
-/// <summary>Applies behavior patches for Unicorn Hook After Damage Received.</summary>
-public class UnicornHookAfterDamageReceivedPatch : IPatchMethod
-{
-    public static string PatchId => "unicorn_hook_after_damage_received";
-    public static string Description => "Skip generic after-damage receive hooks during Unicorn counterattack.";
-    public static bool IsCritical => false;
-
-    public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(Hook), nameof(Hook.AfterDamageReceived), ignoreIfMissing: true)];
-
-    public static bool Prefix(ref Task __result) =>
-        UnicornCounterattackReceiveEffectPatch.HookAfterDamageReceivedPrefix(ref __result);
-}
-
-/// <summary>Applies behavior patches for Unicorn Thorns Before Damage Received.</summary>
-public class UnicornThornsBeforeDamageReceivedPatch : IPatchMethod
-{
-    public static string PatchId => "unicorn_thorns_before_damage_received";
-    public static string Description => "Skip Thorns during Unicorn counterattack.";
-    public static bool IsCritical => false;
-
-    public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(ThornsPower), nameof(ThornsPower.BeforeDamageReceived), ignoreIfMissing: true)];
-
-    public static bool Prefix() =>
-        UnicornCounterattackReceiveEffectPatch.ThornsBeforeDamageReceivedPrefix();
-}
-
-/// <summary>Applies behavior patches for Unicorn Personal Hive After Damage Received.</summary>
-public class UnicornPersonalHiveAfterDamageReceivedPatch : IPatchMethod
-{
-    public static string PatchId => "unicorn_personal_hive_after_damage_received";
-    public static string Description => "Skip Personal Hive during Unicorn counterattack.";
-    public static bool IsCritical => false;
-
-    public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(PersonalHivePower), nameof(PersonalHivePower.AfterDamageReceived), ignoreIfMissing: true)];
-
-    public static bool Prefix() =>
-        UnicornCounterattackReceiveEffectPatch.PersonalHiveAfterDamageReceivedPrefix();
-}
 
 /// <summary>Applies behavior patches for Mirror San Fairy Reset.</summary>
 public class MirrorSanFairyResetPatch : IPatchMethod

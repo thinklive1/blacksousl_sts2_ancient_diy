@@ -75,7 +75,7 @@ public class ViolenceDemonPower : ModPowerTemplate
         if (selfDamage > 0m)
         {
             Flash();
-            await CreatureCmd.Damage(
+            await GameApiCompat.Damage(
                 new ThrowingPlayerChoiceContext(),
                 Owner,
                 selfDamage,

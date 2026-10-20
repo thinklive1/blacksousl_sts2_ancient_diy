@@ -169,5 +169,8 @@
   "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.playPrompt": "Choose 1 to 5 suited cards to play.",
   "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.discardPrompt": "Choose 1 to 5 suited cards to discard.",
   "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.playButton": "Play Hand",
-  "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.discardButton": "Discard"
+  "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.discardButton": "Discard",
+  "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.rulesTitle": "Card Table Rules",
+  "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.rulesBody": "Hand size is fixed at 10.\n\nHands: up to 4 per combat. Discards: up to 4 cards per combat.\nOnly valid poker hands damage the dummy.\nChoose 1 to 5 cards; a High Card deals no damage.\n\nValid hands: Pair, Two Pair, Three of a Kind, Straight, Flush, Full House, Four of a Kind, Straight Flush, and Royal Flush.",
+  "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.confirmButton": "Confirm"
 }

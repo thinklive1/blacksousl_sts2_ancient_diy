@@ -68,13 +68,14 @@ public abstract class ExecutionerEvolutionCard<TNext> : ModCardTemplate where TN
         }
 
         Creature target = cardPlay.Target;
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             choiceContext,
             target,
             DynamicVars.Damage.BaseValue,
             DynamicVars.Damage.Props,
             Owner.Creature,
-            this);
+            this,
+            cardPlay);
 
         if (target.IsDead)
         {
@@ -213,13 +214,14 @@ public sealed class ExecutionerKetchCard : ModCardTemplate
 
         await RemovePowerIfPresent<ArtifactPower>(cardPlay.Target);
 
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             choiceContext,
             cardPlay.Target,
             DynamicVars.Damage.BaseValue,
             DynamicVars.Damage.Props,
             Owner.Creature,
-            this);
+            this,
+            cardPlay);
     }
 
     protected override void OnUpgrade()

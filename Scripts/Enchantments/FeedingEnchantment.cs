@@ -23,7 +23,15 @@ public class FeedingEnchantment : ModEnchantmentTemplate
     private int _damagePercent = InitialDamagePercent;
     private int _killsThisCombat;
     private bool _isPlayingThisCard;
-    private readonly HashSet<Creature> _damagedTargetsThisPlay = [];
+    private HashSet<Creature> _damagedTargetsThisPlay = [];
+
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _damagedTargetsThisPlay = [];
+        _isPlayingThisCard = false;
+        _killsThisCombat = 0;
+    }
 
     public override bool ShowAmount => true;
 

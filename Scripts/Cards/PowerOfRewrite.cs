@@ -42,7 +42,7 @@ public class PowerOfRewrite : ModCardTemplate
         BsAncientAudio.PlayOneShot(BsAncientAudio.Write);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCardCompat(this, cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
 

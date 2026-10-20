@@ -25,6 +25,8 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class SuspiciousHatRelic : ModRelicTemplate
 {
+    private const string LocalizationPrefix = "BS_ANCIENT_RELIC_SUSPICIOUS_HAT_RELIC";
+
     public override RelicRarity Rarity => RelicRarity.Event;
 
     public override bool SpawnsPets => !IsCanonical && (CopiedRelic()?.SpawnsPets ?? false);
@@ -42,20 +44,27 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
             {
                 return [
                     new HoverTip(
-                        new LocString("relics", $"{Id.Entry}.details.title"),
-                        "复制你遗物栏中位于最右侧，且稀有度不是先古的原版遗物。若没有符合条件的遗物，则不产生效果。")
+                        new LocString("relics", $"{LocalizationPrefix}.details.title"),
+                        GetRelicText("details.description"))
                 ];
             }
 
             RelicModel? copied = CopiedRelic();
-            string copiedTitle = copied?.Title.GetFormattedText() ?? "无";
-            string description =
-                $"当前复制：[gold]{copiedTitle}[/gold]。只会复制你遗物栏中位于最右侧，且稀有度不是先古的遗物。若没有符合条件的遗物，则不产生效果。";
+            string copiedTitle = copied?.Title.GetFormattedText() ?? GetRelicText("details.none");
+            LocString description = new("relics", $"{LocalizationPrefix}.details.currentDescription");
+            description.Add("CopiedTitle", copiedTitle);
 
             return [
-                new HoverTip(new LocString("relics", $"{Id.Entry}.details.title"), description)
+                new HoverTip(
+                    new LocString("relics", $"{LocalizationPrefix}.details.title"),
+                    description.GetFormattedText())
             ];
         }
+    }
+
+    private static string GetRelicText(string key)
+    {
+        return new LocString("relics", $"{LocalizationPrefix}.{key}").GetFormattedText();
     }
 
     public override RelicAssetProfile AssetProfile => new(
@@ -304,9 +313,17 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if BS_BETA_1110
+        , CardPlay? cardPlay
+#endif
+        )
     {
+#if BS_BETA_1110
+        return CopiedRelic()?.ModifyDamageAdditive(target, amount, props, dealer, cardSource, cardPlay) ?? 0;
+#else
         return CopiedRelic()?.ModifyDamageAdditive(target, amount, props, dealer, cardSource) ?? 0;
+#endif
     }
 
     public override decimal ModifyDamageMultiplicative(
@@ -314,9 +331,17 @@ public sealed class SuspiciousHatRelic : ModRelicTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if BS_BETA_1110
+        , CardPlay? cardPlay
+#endif
+        )
     {
+#if BS_BETA_1110
+        return CopiedRelic()?.ModifyDamageMultiplicative(target, amount, props, dealer, cardSource, cardPlay) ?? 1;
+#else
         return CopiedRelic()?.ModifyDamageMultiplicative(target, amount, props, dealer, cardSource) ?? 1;
+#endif
     }
 
     public override decimal ModifyBlockAdditive(

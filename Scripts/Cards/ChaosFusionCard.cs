@@ -17,6 +17,7 @@ namespace BlackSouls.Scripts.Cards;
 public class ChaosFusionCard : ModCardTemplate
 {
     private const int DefaultCost = 0;
+    private const string LocalizationPrefix = "BS_ANCIENT_CARD_CHAOS_FUSION_CARD";
 
     private List<SerializableCard> _materials = [];
     private CardKeyword[] _fusedKeywords = [];
@@ -155,8 +156,16 @@ public class ChaosFusionCard : ModCardTemplate
 
     protected override void AddExtraArgsToDescription(LocString description)
     {
-        string materialNames = string.Join("、", BlackSouls_Materials.Select(GetMaterialTitle));
-        description.Add("Materials", string.IsNullOrWhiteSpace(materialNames) ? "无" : materialNames);
+        string separator = GetCardText("materialsSeparator");
+        string materialNames = string.Join(separator, BlackSouls_Materials.Select(GetMaterialTitle));
+        description.Add(
+            "Materials",
+            string.IsNullOrWhiteSpace(materialNames) ? GetCardText("materialsEmpty") : materialNames);
+    }
+
+    private static string GetCardText(string key)
+    {
+        return new LocString("cards", $"{LocalizationPrefix}.{key}").GetFormattedText();
     }
 
     private void RefreshCost()

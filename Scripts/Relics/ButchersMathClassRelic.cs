@@ -65,7 +65,15 @@ public sealed class ButchersMathClassRelic : ModRelicTemplate
     private int _lastCrossEntropyMilli;
     private Dictionary<string, int>? _playCounts;
     private Dictionary<string, int>? _predictionCounts;
-    private readonly Dictionary<string, int> _turnPlayCounts = [];
+    private Dictionary<string, int> _turnPlayCounts = [];
+
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _playCounts = null;
+        _predictionCounts = null;
+        _turnPlayCounts = new(_turnPlayCounts);
+    }
 
     public override RelicRarity Rarity => RelicRarity.Event;
 
@@ -161,7 +169,16 @@ public sealed class ButchersMathClassRelic : ModRelicTemplate
         return Task.CompletedTask;
     }
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(
+        Creature? target,
+        decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource
+#if BS_BETA_1110
+        , CardPlay? cardPlay
+#endif
+        )
     {
         return IsAffectedCard(cardSource) && dealer == Owner?.Creature ? GetMultiplier(cardSource!, amount) : 1m;
     }

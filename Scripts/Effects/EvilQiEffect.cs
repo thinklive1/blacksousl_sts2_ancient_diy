@@ -28,13 +28,20 @@ internal static class EvilQiEffect
             return;
         }
 
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             choiceContext,
             owner,
             amount,
             ValueProp.Unblockable | ValueProp.Unpowered,
             owner,
             null);
+
+        // Damage to the owner may have ended the combat. Do not enqueue more power or
+        // damage commands onto an end-of-turn action chain that is already closing.
+        if (owner.IsDead || CombatManager.Instance.IsOverOrEnding)
+        {
+            return;
+        }
 
         ICombatState? combatState = owner.CombatState;
         if (combatState == null)
@@ -63,19 +70,31 @@ internal static class EvilQiEffect
         }
 
         await DrainPower<StrengthPower>(choiceContext, target, owner, amount);
+        if (owner.IsDead || CombatManager.Instance.IsOverOrEnding)
+        {
+            return;
+        }
+
         await DrainPower<PlatingPower>(choiceContext, target, owner, amount);
 
-        if (target.IsAlive && target.CurrentHp > 0)
+        if (!owner.IsDead
+            && !CombatManager.Instance.IsOverOrEnding
+            && target.IsAlive
+            && target.CurrentHp > 0)
         {
             int hpDrain = Math.Min(amount, target.CurrentHp);
-            await CreatureCmd.Damage(
+            await GameApiCompat.Damage(
                 choiceContext,
                 target,
                 hpDrain,
                 ValueProp.Unblockable | ValueProp.Unpowered,
                 owner,
                 null);
-            await CreatureCmd.Heal(owner, hpDrain);
+
+            if (!owner.IsDead && !CombatManager.Instance.IsOverOrEnding)
+            {
+                await CreatureCmd.Heal(owner, hpDrain);
+            }
         }
     }
 

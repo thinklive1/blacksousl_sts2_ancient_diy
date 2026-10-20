@@ -21,10 +21,6 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<FairyTaleModeRunLifecyclePatch>();
         patcher.RegisterPatch<OnlyUseModAncientsPatch>();
         patcher.RegisterPatch<WormSmokeRestSiteIconPatch>();
-        patcher.RegisterPatch<UnicornHookBeforeDamageReceivedPatch>();
-        patcher.RegisterPatch<UnicornHookAfterDamageReceivedPatch>();
-        patcher.RegisterPatch<UnicornThornsBeforeDamageReceivedPatch>();
-        patcher.RegisterPatch<UnicornPersonalHiveAfterDamageReceivedPatch>();
         patcher.RegisterPatch<CardCanPlayCompatibilityPatch>();
         patcher.RegisterPatch<MirrorSanFairyResetPatch>();
         patcher.RegisterPatch<MirrorSanLizardTailResetPatch>();
@@ -38,6 +34,7 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<BalatroModifyHandDrawPatch>();
         patcher.RegisterPatch<SharedAfterPlayerTurnStartPatch>();
         patcher.RegisterPatch<SharedAfterCardDrawnPatch>();
+        patcher.RegisterPatch<SharedCardDrawPatch>();
         patcher.RegisterPatch<SharedCardPlayWrapperPatch>();
         patcher.RegisterPatch<CroquetMalletAfterCardPlayedPatch>();
         patcher.RegisterPatch<CroquetMalletAfterCombatEndPatch>();

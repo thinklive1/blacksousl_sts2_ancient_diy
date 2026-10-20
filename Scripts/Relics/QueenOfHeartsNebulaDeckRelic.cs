@@ -56,7 +56,7 @@ public sealed class QueenOfHeartsNebulaDeckRelic : ModRelicTemplate
         if (player != Owner
             || options.Flags.HasFlag(CardCreationFlags.NoCardPoolModifications)
             || !options.Flags.HasFlag(CardCreationFlags.IsCardReward)
-            || options.CustomCardPool != null)
+            || GameApiCompat.HasCustomCardPool(options))
         {
             return options;
         }
@@ -64,7 +64,8 @@ public sealed class QueenOfHeartsNebulaDeckRelic : ModRelicTemplate
         Func<CardModel, bool>? existingFilter = options.CardPoolFilter;
         IEnumerable<CardPoolModel> pools = GetRewardPools(player, options);
 
-        return options.WithCardPools(
+        return GameApiCompat.WithCardPoolsAndFilter(
+            options,
             pools,
             card => (existingFilter?.Invoke(card) ?? true)
                 && IsRewardEligible(card)
@@ -79,7 +80,7 @@ public sealed class QueenOfHeartsNebulaDeckRelic : ModRelicTemplate
         out int safeCount)
     {
         safeCount = requestedCount;
-        if (player != Owner || options.CustomCardPool != null || requestedCount <= 0)
+        if (player != Owner || GameApiCompat.HasCustomCardPool(options) || requestedCount <= 0)
         {
             return true;
         }

@@ -59,8 +59,12 @@ public class SleepEnchantment : ModEnchantmentTemplate
 
     protected override void OnEnchant()
     {
-        BlackSouls_OriginalAmount = Amount;
-        BlackSouls_Awakened = false;
+        // ModifyCard also runs after loading and upgrades; keep the saved sleep progress.
+        if (BlackSouls_OriginalAmount <= 0 && Amount > 0)
+        {
+            BlackSouls_OriginalAmount = Amount;
+            BlackSouls_Awakened = false;
+        }
         SyncDynamicVars();
     }
 

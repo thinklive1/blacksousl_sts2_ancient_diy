@@ -18,13 +18,18 @@ namespace BlackSouls.Scripts;
 [RegisterRelic(typeof(EventRelicPool))]
 public class UnicornRoyalCrestRelic : ModRelicTemplate
 {
+    internal const ValueProp CounterattackProps = ValueProp.Unpowered;
     private const int DexterityAmount = 2;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/UnicornRoyalCrestRelic.png";
 
-    private readonly Dictionary<(Creature Target, Creature Dealer), decimal> _incomingAttacks = [];
+    private Dictionary<(Creature Target, Creature Dealer), decimal> _incomingAttacks = [];
     private bool _isCounterattacking;
 
-    internal static bool IsCounterattacking { get; private set; }
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _incomingAttacks = new(_incomingAttacks);
+    }
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
@@ -98,22 +103,20 @@ public class UnicornRoyalCrestRelic : ModRelicTemplate
 
         Flash();
         _isCounterattacking = true;
-        IsCounterattacking = true;
         try
         {
-            await CreatureCmd.Damage(
+            await GameApiCompat.Damage(
                 choiceContext,
                 dealer,
                 counterDamage,
                 // Reflected damage is not a new card or monster attack.
-                ValueProp.Unpowered,
+                CounterattackProps,
                 Owner.Creature,
                 null);
         }
         finally
         {
             _isCounterattacking = false;
-            IsCounterattacking = false;
         }
     }
 

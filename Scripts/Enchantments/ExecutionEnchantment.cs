@@ -16,7 +16,14 @@ namespace BlackSouls.Scripts;
 public sealed class ExecutionEnchantment : ModEnchantmentTemplate
 {
     private bool _returnedThisPlay;
-    private readonly HashSet<Creature> _disabledDeathPreventionThisPlay = [];
+    private HashSet<Creature> _disabledDeathPreventionThisPlay = [];
+
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _disabledDeathPreventionThisPlay = [];
+        _returnedThisPlay = false;
+    }
 
     public override bool HasExtraCardText => true;
 
@@ -45,7 +52,11 @@ public sealed class ExecutionEnchantment : ModEnchantmentTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if BS_BETA_1110
+        , CardPlay? cardPlay
+#endif
+        )
     {
         return IsThisCard(cardSource) && target?.Powers.Any(power => power is MinionPower) == true
             ? 2m

@@ -38,6 +38,7 @@ public class PrickettAncient : ModAncientEventTemplate
         [
             CreateModRelicOption<RedQueenAlbumRelic>(),
             CreateOldFilmAOption(),
+            CreateModRelicOption<RedQueenDanceShoesRelic>(),
         ];
 
         if (!isMultiplayer)

@@ -172,7 +172,11 @@ public sealed class MirrorSanModifier : ModModifierTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if BS_BETA_1110
+        , CardPlay? cardPlay
+#endif
+        )
     {
         if (target?.Player == null || !IsSenActive)
         {

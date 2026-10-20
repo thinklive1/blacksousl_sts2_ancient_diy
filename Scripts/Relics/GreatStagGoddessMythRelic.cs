@@ -21,7 +21,13 @@ public sealed class GreatStagGoddessMythRelic : ModRelicTemplate
     private const int CostIncrease = 1;
     private const int CardsToReturn = 1;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/MythRelic.png";
-    private readonly HashSet<CardModel> _cardsThatEnteredExhaust = [];
+    private HashSet<CardModel> _cardsThatEnteredExhaust = [];
+
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _cardsThatEnteredExhaust = new(_cardsThatEnteredExhaust);
+    }
 
     public override RelicRarity Rarity => RelicRarity.Event;
 

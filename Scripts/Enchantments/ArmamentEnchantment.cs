@@ -16,12 +16,17 @@ namespace BlackSouls.Scripts;
 public sealed class ArmamentEnchantment : ModEnchantmentTemplate
 {
     private const decimal SelfDamageRate = 0.2m;
-    private const int AutoPlayCapPerTurn = 9;
     private const string ArmamentIconPath = "res://bs_ancient/assets/images/enchantment/ArmamentEnchantment.png";
 
     private bool _isAutoPlaying;
     private bool _autoPlayedThisTurn;
-    private int _autoPlaysThisTurn;
+
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _isAutoPlaying = false;
+        _autoPlayedThisTurn = false;
+    }
 
     public override bool HasExtraCardText => true;
 
@@ -41,7 +46,6 @@ public sealed class ArmamentEnchantment : ModEnchantmentTemplate
             || card.Pile?.Type != PileType.Hand
             || _isAutoPlaying
             || _autoPlayedThisTurn
-            || _autoPlaysThisTurn >= AutoPlayCapPerTurn
             || CombatManager.Instance.IsOverOrEnding)
         {
             return;
@@ -55,7 +59,6 @@ public sealed class ArmamentEnchantment : ModEnchantmentTemplate
 
         _isAutoPlaying = true;
         _autoPlayedThisTurn = true;
-        _autoPlaysThisTurn++;
         try
         {
             await CardCmd.AutoPlay(choiceContext, card, target);
@@ -79,20 +82,20 @@ public sealed class ArmamentEnchantment : ModEnchantmentTemplate
             return;
         }
 
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             choiceContext,
             owner,
             selfDamage,
             ValueProp.Unblockable | ValueProp.Unpowered,
             owner,
-            Card);
+            Card,
+            cardPlay);
     }
 
-    public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public override Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
         if (player == Card.Owner)
         {
-            _autoPlaysThisTurn = 0;
             _autoPlayedThisTurn = false;
         }
 

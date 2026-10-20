@@ -169,5 +169,8 @@
   "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.playPrompt": "选择1至5张花色牌出牌。",
   "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.discardPrompt": "选择1至5张花色牌弃掉。",
   "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.playButton": "出牌",
-  "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.discardButton": "弃牌"
+  "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.discardButton": "弃牌",
+  "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.rulesTitle": "扑克牌训练规则",
+  "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.rulesBody": "手牌固定为 10 张。\n\n出牌：每场战斗最多 4 次。弃牌：每场战斗最多弃 4 张。\n只有符合德州扑克规则的牌型才能对木偶造成伤害。\n请选择 1 至 5 张牌组成牌型；高牌不会造成伤害。\n\n有效牌型：对子、两对、三条、顺子、同花、葫芦、四条、同花顺和皇家同花顺。",
+  "BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.confirmButton": "确认"
 }

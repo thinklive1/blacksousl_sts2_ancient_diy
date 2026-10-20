@@ -27,7 +27,16 @@ public sealed class EdithFlutterPower : ModPowerTemplate
         BigIconPath: "res://bs_ancient/assets/images/powers/FlutterPower.png"
     );
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(
+        Creature? target,
+        decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource
+#if BS_BETA_1110
+        , MegaCrit.Sts2.Core.Entities.Cards.CardPlay? cardPlay
+#endif
+        )
     {
         if (target != Owner || !props.IsPoweredAttack())
         {

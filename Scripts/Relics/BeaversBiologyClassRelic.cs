@@ -183,7 +183,7 @@ public sealed class BeaversBiologyClassRelic : ModRelicTemplate
 
         if (copiedDamage > 0m)
         {
-            await CreatureCmd.Damage(
+            await GameApiCompat.Damage(
                 new ThrowingPlayerChoiceContext(),
                 targets.Where(target => target.IsAlive),
                 copiedDamage,

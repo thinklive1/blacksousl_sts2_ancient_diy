@@ -91,7 +91,7 @@ public sealed class WolfAndLittleGoatsRelic : ModRelicTemplate
         IReadOnlyList<Creature> targets = Owner.Creature.CombatState.Creatures
             .Where(creature => creature.IsAlive)
             .ToList();
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             new ThrowingPlayerChoiceContext(),
             targets,
             damage,

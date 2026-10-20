@@ -323,6 +323,10 @@ public abstract class PlayingCardSuitEnchantment : ModEnchantmentTemplate
     internal Task TriggerForPokerTraining(PlayerChoiceContext choiceContext, Creature owner) =>
         TryTriggerSuitEffect(choiceContext, owner, null, consumePersistentTrigger: true);
 
+    /// <summary>Triggers this suit directly without spending its run-wide or combat trigger limits.</summary>
+    internal Task TriggerForRightClick(PlayerChoiceContext choiceContext, Creature owner) =>
+        TriggerSuitEffect(choiceContext, owner, null);
+
     private async Task TryTriggerSuitEffect(
         PlayerChoiceContext choiceContext,
         Creature owner,

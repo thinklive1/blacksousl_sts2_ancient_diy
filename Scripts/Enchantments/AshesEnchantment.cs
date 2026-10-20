@@ -43,6 +43,18 @@ public class AshesEnchantment : ModEnchantmentTemplate
         return cardType is CardType.Attack or CardType.Skill;
     }
 
+#if BS_BETA_1110
+    public override CardLocation ModifyCardPlayResultLocation(
+        CardModel card,
+        bool isAutoPlay,
+        ResourceInfo resources,
+        CardLocation location)
+    {
+        return card == Card
+            ? new CardLocation(location.player, PileType.Exhaust, location.position)
+            : location;
+    }
+#else
     public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(
         CardModel card,
         bool isAutoPlay,
@@ -52,6 +64,7 @@ public class AshesEnchantment : ModEnchantmentTemplate
     {
         return card == Card ? (PileType.Exhaust, position) : (pileType, position);
     }
+#endif
 
     public override Task BeforeCombatStart()
     {

@@ -40,7 +40,11 @@ public sealed class KingWithDonkeyEarsRelic : ModRelicTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if BS_BETA_1110
+        , MegaCrit.Sts2.Core.Entities.Cards.CardPlay? cardPlay
+#endif
+        )
     {
         if (Owner.RunState.CurrentRoom is not CombatRoom { RoomType: RoomType.Boss }
             || target is null

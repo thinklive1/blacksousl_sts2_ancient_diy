@@ -80,7 +80,7 @@ internal static class JudgmentOrderCombatService
                 card.InvokeEnergyCostChanged();
             }
 
-            await CombatManager.Instance.CheckForEmptyHand(choiceContext, owner);
+            await GameApiCompat.CheckForEmptyHand(choiceContext, owner);
         }
         finally
         {
@@ -127,8 +127,8 @@ internal static class JudgmentOrderCombatService
     internal static IDisposable AllowImmediatePlay(CardModel card)
     {
         HashSet<CardModel> plays = ImmediatePlays.Value ??= [];
-        plays.Add(card);
-        return new ImmediatePlayScope(plays, card);
+        bool added = plays.Add(card);
+        return new ImmediatePlayScope(plays, card, added);
     }
 
     internal static void Reset(Player player)
@@ -141,7 +141,7 @@ internal static class JudgmentOrderCombatService
 
     private sealed record PendingAttack(CardModel Card, Creature? Target);
 
-    private static bool IsImmediatePlay(CardModel card)
+    internal static bool IsImmediatePlay(CardModel card)
     {
         return ImmediatePlays.Value?.Contains(card) == true;
     }
@@ -150,15 +150,24 @@ internal static class JudgmentOrderCombatService
     {
         private readonly HashSet<CardModel> _plays;
         private readonly CardModel _card;
+        private readonly bool _added;
+        private bool _disposed;
 
-        internal ImmediatePlayScope(HashSet<CardModel> plays, CardModel card)
+        internal ImmediatePlayScope(HashSet<CardModel> plays, CardModel card, bool added)
         {
             _plays = plays;
             _card = card;
+            _added = added;
         }
 
         public void Dispose()
         {
+            if (_disposed || !_added)
+            {
+                return;
+            }
+
+            _disposed = true;
             _plays.Remove(_card);
             if (_plays.Count == 0)
             {

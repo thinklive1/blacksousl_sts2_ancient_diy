@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AssemblyName>bs_ancient.Beta.Tests</AssemblyName>
+    <GodotProjectDir>$(MSBuildProjectDirectory)</GodotProjectDir>
+    <GodotSourceGenerators>disabled</GodotSourceGenerators>
+    <Sts2Dir>D:\software\steam\steamapps\common\Slay the Spire 2</Sts2Dir>
+    <Sts2DataDir>$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CompilerVisibleProperty Include="GodotProjectDir" />
+    <CompilerVisibleProperty Include="GodotSourceGenerators" />
+    <Compile Include="..\bs_ancient.Tests\**\*.cs"
+             Exclude="..\bs_ancient.Tests\bin\**\*;..\bs_ancient.Tests\obj\**\*;..\bs_ancient.Tests\CompatibilityLoaderTests.cs;..\bs_ancient.Tests\StableModTypeDiscoveryPatchTests.cs" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="Godot.SourceGenerators" Version="4.5.1" ExcludeAssets="all" PrivateAssets="all" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="STS2.RitsuLib" Version="0.6.9" />
+    <ProjectReference Include="..\..\compat\bs_ancient.Beta\bs_ancient.Beta.csproj" />
+    <Reference Include="sts2">
+      <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="SmartFormat">
+      <HintPath>$(Sts2DataDir)\SmartFormat.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="ExportPck" />
+</Project>

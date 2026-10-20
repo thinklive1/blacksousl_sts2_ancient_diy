@@ -267,12 +267,6 @@ internal static class ButchersMathClassDirectValuePatch
         ButchersMathClassExecutionContext.Scale(player, ref amount);
     }
 
-    [HarmonyPatch(typeof(CardPileCmd), nameof(CardPileCmd.Draw), new Type[] { typeof(PlayerChoiceContext), typeof(decimal), typeof(Player), typeof(bool) })]
-    [HarmonyPrefix]
-    private static void ScaleDraw(PlayerChoiceContext choiceContext, ref decimal count, Player player)
-    {
-        ButchersMathClassExecutionContext.Scale(player, ref count);
-    }
 }
 
 /// <summary>Scales discard selections made by the active card.</summary>

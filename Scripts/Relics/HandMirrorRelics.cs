@@ -202,7 +202,7 @@ public sealed class GirlHandMirrorRelic : HandMirrorRelicBase
 
         _reflectedThisCombat = true;
         Flash();
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             choiceContext,
             dealer,
             result.UnblockedDamage,

@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -12,6 +13,8 @@ namespace BlackSouls.Scripts;
 [RegisterPower]
 public sealed class PokerHandAnnouncementPower : ModPowerTemplate
 {
+    private const string LocalizationPrefix = "BS_ANCIENT_POWER_POKER_HAND_ANNOUNCEMENT_POWER";
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;
@@ -21,20 +24,24 @@ public sealed class PokerHandAnnouncementPower : ModPowerTemplate
     /// <summary>Displays the resolved hand every time it is played.</summary>
     internal static void ShowHand(PlayingCardPokerHandRank rank)
     {
-        RitsuToastService.ShowInfo($"打出：{GetHandName((int)rank)}");
+        string handName = new LocString("powers", $"{LocalizationPrefix}.hands.{GetHandKey(rank)}")
+            .GetFormattedText();
+        LocString message = new("powers", $"{LocalizationPrefix}.toast");
+        message.Add("Hand", handName);
+        RitsuToastService.ShowInfo(message.GetFormattedText());
     }
 
-    private static string GetHandName(int rank) => rank switch
+    private static string GetHandKey(PlayingCardPokerHandRank rank) => rank switch
     {
-        (int)PlayingCardPokerHandRank.Pair => "对子",
-        (int)PlayingCardPokerHandRank.TwoPair => "两对",
-        (int)PlayingCardPokerHandRank.ThreeOfAKind => "三条",
-        (int)PlayingCardPokerHandRank.Straight => "顺子",
-        (int)PlayingCardPokerHandRank.Flush => "同花",
-        (int)PlayingCardPokerHandRank.FullHouse => "葫芦",
-        (int)PlayingCardPokerHandRank.FourOfAKind => "四条",
-        (int)PlayingCardPokerHandRank.StraightFlush => "同花顺",
-        (int)PlayingCardPokerHandRank.RoyalFlush => "皇家同花顺",
-        _ => "牌型"
+        PlayingCardPokerHandRank.Pair => nameof(PlayingCardPokerHandRank.Pair),
+        PlayingCardPokerHandRank.TwoPair => nameof(PlayingCardPokerHandRank.TwoPair),
+        PlayingCardPokerHandRank.ThreeOfAKind => nameof(PlayingCardPokerHandRank.ThreeOfAKind),
+        PlayingCardPokerHandRank.Straight => nameof(PlayingCardPokerHandRank.Straight),
+        PlayingCardPokerHandRank.Flush => nameof(PlayingCardPokerHandRank.Flush),
+        PlayingCardPokerHandRank.FullHouse => nameof(PlayingCardPokerHandRank.FullHouse),
+        PlayingCardPokerHandRank.FourOfAKind => nameof(PlayingCardPokerHandRank.FourOfAKind),
+        PlayingCardPokerHandRank.StraightFlush => nameof(PlayingCardPokerHandRank.StraightFlush),
+        PlayingCardPokerHandRank.RoyalFlush => nameof(PlayingCardPokerHandRank.RoyalFlush),
+        _ => "Generic"
     };
 }

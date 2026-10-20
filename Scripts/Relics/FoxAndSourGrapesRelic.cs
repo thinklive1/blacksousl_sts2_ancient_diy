@@ -20,7 +20,13 @@ public sealed class FoxAndSourGrapesRelic : ModRelicTemplate
     private const int EnvenomAmount = 1;
     private const string RelicIconPath = "res://bs_ancient/assets/images/relics/FairyTaleRelic.png";
 
-    private readonly HashSet<Creature> _affectedCreatures = [];
+    private HashSet<Creature> _affectedCreatures = [];
+
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _affectedCreatures = new(_affectedCreatures);
+    }
 
     public override RelicRarity Rarity => RelicRarity.Event;
 

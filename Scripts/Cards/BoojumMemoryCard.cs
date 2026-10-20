@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.CardPools;
@@ -17,6 +18,8 @@ namespace BlackSouls.Scripts.Cards;
 [RegisterCard(typeof(EventCardPool))]
 public sealed class BoojumMemoryCard : ModCardTemplate
 {
+    private const string LocalizationPrefix = "BS_ANCIENT_CARD_BOOJUM_MEMORY_CARD";
+
     private static readonly SavedAttachedState<BoojumMemoryCard, string> HistoryStartTimes = new(
         "BlackSouls_BoojumHistoryStartTime",
         static () => string.Empty);
@@ -124,17 +127,27 @@ public sealed class BoojumMemoryCard : ModCardTemplate
     {
         if (startTime <= 0)
         {
-            return "无日期的记忆";
+            return GetCardText("undatedTitle");
         }
 
         try
         {
             DateTimeOffset localTime = DateTimeOffset.FromUnixTimeSeconds(startTime).ToLocalTime();
-            return $"{localTime.Month:D2}月{localTime.Day:D2}日{localTime.Hour:D2}时{localTime.Minute:D2}分的记忆";
+            LocString title = new("cards", $"{LocalizationPrefix}.datedTitle");
+            title.Add("Month", localTime.Month.ToString("D2"));
+            title.Add("Day", localTime.Day.ToString("D2"));
+            title.Add("Hour", localTime.Hour.ToString("D2"));
+            title.Add("Minute", localTime.Minute.ToString("D2"));
+            return title.GetFormattedText();
         }
         catch (ArgumentOutOfRangeException)
         {
-            return "无日期的记忆";
+            return GetCardText("undatedTitle");
         }
+    }
+
+    private static string GetCardText(string key)
+    {
+        return new LocString("cards", $"{LocalizationPrefix}.{key}").GetFormattedText();
     }
 }

@@ -1,12 +1,16 @@
 # BS Ancient
 
-Note: this English README and the in-game English localization are machine-translated.
-
 A Slay the Spire 2 Ancient expansion mod. It currently adds 4 map Ancients, replaces the starting Neow appearance with Grand Guignol, and adds a separate "Grand Guignol?" compendium category for starting Ancient relics. It also includes separate Fairy Tale, Myth, and News relic pools, random events, cards, enchantments, afflictions, and special mechanics.
 
 ## Requirements
 
-- RitsuLib 0.5.14 or later (game 0.107.1 compatibility branch)
+- RitsuLib 0.6.9 or later
+
+## Game Version Compatibility
+
+One release package contains isolated implementations for stable game version `0.107.1` and beta version `0.111.0`. The root loader reads the game's `release_info.json` and automatically loads `compat/<game-version>/bs_ancient.impl.dll`; both implementations share the PCK, assets, localization, and configuration. This keeps the stable and beta APIs separate, but it is not automatic forward compatibility: if a future beta changes the game API again, the mod must ship another compatible implementation. See [Compatibility](docs/COMPATIBILITY.md) for the package layout and verification commands.
+
+The Chinese and English game text are maintained together. Reports of awkward wording or terminology that differs from the base game are welcome.
 
 ## Ancient Spawn Rules
 
@@ -89,7 +93,7 @@ Relics:
 
 Options:
 
-- Option 1: Red Queen's Signed Album / Prickett's Dice / Jabberwock's Film Reel
+- Option 1: Red Queen's Signed Album / Prickett's Dice / Jabberwock's Film Reel / Red Queen's Dance Shoes
 - Option 2: Alice's Ribbon / Prickett's Looking Glass / Killer's Film Reel. Prickett's Looking Glass will not appear in multiplayer.
 - Option 3: Prickett's Oath / 蟇?ｋ蟆大･ｳ縺溘 / Fairy-Tale Writer's Quill Pen. Default odds are 45% / 10% / 45%; if your deck has at least 3 curses, odds become 10% / 80% / 10%.
 - Option 4: Red Queen's Soldier Piece
@@ -97,6 +101,7 @@ Options:
 Relics:
 
 - Red Queen's Signed Album: at the start of each turn, randomly reduce the cost of 1 current hand card by 1 for this combat.
+- Red Queen's Dance Shoes: draw 1 additional card each time you draw, including at the start of your turn. Active on the first turn. If you do not shuffle during a turn, the bonus is temporarily disabled next turn; shuffling restores it on the following turn. The Red Dance Shoes power displays 1 while active and 0 while inactive.
 - Prickett's Dice: at the start of each turn, gain 1 Energy. During combat, all cards' attack and block values randomly fluctuate by up to 3. If at least one third of eligible cards roll +3, gain 1 Big Success, once per run.
 - Big Success: 0-cost Ethereal Power card. At the end of combat, gain 1 rare card reward and may remove 1 card.
 - Jabberwock's Film Reel: gain Jabberwock at the start of combat. Jabberwock's attacks heal HP equal to unblocked damage dealt. It cannot gain Block, and playing a non-Attack card deals damage equal to 20% of your Max HP.
@@ -135,7 +140,7 @@ Relics:
 
 Lorina is an Act 2 Ancient. Her first three options randomly offer one relic from the Deck, Ace, or Queen's Command pool; the fourth option always offers Royal Chip. The first three pools currently contain 3, 3, and 3 relics, while the Royal Chip pool contains 1 relic. Lorina's relics do not enter random event relic pools and can only be obtained through Lorina's Ancient options.
 
-- The Red Deck of the Queen of Hearts: in each combat, up to 4 times, right-click a card in your Hand to discard it and draw 1 card.
+- The Red Deck of the Queen of Hearts: in each combat, up to 3 times, right-click a card in your Hand to discard it and draw 1 card.
 - The Yellow Deck of the Queen of Hearts: gain 100 Gold on pickup; after each combat victory, gain interest equal to 20% of your current Gold, up to 50 Gold.
 - The Nebula Deck of the Queen of Hearts: card rewards offer 3 additional choices and add Colorless cards to the reward pool; cards you leave unchosen will not appear in later card rewards.
 - The Last Ace: add 1 Last Ace to your deck. It is a 0-cost, Retain, Exhaust Ancient Skill; when played alone, it triggers all Suit effects twice, and when used in a poker hand it can count as any suit and rank, then draws 1 card.
@@ -148,7 +153,7 @@ Lorina is an Act 2 Ancient. Her first three options randomly offer one relic fro
 
 ## Fairy Tale Relics
 
-Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining combat victories before the next relic; after winning 4 normal, elite, or boss combats, it grants a random Fairy Tale, Myth, or News relic. The same relic cannot be gained twice in one run. In single-player, the character select screen can enable or disable Fairy Tale Mode for the current run, and that toggle takes priority over the config default. `EnablePositiveFairyTaleRelics` and `EnableNegativeFairyTaleRelics` control whether positive and negative relics enter the random pool, and they take priority over individual strongly negative relic toggles. Fairy Tale Mode is strongly not recommended in multiplayer.
+Fairy Tale relics use a separate relic pool and are not automatically treated as Ancient relics. When Fairy Tale Mode is enabled, you start with Unnamed Fairy Tale Book. It displays the number of remaining combat victories before the next relic; after winning 4 normal, elite, or boss combats, it grants a random Fairy Tale, Myth, or News relic. The same relic cannot be gained twice in one run. In single-player, the character select screen can enable or disable Fairy Tale Mode for the current run, and that toggle takes priority over the config default. `EnablePositiveFairyTaleRelics` and `EnableNegativeFairyTaleRelics` control whether positive and negative relics enter the random pool, and they take priority over individual strongly negative relic toggles. Fairy Tale Mode is not recommended in multiplayer.
 
 - Unnamed Fairy Tale Book: obtained at the start of a run when Fairy Tale Mode is enabled. Shows how many combat victories remain before the next random relic. After winning 4 normal, elite, or boss combats, gain a random Fairy Tale, Myth, or News relic. The same relic cannot be gained twice in one run.
 - Fairy Tale - Pinocchio: on pickup, choose 1 card with damage or block values and enchant it with Lie. After a Lie card is played, swap its damage and block values. Damage-only cards switch to gaining that much Block and dealing no damage; block-only cards switch to dealing that much damage and gaining no Block.

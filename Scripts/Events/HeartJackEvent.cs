@@ -41,7 +41,7 @@ public sealed class HeartJackEvent : ModEventTemplate
     private async Task KeepTart()
     {
         HeartSuitEnchantment.ClaimNextEvent(Owner!);
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             new ThrowingPlayerChoiceContext(),
             Owner!.Creature,
             TartDamage,

@@ -21,7 +21,14 @@ public sealed class MercuryCard : ModCardTemplate
     private List<SerializableCard> _copiedCards = [];
     private string _copiedDescription = "";
     private int _copiedCost = -1;
-    private readonly HashSet<CardModel> _autoPlayedCopies = [];
+    private HashSet<CardModel> _autoPlayedCopies = [];
+
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _copiedCards = new(_copiedCards);
+        _autoPlayedCopies = [];
+    }
     private SerializableCard? CopiedCard => BlackSouls_CopiedCards.Count > 0 ? BlackSouls_CopiedCards[0] : null;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [

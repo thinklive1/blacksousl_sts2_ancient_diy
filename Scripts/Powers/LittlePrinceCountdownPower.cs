@@ -58,7 +58,7 @@ public sealed class LittlePrinceCountdownPower : ModPowerTemplate
 
         foreach (Creature creature in combatState.Creatures.Where(creature => creature.IsAlive).ToList())
         {
-            await CreatureCmd.Damage(
+            await GameApiCompat.Damage(
                 new ThrowingPlayerChoiceContext(),
                 creature,
                 DynamicVars["MeteorDamage"].BaseValue,

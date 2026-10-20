@@ -55,7 +55,7 @@ public sealed class BirdSingerEvent : ModEventTemplate
     private async Task Wait()
     {
         await ApplyEffect(showMarkers: true);
-        await CreatureCmd.Damage(
+        await GameApiCompat.Damage(
             new ThrowingPlayerChoiceContext(),
             Owner!.Creature,
             HpLoss,

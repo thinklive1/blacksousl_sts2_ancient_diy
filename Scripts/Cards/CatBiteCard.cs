@@ -47,11 +47,11 @@ public class CatBiteCard : ModCardTemplate
 
         if (cardPlay.Target.Block > 0)
         {
-            await CreatureCmd.LoseBlock(cardPlay.Target, cardPlay.Target.Block);
+            await GameApiCompat.LoseBlock(choiceContext, cardPlay.Target, cardPlay.Target.Block, Owner.Creature);
         }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCardCompat(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitVfxNode((Creature target) => NScratchVfx.Create(target, goingRight: true))
             .Execute(choiceContext);

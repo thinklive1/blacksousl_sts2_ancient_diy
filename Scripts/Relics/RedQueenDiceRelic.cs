@@ -103,7 +103,11 @@ public class RedQueenDiceRelic : ModRelicTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if BS_BETA_1110
+        , CardPlay? cardPlay
+#endif
+        )
     {
         return GetCardRoll(cardSource, amount);
     }

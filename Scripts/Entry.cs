@@ -19,7 +19,6 @@ using STS2RitsuLib.Utils;
 namespace BlackSouls.Scripts;
 
 /// <summary>Initializes BS Ancient settings, patches, scripts, and content registration.</summary>
-[ModInitializer(nameof(Init))]
 public class Entry
 {
     // Stable id used for registration, logging, and persisted settings.
@@ -27,6 +26,7 @@ public class Entry
     public static readonly Logger Logger = RitsuLibFramework.CreateLogger(ModId);
     private static I18N? _settingsLocalization;
     private static IDisposable? _queenOfHeartsRedDeckRightClick;
+    private static IDisposable? _knightCovenantRightClick;
 
     public static void Init()
     {
@@ -45,6 +45,7 @@ public class Entry
             assembly);
         RegisterSettings();
         RegisterQueenOfHeartsRedDeckRightClick();
+        RegisterKnightCovenantRightClick();
         RegisterPlayingCardPokerHandOutline();
         RegisterFirstLaunchToast();
         ModPatcher patcher = RitsuLibFramework.CreatePatcher(ModId, "core-patches");
@@ -98,6 +99,35 @@ public class Entry
                 && relic.CanDiscardAndDraw(card));
     }
 
+    private static void RegisterKnightCovenantRightClick()
+    {
+        _knightCovenantRightClick = ModRightClickRegistry.Register<CardModel>(
+            ModId,
+            "knight_covenant_trigger_suit",
+            execute: context =>
+            {
+                if (context.Model is not CardModel card
+                    || card.Owner?.GetRelic<KnightCovenantRelic>() is not { } relic)
+                {
+                    return Task.CompletedTask;
+                }
+
+                return relic.TryTriggerSuitEffect(
+                    card,
+                    (PlayerChoiceContext?)context.PlayerChoiceContext ?? new ThrowingPlayerChoiceContext());
+            },
+            priority: 10,
+            canHandleLocal: context =>
+                context.Model is CardModel card
+                && card.Owner?.GetRelic<KnightCovenantRelic>() != null
+                && card.Enchantment is PlayingCardSuitEnchantment
+                && card.Pile?.Type == PileType.Hand,
+            canExecute: context =>
+                context.Model is CardModel card
+                && card.Owner?.GetRelic<KnightCovenantRelic>() is { } relic
+                && relic.CanTriggerSuitEffect(card));
+    }
+
     private static void RegisterFirstLaunchToast()
     {
         RitsuLibFramework.SubscribeLifecycle<GameReadyEvent>(_ =>
@@ -107,7 +137,9 @@ public class Entry
                 return;
             }
 
-            RitsuToastService.ShowInfo("您可以在Mod设置内编辑各种选项");
+            RitsuToastService.ShowInfo(GetSettingsText(
+                "firstLaunchToast",
+                "您可以在 Mod 设置中调整各项功能。"));
             BsAncientConfig.HasShownSettingsToast = true;
             BsAncientConfig.Save();
         });
@@ -128,7 +160,7 @@ public class Entry
                         "OnlyUseModAncients",
                         () => BsAncientConfig.OnlyUseModAncients,
                         value => BsAncientConfig.OnlyUseModAncients = value),
-                    S("onlyUseModAncients.description", "开启后，第 2 层只会从诺登/梅贝尔中选择，第 3 层只会从普利凯特/梅贝尔中选择。更改后需要重启游戏并新开一局。"))
+                    S("onlyUseModAncients.description", "开启后，第 2 层只会从已启用的诺登/梅贝尔/罗丽娜中选择，第 3 层只会从已启用的普利凯特/梅贝尔中选择。更改后需要重启游戏并新开一局。"))
                 .AddToggle(
                     "disable_mod_ancients",
                     S("disableModAncients.title", "完全禁用 Mod 地图先古之民"),
@@ -217,7 +249,7 @@ public class Entry
                         "EnableFairyTaleMode",
                         () => BsAncientConfig.EnableFairyTaleMode,
                         value => BsAncientConfig.EnableFairyTaleMode = value),
-                    S("enableFairyTaleMode.description", "开启后，每赢得 4 场战斗（包含 Boss 战），获得一本随机童话。更改后需要重启游戏并新开一局。"))
+                    S("enableFairyTaleMode.description", "开启后，每赢得 4 场战斗（包含 Boss 战），获得一本随机童话、神话或骇闻；同一遗物在一局内不会重复获得。不建议在多人模式启用。更改后需要重启游戏并新开一局。"))
                 .AddToggle(
                     "enable_positive_fairy_tale_relics",
                     S("enablePositiveFairyTaleRelics.title", "允许正面童话"),
@@ -225,7 +257,7 @@ public class Entry
                         "EnablePositiveFairyTaleRelics",
                         () => BsAncientConfig.EnablePositiveFairyTaleRelics,
                         value => BsAncientConfig.EnablePositiveFairyTaleRelics = value),
-                    S("enablePositiveFairyTaleRelics.description", "关闭后，童话模式不会随机获得正面童话遗物。更改后需要重启游戏并新开一局。"))
+                    S("enablePositiveFairyTaleRelics.description", "关闭后，童话模式不会随机获得正面童话遗物。此开关优先于其他单个童话遗物开关。更改后需要重启游戏并新开一局。"))
                 .AddToggle(
                     "enable_negative_fairy_tale_relics",
                     S("enableNegativeFairyTaleRelics.title", "允许负面童话"),
@@ -312,6 +344,11 @@ public class Entry
         return _settingsLocalization == null
             ? ModSettingsText.Literal(fallback)
             : ModSettingsText.I18N(_settingsLocalization, key, fallback);
+    }
+
+    internal static string GetSettingsText(string key, string fallback)
+    {
+        return _settingsLocalization?.Get(key, fallback) ?? fallback;
     }
 
     private static IModSettingsValueBinding<bool> BoolBinding(

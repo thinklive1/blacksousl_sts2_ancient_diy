@@ -97,13 +97,14 @@ public sealed class LieEnchantment : ModEnchantmentTemplate
             Creature? target = GetVirtualDamageTarget(cardPlay);
             if (target != null)
             {
-                await CreatureCmd.Damage(
+                await GameApiCompat.Damage(
                     choiceContext,
                     target,
                     BlackSouls_VirtualDamage,
                     ValueProp.Move,
                     Card.Owner.Creature,
-                    Card);
+                    Card,
+                    cardPlay);
             }
         }
 

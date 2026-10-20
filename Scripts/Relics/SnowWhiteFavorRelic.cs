@@ -42,7 +42,16 @@ public class SnowWhiteFavorRelic : ModRelicTemplate
         await PowerCmd.Apply<DexterityPower>(new MegaCrit.Sts2.Core.GameActions.Multiplayer.ThrowingPlayerChoiceContext(), Owner.Creature, -DynamicVars["DexterityPower"].BaseValue, Owner.Creature, null, false);
     }
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(
+        Creature? target,
+        decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource
+#if BS_BETA_1110
+        , MegaCrit.Sts2.Core.Entities.Cards.CardPlay? cardPlay
+#endif
+        )
     {
         if (!IsProtectedTarget(target)
             || !props.IsPoweredAttack()

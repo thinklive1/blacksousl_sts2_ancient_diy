@@ -21,7 +21,13 @@ public class OldFilmB : ModRelicTemplate
 {
     private const int VulnerableAmount = 3;
 
-    private readonly HashSet<Creature> _triggeredTargets = [];
+    private HashSet<Creature> _triggeredTargets = [];
+
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _triggeredTargets = new(_triggeredTargets);
+    }
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 

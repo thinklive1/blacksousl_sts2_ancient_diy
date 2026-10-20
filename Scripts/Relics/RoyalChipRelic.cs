@@ -434,9 +434,11 @@ public sealed class RoyalChipRelic : ModRelicTemplate
 
         MapPoint? currentPoint = runState.CurrentMapPoint;
         int minRow = currentPoint?.coord.row + 1 ?? 1;
-        Rng rng = new((uint)((int)runState.Rng.Seed
-            + StringHelper.GetDeterministicHashCode(nameof(RoyalChipRelic))
-            + runState.CurrentActIndex));
+        int runSeed = unchecked((int)runState.Rng.Seed);
+        int typeHash = unchecked((int)StringHelper.GetDeterministicHashCode(nameof(RoyalChipRelic)));
+        Rng rng = new(unchecked((uint)(runSeed
+            + typeHash
+            + runState.CurrentActIndex)));
 
         IEnumerable<MapPoint> futurePoints = currentPoint == null
             ? runState.Map.GetAllMapPoints().Where(point => point.coord.row >= minRow)

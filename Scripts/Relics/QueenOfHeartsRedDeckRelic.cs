@@ -12,11 +12,11 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-/// <summary>Provides four combat-only right-click discard-and-draw actions.</summary>
+/// <summary>Provides three combat-only right-click discard-and-draw actions.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class QueenOfHeartsRedDeckRelic : ModRelicTemplate
 {
-    public const int DiscardsPerCombat = 4;
+    public const int DiscardsPerCombat = 3;
     private const string RelicIconPath =
         "res://bs_ancient/assets/images/relics/QueenOfHeartsRedDeckRelic.png";
 

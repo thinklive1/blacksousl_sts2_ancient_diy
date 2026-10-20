@@ -46,7 +46,9 @@ public class FairyTaleModeCharacterSelectPatch : IPatchMethod
             Flat = true,
             MouseFilter = Control.MouseFilterEnum.Stop,
             FocusMode = Control.FocusModeEnum.All,
-            TooltipText = "仅本局生效；优先于 Mod 设置中的默认值。"
+            TooltipText = Entry.GetSettingsText(
+                "fairyTaleRunToggle.tooltip",
+                "仅本局生效；优先于 Mod 设置中的默认值。")
         };
 
         TextureRect icon = new()
@@ -63,7 +65,7 @@ public class FairyTaleModeCharacterSelectPatch : IPatchMethod
         Label label = new()
         {
             Name = "Label",
-            Text = "童话模式 / Fairy Tale",
+            Text = Entry.GetSettingsText("fairyTaleRunToggle.title", "童话模式"),
             HorizontalAlignment = HorizontalAlignment.Left,
             VerticalAlignment = VerticalAlignment.Center,
             MouseFilter = Control.MouseFilterEnum.Ignore
@@ -78,7 +80,9 @@ public class FairyTaleModeCharacterSelectPatch : IPatchMethod
         Label warning = new()
         {
             Name = $"{ToggleName}Warning",
-            Text = "多人模式可能存在恶性bug",
+            Text = Entry.GetSettingsText(
+                "fairyTaleRunToggle.multiplayerWarning",
+                "多人模式可能存在严重问题。"),
             HorizontalAlignment = HorizontalAlignment.Right,
             VerticalAlignment = VerticalAlignment.Center,
             MouseFilter = Control.MouseFilterEnum.Ignore,

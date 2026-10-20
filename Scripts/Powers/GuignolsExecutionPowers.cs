@@ -51,7 +51,11 @@ public sealed class GuignolsApplauseExecutionPower : GuignolsExecutionPowerBase,
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if BS_BETA_1110
+        , CardPlay? cardPlay
+#endif
+        )
     {
         if (target == null
             || amount <= 0m
@@ -107,7 +111,11 @@ public sealed class GuignolsBooExecutionPower : GuignolsExecutionPowerBase
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if BS_BETA_1110
+        , CardPlay? cardPlay
+#endif
+        )
     {
         if (target != Owner
             || amount <= 0m

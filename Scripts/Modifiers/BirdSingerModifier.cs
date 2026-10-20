@@ -79,7 +79,9 @@ public sealed class BirdSingerModifier : ModModifierTemplate
 
         MapPoint? currentPoint = runState.CurrentMapPoint;
         int minRow = currentPoint?.coord.row + 1 ?? 1;
-        Rng rng = new((uint)((int)runState.Rng.Seed + StringHelper.GetDeterministicHashCode(nameof(BirdSingerModifier)) + runState.CurrentActIndex));
+        int runSeed = unchecked((int)runState.Rng.Seed);
+        int typeHash = unchecked((int)StringHelper.GetDeterministicHashCode(nameof(BirdSingerModifier)));
+        Rng rng = new(unchecked((uint)(runSeed + typeHash + runState.CurrentActIndex)));
         List<MapPoint> candidates = runState.Map.GetAllMapPoints()
             .Where(point => point.PointType == MapPointType.Monster && point.coord.row >= minRow)
             .ToList();

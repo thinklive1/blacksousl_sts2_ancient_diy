@@ -113,8 +113,8 @@ internal static class BalatroTrainingCombatService
         controls.OffsetRight = -326f;
         controls.OffsetBottom = -142f;
 
-        TextureButton playButton = CreateButton("playButton", "Play Hand");
-        TextureButton discardButton = CreateButton("discardButton", "Discard");
+        TextureButton playButton = CreateButton("playButton");
+        TextureButton discardButton = CreateButton("discardButton");
         controls.AddChild(playButton);
         controls.AddChild(discardButton);
         ui.AddChild(controls);
@@ -124,10 +124,10 @@ internal static class BalatroTrainingCombatService
             _rulesDialogState = state;
             ModSettingsUiFactory.ShowStyledConfirm(
                 ui,
-                "扑克训练规则",
-                "手牌固定为 10 张。\n\n出牌：最多 4 次。弃牌：本场最多弃 4 张。\n只有打出符合德州扑克规则的牌型才能对木偶造成伤害。\n请选择 1 至 5 张牌组成牌型；单张牌不会造成伤害。\n\n有效牌型：对子、两对、三条、顺子、同花、葫芦、四条、同花顺和皇家同花顺。",
+                GetEventText("rulesTitle"),
+                GetEventText("rulesBody"),
                 "",
-                "确认",
+                GetEventText("confirmButton"),
                 false,
                 static () => { },
                 false,
@@ -141,13 +141,14 @@ internal static class BalatroTrainingCombatService
         discardButton.Pressed += () => ResolveFromButton(ui, state, playButton, discardButton, scoreHand: false);
     }
 
-    private static TextureButton CreateButton(string localizationKey, string tooltip)
+    private static TextureButton CreateButton(string localizationKey)
     {
+        string text = GetEventText(localizationKey);
         Texture2D? normal = ResourceLoader.Load<Texture2D>(EndTurnTexturePath);
         Texture2D? hover = ResourceLoader.Load<Texture2D>(EndTurnGlowTexturePath);
         TextureButton button = new()
         {
-            TooltipText = tooltip,
+            TooltipText = text,
             CustomMinimumSize = new Vector2(235f, 96f),
             IgnoreTextureSize = true,
             StretchMode = TextureButton.StretchModeEnum.Scale,
@@ -159,9 +160,7 @@ internal static class BalatroTrainingCombatService
 
         Label label = new()
         {
-            Text = new LocString(
-                "events",
-                $"BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.{localizationKey}").GetFormattedText(),
+            Text = text,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
             MouseFilter = Control.MouseFilterEnum.Ignore,
@@ -172,6 +171,13 @@ internal static class BalatroTrainingCombatService
         label.OffsetTop = -2f;
         button.AddChild(label);
         return button;
+    }
+
+    private static string GetEventText(string key)
+    {
+        return new LocString(
+            "events",
+            $"BS_ANCIENT_EVENT_BALATRO_TRAINING_DUMMY_EVENT.{key}").GetFormattedText();
     }
 
     private static void ResolveFromButton(
@@ -266,7 +272,7 @@ internal static class BalatroTrainingCombatService
                 Creature? dummy = state.HittableEnemies.FirstOrDefault();
                 if (dummy != null)
                 {
-                    await CreatureCmd.Damage(
+                    await GameApiCompat.Damage(
                         context,
                         dummy,
                         score,

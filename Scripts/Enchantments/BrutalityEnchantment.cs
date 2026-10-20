@@ -18,7 +18,15 @@ public sealed class BrutalityEnchantment : ModEnchantmentTemplate
 
     private bool _isEmpoweredThisPlay;
     private bool _isPlayingThisCard;
-    private readonly HashSet<Creature> _damagedTargetsThisPlay = [];
+    private HashSet<Creature> _damagedTargetsThisPlay = [];
+
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _damagedTargetsThisPlay = [];
+        _isEmpoweredThisPlay = false;
+        _isPlayingThisCard = false;
+    }
 
     public override bool HasExtraCardText => true;
 
@@ -32,11 +40,6 @@ public sealed class BrutalityEnchantment : ModEnchantmentTemplate
     public override decimal EnchantDamageMultiplicative(decimal originalDamage, ValueProp props)
     {
         return HasPendingEmpowerment() ? 2m : 1m;
-    }
-
-    public override Task BeforeCombatStart()
-    {
-        return Task.CompletedTask;
     }
 
     public override Task AfterCombatEnd(CombatRoom room)
@@ -62,7 +65,11 @@ public sealed class BrutalityEnchantment : ModEnchantmentTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if BS_BETA_1110
+        , CardPlay? cardPlay
+#endif
+        )
     {
         return IsDamageFromThisCard(dealer, null, cardSource) && _isEmpoweredThisPlay ? 2m : 1m;
     }

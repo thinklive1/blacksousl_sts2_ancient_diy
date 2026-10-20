@@ -30,7 +30,13 @@ public sealed class EvilQiPendingPower : ModPowerTemplate
         }
 
         int amount = Amount;
-        await EvilQiEffect.Resolve(choiceContext, Owner, amount);
         await PowerCmd.Remove(this);
+
+        // Remove the pending marker before resolving damage. Self-damage can end the
+        // combat, so no end-of-turn hook should remain waiting on this power afterward.
+        if (!Owner.IsDead && !CombatManager.Instance.IsOverOrEnding)
+        {
+            await EvilQiEffect.Resolve(choiceContext, Owner, amount);
+        }
     }
 }
