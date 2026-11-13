@@ -55,6 +55,18 @@ public static class Entry
 
     internal static string SelectCompatibilityFolder(GameRelease release)
     {
+        if (release.Version >= new Version(0, 114, 0))
+        {
+            throw new NotSupportedException(
+                $"BS Ancient has not been compiled for game {release.DisplayName}. " +
+                "This release supports game 0.107.1, 0.111.0 and 0.113.0. Use a supported game branch until a compatible release is available.");
+        }
+
+        if (release.Version >= new Version(0, 113, 0))
+        {
+            return "0.113.0";
+        }
+
         return release.Version >= new Version(0, 111, 0)
             ? "0.111.0"
             : "0.107.1";

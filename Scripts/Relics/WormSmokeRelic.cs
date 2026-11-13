@@ -96,7 +96,7 @@ public class WormSmokeRelic : ModRelicTemplate
         }
 
         Flash();
-        await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, CurrentMaxHpCost, isFromCard: false);
+        await GameApiCompat.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, CurrentMaxHpCost);
         CardCmd.Upgrade(selected, CardPreviewStyle.None);
         BlackSouls_UseCount++;
         return true;

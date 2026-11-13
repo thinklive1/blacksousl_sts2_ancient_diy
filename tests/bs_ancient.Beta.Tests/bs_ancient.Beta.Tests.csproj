@@ -25,16 +25,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="STS2.RitsuLib" Version="0.6.9" />
+    <PackageReference Include="STS2.RitsuLib.Compat.0.111.0" Version="0.6.11" />
+    <PackageReference Include="BSchneppe.Sts2.ReferenceAssemblies" Version="0.111.0-beta-41cef1ea" PrivateAssets="all" />
     <ProjectReference Include="..\..\compat\bs_ancient.Beta\bs_ancient.Beta.csproj" />
-    <Reference Include="sts2">
-      <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
     <Reference Include="SmartFormat">
       <HintPath>$(Sts2DataDir)\SmartFormat.dll</HintPath>
       <Private>true</Private>
@@ -42,4 +35,7 @@
   </ItemGroup>
 
   <Target Name="ExportPck" />
+  <Target Name="CopyInstalledGameRuntimeAssemblies" AfterTargets="Build">
+    <Copy SourceFiles="$(Sts2DataDir)\sts2.dll;$(Sts2DataDir)\0Harmony.dll" DestinationFolder="$(OutDir)" />
+  </Target>
 </Project>

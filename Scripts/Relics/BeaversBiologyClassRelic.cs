@@ -40,7 +40,8 @@ public sealed class BeaversBiologyClassRelic : ModRelicTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BeaversBiologyClassRelic>(runState);
+        return SnarkPageRelicTrackerModifier.CanAppearInRun(runState)
+            && !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BeaversBiologyClassRelic>(runState);
     }
 
     public override Task AfterObtained()

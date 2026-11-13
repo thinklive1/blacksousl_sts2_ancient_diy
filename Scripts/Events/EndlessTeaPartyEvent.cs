@@ -36,7 +36,7 @@ public sealed class EndlessTeaPartyEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return BsAncientConfig.EnableModEvents
+        return BsAncientRunConfig.ForRun(runState).EnableModEvents
             && runState.CurrentActIndex is >= 0 and <= 2;
     }
 

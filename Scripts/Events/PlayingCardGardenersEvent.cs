@@ -32,7 +32,7 @@ public sealed class PlayingCardGardenersEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return BsAncientConfig.EnableModEvents
+        return BsAncientRunConfig.ForRun(runState).EnableModEvents
             && runState.CurrentActIndex is >= 0 and <= 2
             && runState.Players.All(HasGardenerCondition);
     }
@@ -73,10 +73,10 @@ public sealed class PlayingCardGardenersEvent : ModEventTemplate
         List<CardModel> candidates = GetHeartCandidates(Owner!);
         if (candidates.Count > 0)
         {
-            CardModel? selected = Owner!.RunState.Rng.Niche.NextItem(candidates);
+            CardModel? selected = Rng.NextItem(candidates);
             if (selected != null)
             {
-                decimal amount = Owner.RunState.Rng.Niche.NextInt(PlayingCardSuitEnchantment.MaxTriggersPerCombat)
+                decimal amount = Rng.NextInt(PlayingCardSuitEnchantment.MaxTriggersPerCombat)
                     + PlayingCardSuitEnchantment.MinTriggersPerCombat;
                 CardCmd.Enchant<HeartSuitEnchantment>(selected, amount);
                 ShowEnchantVfx(selected);

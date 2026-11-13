@@ -830,7 +830,7 @@ public sealed class RoyalChipRelic : ModRelicTemplate
         switch (gamble.Wager)
         {
             case RoyalChipWagerKind.MaxHp:
-                await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, 3, false);
+                await GameApiCompat.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, 3);
                 break;
             case RoyalChipWagerKind.Card:
                 CardModel? card = FindStakedCard();

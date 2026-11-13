@@ -23,7 +23,7 @@ public sealed class BirdSingerEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        if (!BsAncientConfig.EnableModEvents
+        if (!BsAncientRunConfig.ForRun(runState).EnableModEvents
             || runState.CurrentActIndex != 1
             || runState.Modifiers.Any(modifier => modifier is BirdSingerModifier))
         {

@@ -19,6 +19,8 @@ public sealed class SnarkPageRelicTrackerModifier : ModModifierTemplate
 
     public override ModifierAssetProfile AssetProfile => new(TransparentIconPath);
 
+    internal static bool CanAppearInRun(IRunState? runState) => runState?.Players.Count == 1;
+
     [SavedProperty]
     public string BlackSouls_AppearedSnarkPageRelicIds
     {
@@ -66,7 +68,7 @@ public sealed class SnarkPageRelicTrackerModifier : ModModifierTemplate
     public static bool ShouldOfferHiddenOption<T>(EventModel eventModel, int chancePercent) where T : RelicModel
     {
         Player? owner = eventModel.Owner;
-        if (owner == null || owner.GetRelic<T>() != null)
+        if (owner == null || !CanAppearInRun(owner.RunState) || owner.GetRelic<T>() != null)
         {
             return false;
         }
@@ -93,7 +95,7 @@ public sealed class SnarkPageRelicTrackerModifier : ModModifierTemplate
     /// <summary>Persists a custom hidden-option outcome for an event and reuses it after page refreshes.</summary>
     public static int GetOrCreateHiddenOptionOutcome(EventModel eventModel, string optionId, Func<int> createOutcome)
     {
-        if (eventModel.Owner?.RunState is not { } runState)
+        if (eventModel.Owner?.RunState is not { } runState || !CanAppearInRun(runState))
         {
             return 0;
         }

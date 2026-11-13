@@ -26,9 +26,9 @@ public sealed class BoojumEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        if (!BsAncientConfig.EnableModEvents
+        if (!BsAncientRunConfig.ForRun(runState).EnableModEvents
             || runState.CurrentActIndex != 2
-            || runState.Players.Count != 1
+            || !SnarkPageRelicTrackerModifier.CanAppearInRun(runState)
             || SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BoojumPageRelic>(runState))
         {
             return false;

@@ -46,7 +46,11 @@ public sealed class SurroundedVisualPower : ModPowerTemplate
         }
     }
 
-    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature,
+#if BS_BETA_1130
+        CardModel? cardSource,
+#endif
+        bool wasRemovalPrevented, float deathAnimLength)
     {
         if (!wasRemovalPrevented && creature.Side != Owner.Side)
         {

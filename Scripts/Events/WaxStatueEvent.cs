@@ -26,7 +26,7 @@ public sealed class WaxStatueEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return BsAncientConfig.EnableModEvents
+        return BsAncientRunConfig.ForRun(runState).EnableModEvents
             && runState.Players.Any(player => PileType.Deck.GetPile(player).Cards.Count > 0);
     }
 

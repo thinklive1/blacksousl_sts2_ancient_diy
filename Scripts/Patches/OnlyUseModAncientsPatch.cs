@@ -37,13 +37,13 @@ public class OnlyUseModAncientsPatch : IPatchMethod
         RemoveGeneratedGrandGuignol(__instance, rng, unlockState);
         RemoveGeneratedDisabledModAncient(__instance, rng, unlockState);
 
-        if (BsAncientConfig.DisableModAncients)
+        if (BsAncientRunConfig.Current.DisableModAncients)
         {
             RemoveGeneratedModAncient(__instance, rng, unlockState);
             return;
         }
 
-        if (!BsAncientConfig.OnlyUseModAncients)
+        if (!BsAncientRunConfig.Current.OnlyUseModAncients)
         {
             return;
         }
@@ -175,27 +175,27 @@ public class OnlyUseModAncientsPatch : IPatchMethod
     {
         return ancient switch
         {
-            NodeAncient => BsAncientConfig.EnableNodeAncient,
-            PrickettAncient => BsAncientConfig.EnablePrickettAncient,
-            MabelAncient => BsAncientConfig.EnableMabelAncient,
-            LorinaAncient => BsAncientConfig.EnableLorinaAncient,
+            NodeAncient => BsAncientRunConfig.Current.EnableNodeAncient,
+            PrickettAncient => BsAncientRunConfig.Current.EnablePrickettAncient,
+            MabelAncient => BsAncientRunConfig.Current.EnableMabelAncient,
+            LorinaAncient => BsAncientRunConfig.Current.EnableLorinaAncient,
             _ => true,
         };
     }
 
     private static IEnumerable<AncientEventModel> GetEnabledHiveAncients()
     {
-        if (BsAncientConfig.EnableNodeAncient)
+        if (BsAncientRunConfig.Current.EnableNodeAncient)
         {
             yield return ModelDb.AncientEvent<NodeAncient>();
         }
 
-        if (BsAncientConfig.EnableMabelAncient)
+        if (BsAncientRunConfig.Current.EnableMabelAncient)
         {
             yield return ModelDb.AncientEvent<MabelAncient>();
         }
 
-        if (BsAncientConfig.EnableLorinaAncient)
+        if (BsAncientRunConfig.Current.EnableLorinaAncient)
         {
             yield return ModelDb.AncientEvent<LorinaAncient>();
         }
@@ -203,12 +203,12 @@ public class OnlyUseModAncientsPatch : IPatchMethod
 
     private static IEnumerable<AncientEventModel> GetEnabledGloryAncients()
     {
-        if (BsAncientConfig.EnablePrickettAncient)
+        if (BsAncientRunConfig.Current.EnablePrickettAncient)
         {
             yield return ModelDb.AncientEvent<PrickettAncient>();
         }
 
-        if (BsAncientConfig.EnableMabelAncient)
+        if (BsAncientRunConfig.Current.EnableMabelAncient)
         {
             yield return ModelDb.AncientEvent<MabelAncient>();
         }

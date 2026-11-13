@@ -32,6 +32,7 @@ public class Entry
     {
         var assembly = Assembly.GetExecutingAssembly();
         BsAncientConfig.Load(assembly);
+        BsAncientRunConfig.Initialize();
         BsAncientRewardTypes.Register();
         // Modifiers are omitted from post-combat listeners while a CombatState exists.
         ModHelper.SubscribeForRunStateHooks(ModId, static runState =>

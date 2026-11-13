@@ -19,6 +19,9 @@ public sealed class BsAncientPatchSet : IModPatches
         patcher.RegisterPatch<FairyTaleBookBeforeNeowPatch>();
         patcher.RegisterPatch<FairyTaleModeCharacterSelectPatch>();
         patcher.RegisterPatch<FairyTaleModeRunLifecyclePatch>();
+        patcher.RegisterPatch<SuspiciousHatRelicObtainedPatch>();
+        patcher.RegisterPatch<SuspiciousHatRelicRemovedPatch>();
+        patcher.RegisterPatch<SuspiciousHatPlayerRestoredPatch>();
         patcher.RegisterPatch<OnlyUseModAncientsPatch>();
         patcher.RegisterPatch<WormSmokeRestSiteIconPatch>();
         patcher.RegisterPatch<CardCanPlayCompatibilityPatch>();

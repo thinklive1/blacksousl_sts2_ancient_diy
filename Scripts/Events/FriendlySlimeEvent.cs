@@ -35,7 +35,7 @@ public sealed class FriendlySlimeEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return BsAncientConfig.EnableModEvents
+        return BsAncientRunConfig.ForRun(runState).EnableModEvents
             && runState.Players.All(player => CountDissolveCandidates(player) >= NodCards);
     }
 

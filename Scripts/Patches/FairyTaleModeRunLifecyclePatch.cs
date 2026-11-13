@@ -18,5 +18,6 @@ public sealed class FairyTaleModeRunLifecyclePatch : IPatchMethod
     public static void Postfix(RunState __result)
     {
         BsAncientRunOptions.CaptureFairyTaleModeForRun(__result);
+        SuspiciousHatRelic.RefreshForRun(__result);
     }
 }

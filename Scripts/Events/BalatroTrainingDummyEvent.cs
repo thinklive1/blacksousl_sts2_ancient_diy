@@ -24,7 +24,7 @@ public sealed class BalatroTrainingDummyEvent : ModEventTemplate
     public override EventAssetProfile AssetProfile => new(InitialPortraitPath: PortraitPath);
 
     public override bool IsAllowed(IRunState runState) =>
-        BsAncientConfig.EnableModEvents && runState.CurrentActIndex == 2 && runState.Players.Count == 1;
+        BsAncientRunConfig.ForRun(runState).EnableModEvents && runState.CurrentActIndex == 2 && runState.Players.Count == 1;
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>
     [
@@ -71,7 +71,7 @@ public sealed class BalatroTrainingDummyEvent : ModEventTemplate
                 }
                 break;
             case 3:
-                await RelicCmd.Obtain(RelicFactory.PullNextRelicFromFront(Owner!).ToMutable(), Owner!);
+                await RelicCmd.Obtain(GameApiCompat.PullNextRelic(Owner!, Rng).ToMutable(), Owner!);
                 break;
         }
     }

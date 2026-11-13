@@ -24,7 +24,7 @@
     <BetaImplementationName>bs_ancient.impl.dll</BetaImplementationName>
   </PropertyGroup>
 
-  <!-- Godot 导出 PCK 时会执行一次内部 publish；这里仅构建资源程序集，避免递归组装和部署双版本 DLL。 -->
+  <!-- Godot 导出 PCK 时仅构建资源程序集，避免递归组装和部署兼容 DLL。 -->
   <PropertyGroup Condition="'$(IsInnerGodotExport)' == 'true'">
     <SkipCompatibilityBundle>true</SkipCompatibilityBundle>
     <SkipModDeployment>true</SkipModDeployment>
@@ -37,13 +37,13 @@
 
   <!-- 固定 RitsuLib 版本，避免 Version="*" 在发布时绑定到玩家未安装的新程序集版本 -->
   <PackageReference Include="BSchneppe.Sts2.ReferenceAssemblies" Version="0.107.1" PrivateAssets="all" />
-  <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.6.9" />
+  <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.6.11" />
   <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
   </ItemGroup>
 
   <Target Name="BuildCompatibilityImplementations"
           Condition="'$(SkipCompatibilityBundle)' != 'true'">
-    <MSBuild Projects="$(MSBuildProjectDirectory)\compat\bs_ancient.Beta\bs_ancient.Beta.csproj;$(MSBuildProjectDirectory)\compat\bs_ancient.Loader\bs_ancient.Loader.csproj"
+    <MSBuild Projects="$(MSBuildProjectDirectory)\compat\bs_ancient.Beta\bs_ancient.Beta.csproj;$(MSBuildProjectDirectory)\compat\bs_ancient.Beta113\bs_ancient.Beta113.csproj;$(MSBuildProjectDirectory)\compat\bs_ancient.Loader\bs_ancient.Loader.csproj"
              Targets="Build"
              BuildInParallel="true"
              Properties="Configuration=$(Configuration);SkipModDeployment=true;SkipCompatibilityBundle=true" />
@@ -53,13 +53,15 @@
           DependsOnTargets="BuildCompatibilityImplementations"
           Condition="'$(SkipCompatibilityBundle)' != 'true'">
     <RemoveDir Directories="$(CompatibilityBundleDir)" />
-    <MakeDir Directories="$(CompatibilityBundleDir);$(CompatibilityBundleDir)\compat\0.107.1;$(CompatibilityBundleDir)\compat\0.111.0" />
+    <MakeDir Directories="$(CompatibilityBundleDir);$(CompatibilityBundleDir)\compat\0.107.1;$(CompatibilityBundleDir)\compat\0.111.0;$(CompatibilityBundleDir)\compat\0.113.0" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\compat\bs_ancient.Loader\bin\$(Configuration)\net9.0\bs_ancient.dll"
           DestinationFiles="$(CompatibilityBundleDir)\bs_ancient.dll" />
     <Copy SourceFiles="$(TargetPath)"
           DestinationFiles="$(CompatibilityBundleDir)\compat\0.107.1\$(StableImplementationName)" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\compat\bs_ancient.Beta\.godot\mono\temp\bin\$(Configuration)\bs_ancient.impl.1110.dll"
           DestinationFiles="$(CompatibilityBundleDir)\compat\0.111.0\$(BetaImplementationName)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\compat\bs_ancient.Beta113\.godot\mono\temp\bin\$(Configuration)\bs_ancient.impl.1130.dll"
+          DestinationFiles="$(CompatibilityBundleDir)\compat\0.113.0\$(BetaImplementationName)" />
   </Target>
 
   <!-- Godot 根据 project.godot 查找 bs_ancient.dll；临时别名只用于通过资源导出检查，不进入 Mod 部署目录。 -->
@@ -70,7 +72,7 @@
           DestinationFiles="$(PublishDir)bs_ancient.dll" />
   </Target>
 
-  <!-- 自动复制双版本 DLL、json 和 README。 -->
+  <!-- 自动复制各版本 DLL、json 和 README。 -->
   <Target Name="CopyMod"
           AfterTargets="Build"
           DependsOnTargets="PrepareCompatibilityBundle"

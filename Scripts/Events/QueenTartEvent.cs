@@ -24,7 +24,7 @@ public sealed class QueenTartEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return BsAncientConfig.EnableModEvents
+        return BsAncientRunConfig.ForRun(runState).EnableModEvents
             && runState.CurrentActIndex == 0
             && !runState.Players.Any(player => player.GetRelic<QueenTartRelic>() != null)
             && !runState.Modifiers.Any(modifier => modifier is QueenTartModifier);

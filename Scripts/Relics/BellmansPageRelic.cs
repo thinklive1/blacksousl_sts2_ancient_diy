@@ -25,7 +25,8 @@ public sealed class BellmansPageRelic : ModRelicTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BellmansPageRelic>(runState);
+        return SnarkPageRelicTrackerModifier.CanAppearInRun(runState)
+            && !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BellmansPageRelic>(runState);
     }
 
     /// <summary>

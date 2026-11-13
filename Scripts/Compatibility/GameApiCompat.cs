@@ -4,6 +4,9 @@ using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Factories;
+using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
@@ -14,6 +17,33 @@ namespace BlackSouls.Scripts.Compatibility;
 /// <summary>Bridges game command signatures shared by the stable and beta builds.</summary>
 internal static class GameApiCompat
 {
+    internal static Task LoseMaxHp(PlayerChoiceContext context, Creature target, decimal amount)
+    {
+#if BS_BETA_1130
+        return CreatureCmd.LoseMaxHp(context, target, amount, null);
+#else
+        return CreatureCmd.LoseMaxHp(context, target, amount, false);
+#endif
+    }
+
+    internal static RelicModel PullNextRelic(Player player, Rng rng)
+    {
+#if BS_BETA_1130
+        return RelicFactory.PullNextRelicFromFront(player, rng);
+#else
+        return RelicFactory.PullNextRelicFromFront(player);
+#endif
+    }
+
+    internal static RelicRarity RollRelicRarity(Player player, Rng rng)
+    {
+#if BS_BETA_1130
+        return RelicFactory.RollRarity(rng);
+#else
+        return RelicFactory.RollRarity(player);
+#endif
+    }
+
     internal static Task<IEnumerable<DamageResult>> Damage(
         PlayerChoiceContext choiceContext,
         Creature target,

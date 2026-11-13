@@ -85,7 +85,8 @@ public sealed class ButchersMathClassRelic : ModRelicTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<ButchersMathClassRelic>(runState);
+        return SnarkPageRelicTrackerModifier.CanAppearInRun(runState)
+            && !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<ButchersMathClassRelic>(runState);
     }
 
     public override Task AfterObtained()

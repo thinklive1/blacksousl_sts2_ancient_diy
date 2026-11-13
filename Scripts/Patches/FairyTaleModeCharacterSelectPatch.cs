@@ -1,3 +1,4 @@
+using System.Reflection;
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
@@ -25,11 +26,16 @@ public class FairyTaleModeCharacterSelectPatch : IPatchMethod
             new(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.InitializeMultiplayerAsClient), ignoreIfMissing: true),
         ];
 
-    public static void Postfix(NCharacterSelectScreen __instance)
+    public static void Postfix(NCharacterSelectScreen __instance, MethodBase __originalMethod)
     {
+        bool isClient = __originalMethod.Name == nameof(NCharacterSelectScreen.InitializeMultiplayerAsClient);
         if (__instance.GetNodeOrNull<Button>(ToggleName) is { } existingToggle)
         {
-            BsAncientRunOptions.FairyTaleModeForNextRun = existingToggle.ButtonPressed;
+            existingToggle.Visible = !isClient;
+            if (!isClient)
+            {
+                BsAncientRunOptions.FairyTaleModeForNextRun = existingToggle.ButtonPressed;
+            }
             return;
         }
 
@@ -44,6 +50,7 @@ public class FairyTaleModeCharacterSelectPatch : IPatchMethod
             ToggleMode = true,
             ButtonPressed = BsAncientConfig.EnableFairyTaleMode,
             Flat = true,
+            Visible = !isClient,
             MouseFilter = Control.MouseFilterEnum.Stop,
             FocusMode = Control.FocusModeEnum.All,
             TooltipText = Entry.GetSettingsText(
@@ -91,7 +98,10 @@ public class FairyTaleModeCharacterSelectPatch : IPatchMethod
         PositionWarning(warning);
         __instance.AddChild(warning);
 
-        BsAncientRunOptions.FairyTaleModeForNextRun = toggle.ButtonPressed;
+        if (!isClient)
+        {
+            BsAncientRunOptions.FairyTaleModeForNextRun = toggle.ButtonPressed;
+        }
     }
 
     private static void OnTogglePressed(Button toggle, TextureRect icon)

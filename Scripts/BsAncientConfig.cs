@@ -149,7 +149,7 @@ public static class BsAncientConfig
         AllowJackKetchNews = config.AllowJackKetchNews;
     }
 
-    private static FileConfig CaptureCurrent()
+    internal static FileConfig CaptureCurrent()
     {
         return new FileConfig
         {
@@ -303,7 +303,7 @@ public static class BsAncientConfig
         }
     }
 
-    private sealed class FileConfig
+    internal sealed class FileConfig
     {
         public bool OnlyUseModAncients { get; set; } = true;
 

@@ -15,6 +15,9 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>bs_ancient.Tests</_Parameter1>
     </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>bs_ancient.Beta113.Tests</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <Target Name="ExportPck" />

@@ -33,7 +33,8 @@ public sealed class BankersPageRelic : ModRelicTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BankersPageRelic>(runState);
+        return SnarkPageRelicTrackerModifier.CanAppearInRun(runState)
+            && !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BankersPageRelic>(runState);
     }
 
     public override Task AfterObtained()

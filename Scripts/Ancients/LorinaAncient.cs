@@ -113,8 +113,8 @@ public class LorinaAncient : ModAncientEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return !BsAncientConfig.DisableModAncients
-            && BsAncientConfig.EnableLorinaAncient
+        return !BsAncientRunConfig.ForRun(runState).DisableModAncients
+            && BsAncientRunConfig.ForRun(runState).EnableLorinaAncient
             && runState.CurrentActIndex == 1;
     }
 

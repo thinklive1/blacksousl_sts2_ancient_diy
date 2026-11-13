@@ -69,14 +69,41 @@ public sealed class NumberedOrderTests
         original.BlackSouls_OrderNumber = 45;
         original.BlackSouls_PendingAdvance = true;
         var restored = ModelStateIsolationTests.CreateMutable<NumberedOrderCard>();
-        SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(NumberedOrderCard));
-        var saved = SavedProperties.From(original);
-        Assert.NotNull(saved);
-        saved.Fill(restored);
-        Assert.Equal(45, restored.BlackSouls_OrderNumber);
-        Assert.Equal(3, restored.EnergyCost.GetWithModifiers(CostModifiers.Local));
-        Assert.True(restored.AdvanceIfPending());
-        Assert.Equal(46, restored.BlackSouls_OrderNumber);
+        Action restoreCache = ConfigureSavedPropertyCache(typeof(NumberedOrderCard));
+        try
+        {
+            var saved = SavedProperties.From(original);
+            Assert.NotNull(saved);
+            saved.Fill(restored);
+            Assert.Equal(45, restored.BlackSouls_OrderNumber);
+            Assert.Equal(3, restored.EnergyCost.GetWithModifiers(CostModifiers.Local));
+            Assert.True(restored.AdvanceIfPending());
+            Assert.Equal(46, restored.BlackSouls_OrderNumber);
+        }
+        finally
+        {
+            restoreCache();
+        }
+    }
+
+    private static Action ConfigureSavedPropertyCache(Type modelType)
+    {
+        var assembly = typeof(SavedProperties).Assembly;
+        var legacyCache = assembly.GetType("MegaCrit.Sts2.Core.Saves.Runs.SavedPropertiesTypeCache");
+        if (legacyCache != null)
+        {
+            legacyCache.GetMethod("InjectTypeIntoCache")!.Invoke(null, [modelType]);
+            return static () => { };
+        }
+
+        // Prepare only this model's metadata without bootstrapping Godot's ModelDb.
+        var cacheType = assembly.GetType("MegaCrit.Sts2.Core.Multiplayer.Serialization.ModelIdSerializationCache", true)!;
+        var initialized = cacheType.GetField("_initialized",
+            System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)!;
+        bool wasInitialized = (bool)initialized.GetValue(null)!;
+        cacheType.GetMethod("CacheSavedPropertiesForTypeDebug")!.Invoke(null, [modelType]);
+        initialized.SetValue(null, true);
+        return () => initialized.SetValue(null, wasInitialized);
     }
 
     [Fact]

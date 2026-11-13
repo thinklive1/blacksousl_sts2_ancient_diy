@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AssemblyName>bs_ancient.Beta113.Tests</AssemblyName>
+    <DefineConstants>$(DefineConstants);BS_BETA_1130</DefineConstants>
+    <GodotProjectDir>$(MSBuildProjectDirectory)</GodotProjectDir>
+    <GodotSourceGenerators>disabled</GodotSourceGenerators>
+    <Sts2Dir Condition="'$(Sts2Dir)' == ''">D:\software\steam\steamapps\common\Slay the Spire 2</Sts2Dir>
+    <Sts2DataDir>$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <CompilerVisibleProperty Include="GodotProjectDir" />
+    <CompilerVisibleProperty Include="GodotSourceGenerators" />
+    <Compile Include="..\bs_ancient.Tests\**\*.cs"
+             Exclude="..\bs_ancient.Tests\bin\**\*;..\bs_ancient.Tests\obj\**\*;..\bs_ancient.Tests\StableModTypeDiscoveryPatchTests.cs" />
+    <Compile Include="Compatibility113Tests.cs" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="Godot.SourceGenerators" Version="4.5.1" ExcludeAssets="all" PrivateAssets="all" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="STS2.RitsuLib" Version="0.6.11" />
+    <ProjectReference Include="..\..\compat\bs_ancient.Beta113\bs_ancient.Beta113.csproj" />
+    <ProjectReference Include="..\..\compat\bs_ancient.Loader\bs_ancient.Loader.csproj" />
+    <Reference Include="sts2" HintPath="$(Sts2DataDir)\sts2.dll" />
+    <Reference Include="0Harmony" HintPath="$(Sts2DataDir)\0Harmony.dll" />
+    <Reference Include="SmartFormat" HintPath="$(Sts2DataDir)\SmartFormat.dll" />
+    <None Include="$(Sts2DataDir)\Sentry*.dll;$(Sts2DataDir)\JetBrains.Annotations.dll;$(Sts2DataDir)\MonoMod.*.dll;$(Sts2DataDir)\SmartFormat*.dll;$(Sts2DataDir)\Steamworks.NET.dll;$(Sts2DataDir)\SharpGen.Runtime*.dll;$(Sts2DataDir)\Vortice.*.dll"
+          Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <Target Name="ExportPck" />
+</Project>

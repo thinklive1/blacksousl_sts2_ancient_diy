@@ -17,7 +17,9 @@ public class CheshireCatPet : MonsterModel
 
     public override int MaxInitialHp => 9999;
 
+#if !BS_BETA_1130
     public override bool IsHealthBarVisible => false;
+#endif
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {

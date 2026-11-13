@@ -31,8 +31,8 @@ public sealed class GirlInMazeEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return BsAncientConfig.EnableModEvents
-            && !BsAncientConfig.DisableTestingEvents
+        return BsAncientRunConfig.ForRun(runState).EnableModEvents
+            && !BsAncientRunConfig.ForRun(runState).DisableTestingEvents
             && runState.Players.Count == 1
             && runState.CurrentActIndex == 2
             && runState.Players.All(player =>

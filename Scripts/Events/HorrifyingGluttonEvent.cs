@@ -27,7 +27,7 @@ public sealed class HorrifyingGluttonEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return BsAncientConfig.EnableModEvents
+        return BsAncientRunConfig.ForRun(runState).EnableModEvents
             && runState.CurrentActIndex == 1
             && runState.Players.All(player =>
                 HorrifyingGluttonRelic.HasAttackCandidate(player)
@@ -72,7 +72,7 @@ public sealed class HorrifyingGluttonEvent : ModEventTemplate
 
         if (hasCommon && hasUncommon)
         {
-            RelicRarity rarity = RelicFactory.RollRarity(Owner!);
+            RelicRarity rarity = GameApiCompat.RollRelicRarity(Owner!, Rng);
             return rarity == RelicRarity.Common ? RelicRarity.Common : RelicRarity.Uncommon;
         }
 

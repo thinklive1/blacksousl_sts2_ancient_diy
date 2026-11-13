@@ -106,9 +106,10 @@ public sealed class UnnamedFairyTaleBookRelic : ModRelicTemplate
             .Select(relic => relic.Id.Entry)
             .ToHashSet(StringComparer.Ordinal);
 
+        BsAncientConfig.FileConfig config = BsAncientRunConfig.ForRun(Owner.RunState);
         List<RelicModel> candidates = FairyTaleRelicCatalog.All()
             .Where(relic => !obtainedRelicIds.Contains(relic.Id.Entry) && !ownedRelicIds.Contains(relic.Id.Entry))
-            .Where(FairyTaleRelicCatalog.IsEnabledByConfig)
+            .Where(relic => FairyTaleRelicCatalog.IsEnabledByConfig(relic, config))
             .ToList();
 
         RelicModel? relic = Owner.RunState.Rng.Niche.NextItem(candidates);

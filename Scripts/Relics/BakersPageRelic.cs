@@ -27,7 +27,8 @@ public sealed class BakersPageRelic : ModRelicTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BakersPageRelic>(runState);
+        return SnarkPageRelicTrackerModifier.CanAppearInRun(runState)
+            && !SnarkPageRelicTrackerModifier.HasAppearedOrOwned<BakersPageRelic>(runState);
     }
 
     public override Task AfterObtained()

@@ -17,22 +17,19 @@ public sealed class BsAncientRunOptionsTests : IDisposable
     [Fact]
     public void PendingSelectionIsCapturedByOnlyOneRun()
     {
-        object firstRun = new();
-        object secondRun = new();
         BsAncientRunOptions.FairyTaleModeForNextRun = true;
 
-        Assert.True(BsAncientRunOptions.ResolveFairyTaleModeForRun(firstRun, defaultValue: false));
-        Assert.False(BsAncientRunOptions.ResolveFairyTaleModeForRun(secondRun, defaultValue: false));
+        Assert.True(BsAncientRunOptions.ConsumePendingSelection(defaultValue: false));
+        Assert.False(BsAncientRunOptions.ConsumePendingSelection(defaultValue: false));
     }
 
     [Fact]
-    public void CapturedRunValueStaysStableForAllReaders()
+    public void CapturedRunValueStaysStableAfterAnotherSelection()
     {
-        object multiplayerRun = new();
         BsAncientRunOptions.FairyTaleModeForNextRun = true;
-
-        Assert.True(BsAncientRunOptions.ResolveFairyTaleModeForRun(multiplayerRun, defaultValue: false));
+        var captured = BsAncientRunConfig.CaptureNewRun();
         BsAncientRunOptions.FairyTaleModeForNextRun = false;
-        Assert.True(BsAncientRunOptions.ResolveFairyTaleModeForRun(multiplayerRun, defaultValue: false));
+        Assert.True(captured.EnableFairyTaleMode);
+        Assert.False(BsAncientRunOptions.ConsumePendingSelection(defaultValue: true));
     }
 }

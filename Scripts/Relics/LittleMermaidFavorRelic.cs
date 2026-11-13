@@ -36,11 +36,10 @@ public class LittleMermaidFavorRelic : ModRelicTemplate
 
     public override async Task AfterObtained()
     {
-        await CreatureCmd.LoseMaxHp(
+        await GameApiCompat.LoseMaxHp(
             new ThrowingPlayerChoiceContext(),
             Owner.Creature,
-            DynamicVars.MaxHp.BaseValue,
-            isFromCard: false
+            DynamicVars.MaxHp.BaseValue
         );
     }
 

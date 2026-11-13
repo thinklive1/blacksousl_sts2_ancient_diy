@@ -24,6 +24,11 @@ public sealed class HiddenEventOptionInjectionPatch : IPatchMethod
 
     public static void Prefix(EventModel __instance, ref IEnumerable<EventOption> eventOptions)
     {
+        if (!SnarkPageRelicTrackerModifier.CanAppearInRun(__instance.Owner?.RunState))
+        {
+            return;
+        }
+
         BakersPageHiddenEventOptionPatch.SetEventStatePrefix(__instance, ref eventOptions);
         BankersPageHiddenEventOptionPatch.SetEventStatePrefix(__instance, ref eventOptions);
         BarristersPageHiddenEventOptionPatch.SetEventStatePrefix(__instance, ref eventOptions);

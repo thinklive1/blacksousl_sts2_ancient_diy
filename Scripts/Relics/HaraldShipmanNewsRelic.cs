@@ -83,7 +83,7 @@ public sealed class HaraldShipmanNewsRelic : ModRelicTemplate
         {
             BlackSouls_CombatsWithoutPotion++;
             Flash();
-            await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, 1, false);
+            await GameApiCompat.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, 1);
         }
 
         _usedPotionThisCombat = false;

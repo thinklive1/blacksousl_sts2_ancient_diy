@@ -30,7 +30,7 @@ public sealed class GentleGiftEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return BsAncientConfig.EnableModEvents
+        return BsAncientRunConfig.ForRun(runState).EnableModEvents
             && runState.CurrentActIndex == 2
             && runState.Players.All(HasEnchantedCard);
     }
@@ -72,7 +72,7 @@ public sealed class GentleGiftEvent : ModEventTemplate
             .ToList();
         CardModel? selected = candidates.Count == 0
             ? null
-            : Owner!.RunState.Rng.Niche.NextItem(candidates);
+            : Rng.NextItem(candidates);
         if (selected != null)
         {
             if (selected.Enchantment != null)

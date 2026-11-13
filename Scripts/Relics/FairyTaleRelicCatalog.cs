@@ -59,50 +59,55 @@ public static class FairyTaleRelicCatalog
 
     public static bool IsEnabledByConfig(RelicModel relic)
     {
-        if (IsNegative(relic))
-        {
-            return BsAncientConfig.EnableNegativeFairyTaleRelics && IsEnabledByIndividualConfig(relic);
-        }
-
-        return BsAncientConfig.EnablePositiveFairyTaleRelics;
+        return IsEnabledByConfig(relic, BsAncientRunConfig.Current);
     }
 
-    private static bool IsEnabledByIndividualConfig(RelicModel relic)
+    internal static bool IsEnabledByConfig(RelicModel relic, BsAncientConfig.FileConfig config)
+    {
+        if (IsNegative(relic))
+        {
+            return config.EnableNegativeFairyTaleRelics && IsEnabledByIndividualConfig(relic, config);
+        }
+
+        return config.EnablePositiveFairyTaleRelics;
+    }
+
+    private static bool IsEnabledByIndividualConfig(RelicModel relic, BsAncientConfig.FileConfig config)
     {
         if (relic is AliceThroughLookingGlassRelic)
-            return BsAncientConfig.AllowAliceThroughLookingGlass;
+            return config.AllowAliceThroughLookingGlass;
         if (relic is CinderellaRelic)
-            return BsAncientConfig.AllowCinderella;
+            return config.AllowCinderella;
         if (relic is FrogPrincessRelic)
-            return BsAncientConfig.AllowFrogPrincess;
+            return config.AllowFrogPrincess;
         if (relic is GreedyDogRelic)
-            return BsAncientConfig.AllowGreedyDog;
+            return config.AllowGreedyDog;
         if (relic is MermaidPrincessRelic)
-            return BsAncientConfig.AllowMermaidPrincess;
+            return config.AllowMermaidPrincess;
         if (relic is MonkeyCrabBattleRelic)
-            return BsAncientConfig.AllowMonkeyCrabBattle;
+            return config.AllowMonkeyCrabBattle;
         if (relic is NorthWindAndSunRelic)
-            return BsAncientConfig.AllowNorthWindAndSun;
+            return config.AllowNorthWindAndSun;
         if (relic is PeterPanRelic)
-            return BsAncientConfig.AllowPeterPan;
+            return config.AllowPeterPan;
         if (relic is UglyDucklingRelic)
-            return BsAncientConfig.AllowUglyDuckling;
+            return config.AllowUglyDuckling;
         if (relic is SleepGodMythRelic)
-            return BsAncientConfig.AllowSleepGodMyth;
+            return config.AllowSleepGodMyth;
         if (relic is LakeGodMythRelic)
-            return BsAncientConfig.AllowLakeGodMyth;
+            return config.AllowLakeGodMyth;
         if (relic is DarkGoatOfTheWoodsMythRelic)
-            return BsAncientConfig.AllowDarkGoatOfTheWoodsMyth;
+            return config.AllowDarkGoatOfTheWoodsMyth;
         if (relic is GreatStagGoddessMythRelic)
-            return BsAncientConfig.AllowGreatStagGoddessMyth;
+            return config.AllowGreatStagGoddessMyth;
         if (relic is BlackThingMythRelic)
-            return BsAncientConfig.AllowBlackThingMyth;
+            return config.AllowBlackThingMyth;
         if (relic is ShadowDemonessMythRelic)
-            return BsAncientConfig.AllowShadowDemonessMyth;
+            return config.AllowShadowDemonessMyth;
         if (relic is HaraldShipmanNewsRelic)
-            return BsAncientConfig.AllowHaraldShipmanNews;
+            return config.AllowHaraldShipmanNews;
         if (relic is JackKetchNewsRelic)
-            return BsAncientConfig.AllowJackKetchNews;
+            return config.AllowJackKetchNews;
 
         return true;
     }

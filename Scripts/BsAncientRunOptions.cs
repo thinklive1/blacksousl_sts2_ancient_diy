@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using MegaCrit.Sts2.Core.Runs;
 
 namespace BlackSouls.Scripts;
@@ -7,7 +6,6 @@ namespace BlackSouls.Scripts;
 public static class BsAncientRunOptions
 {
     private static readonly object SyncRoot = new();
-    private static ConditionalWeakTable<object, FairyTaleModeSelection> _fairyTaleModeByRun = new();
     private static bool? _pendingFairyTaleModeOverride;
 
     public static bool FairyTaleModeForNextRun
@@ -30,27 +28,21 @@ public static class BsAncientRunOptions
 
     public static void CaptureFairyTaleModeForRun(IRunState runState)
     {
-        _ = ResolveFairyTaleModeForRun(runState, BsAncientConfig.EnableFairyTaleMode);
+        _ = BsAncientRunConfig.ForRun(runState);
+        _ = ConsumePendingSelection(false);
     }
 
     public static bool IsFairyTaleModeEnabled(IRunState runState)
     {
-        return ResolveFairyTaleModeForRun(runState, BsAncientConfig.EnableFairyTaleMode);
+        return BsAncientRunConfig.ForRun(runState).EnableFairyTaleMode;
     }
 
-    internal static bool ResolveFairyTaleModeForRun(object runKey, bool defaultValue)
+    internal static bool ConsumePendingSelection(bool defaultValue)
     {
-        ArgumentNullException.ThrowIfNull(runKey);
         lock (SyncRoot)
         {
-            if (_fairyTaleModeByRun.TryGetValue(runKey, out FairyTaleModeSelection? existing))
-            {
-                return existing.Enabled;
-            }
-
             bool enabled = _pendingFairyTaleModeOverride ?? defaultValue;
             _pendingFairyTaleModeOverride = null;
-            _fairyTaleModeByRun.Add(runKey, new FairyTaleModeSelection(enabled));
             return enabled;
         }
     }
@@ -60,9 +52,7 @@ public static class BsAncientRunOptions
         lock (SyncRoot)
         {
             _pendingFairyTaleModeOverride = null;
-            _fairyTaleModeByRun = new ConditionalWeakTable<object, FairyTaleModeSelection>();
         }
     }
 
-    private sealed record FairyTaleModeSelection(bool Enabled);
 }

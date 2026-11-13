@@ -35,7 +35,7 @@ public sealed class LastWhiteKnightEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return BsAncientConfig.EnableModEvents
+        return BsAncientRunConfig.ForRun(runState).EnableModEvents
             && runState.CurrentActIndex is 0 or 1
             && runState.Players.Any(player =>
                 player.Creature.CurrentHp > 0

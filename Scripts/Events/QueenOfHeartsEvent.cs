@@ -34,7 +34,7 @@ public sealed class QueenOfHeartsEvent : ModEventTemplate
 
     public override bool IsAllowed(IRunState runState)
     {
-        return BsAncientConfig.EnableModEvents
+        return BsAncientRunConfig.ForRun(runState).EnableModEvents
             && runState.CurrentActIndex == 1
             && (runState.Players.Any(player => player.GetRelic<QueenTartRelic>() != null)
                 || QueenTartModifier.FindActive(runState) != null);
@@ -107,10 +107,10 @@ public sealed class QueenOfHeartsEvent : ModEventTemplate
 
     private void ApplyRandomSuit(CardModel card)
     {
-        decimal amount = Owner!.RunState.Rng.Niche.NextInt(PlayingCardSuitEnchantment.MaxTriggersPerCombat)
+        decimal amount = Rng.NextInt(PlayingCardSuitEnchantment.MaxTriggersPerCombat)
             + PlayingCardSuitEnchantment.MinTriggersPerCombat;
 
-        switch (Owner.RunState.Rng.Niche.NextInt(4))
+        switch (Rng.NextInt(4))
         {
             case 0:
                 CardCmd.Enchant<HeartSuitEnchantment>(card, amount);

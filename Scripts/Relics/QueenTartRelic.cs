@@ -27,7 +27,7 @@ public sealed class QueenTartRelic : ModRelicTemplate
 
     public override EventModel ModifyNextEvent(EventModel currentEvent)
     {
-        return BsAncientConfig.EnableModEvents
+        return BsAncientRunConfig.ForRun(Owner.RunState).EnableModEvents
             && Owner.RunState.CurrentActIndex == 1
             ? ModelDb.Event<QueenOfHeartsEvent>()
             : currentEvent;

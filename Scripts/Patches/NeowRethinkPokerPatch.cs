@@ -30,7 +30,11 @@ public class NeowRethinkPokerPatch : IPatchMethod
         AccessTools.Method(
             typeof(AncientEventModel),
             "RelicOption",
+#if BS_BETA_1130
+            [typeof(RelicModel), typeof(string)]);
+#else
             [typeof(RelicModel), typeof(string), typeof(string)]);
+#endif
     private static bool _missingRelicOptionLogged;
 
     internal static bool CanCreateRelicOption => RelicOptionMethod != null;
@@ -74,19 +78,19 @@ public class NeowRethinkPokerPatch : IPatchMethod
                 return;
             }
 
-            if (__instance.Owner.RunState.Rng.Niche.NextInt(100) >= BsAncientConfig.GrandGuignolInitialRelicChance)
+            if (__instance.Rng.NextInt(100) >= BsAncientRunConfig.ForRun(__instance.Owner.RunState).GrandGuignolInitialRelicChance)
             {
                 return;
             }
 
             List<EventOption> options = __result.ToList();
-            RelicModel? relic = __instance.Owner.RunState.Rng.Niche.NextItem(candidates);
+            RelicModel? relic = __instance.Rng.NextItem(candidates);
             if (relic == null)
             {
                 return;
             }
 
-            int replacementIndex = __instance.Owner.RunState.Rng.Niche.NextInt(PositiveOptionCount);
+            int replacementIndex = __instance.Rng.NextInt(PositiveOptionCount);
             options[replacementIndex] = CreateRethinkPokerOption(__instance, relic);
             __result = options;
         }
@@ -100,7 +104,11 @@ public class NeowRethinkPokerPatch : IPatchMethod
     {
         return (EventOption)RelicOptionMethod!.Invoke(
             neow,
+#if BS_BETA_1130
+            [relic, "INITIAL"])!;
+#else
             [relic, "INITIAL", "NEOW.pages.DONE.POSITIVE.description"])!;
+#endif
     }
 }
 

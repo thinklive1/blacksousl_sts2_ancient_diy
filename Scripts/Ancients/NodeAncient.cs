@@ -95,8 +95,8 @@ public class NodeAncient : ModAncientEventTemplate
     // Node is only allowed in act 2, which uses zero-based index 1.
     public override bool IsAllowed(IRunState runState)
     {
-        return !BsAncientConfig.DisableModAncients
-            && BsAncientConfig.EnableNodeAncient
+        return !BsAncientRunConfig.ForRun(runState).DisableModAncients
+            && BsAncientRunConfig.ForRun(runState).EnableNodeAncient
             && runState.CurrentActIndex == 1;
     }
 

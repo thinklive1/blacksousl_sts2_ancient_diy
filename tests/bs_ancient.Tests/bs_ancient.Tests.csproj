@@ -21,7 +21,7 @@
                       Version="0.107.1"
                       PrivateAssets="all"
                       GeneratePathProperty="true" />
-    <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.6.9" />
+    <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.6.11" />
     <PackageReference Include="Godot.SourceGenerators" Version="4.5.1" ExcludeAssets="all" PrivateAssets="all" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

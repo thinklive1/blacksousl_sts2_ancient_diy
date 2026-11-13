@@ -23,7 +23,7 @@
     <Compile Include="..\..\Scripts\**\*.cs" />
     <Compile Include="..\..\Properties\AssemblyInfo.cs" />
     <PackageReference Include="BSchneppe.Sts2.ReferenceAssemblies" Version="0.111.0-beta-41cef1ea" PrivateAssets="all" />
-    <PackageReference Include="STS2.RitsuLib" Version="0.6.9" />
+    <PackageReference Include="STS2.RitsuLib.Compat.0.111.0" Version="0.6.11" />
     <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
   </ItemGroup>
 

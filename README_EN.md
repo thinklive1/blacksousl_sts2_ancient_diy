@@ -4,11 +4,11 @@ A Slay the Spire 2 Ancient expansion mod. It currently adds 4 map Ancients, repl
 
 ## Requirements
 
-- RitsuLib 0.6.9 or later
+- RitsuLib 0.6.11 or later
 
 ## Game Version Compatibility
 
-One release package contains isolated implementations for stable game version `0.107.1` and beta version `0.111.0`. The root loader reads the game's `release_info.json` and automatically loads `compat/<game-version>/bs_ancient.impl.dll`; both implementations share the PCK, assets, localization, and configuration. This keeps the stable and beta APIs separate, but it is not automatic forward compatibility: if a future beta changes the game API again, the mod must ship another compatible implementation. See [Compatibility](docs/COMPATIBILITY.md) for the package layout and verification commands.
+One release package contains separate implementations for game APIs `0.107.1`, `0.111.0`, and `0.113.0`. The root loader reads the game's `release_info.json` and selects the corresponding `compat/<game-version>/bs_ancient.impl.dll`; all three share the PCK, assets, localization, and configuration. The `0.113.0` implementation has passed compilation and automated tests against the installed game assembly. Multiplayer and in-game asynchronous flows still require playtesting. Unknown newer API versions produce an explicit compatibility error. See [Compatibility](docs/COMPATIBILITY.md) for the package layout and verification commands.
 
 The Chinese and English game text are maintained together. Reports of awkward wording or terminology that differs from the base game are welcome.
 
@@ -25,6 +25,8 @@ The Chinese and English game text are maintained together. Reports of awkward wo
 ## Settings
 
 These settings can be changed in the in-game mod settings UI, or by editing `bs_ancient_config.cfg` in the mod folder. The UI and config file use the same options; pressing Save in the UI writes them back to the config file. Existing config files automatically receive newly added fields on the next launch. Release packages do not include or overwrite this file, so your settings are preserved.
+
+Gameplay settings are saved at the start of each run. Changes made during a run apply to the next one. In multiplayer, the host's Fairy Tale choice, relic pools, event and Ancient settings, and Neow starting-relic chance apply to everyone without overwriting anyone else's config file. Continuing a saved run restores its settings. Older multiplayer saves without a settings snapshot use shared defaults and keep any Fairy Tale Books already obtained.
 
 `bs_ancient_config.cfg` is a JSON config file. The following are the core defaults. Individually controlled destructive Fairy Tale, Myth, and News relics have additional fields, all disabled by default:
 

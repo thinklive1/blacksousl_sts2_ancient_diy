@@ -169,6 +169,12 @@ public class CatCollarRelic : ModRelicTemplate
             await PlayerCmd.AddPet<CheshireCatPet>(Owner);
         }
 
+#if BS_BETA_1130
+        var pet = Owner.PlayerCombatState?.GetPet<CheshireCatPet>();
+        var display = pet == null ? null : NCombatRoom.Instance?.GetCreatureNode(pet)
+            ?.GetNodeOrNull<MegaCrit.Sts2.Core.Nodes.Combat.NCreatureStateDisplay>("%HealthBar");
+        display?.GetNodeOrNull<MegaCrit.Sts2.Core.Nodes.Combat.NHealthBar>("%HealthBar")?.Hide();
+#endif
         GetCatVisuals()?.ShowSmileIdle();
     }
 
