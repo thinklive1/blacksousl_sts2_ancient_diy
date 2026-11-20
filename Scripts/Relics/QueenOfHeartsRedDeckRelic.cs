@@ -59,21 +59,45 @@ public sealed class QueenOfHeartsRedDeckRelic : ModRelicTemplate
     {
         return _remainingDiscards > 0
             && card.Owner == Owner
+            && card.IsInCombat
             && card.Pile?.Type == PileType.Hand
-            && Owner.Creature.CombatState != null
+            && Owner.PlayerCombatState?.Phase == PlayerTurnPhase.Play
+            && Owner.Creature.IsAlive
+            && card.CombatState == Owner.Creature.CombatState
+            && CombatManager.Instance.IsInProgress
             && !CombatManager.Instance.IsOverOrEnding;
     }
 
-    internal async Task TryDiscardAndDraw(CardModel card, PlayerChoiceContext choiceContext)
+    internal async Task TryDiscardAndDraw(CardModel card, PlayerChoiceContext? choiceContext)
     {
+        // Never substitute an unsynchronized choice context for a queued right-click action.
+        if (choiceContext is not GameActionPlayerChoiceContext queuedContext
+            || queuedContext.Action.OwnerId != Owner.NetId)
+        {
+            Entry.Logger.Warn($"[RedDeck] Rejected discard without the owner's queued choice context. Player={Owner.NetId}");
+            return;
+        }
+
         if (!CanDiscardAndDraw(card))
         {
+            Entry.Logger.Info($"[RedDeck] Skipped stale discard. Player={Owner.NetId} Card={card.Id} Phase={Owner.PlayerCombatState?.Phase} Remaining={_remainingDiscards}");
             return;
         }
 
         BlackSouls_RemainingDiscards--;
         InvokeDisplayAmountChanged();
         Flash();
-        await CardCmd.DiscardAndDraw(choiceContext, [card], 1);
+        Entry.Logger.Info($"[RedDeck] Discard started. Player={Owner.NetId} Card={card.Id} Remaining={_remainingDiscards}");
+        try
+        {
+            await CardCmd.DiscardAndDraw(queuedContext, [card], 1);
+            Entry.Logger.Info($"[RedDeck] Discard finished. Player={Owner.NetId} Remaining={_remainingDiscards} Hand={Owner.PlayerCombatState?.Hand.Cards.Count} Draw={Owner.PlayerCombatState?.DrawPile.Cards.Count} Discard={Owner.PlayerCombatState?.DiscardPile.Cards.Count}");
+        }
+        catch (Exception exception)
+        {
+            // A partially executed discard must not be retried or locally rolled back.
+            Entry.Logger.Warn($"[RedDeck] Discard failed. Player={Owner.NetId} Card={card.Id} Remaining={_remainingDiscards} Error={exception}");
+            throw;
+        }
     }
 }

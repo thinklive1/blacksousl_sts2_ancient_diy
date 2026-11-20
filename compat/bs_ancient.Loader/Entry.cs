@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Runtime.Loader;
 using System.Text.Json;
+using MegaCrit.Sts2.Core.Debug;
 using MegaCrit.Sts2.Core.Modding;
 
 namespace BlackSouls.Compatibility;
@@ -80,51 +81,90 @@ public static class Entry
 
     private static string ResolveModDirectory()
     {
-        string? assemblyPath = Assembly.GetExecutingAssembly().Location;
-        if (!string.IsNullOrWhiteSpace(assemblyPath))
+        return ResolveModDirectory(
+            Assembly.GetExecutingAssembly().Location,
+            ModManager.Mods.FirstOrDefault(mod => mod.manifest?.id == "bs_ancient")?.path,
+            AppContext.BaseDirectory);
+    }
+
+    internal static string ResolveModDirectory(
+        string? assemblyPath,
+        string? registeredModDirectory,
+        string baseDirectory)
+    {
+        if (!string.IsNullOrWhiteSpace(assemblyPath) && Path.IsPathFullyQualified(assemblyPath))
         {
             return Path.GetDirectoryName(Path.GetFullPath(assemblyPath))!;
         }
 
-        return AppContext.BaseDirectory;
+        // Mobile hosts can load assemblies from bytes and expose only a filename or an empty Location.
+        if (!string.IsNullOrWhiteSpace(registeredModDirectory) && Path.IsPathFullyQualified(registeredModDirectory))
+        {
+            return Path.GetFullPath(registeredModDirectory);
+        }
+
+        if (File.Exists(Path.Combine(baseDirectory, "bs_ancient.dll")))
+        {
+            return Path.GetFullPath(baseDirectory);
+        }
+
+        throw new DirectoryNotFoundException(
+            "BS Ancient could not locate its mod directory. The host must provide an assembly path or a registered mod path.");
     }
 
     private static GameRelease ReadGameRelease()
     {
-        string? gameAssemblyPath = typeof(ModInitializerAttribute).Assembly.Location;
-        string? dataDirectory = string.IsNullOrWhiteSpace(gameAssemblyPath)
-            ? null
-            : Path.GetDirectoryName(gameAssemblyPath);
-        string? gameDirectory = dataDirectory == null
+        // Prefer the public release manager; mobile hosts may instead supply the version to ModManager.Initialize.
+        SemanticVersion? hostVersion = ReleaseInfoManager.Instance.SemVer
+            ?? typeof(ModManager).GetField("_gameVersion", BindingFlags.Static | BindingFlags.NonPublic)
+                ?.GetValue(null) as SemanticVersion;
+        return ReadGameRelease(typeof(ModInitializerAttribute).Assembly.Location, hostVersion);
+    }
+
+    internal static GameRelease ReadGameRelease(string? gameAssemblyPath, SemanticVersion? hostVersion)
+    {
+        string? releaseInfoPath = FindReleaseInfoPath(gameAssemblyPath);
+        if (releaseInfoPath != null && File.Exists(releaseInfoPath))
+        {
+            using JsonDocument document = JsonDocument.Parse(File.ReadAllText(releaseInfoPath));
+            string rawVersion = document.RootElement.TryGetProperty("version", out JsonElement versionElement)
+                ? versionElement.GetString() ?? string.Empty
+                : string.Empty;
+            string branch = document.RootElement.TryGetProperty("branch", out JsonElement branchElement)
+                ? branchElement.GetString() ?? string.Empty
+                : string.Empty;
+
+            if (Version.TryParse(rawVersion.Trim().TrimStart('v', 'V'), out Version? version))
+            {
+                string displayName = string.IsNullOrWhiteSpace(branch) ? rawVersion : $"{rawVersion} ({branch})";
+                return new GameRelease(version, displayName);
+            }
+        }
+
+        if (hostVersion != null)
+        {
+            return new GameRelease(
+                new Version(hostVersion.Major, hostVersion.Minor, hostVersion.Patch),
+                $"{hostVersion} (host runtime)");
+        }
+
+        throw new NotSupportedException(
+            "BS Ancient could not identify the game version from release_info.json or the host runtime. " +
+            "Refusing to guess a compatibility target.");
+    }
+
+    internal static string? FindReleaseInfoPath(string? gameAssemblyPath)
+    {
+        if (string.IsNullOrWhiteSpace(gameAssemblyPath) || !Path.IsPathFullyQualified(gameAssemblyPath))
+        {
+            return null;
+        }
+
+        string? dataDirectory = Path.GetDirectoryName(gameAssemblyPath);
+        string? gameDirectory = string.IsNullOrWhiteSpace(dataDirectory)
             ? null
             : Directory.GetParent(dataDirectory)?.FullName;
-        string? releaseInfoPath = gameDirectory == null
-            ? null
-            : Path.Combine(gameDirectory, "release_info.json");
-
-        if (releaseInfoPath == null || !File.Exists(releaseInfoPath))
-        {
-            return new GameRelease(new Version(0, 107, 1), "unknown (stable fallback)");
-        }
-
-        using JsonDocument document = JsonDocument.Parse(File.ReadAllText(releaseInfoPath));
-        string rawVersion = document.RootElement.TryGetProperty("version", out JsonElement versionElement)
-            ? versionElement.GetString() ?? string.Empty
-            : string.Empty;
-        string branch = document.RootElement.TryGetProperty("branch", out JsonElement branchElement)
-            ? branchElement.GetString() ?? string.Empty
-            : string.Empty;
-
-        string normalizedVersion = rawVersion.Trim().TrimStart('v', 'V');
-        if (!Version.TryParse(normalizedVersion, out Version? version))
-        {
-            version = new Version(0, 107, 1);
-        }
-
-        string displayName = string.IsNullOrWhiteSpace(branch)
-            ? rawVersion
-            : $"{rawVersion} ({branch})";
-        return new GameRelease(version, displayName);
+        return gameDirectory == null ? null : Path.Combine(gameDirectory, "release_info.json");
     }
 
     internal readonly record struct GameRelease(Version Version, string DisplayName);

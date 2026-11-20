@@ -63,6 +63,8 @@ public static class BoojumHistoryMemory
     public static bool IsSafeHistoryFileName(string? fileName)
     {
         return !string.IsNullOrWhiteSpace(fileName)
+            // Save-store paths may normalize separators differently from the host OS.
+            && fileName.IndexOfAny(['/', '\\', ':', '\0']) < 0
             && string.Equals(fileName, Path.GetFileName(fileName), StringComparison.Ordinal)
             && fileName.EndsWith(".run", StringComparison.OrdinalIgnoreCase);
     }

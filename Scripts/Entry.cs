@@ -87,7 +87,7 @@ public class Entry
 
                 return relic.TryDiscardAndDraw(
                     card,
-                    (PlayerChoiceContext?)context.PlayerChoiceContext ?? new ThrowingPlayerChoiceContext());
+                    context.PlayerChoiceContext);
             },
             priority: 10,
             canHandleLocal: context =>
@@ -96,6 +96,7 @@ public class Entry
                 && card.Pile?.Type == PileType.Hand,
             canExecute: context =>
                 context.Model is CardModel card
+                && card.Owner == context.Player
                 && card.Owner?.GetRelic<QueenOfHeartsRedDeckRelic>() is { } relic
                 && relic.CanDiscardAndDraw(card));
     }

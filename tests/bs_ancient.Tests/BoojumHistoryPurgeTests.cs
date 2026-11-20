@@ -4,6 +4,21 @@ namespace BsAncient.Tests;
 
 public sealed class BoojumHistoryPurgeTests : IDisposable
 {
+    [Theory]
+    [InlineData("123456.run", true)]
+    [InlineData("memory.run", true)]
+    [InlineData("../123456.run", false)]
+    [InlineData("..\\123456.run", false)]
+    [InlineData("folder/123456.run", false)]
+    [InlineData("folder\\123456.run", false)]
+    [InlineData("C:123456.run", false)]
+    [InlineData("123\0.run", false)]
+    [InlineData("123456.run.boojum.bak", false)]
+    public void HistoryNamesAreSafeRegardlessOfTheHostPathSeparator(string fileName, bool expected)
+    {
+        Assert.Equal(expected, BoojumHistoryMemory.IsSafeHistoryFileName(fileName));
+    }
+
     public BoojumHistoryPurgeTests()
     {
         BoojumHistoryPurge.Reset();

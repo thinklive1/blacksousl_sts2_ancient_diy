@@ -1,5 +1,8 @@
 using System.Reflection;
 using System.Text.Json;
+using Godot;
+using MegaCrit.Sts2.Core.Modding;
+using STS2RitsuLib.Utils.Persistence;
 
 namespace BlackSouls.Scripts;
 
@@ -48,7 +51,62 @@ public static class BsAncientConfig
 
     public static void Load(Assembly assembly)
     {
-        LoadFromPath(GetConfigPath(assembly), message => Entry.Logger.Warn(message));
+        string configPath = GetConfigPath(assembly);
+        if (!OperatingSystem.IsAndroid() && !OperatingSystem.IsIOS() && Path.IsPathFullyQualified(assembly.Location))
+        {
+            string legacyPath = Path.Combine(Path.GetDirectoryName(assembly.Location)!, ConfigFileName);
+            LoadDesktopConfig(configPath, legacyPath, message => Entry.Logger.Warn(message));
+            return;
+        }
+
+        string? registeredModDirectory = ModManager.Mods.FirstOrDefault(mod => mod.manifest?.id == Entry.ModId)?.path;
+        LoadWithLegacyFallback(configPath,
+            GetLegacyConfigPaths(assembly.Location, registeredModDirectory, AppContext.BaseDirectory),
+            message => Entry.Logger.Warn(message));
+    }
+
+    internal static void LoadDesktopConfig(string configPath, string legacyPath, Action<string>? warn = null)
+    {
+        try
+        {
+            // A previous compatibility build may have a newer setting than the old root config.
+            bool migrate = !string.Equals(configPath, legacyPath, StringComparison.OrdinalIgnoreCase)
+                && File.Exists(legacyPath)
+                && (!File.Exists(configPath) || File.GetLastWriteTimeUtc(legacyPath) > File.GetLastWriteTimeUtc(configPath));
+            if (migrate)
+            {
+                FileConfig config = JsonSerializer.Deserialize<FileConfig>(File.ReadAllText(legacyPath))
+                    ?? throw new JsonException("The legacy configuration root was null.");
+                Apply(config);
+                _configPath = configPath;
+                TrySaveCurrent(configPath, warn);
+                return;
+            }
+        }
+        catch (Exception exception) when (exception is JsonException or NotSupportedException or IOException or UnauthorizedAccessException)
+        {
+            warn?.Invoke($"Could not migrate BS Ancient configuration '{legacyPath}'. The root configuration will be used: {exception.Message}");
+        }
+
+        LoadFromPath(configPath, warn);
+    }
+
+    internal static void LoadWithLegacyFallback(string configPath, IEnumerable<string> legacyPaths, Action<string>? warn = null)
+    {
+        if (!File.Exists(configPath))
+        {
+            string? legacyPath = legacyPaths.FirstOrDefault(path =>
+                !string.Equals(path, configPath, StringComparison.Ordinal) && File.Exists(path));
+            if (legacyPath != null)
+            {
+                LoadFromPath(legacyPath, warn);
+                _configPath = configPath;
+                TrySaveCurrent(configPath, warn);
+                return;
+            }
+        }
+
+        LoadFromPath(configPath, warn);
     }
 
     internal static void LoadFromPath(string configPath, Action<string>? warn = null)
@@ -105,13 +163,48 @@ public static class BsAncientConfig
 
     private static string GetConfigPath(Assembly assembly)
     {
-        string? assemblyDirectory = Path.GetDirectoryName(assembly.Location);
-        if (string.IsNullOrWhiteSpace(assemblyDirectory))
+        return ResolveConfigPath(assembly.Location, OperatingSystem.IsAndroid() || OperatingSystem.IsIOS(),
+            () => ProjectSettings.GlobalizePath(ProfileManager.Instance.GetFilePath(ConfigFileName, SaveScope.Global, Entry.ModId)));
+    }
+
+    internal static string ResolveConfigPath(string? assemblyPath, bool isMobile, Func<string> userDataPath)
+    {
+        if (!isMobile && !string.IsNullOrWhiteSpace(assemblyPath) && Path.IsPathFullyQualified(assemblyPath))
         {
-            assemblyDirectory = AppContext.BaseDirectory;
+            DirectoryInfo directory = new(Path.GetDirectoryName(assemblyPath)!);
+            // All compatibility implementations must share the config outside the replaceable DLL tree.
+            if (string.Equals(Path.GetFileName(assemblyPath), "bs_ancient.impl.dll", StringComparison.OrdinalIgnoreCase)
+                && Version.TryParse(directory.Name, out _)
+                && string.Equals(directory.Parent?.Name, "compat", StringComparison.OrdinalIgnoreCase)
+                && directory.Parent?.Parent is { } modDirectory)
+            {
+                directory = modDirectory;
+            }
+
+            return Path.Combine(directory.FullName, ConfigFileName);
         }
 
-        return Path.Combine(assemblyDirectory, ConfigFileName);
+        // User data survives mobile Workshop replacements and does not require a writable assembly directory.
+        return userDataPath();
+    }
+
+    internal static IEnumerable<string> GetLegacyConfigPaths(
+        string? assemblyPath, string? registeredModDirectory, string? baseDirectory)
+    {
+        if (!string.IsNullOrWhiteSpace(assemblyPath) && Path.IsPathFullyQualified(assemblyPath))
+        {
+            yield return Path.Combine(Path.GetDirectoryName(assemblyPath)!, ConfigFileName);
+        }
+
+        if (!string.IsNullOrWhiteSpace(registeredModDirectory) && Path.IsPathFullyQualified(registeredModDirectory))
+        {
+            yield return Path.Combine(registeredModDirectory, ConfigFileName);
+        }
+
+        if (!string.IsNullOrWhiteSpace(baseDirectory) && Path.IsPathFullyQualified(baseDirectory))
+        {
+            yield return Path.Combine(baseDirectory, ConfigFileName);
+        }
     }
 
     private static void Apply(FileConfig config)

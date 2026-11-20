@@ -21,8 +21,27 @@ public class OnlyUseModAncientsPatch : IPatchMethod
         [new(
             typeof(ActModel),
             nameof(ActModel.GenerateRooms),
+            ResolveGenerateRoomsParameters(typeof(ActModel)))];
+
+    internal static Type[] ResolveGenerateRoomsParameters(Type actType)
+    {
+        // 0.113 adds isBlitz; patch only the implementation, not its RunState wrapper.
+        Type[][] signatures =
+        [
+            [typeof(Rng), typeof(UnlockState), typeof(bool), typeof(bool)],
             [typeof(Rng), typeof(UnlockState), typeof(bool)],
-            ignoreIfMissing: true)];
+        ];
+        foreach (Type[] signature in signatures)
+        {
+            if (AccessTools.DeclaredMethod(actType, nameof(ActModel.GenerateRooms), signature) != null)
+            {
+                return signature;
+            }
+        }
+
+        throw new MissingMethodException(actType.FullName,
+            "GenerateRooms(Rng, UnlockState, bool[, bool])");
+    }
 
     private static readonly FieldInfo? RoomsField = AccessTools.Field(typeof(ActModel), "_rooms");
     private static readonly FieldInfo? SharedAncientSubsetField = AccessTools.Field(typeof(ActModel), "_sharedAncientSubset");

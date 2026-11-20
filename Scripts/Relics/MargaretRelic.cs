@@ -31,6 +31,7 @@ public class MargaretRelic : ModRelicTemplate
 
     private int _supplyCount;
     private int _supplyScore;
+    private CardReward? _pendingSupplyReward;
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
@@ -83,6 +84,12 @@ public class MargaretRelic : ModRelicTemplate
         return runState.Players.Count == 1;
     }
 
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _pendingSupplyReward = null;
+    }
+
     public override bool TryModifyCardRewardAlternatives(Player player, CardReward cardReward, List<CardRewardAlternative> alternatives)
     {
         if (player != Owner || IsUsedUp)
@@ -100,12 +107,12 @@ public class MargaretRelic : ModRelicTemplate
         return true;
     }
 
-    private async Task Supply(CardReward cardReward)
+    private Task Supply(CardReward cardReward)
     {
-        if (IsUsedUp)
+        if (cardReward.Player != Owner || IsUsedUp)
         {
             UpdateStatus();
-            return;
+            return Task.CompletedTask;
         }
 
         Flash();
@@ -114,30 +121,42 @@ public class MargaretRelic : ModRelicTemplate
 
         if (BlackSouls_SupplyCount >= RequiredSupplies)
         {
-            await GrantSupplyRewards();
-            UpdateStatus();
+            // CardReward still owns the selection overlay until this alternative callback returns.
+            _pendingSupplyReward = cardReward;
         }
+
+        return Task.CompletedTask;
     }
+
+    public override async Task AfterRewardTaken(Player player, Reward reward)
+    {
+        if (player != Owner || _pendingSupplyReward == null || !ReferenceEquals(reward, _pendingSupplyReward))
+        {
+            return;
+        }
+
+        // Consume before opening bonus rewards, whose selections also invoke this hook.
+        _pendingSupplyReward = null;
+        await GrantSupplyRewards();
+        UpdateStatus();
+    }
+
+    internal static (int Gold, CardRarity Rarity, int CardRewardCount) GetSupplyRewardPlan(int score) =>
+        score <= LowScoreThreshold ? (LowGold, CardRarity.Uncommon, 1) :
+        score <= HighScoreThreshold ? (MidGold, CardRarity.Rare, 1) :
+        (HighGold, CardRarity.Rare, 2);
 
     private async Task GrantSupplyRewards()
     {
-        int score = BlackSouls_SupplyScore;
-        if (score <= LowScoreThreshold)
+        var plan = GetSupplyRewardPlan(BlackSouls_SupplyScore);
+        await PlayerCmd.GainGold(plan.Gold, Owner);
+        List<Reward> rewards = [];
+        for (int i = 0; i < plan.CardRewardCount; i++)
         {
-            await PlayerCmd.GainGold(LowGold, Owner);
-            await RewardsCmd.OfferCustom(Owner, [CreateCardReward(CardRarity.Uncommon)]);
-            return;
+            rewards.Add(CreateCardReward(plan.Rarity));
         }
 
-        if (score <= HighScoreThreshold)
-        {
-            await PlayerCmd.GainGold(MidGold, Owner);
-            await RewardsCmd.OfferCustom(Owner, [CreateCardReward(CardRarity.Rare)]);
-            return;
-        }
-
-        await PlayerCmd.GainGold(HighGold, Owner);
-        await RewardsCmd.OfferCustom(Owner, [CreateCardReward(CardRarity.Rare), CreateCardReward(CardRarity.Rare)]);
+        await RewardsCmd.OfferCustom(Owner, rewards);
     }
 
     private CardReward CreateCardReward(CardRarity rarity)

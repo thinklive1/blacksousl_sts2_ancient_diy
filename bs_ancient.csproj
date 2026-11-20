@@ -94,7 +94,7 @@
 
     <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
     <MakeDir Directories="$(ModInstallDir)" />
-    <RemoveDir Directories="$(ModInstallDir)\compat" />
+    <!-- Preserve legacy configs until the new implementation can migrate them to the mod root. -->
     <RemoveDir Directories="$(ModInstallDir)\docs" />
     <Copy SourceFiles="@(_CompatibilityBundleFiles)"
           DestinationFiles="@(_CompatibilityBundleFiles->'$(ModInstallDir)\%(RecursiveDir)%(Filename)%(Extension)')"
