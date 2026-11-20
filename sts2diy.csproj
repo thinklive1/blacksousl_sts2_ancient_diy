@@ -1,0 +1,73 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>true</ImplicitUsings>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+
+    <!-- Change this only when your local Slay the Spire 2 installation moves. -->
+    <Sts2Dir>D:\software\steam\steamapps\common\Slay the Spire 2</Sts2Dir>
+    <Sts2DataDir>$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
+    <GodotExe>D:\game\bsmod\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64_console.exe</GodotExe>
+    <WorkshopUploadContentDir>$(MSBuildProjectDirectory)\upload\content</WorkshopUploadContentDir>
+    <ModInstallDir>$(Sts2Dir)\mods\sts2diy</ModInstallDir>
+    <PckExportDir>$(MSBuildProjectDirectory)\.godot\pck-export</PckExportDir>
+  </PropertyGroup>
+
+  <!-- Godot's internal publish must not deploy intermediate assemblies. -->
+  <PropertyGroup Condition="'$(IsInnerGodotExport)' == 'true'">
+    <SkipModDeployment>true</SkipModDeployment>
+    <NuGetAudit>false</NuGetAudit>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests\**\*.cs" />
+    <Compile Remove="archive\**\*.cs;docs\**\*.cs;upload\**\*.cs" />
+    <Reference Include="sts2">
+      <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <PackageReference Include="STS2.RitsuLib" Version="0.6.11" />
+    <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Match bs_ancient: deploy to the uploader workspace and local game after Build. -->
+  <Target Name="CopyMod" AfterTargets="Build" Condition="'$(SkipModDeployment)' != 'true'">
+    <ItemGroup>
+      <_ModFiles Include="$(TargetPath);$(MSBuildProjectDirectory)\sts2diy.json;$(MSBuildProjectDirectory)\README.md;$(MSBuildProjectDirectory)\README_EN.md" />
+      <_UploadConfigFiles Include="$(WorkshopUploadContentDir)\**\*.cfg;$(WorkshopUploadContentDir)\**\*_config.json;$(WorkshopUploadContentDir)\**\settings.json" />
+    </ItemGroup>
+    <Message Text="Copying mod to Steam Workshop uploader workspace..." Importance="high" />
+    <MakeDir Directories="$(WorkshopUploadContentDir)" />
+    <RemoveDir Directories="$(WorkshopUploadContentDir)\docs" />
+    <Delete Files="@(_UploadConfigFiles)" />
+    <Copy SourceFiles="@(_ModFiles)" DestinationFolder="$(WorkshopUploadContentDir)\" />
+    <Copy SourceFiles="$(ModInstallDir)\sts2diy.pck" DestinationFolder="$(WorkshopUploadContentDir)\"
+          Condition="Exists('$(ModInstallDir)\sts2diy.pck')" />
+
+    <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
+    <MakeDir Directories="$(ModInstallDir)" />
+    <Copy SourceFiles="@(_ModFiles)" DestinationFolder="$(ModInstallDir)\" ContinueOnError="WarnAndContinue" />
+  </Target>
+
+  <!-- Run: dotnet build -t:ExportPck to export assets into the installed mod. -->
+  <Target Name="ExportPck" DependsOnTargets="Build;CopyMod">
+    <Error Text="GodotExe not found: $(GodotExe)" Condition="!Exists('$(GodotExe)')" />
+    <Message Text="Exporting PCK to Slay the Spire 2 mods folder..." Importance="high" />
+    <MakeDir Directories="$(ModInstallDir);$(WorkshopUploadContentDir);$(PckExportDir)" />
+    <Delete Files="$(PckExportDir)\sts2diy.pck" />
+    <Exec Command="&quot;$(GodotExe)&quot; --headless --path &quot;$(MSBuildProjectDirectory)&quot; --export-pack &quot;Windows Desktop&quot; &quot;$(PckExportDir)\sts2diy.pck&quot;"
+          EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
+          Timeout="60000" />
+    <Copy SourceFiles="$(PckExportDir)\sts2diy.pck" DestinationFolder="$(ModInstallDir)\" />
+    <Copy SourceFiles="$(PckExportDir)\sts2diy.pck" DestinationFolder="$(WorkshopUploadContentDir)\" />
+  </Target>
+</Project>

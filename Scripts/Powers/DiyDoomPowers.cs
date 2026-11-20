@@ -1,0 +1,244 @@
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
+using STS2RitsuLib.Utils.Persistence;
+
+namespace Sts2Diy.Scripts.Powers;
+
+/// <summary>Tracks Doom applications and grants energy for every four applications.</summary>
+[RegisterPower]
+public sealed class CalamityRaimentPower : ModPowerTemplate
+{
+    private int _doomApplications;
+
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+    public override int DisplayAmount => _doomApplications;
+
+    public override PowerAssetProfile AssetProfile
+    {
+        get
+        {
+            PowerModel original = ModelDb.Power<ShroudPower>();
+            return new(IconPath: original.IconPath, BigIconPath: original.ResolvedBigIconPath);
+        }
+    }
+
+    public override LocString Description
+    {
+        get
+        {
+            LocString description = base.Description;
+            AddDescriptionVariables(description, IsMutable ? Sts2Diy_DoomApplications : 0, IsMutable ? Amount : 1);
+            return description;
+        }
+    }
+
+    internal static (int Progress, int Energy) AdvanceProgress(int previousProgress, int stacks)
+    {
+        int applications = Math.Clamp(previousProgress, 0, 3) + 1;
+        return (applications % 4, applications == 4 ? Math.Max(0, stacks) : 0);
+    }
+
+    internal static void AddDescriptionVariables(LocString description, int progress, int stacks)
+    {
+        description.Add("DoomApplications", progress);
+        description.Add("EnergyPerTrigger", stacks);
+    }
+
+    [SavedProperty]
+    public int Sts2Diy_DoomApplications
+    {
+        get => _doomApplications;
+        set { AssertMutable(); _doomApplications = value; }
+    }
+
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext context, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    {
+        if (applier != Owner || power is not DoomPower || amount <= 0 || Owner.Player == null)
+        {
+            return;
+        }
+
+        var next = AdvanceProgress(Sts2Diy_DoomApplications, Amount);
+        // Commit the remainder before granting energy, since energy gain can invoke more hooks.
+        Sts2Diy_DoomApplications = next.Progress;
+        if (next.Energy > 0)
+        {
+            Flash();
+            await PlayerCmd.GainEnergy(next.Energy, Owner.Player);
+        }
+
+        InvokeDisplayAmountChanged();
+    }
+}
+
+/// <summary>Provides the one-turn damage reactions granted by Death and Life's Pact.</summary>
+[RegisterPower]
+public sealed class DeathLifePactPower : ModPowerTemplate
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://sts2diy/assets/images/powers/DeathLifePactPower.png",
+        BigIconPath: "res://sts2diy/assets/images/powers/DeathLifePactPower.png");
+
+    public override LocString Description
+    {
+        get
+        {
+            LocString description = base.Description;
+            AddDescriptionVariables(description, IsMutable ? Amount : 2);
+            return description;
+        }
+    }
+
+    internal static decimal GetOstyBlock(int summonAmount) => Math.Max(0, summonAmount) * 2m;
+
+    internal static void AddDescriptionVariables(LocString description, int summonAmount)
+    {
+        description.Add("SummonAmount", summonAmount);
+        description.Add("BlockAmount", GetOstyBlock(summonAmount));
+    }
+
+    public override async Task AfterDamageGiven(PlayerChoiceContext context, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
+    {
+        if (result.TotalDamage <= 0 || Owner.Player == null || CombatManager.Instance.IsOverOrEnding)
+        {
+            return;
+        }
+
+        if (dealer == Owner)
+        {
+            Flash();
+            await OstyCmd.Summon(context, Owner.Player, Amount, this);
+        }
+        else if (dealer == Owner.Player.Osty)
+        {
+            Flash();
+            await CreatureCmd.GainBlock(Owner, GetOstyBlock(Amount), ValueProp.Unpowered, null);
+        }
+    }
+
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (side == Owner.Side && participants.Contains(Owner))
+        {
+            await PowerCmd.Remove(this);
+        }
+    }
+}
+
+/// <summary>Moves the owner's Doom to all enemies at the next player-turn start.</summary>
+[RegisterPower]
+public sealed class SharedDoomTransferPower : ModPowerTemplate
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://sts2diy/assets/images/powers/SharedDoomTransferPower.png",
+        BigIconPath: "res://sts2diy/assets/images/powers/SharedDoomTransferPower.png");
+
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
+    {
+        if (player != Owner.Player)
+        {
+            return;
+        }
+
+        int doom = Owner.GetPowerAmount<DoomPower>();
+        if (doom > 0)
+        {
+            ICombatState? combatState = Owner.CombatState;
+            if (combatState != null)
+            {
+                await PowerCmd.Apply<DoomPower>(context, combatState.HittableEnemies, doom, Owner, null);
+            }
+            DoomPower? ownDoom = Owner.GetPower<DoomPower>();
+            if (ownDoom != null)
+            {
+                await PowerCmd.ModifyAmount(context, ownDoom, -doom, Owner, null);
+            }
+        }
+
+        await PowerCmd.Remove(this);
+    }
+}
+
+/// <summary>Arms an Osty-only damage boost for the turn after Osty dies.</summary>
+[RegisterPower]
+public sealed class BitterHatredPower : ModPowerTemplate
+{
+    private bool _pending;
+    private bool _active;
+
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://sts2diy/assets/images/powers/BitterHatredPower.png",
+        BigIconPath: "res://sts2diy/assets/images/powers/BitterHatredPower.png");
+
+    [SavedProperty]
+    public bool Sts2Diy_Pending
+    {
+        get => _pending;
+        set { AssertMutable(); _pending = value; }
+    }
+
+    [SavedProperty]
+    public bool Sts2Diy_Active
+    {
+        get => _active;
+        set { AssertMutable(); _active = value; }
+    }
+
+    public override Task AfterDeath(PlayerChoiceContext context, Creature creature, CardModel? cardSource, bool wasRemovalPrevented, float deathAnimLength)
+    {
+        if (!wasRemovalPrevented && creature == Owner.Player?.Osty)
+        {
+            Sts2Diy_Pending = true;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
+    {
+        if (player == Owner.Player && Sts2Diy_Pending)
+        {
+            Sts2Diy_Pending = false;
+            Sts2Diy_Active = true;
+            Flash();
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
+    {
+        return Sts2Diy_Active && dealer == Owner.Player?.Osty && props.IsPoweredAttack()
+            ? 1m + Amount / 100m
+            : 1m;
+    }
+
+    public override Task AfterSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (side == Owner.Side && participants.Contains(Owner))
+        {
+            Sts2Diy_Active = false;
+        }
+
+        return Task.CompletedTask;
+    }
+}

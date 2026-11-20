@@ -1,0 +1,21 @@
+{
+  "COUNTDOWN_POWER.smartDescription": "At the start of your turn, apply [gold]Doom[/gold] equal to 150% of the original amount ({Amount}) to a random enemy and one third of the original amount to yourself. Round down.",
+  "OBLIVION_POWER.smartDescription": "Whenever the applier plays a card this turn, apply [gold]Doom[/gold] equal to 150% of the original amount ({Amount}) to this enemy and one third of the original amount to the applier. Round down.",
+  "OBLIVION_POWER.remoteDescription": "Whenever [gold]{ApplierName}[/gold] plays a card this turn, apply [gold]Doom[/gold] equal to 150% of the original amount ({Amount}) to this enemy and one third of the original amount to the applier. Round down.",
+  "REAPER_FORM_POWER.smartDescription": "Whenever your Attacks deal damage, the original [gold]Doom[/gold] is damage dealt times {Amount}. Apply 150% of that amount to the target and one third to yourself. Round down.",
+  "NEUROSURGE_POWER.smartDescription": "At the start of your turn, apply [gold]Doom[/gold] equal to 150% of the original amount ({Amount}) to yourself, then apply one third of the original amount to yourself again. Round down.",
+  "UNDERWORLD_POWER.smartDescription": "This turn, whenever other players' Attacks or their pets' Attacks deal damage, the original [gold]Doom[/gold] is damage dealt times {Amount}. Apply 150% of that amount to the target and one third to yourself. Round down.",
+  "UNDERWORLD_POWER.description": "This turn, whenever other players' Attacks or their pets' Attacks deal damage, the original [gold]Doom[/gold] is damage dealt times {Amount}. Apply 150% of that amount to the target and one third to yourself. Round down.",
+  "COUNTDOWN_POWER.description": "At the start of your turn, apply [gold]Doom[/gold] equal to 150% of the original amount ({Amount}) to a random enemy and one third of the original amount to yourself. Round down.",
+  "OBLIVION_POWER.description": "Whenever the applier plays a card this turn, apply [gold]Doom[/gold] equal to 150% of the original amount ({Amount}) to this enemy and one third of the original amount to the applier. Round down.",
+  "REAPER_FORM_POWER.description": "Whenever your Attacks deal damage, the original [gold]Doom[/gold] is damage dealt times {Amount}. Apply 150% of that amount to the target and one third to yourself. Round down.",
+  "NEUROSURGE_POWER.description": "At the start of your turn, apply [gold]Doom[/gold] equal to 150% of the original amount ({Amount}) to yourself, then apply one third of the original amount to yourself again. Round down.",
+  "STS2DIY_POWER_CALAMITY_RAIMENT_POWER.title": "Raiment of Doom",
+  "STS2DIY_POWER_CALAMITY_RAIMENT_POWER.description": "Every 4 times you apply [gold]Doom[/gold], gain [blue]{EnergyPerTrigger}[/blue] [gold]Energy[/gold]. Current progress: [blue]{DoomApplications}[/blue]/4.",
+  "STS2DIY_POWER_DEATH_LIFE_PACT_POWER.title": "Death and Life's Pact",
+  "STS2DIY_POWER_DEATH_LIFE_PACT_POWER.description": "This turn, whenever you deal damage, [gold]Summon[/gold] [blue]{SummonAmount}[/blue]. Whenever [gold]Osty[/gold] deals damage, gain [blue]{BlockAmount}[/blue] [gold]Block[/gold].",
+  "STS2DIY_POWER_SHARED_DOOM_TRANSFER_POWER.title": "Together Unto Death",
+  "STS2DIY_POWER_SHARED_DOOM_TRANSFER_POWER.description": "At the start of your next turn, transfer all your [gold]Doom[/gold] to all enemies.",
+  "STS2DIY_POWER_BITTER_HATRED_POWER.title": "Endless Hatred",
+  "STS2DIY_POWER_BITTER_HATRED_POWER.description": "After [gold]Osty[/gold] dies, it deals [blue]{Amount}[/blue]% more damage next turn."
+}

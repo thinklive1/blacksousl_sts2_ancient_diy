@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsTestProject>true</IsTestProject>
+    <IsPackable>false</IsPackable>
+    <GodotSourceGenerators>disabled</GodotSourceGenerators>
+    <GodotProjectDir>$(MSBuildProjectDirectory)</GodotProjectDir>
+    <Sts2DataDir>D:\software\steam\steamapps\common\Slay the Spire 2\data_sts2_windows_x86_64</Sts2DataDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <CompilerVisibleProperty Include="GodotProjectDir" />
+    <CompilerVisibleProperty Include="GodotSourceGenerators" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" PrivateAssets="all" />
+    <PackageReference Include="Godot.SourceGenerators" Version="4.5.1" ExcludeAssets="all" PrivateAssets="all" />
+    <ProjectReference Include="..\..\sts2diy.csproj" AdditionalProperties="SkipModDeployment=true" />
+    <Reference Include="sts2" HintPath="$(Sts2DataDir)\sts2.dll" />
+    <Reference Include="0Harmony" HintPath="$(Sts2DataDir)\0Harmony.dll" />
+    <Reference Include="SmartFormat" HintPath="$(Sts2DataDir)\SmartFormat.dll" />
+    <None Include="$(Sts2DataDir)\Sentry*.dll;$(Sts2DataDir)\JetBrains.Annotations.dll;$(Sts2DataDir)\MonoMod.*.dll;$(Sts2DataDir)\SmartFormat*.dll;$(Sts2DataDir)\Steamworks.NET.dll;$(Sts2DataDir)\SharpGen.Runtime*.dll;$(Sts2DataDir)\Vortice.*.dll"
+          Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,21 @@
+{
+  "COUNTDOWN_POWER.smartDescription": "在你的回合开始时，给予随机敌人原始层数（{Amount}）1.5倍的[gold]灾厄[/gold]，自身获得原始层数三分之一的[gold]灾厄[/gold]。均向下取整。",
+  "OBLIVION_POWER.smartDescription": "本回合内，每当施加者打出一张牌，给予此敌人原始层数（{Amount}）1.5倍的[gold]灾厄[/gold]，施加者获得原始层数三分之一的[gold]灾厄[/gold]。均向下取整。",
+  "OBLIVION_POWER.remoteDescription": "本回合内，每当[gold]{ApplierName}[/gold]打出一张牌，给予此敌人原始层数（{Amount}）1.5倍的[gold]灾厄[/gold]，施加者获得原始层数三分之一的[gold]灾厄[/gold]。均向下取整。",
+  "REAPER_FORM_POWER.smartDescription": "每当你的攻击造成伤害时，原始灾厄为伤害乘以{Amount}，给予目标原始灾厄的1.5倍，自身获得原始灾厄的三分之一。均向下取整。",
+  "NEUROSURGE_POWER.smartDescription": "在你的回合开始时，自身获得原始层数（{Amount}）1.5倍的[gold]灾厄[/gold]，再额外获得原始层数三分之一的[gold]灾厄[/gold]。均向下取整。",
+  "UNDERWORLD_POWER.smartDescription": "本回合内，其他玩家及其召唤物的攻击造成伤害时，原始灾厄为伤害乘以{Amount}。给予目标原始灾厄的1.5倍，自身获得原始灾厄的三分之一。均向下取整。",
+  "UNDERWORLD_POWER.description": "本回合内，其他玩家及其召唤物的攻击造成伤害时，原始灾厄为伤害乘以{Amount}。给予目标原始灾厄的1.5倍，自身获得原始灾厄的三分之一。均向下取整。",
+  "COUNTDOWN_POWER.description": "在你的回合开始时，给予随机敌人原始层数（{Amount}）1.5倍的[gold]灾厄[/gold]，自身获得原始层数三分之一的[gold]灾厄[/gold]。均向下取整。",
+  "OBLIVION_POWER.description": "本回合内，每当施加者打出一张牌，给予此敌人原始层数（{Amount}）1.5倍的[gold]灾厄[/gold]，施加者获得原始层数三分之一的[gold]灾厄[/gold]。均向下取整。",
+  "REAPER_FORM_POWER.description": "每当你的攻击造成伤害时，原始灾厄为伤害乘以{Amount}，给予目标原始灾厄的1.5倍，自身获得原始灾厄的三分之一。均向下取整。",
+  "NEUROSURGE_POWER.description": "在你的回合开始时，自身获得原始层数（{Amount}）1.5倍的[gold]灾厄[/gold]，再额外获得原始层数三分之一的[gold]灾厄[/gold]。均向下取整。",
+  "STS2DIY_POWER_CALAMITY_RAIMENT_POWER.title": "灾厄之衣",
+  "STS2DIY_POWER_CALAMITY_RAIMENT_POWER.description": "每给予4次[gold]灾厄[/gold]，获得[blue]{EnergyPerTrigger}[/blue]点[gold]能量[/gold]。当前进度：[blue]{DoomApplications}[/blue]/4。",
+  "STS2DIY_POWER_DEATH_LIFE_PACT_POWER.title": "死生契阔",
+  "STS2DIY_POWER_DEATH_LIFE_PACT_POWER.description": "本回合内，你造成伤害时[gold]召唤[/gold][blue]{SummonAmount}[/blue]；[gold]奥斯提[/gold]造成伤害时获得[blue]{BlockAmount}[/blue]点[gold]格挡[/gold]。",
+  "STS2DIY_POWER_SHARED_DOOM_TRANSFER_POWER.title": "共赴黄泉",
+  "STS2DIY_POWER_SHARED_DOOM_TRANSFER_POWER.description": "下回合开始时，将自身所有[gold]灾厄[/gold]转移给所有敌人。",
+  "STS2DIY_POWER_BITTER_HATRED_POWER.title": "此恨绵绵",
+  "STS2DIY_POWER_BITTER_HATRED_POWER.description": "[gold]奥斯提[/gold]死亡后，他在下回合造成的伤害提高[blue]{Amount}[/blue]%。"
+}

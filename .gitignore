@@ -1,41 +1,38 @@
-# Godot 4+ cache and generated files
+# Godot caches and exported packages
 .godot/
 .mono/
 *.translation
-*.import
-*.uid
-
-# Godot exports
-/android/
-/build/
-/exports/
 *.pck
 *.zip
 
 # .NET build output
 bin/
 obj/
-**/bin/
-**/obj/
 
-# IDE / editor state
+# Local editor state
 .vs/
 .vscode/
 *.user
 *.suo
-*.userosscache
 *.sln.docstates
 
-# Logs and temporary files
+# Review originals and generated uploader payloads
+/archive/
+/upload/content/
+/upload/mod_id.txt
+
+# Player configuration, logs, and temporary files
+*.cfg
+!export_presets.cfg
+*_config.json
+settings.json
 logs/
 *.log
 *.tmp
 *.temp
 *.bak
 
-# OS files
+# OS metadata
 .DS_Store
 Thumbs.db
 desktop.ini
-archive
-/upload/
