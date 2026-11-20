@@ -1,7 +1,7 @@
 {
   "title": "亡灵契约师部分重做",
   "description": "亡灵契约师部分重做\n\n围绕灾厄、自身灾厄与奥斯提，对《杀戮尖塔 2》的亡灵契约师进行部分重做。与原版同名的卡牌直接修改原牌，不额外添加同名副本。\n\n主要改动：\n- 原版卡牌直接或通过能力给予的灾厄提高至原始数值的1.5倍，施加者额外获得原始数值三分之一的灾厄，均向下取整。\n- 多目标牌每次打出只结算一次自身反噬；反噬本身不会再次被放大。\n- 重做灾厄之衣与负能量脉冲。\n- 新增死生契阔、负能量吸收、共赴黄泉、此恨绵绵四张卡牌。\n- 包含中文与英文本地化。\n\n需要 STS2 RitsuLib 0.6.11 或更新版本。当前构建面向游戏0.113系列。\n本 Mod 与 Black Souls Ancients 独立，不需要订阅后者。\n部分新增美术使用 AI 生成素材。\n\nNecrobinder: Partial Rework\n\nA partial rework of the Necrobinder for Slay the Spire 2, focused on Doom, self-inflicted Doom, and Osty. Changes to existing cards replace their original effects rather than adding duplicate cards.\n\nMain changes:\n- Doom applied by vanilla cards and their ongoing effects is increased to 150% of its original amount. The applier also receives Doom equal to one third of the original amount. Both values are rounded down.\n- Area cards apply this additional self-inflicted Doom once per play, not once per enemy. This additional Doom is not amplified again.\n- Reworks Shroud and Negative Pulse.\n- Adds four cards: Death and Life's Pact, Negative Energy Absorption, Together Unto Death, and Endless Hatred.\n- Includes Chinese and English localization.\n\nRequires STS2 RitsuLib 0.6.11 or later. This build targets game version 0.113.\nThis is a standalone mod and does not require Black Souls Ancients.\nSome new artwork uses AI-generated assets.",
-  "visibility": "private",
+  "visibility": "public",
   "changeNote": "0.1.0\n初始版本：亡灵契约师部分重做，调整原版灾厄卡牌并新增四张卡牌。\nInitial release: a partial Necrobinder rework with changes to vanilla Doom cards and four new cards.",
   "tags": ["Cards"],
   "dependencies": [3747602295]

@@ -1,7 +1,7 @@
 {
   "SHROUD.title": "灾厄之衣",
-  "SHROUD.description": "每给予4次[gold]灾厄[/gold]，获得1点[gold]能量[/gold]。",
-  "NEGATIVE_PULSE.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n给予所有生物（不包括[gold]奥斯提[/gold]）{DiyDoom}层[gold]灾厄[/gold]。自身额外获得{DiySelfDoom}层[gold]灾厄[/gold]。",
+  "SHROUD.description": "每给予4次[gold]灾厄[/gold]，获得{RaimentEnergy:diff()}点[gold]能量[/gold]。",
+  "NEGATIVE_PULSE.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n给予所有敌人{DiyDoom}层[gold]灾厄[/gold]。自身获得{DiySelfDoom}层[gold]灾厄[/gold]。",
   "SCOURGE.description": "给予{DiyDoom}层[gold]灾厄[/gold]。自身获得{DiySelfDoom}层[gold]灾厄[/gold]。\n抽{Cards:diff()}张牌。",
   "DEATH.description": "给予{DiyDoom}层[gold]灾厄[/gold]。自身获得{DiySelfDoom}层[gold]灾厄[/gold]。",
   "DEATHBRINGER.description": "给予所有敌人{DiyDoom}层[gold]灾厄[/gold]和{WeakPower:diff()}层[gold]虚弱[/gold]。自身获得{DiySelfDoom}层[gold]灾厄[/gold]。",
@@ -18,7 +18,7 @@
   "STS2DIY_CARD_NEGATIVE_ENERGY_ABSORPTION_CARD.title": "负能量吸收",
   "STS2DIY_CARD_NEGATIVE_ENERGY_ABSORPTION_CARD.description": "吸收所有敌人一半层数的[gold]灾厄[/gold]，获得等量[gold]格挡[/gold]。",
   "STS2DIY_CARD_SHARED_DOOM_CARD.title": "共赴黄泉",
-  "STS2DIY_CARD_SHARED_DOOM_CARD.description": "翻倍自身的[gold]灾厄[/gold]层数。下回合开始时，将自身所有[gold]灾厄[/gold]转移给所有敌人。",
+  "STS2DIY_CARD_SHARED_DOOM_CARD.description": "翻倍自身的[gold]灾厄[/gold]层数。下回合开始时，将自身所有[gold]灾厄[/gold]转移给所有敌人。{IfUpgraded:show:\n本回合不会因[gold]灾厄[/gold]而死亡。}",
   "STS2DIY_CARD_BITTER_HATRED_CARD.title": "此恨绵绵",
   "STS2DIY_CARD_BITTER_HATRED_CARD.description": "[gold]奥斯提[/gold]死亡后，他在下回合造成的伤害提高{BitterHatredPower:diff()}%。"
 }

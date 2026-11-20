@@ -8,7 +8,7 @@ A standalone Slay the Spire 2 mod focused on Doom, self-inflicted Doom, and Osty
 - Increases Doom applied by vanilla cards and their ongoing effects to 150% of the original amount. The applier also receives one third of the original amount as Doom. Both values are rounded down.
 - Area cards apply this additional self-inflicted Doom once per play, not once per enemy. This additional Doom is not amplified again.
 - Adds Death and Life's Pact, Negative Energy Absorption, Together Unto Death, and Endless Hatred.
-- Together Unto Death costs 0 Energy, has Retain and Exhaust, and loses Exhaust when upgraded.
+- Together Unto Death costs 0 Energy, has Retain, and does not Exhaust. When upgraded, it also prevents death from Doom for the rest of the turn, without preventing damage or death from other sources.
 - Includes Chinese and English localization.
 
 Requires game version 0.113 and STS2 RitsuLib 0.6.11 or later. It does not require Black Souls Ancients. Some new artwork uses AI-generated assets; review drafts are not included in the release files.
@@ -20,6 +20,12 @@ Requires game version 0.113 and STS2 RitsuLib 0.6.11 or later. It does not requi
 - This project targets the installed 0.113 game API; it does not use the older-version compatibility loader from `bs_ancient`.
 - Test builds and Godot's internal publish do not deploy intermediate assemblies. Player configuration, `docs`, and review art are excluded from the upload. Building never publishes to Steam Workshop.
 - PCK export has a 60-second timeout. A failed export does not proceed to copy its output. NuGet must be able to restore the runtime packs required by Godot's internal .NET publish.
+
+Shroud is a 1-Energy Uncommon Power: every 4 Doom applications grant 1 Energy, or 2 when upgraded. Its cost and trigger interval do not change on upgrade. Additional plays stack the Energy reward and share the same progress counter.
+
+Negative Pulse grants 7 (9) Block and applies 16 (22) Doom to all enemies and 3 (5) Doom to yourself. It does not apply Doom to allies or Osty. The self-inflicted Doom occurs once per play, regardless of enemy count.
+
+While Endless Hatred's damage bonus is active, Osty displays the original Rage icon and the current bonus percentage. The indicator is removed at turn end and does not apply the damage bonus a second time.
 
 ## Tests
 

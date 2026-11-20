@@ -144,11 +144,41 @@ public sealed class DeathLifePactPower : ModPowerTemplate
 [RegisterPower]
 public sealed class SharedDoomTransferPower : ModPowerTemplate
 {
+    private bool _doomProtection;
+
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://sts2diy/assets/images/powers/SharedDoomTransferPower.png",
         BigIconPath: "res://sts2diy/assets/images/powers/SharedDoomTransferPower.png");
+
+    [SavedProperty]
+    public bool Sts2Diy_DoomProtection
+    {
+        get => _doomProtection;
+        set { AssertMutable(); _doomProtection = value; }
+    }
+
+    public override LocString Description
+    {
+        get
+        {
+            LocString description = base.Description;
+            description.Add("DoomProtection", IsMutable && Sts2Diy_DoomProtection);
+            return description;
+        }
+    }
+
+    public override Task AfterSideTurnEndLate(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
+    {
+        // Player Doom resolves in AfterSideTurnEnd, before this late cleanup phase.
+        if (side == Owner.Side && participants.Contains(Owner))
+        {
+            Sts2Diy_DoomProtection = false;
+        }
+
+        return Task.CompletedTask;
+    }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
     {
@@ -157,6 +187,7 @@ public sealed class SharedDoomTransferPower : ModPowerTemplate
             return;
         }
 
+        Sts2Diy_DoomProtection = false;
         int doom = Owner.GetPowerAmount<DoomPower>();
         if (doom > 0)
         {
@@ -213,16 +244,44 @@ public sealed class BitterHatredPower : ModPowerTemplate
         return Task.CompletedTask;
     }
 
-    public override Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
     {
         if (player == Owner.Player && Sts2Diy_Pending)
         {
             Sts2Diy_Pending = false;
             Sts2Diy_Active = true;
             Flash();
+            await SyncRageDisplay(context);
+        }
+    }
+
+    public override Task AfterSummon(PlayerChoiceContext context, Player summoner, decimal amount) =>
+        Sts2Diy_Active && summoner == Owner.Player ? SyncRageDisplay(context) : Task.CompletedTask;
+
+    public override Task AfterPowerAmountChanged(PlayerChoiceContext context, PowerModel power, decimal amount,
+        Creature? applier, CardModel? cardSource) =>
+        Sts2Diy_Active && power == this ? SyncRageDisplay(context) : Task.CompletedTask;
+
+    private async Task SyncRageDisplay(PlayerChoiceContext context)
+    {
+        if (Owner.Player?.Osty is not { IsAlive: true } osty)
+        {
+            return;
         }
 
-        return Task.CompletedTask;
+        BitterHatredRagePower? rage = osty.GetPower<BitterHatredRagePower>();
+        if (!Sts2Diy_Active)
+        {
+            if (rage != null) await PowerCmd.Remove(rage);
+            return;
+        }
+
+        // This marker is visual only; the player's power remains the sole damage modifier.
+        int difference = Amount - (rage?.Amount ?? 0);
+        if (difference != 0)
+        {
+            await PowerCmd.Apply<BitterHatredRagePower>(context, osty, difference, Owner, null);
+        }
     }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
@@ -232,13 +291,16 @@ public sealed class BitterHatredPower : ModPowerTemplate
             : 1m;
     }
 
-    public override Task AfterSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side == Owner.Side && participants.Contains(Owner))
         {
             Sts2Diy_Active = false;
+            await SyncRageDisplay(context);
         }
-
-        return Task.CompletedTask;
     }
+
+    public override Task AfterRemoved(Creature owner) =>
+        owner.Player?.Osty?.GetPower<BitterHatredRagePower>() is { } rage
+            ? PowerCmd.Remove(rage) : Task.CompletedTask;
 }

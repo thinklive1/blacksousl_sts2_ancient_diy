@@ -15,7 +15,9 @@
   "STS2DIY_POWER_DEATH_LIFE_PACT_POWER.title": "Death and Life's Pact",
   "STS2DIY_POWER_DEATH_LIFE_PACT_POWER.description": "This turn, whenever you deal damage, [gold]Summon[/gold] [blue]{SummonAmount}[/blue]. Whenever [gold]Osty[/gold] deals damage, gain [blue]{BlockAmount}[/blue] [gold]Block[/gold].",
   "STS2DIY_POWER_SHARED_DOOM_TRANSFER_POWER.title": "Together Unto Death",
-  "STS2DIY_POWER_SHARED_DOOM_TRANSFER_POWER.description": "At the start of your next turn, transfer all your [gold]Doom[/gold] to all enemies.",
+  "STS2DIY_POWER_SHARED_DOOM_TRANSFER_POWER.description": "At the start of your next turn, transfer all your [gold]Doom[/gold] to all enemies.{DoomProtection:cond:\nYou cannot die to [gold]Doom[/gold] this turn.|}",
   "STS2DIY_POWER_BITTER_HATRED_POWER.title": "Endless Hatred",
-  "STS2DIY_POWER_BITTER_HATRED_POWER.description": "After [gold]Osty[/gold] dies, it deals [blue]{Amount}[/blue]% more damage next turn."
+  "STS2DIY_POWER_BITTER_HATRED_POWER.description": "After [gold]Osty[/gold] dies, it deals [blue]{Amount}[/blue]% more damage next turn.",
+  "STS2DIY_POWER_BITTER_HATRED_RAGE_POWER.title": "Rage",
+  "STS2DIY_POWER_BITTER_HATRED_RAGE_POWER.description": "[gold]Osty[/gold] deals [blue]{Amount}[/blue]% more damage this turn."
 }

@@ -75,23 +75,26 @@ public sealed class SharedDoomCard : ModCardTemplate
         PortraitPath: "res://sts2diy/assets/images/cards/SharedDoomCard.jpg"
     );
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [HoverTipFactory.FromPower<DoomPower>()];
 
     public SharedDoomCard() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        SharedDoomTransferPower? transfer = await PowerCmd.Apply<SharedDoomTransferPower>(
+            context, Owner.Creature, 1m, Owner.Creature, this);
+        if (IsUpgraded && transfer != null)
+        {
+            transfer.Sts2Diy_DoomProtection = true;
+        }
+
         int doom = Owner.Creature.GetPowerAmount<DoomPower>();
         if (doom > 0)
         {
             await PowerCmd.Apply<DoomPower>(context, Owner.Creature, doom, Owner.Creature, this);
         }
-
-        await PowerCmd.Apply<SharedDoomTransferPower>(context, Owner.Creature, 1m, Owner.Creature, this);
     }
-
-    protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Exhaust);
 }
 
 /// <summary>Arms a stronger Osty attack on the turn following an Osty death.</summary>

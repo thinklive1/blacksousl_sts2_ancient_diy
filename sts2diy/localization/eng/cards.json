@@ -1,7 +1,7 @@
 {
   "SHROUD.title": "Raiment of Doom",
-  "SHROUD.description": "Every 4 times you apply [gold]Doom[/gold], gain 1 [gold]Energy[/gold].",
-  "NEGATIVE_PULSE.description": "Gain {Block:diff()} [gold]Block[/gold].\nApply {DiyDoom} [gold]Doom[/gold] to ALL creatures except [gold]Osty[/gold]. Apply {DiySelfDoom} additional [gold]Doom[/gold] to yourself.",
+  "SHROUD.description": "Every 4 times you apply [gold]Doom[/gold], gain {RaimentEnergy:diff()} [gold]Energy[/gold].",
+  "NEGATIVE_PULSE.description": "Gain {Block:diff()} [gold]Block[/gold].\nApply {DiyDoom} [gold]Doom[/gold] to ALL enemies. Apply {DiySelfDoom} [gold]Doom[/gold] to yourself.",
   "SCOURGE.description": "Apply {DiyDoom} [gold]Doom[/gold]. Apply {DiySelfDoom} [gold]Doom[/gold] to yourself.\nDraw {Cards:diff()} {Cards:plural:card|cards}.",
   "DEATH.description": "Apply {DiyDoom} [gold]Doom[/gold]. Apply {DiySelfDoom} [gold]Doom[/gold] to yourself.",
   "DEATHBRINGER.description": "Apply {DiyDoom} [gold]Doom[/gold] and {WeakPower:diff()} [gold]Weak[/gold] to ALL enemies. Apply {DiySelfDoom} [gold]Doom[/gold] to yourself.",
@@ -18,7 +18,7 @@
   "STS2DIY_CARD_NEGATIVE_ENERGY_ABSORPTION_CARD.title": "Negative Energy Absorption",
   "STS2DIY_CARD_NEGATIVE_ENERGY_ABSORPTION_CARD.description": "Absorb half of each enemy's [gold]Doom[/gold]. Gain that much [gold]Block[/gold].",
   "STS2DIY_CARD_SHARED_DOOM_CARD.title": "Together Unto Death",
-  "STS2DIY_CARD_SHARED_DOOM_CARD.description": "Double your [gold]Doom[/gold]. At the start of your next turn, transfer all your [gold]Doom[/gold] to all enemies.",
+  "STS2DIY_CARD_SHARED_DOOM_CARD.description": "Double your [gold]Doom[/gold]. At the start of your next turn, transfer all your [gold]Doom[/gold] to all enemies.{IfUpgraded:show:\nYou cannot die to [gold]Doom[/gold] this turn.}",
   "STS2DIY_CARD_BITTER_HATRED_CARD.title": "Endless Hatred",
   "STS2DIY_CARD_BITTER_HATRED_CARD.description": "After [gold]Osty[/gold] dies, it deals {BitterHatredPower:diff()}% more damage next turn."
 }

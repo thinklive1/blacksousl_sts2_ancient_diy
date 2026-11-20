@@ -22,6 +22,7 @@ public sealed class DoomReworkTests
     [InlineData(3, 4, 1)]
     [InlineData(11, 16, 3)]
     [InlineData(13, 19, 4)]
+    [InlineData(15, 22, 5)]
     [InlineData(16, 24, 5)]
     [InlineData(21, 31, 7)]
     [InlineData(29, 43, 9)]

@@ -29,9 +29,16 @@ public static class VanillaCardPatches
                 return true;
             }
 
-            __result = CardRarity.Rare;
+            __result = CardRarity.Uncommon;
             return false;
         }
+    }
+
+    [HarmonyPatch(typeof(Shroud), "get_CanonicalVars")]
+    private static class ShroudBaseValuesPatch
+    {
+        private static void Postfix(ref IEnumerable<DynamicVar> __result) =>
+            __result = __result.Append(new DynamicVar("RaimentEnergy", 1m)).ToArray();
     }
 
     [HarmonyPatch(typeof(Shroud), "OnPlay")]
@@ -39,7 +46,8 @@ public static class VanillaCardPatches
     {
         private static bool Prefix(Shroud __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
         {
-            __result = PowerCmd.Apply<CalamityRaimentPower>(choiceContext, __instance.Owner.Creature, 1m, __instance.Owner.Creature, __instance);
+            __result = PowerCmd.Apply<CalamityRaimentPower>(choiceContext, __instance.Owner.Creature,
+                __instance.DynamicVars["RaimentEnergy"].BaseValue, __instance.Owner.Creature, __instance);
             return false;
         }
     }
@@ -49,7 +57,8 @@ public static class VanillaCardPatches
     {
         private static bool Prefix(Shroud __instance)
         {
-            // The original cost is already 1. Do not mutate the canonical card during construction.
+            // Keep the 1 Energy cost and upgrade only the energy gained per trigger.
+            __instance.DynamicVars["RaimentEnergy"].UpgradeValueBy(1m);
             return false;
         }
     }
@@ -85,11 +94,11 @@ public static class VanillaCardPatches
     {
         private static bool Prefix(NegativePulse __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
         {
-            __result = ApplyToAllNonOsty(__instance, choiceContext, cardPlay);
+            __result = ApplyToAllEnemies(__instance, choiceContext, cardPlay);
             return false;
         }
 
-        private static async Task ApplyToAllNonOsty(NegativePulse card, PlayerChoiceContext choiceContext, CardPlay cardPlay)
+        private static async Task ApplyToAllEnemies(NegativePulse card, PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             decimal block = card.DynamicVars.Block.BaseValue;
             decimal doom = card.DynamicVars.Doom.BaseValue;
@@ -101,10 +110,9 @@ public static class VanillaCardPatches
                 return;
             }
 
-            IEnumerable<Creature> targets = combatState.Players
-                .Select(player => player.Creature)
-                .Concat(combatState.HittableEnemies)
-                .Where(creature => creature != card.Owner.Osty && creature.IsAlive);
+            Creature[] targets = combatState.HittableEnemies
+                .Where(creature => creature.IsAlive)
+                .ToArray();
 
             await DoomRework.ApplyMultiple(choiceContext, targets, doom, card.Owner.Creature, card);
         }
