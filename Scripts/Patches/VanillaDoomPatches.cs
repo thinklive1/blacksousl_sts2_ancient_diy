@@ -17,13 +17,9 @@ namespace Sts2Diy.Scripts.Patches;
 internal static class VanillaDoomPatches
 {
     internal static readonly Type[] DirectCards =
-        [typeof(Scourge), typeof(Deathbringer), typeof(EndOfDays), typeof(NoEscape), typeof(BlightStrike)
-#if !STS2DIY_STABLE_1110
-        , typeof(Death)
-#endif
-        ];
+        [typeof(Scourge), typeof(Deathbringer), typeof(EndOfDays), typeof(NoEscape)];
     internal static readonly Type[] DelayedPowers =
-        [typeof(CountdownPower), typeof(OblivionPower), typeof(ReaperFormPower), typeof(NeurosurgePower), typeof(UnderworldPower)];
+        [typeof(CountdownPower), typeof(OblivionPower), typeof(ReaperFormPower)];
 
     [HarmonyPatch]
     private static class DoomProducerPatch
@@ -93,11 +89,7 @@ internal static class VanillaDoomPatches
             string? key = __instance switch
             {
                 Scourge or Deathbringer or EndOfDays or NegativePulse or Oblivion => "DoomPower",
-#if !STS2DIY_STABLE_1110
-                Death => "DoomPower",
-#endif
                 Countdown => "CountdownPower",
-                Neurosurge => "NeurosurgePower",
                 NoEscape => "CalculationBase",
                 _ => null
             };

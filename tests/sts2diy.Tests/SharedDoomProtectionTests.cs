@@ -21,6 +21,29 @@ namespace Sts2Diy.Tests;
 public sealed class SharedDoomProtectionTests
 {
     [Theory]
+    [InlineData(0, true)]
+    [InlineData(1, false)]
+    [InlineData(2, false)]
+    public void ReaperFormProtectsOnlyItsOwnerWithoutClearingDoom(int amount, bool expectedDoomed)
+    {
+        var owner = CreateOwner(CombatSide.Player, false);
+        var ally = CreateOwner(CombatSide.Player, false);
+        var reaper = CreatePower<ReaperFormPower>(owner.Creature);
+        AccessTools.Field(typeof(PowerModel), "_amount").SetValue(reaper, amount);
+        ((List<PowerModel>)owner.Creature.Powers).Add(reaper);
+        Harmony harmony = InstallDoomPatch();
+        try
+        {
+            Assert.Equal(expectedDoomed, DoomPower.GetDoomedCreatures([owner.Creature]).Contains(owner.Creature));
+            Assert.Contains(ally.Creature, DoomPower.GetDoomedCreatures([ally.Creature]));
+            Assert.Equal(20, owner.Doom.Amount);
+            ((List<PowerModel>)owner.Creature.Powers).Remove(reaper);
+            Assert.Contains(owner.Creature, DoomPower.GetDoomedCreatures([owner.Creature]));
+        }
+        finally { harmony.UnpatchAll(harmony.Id); }
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void NativeDoomCheckProtectsOnlyTheFlaggedCreatureAndKeepsDoomStacks(bool protectedOwner)

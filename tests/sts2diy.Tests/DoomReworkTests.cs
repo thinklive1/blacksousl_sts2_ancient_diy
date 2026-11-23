@@ -93,7 +93,7 @@ public sealed class DoomReworkTests
         MethodInfo targetsMethod = patch.GetMethod("TargetMethods", BindingFlags.Static | BindingFlags.NonPublic)!;
         MethodInfo rewrite = patch.GetMethod("Transpiler", BindingFlags.Static | BindingFlags.NonPublic)!;
         MethodBase[] targets = ((IEnumerable<MethodBase>)targetsMethod.Invoke(null, null)!).ToArray();
-        Assert.True(targets.Length >= 9);
+        Assert.True(targets.Length >= 7);
         foreach (MethodBase target in targets)
         {
             var original = PatchProcessor.GetOriginalInstructions(target).ToArray();
@@ -123,7 +123,10 @@ public sealed class DoomReworkTests
             Type? machine = play?.GetCustomAttribute<AsyncStateMachineAttribute>()?.StateMachineType;
             MethodInfo? body = machine?.GetMethod("MoveNext", BindingFlags.Instance | BindingFlags.NonPublic);
             if (body == null || !PatchProcessor.GetOriginalInstructions(body).Any(IsDoomCall)) continue;
-            if (card != typeof(NegativePulse) && !covered.Contains(card)) uncovered.Add(card.FullName!);
+            // These two cards replace OnPlay entirely rather than retaining vanilla Doom application.
+            if (card != typeof(NegativePulse) && card != typeof(BlightStrike) && card != typeof(Death)
+                && !covered.Contains(card))
+                uncovered.Add(card.FullName!);
         }
         Assert.True(uncovered.Count == 0, $"Uncovered vanilla Doom cards: {string.Join(", ", uncovered)}");
     }
@@ -140,7 +143,8 @@ public sealed class DoomReworkTests
                 Type? machine = method.GetCustomAttribute<AsyncStateMachineAttribute>()?.StateMachineType;
                 MethodInfo? body = machine?.GetMethod("MoveNext", BindingFlags.Instance | BindingFlags.NonPublic);
                 if (body == null || !PatchProcessor.GetOriginalInstructions(body).Any(IsDoomCall)) continue;
-                if (!covered.Contains(power)) uncovered.Add(power.FullName!);
+                if (power != typeof(NeurosurgePower) && power != typeof(UnderworldPower)
+                    && !covered.Contains(power)) uncovered.Add(power.FullName!);
             }
         }
         Assert.True(uncovered.Count == 0, $"Uncovered vanilla Doom powers: {string.Join(", ", uncovered.Distinct())}");
@@ -168,6 +172,42 @@ public sealed class DoomReworkTests
         Assert.Contains(PatchProcessor.GetOriginalInstructions(apply), IsDoomCall);
         Assert.DoesNotContain(PatchProcessor.GetOriginalInstructions(apply), i =>
             i.operand is MethodInfo m && m.DeclaringType == Rules && m.Name.StartsWith("Apply"));
+    }
+
+    [Fact]
+    public void ExemptCardsAndTheirOngoingPowersAreNotPatched()
+    {
+        Type[] direct = (Type[])Patches.GetField("DirectCards", BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null)!;
+        Type[] delayed = (Type[])Patches.GetField("DelayedPowers", BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null)!;
+        Assert.DoesNotContain(typeof(Death), direct);
+        Assert.DoesNotContain(typeof(NeurosurgePower), delayed);
+        Assert.DoesNotContain(typeof(UnderworldPower), delayed);
+        Type patch = Patches.GetNestedType("DoomProducerPatch", BindingFlags.NonPublic)!;
+        var targets = (IEnumerable<MethodBase>)AccessTools.Method(patch, "TargetMethods").Invoke(null, null)!;
+        foreach (MethodBase target in targets)
+        {
+            Type? source = target.DeclaringType?.DeclaringType;
+            Assert.DoesNotContain(source, new[] { typeof(Death), typeof(NeurosurgePower), typeof(UnderworldPower) });
+        }
+    }
+
+    [Theory]
+    [InlineData("zhs")]
+    [InlineData("eng")]
+    public void ExemptCardsAndPowersUseNativeDescriptions(string language)
+    {
+        DirectoryInfo? root = new(AppContext.BaseDirectory);
+        while (root != null && !File.Exists(Path.Combine(root.FullName, "sts2diy.csproj"))) root = root.Parent;
+        Assert.NotNull(root);
+        string folder = Path.Combine(root.FullName, "sts2diy", "localization", language);
+        using var cards = JsonDocument.Parse(File.ReadAllText(Path.Combine(folder, "cards.json")));
+        using var powers = JsonDocument.Parse(File.ReadAllText(Path.Combine(folder, "powers.json")));
+        foreach (string id in new[] { "DEATH", "NEUROSURGE", "UNDERWORLD" })
+            Assert.False(cards.RootElement.TryGetProperty(id + ".description", out _));
+        foreach (string id in new[] { "NEUROSURGE_POWER", "UNDERWORLD_POWER" })
+            Assert.DoesNotContain(powers.RootElement.EnumerateObject(), property => property.Name.StartsWith(id + "."));
+        string reaper = cards.RootElement.GetProperty("REAPER_FORM.description").GetString()!;
+        Assert.Contains(language == "zhs" ? "不会因" : "cannot die", reaper);
     }
 
     private static decimal InvokeRule(string name, int amount) =>

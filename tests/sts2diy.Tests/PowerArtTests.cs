@@ -11,6 +11,8 @@ public sealed class PowerArtTests
     [InlineData(typeof(DeathLifePactPower))]
     [InlineData(typeof(SharedDoomTransferPower))]
     [InlineData(typeof(BitterHatredPower))]
+    [InlineData(typeof(BloodOathRecoveryPower))]
+    [InlineData(typeof(DarkRitualPower))]
     public void ApprovedPowerIconsHaveExplicitProfilesAndCompactRgbaPngs(Type power)
     {
         var getter = power.GetProperty("AssetProfile")!.GetMethod!;
