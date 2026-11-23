@@ -15,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace BlackSouls.Scripts;
 
-/// <summary>Adds Colorless cards to rewards and permanently removes passed-over cards from future rewards.</summary>
+/// <summary>Adds a combat card reward and Colorless choices, and forgets passed-over cards.</summary>
 [RegisterRelic(typeof(EventRelicPool))]
 public sealed class QueenOfHeartsNebulaDeckRelic : ModRelicTemplate
 {
@@ -101,10 +101,26 @@ public sealed class QueenOfHeartsNebulaDeckRelic : ModRelicTemplate
         if (removed > 0)
         {
             Entry.Logger.Info("Queen of Hearts' Nebula Deck removed an exhausted card reward.");
+        }
+
+        bool added = false;
+        if (room is CombatRoom && rewards.OfType<CardReward>().Any(reward => reward.IsPopulated))
+        {
+            CardCreationOptions options = CardCreationOptions.ForRoom(player, room.RoomType);
+            if (TryGetSafeRewardOptionCount(player, options, 3, out _))
+            {
+                // RewardsSet populates added rewards and synchronizes both choices through the native flow.
+                rewards.Add(new CardReward(options, 3, player));
+                added = true;
+            }
+        }
+
+        if (removed > 0 || added)
+        {
             Flash();
         }
 
-        return removed > 0;
+        return removed > 0 || added;
     }
 
     public override bool TryModifyCardRewardOptions(

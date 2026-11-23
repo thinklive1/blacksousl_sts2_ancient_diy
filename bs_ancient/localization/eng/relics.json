@@ -460,7 +460,7 @@
   "BS_ANCIENT_RELIC_REVERSED_ACE_RELIC.description": "Upon pickup, add an [gold]Inverted Ace[/gold] to your [gold]Deck[/gold].",
   "BS_ANCIENT_RELIC_REVERSED_ACE_RELIC.flavor": "The back of this card is its true face.",
   "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_NEBULA_DECK_RELIC.title": "The Nebula Deck of the Queen of Hearts",
-  "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_NEBULA_DECK_RELIC.description": "Card rewards offer [blue]3[/blue] additional choices. Card rewards may contain Colorless cards. Cards you leave behind will no longer appear in card rewards.",
+  "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_NEBULA_DECK_RELIC.description": "Gain [blue]1[/blue] additional card reward after combat. Each card reward offers [blue]2[/blue] additional choices and may contain Colorless cards. Cards you leave behind will no longer appear in card rewards.",
   "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_NEBULA_DECK_RELIC.flavor": "Even if I must offer my soul to the gods among the stars, I shall have love.",
   "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_JUDGMENT_ORDER_RELIC.title": "The Queen of Hearts' Judgment Order",
   "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_JUDGMENT_ORDER_RELIC.description": "At the start of combat, take an extra turn. Attacks you play are delayed until the start of your next turn.",

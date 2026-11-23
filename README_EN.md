@@ -144,7 +144,8 @@ Lorina is an Act 2 Ancient. Her first three options randomly offer one relic fro
 
 - The Red Deck of the Queen of Hearts: in each combat, up to 3 times, right-click a card in your Hand to discard it and draw 1 card.
 - The Yellow Deck of the Queen of Hearts: gain 100 Gold on pickup; after each combat victory, gain interest equal to 20% of your current Gold, up to 50 Gold.
-- The Nebula Deck of the Queen of Hearts: card rewards offer 3 additional choices and add Colorless cards to the reward pool; cards you leave unchosen will not appear in later card rewards.
+- The Nebula Deck of the Queen of Hearts: gain 1 additional card reward after combat, with 2 additional choices per reward (normally two separate choices of 1 card out of 5). Colorless cards join the reward pool; cards you leave unchosen will not appear in later card rewards. Empty rewards are suppressed when the pool is exhausted.
+- Base Suit effects: Hearts heal 2 HP, Diamonds grant 10 Gold, Clubs grant 4 temporary Strength for the turn, and Spades grant 6 Block. Normal triggers remain limited to once per card per combat and up to the enchanted rank over the run. Poker-hand triggers do not consume either limit.
 - The Last Ace: add 1 Last Ace to your deck. It is a 0-cost, Retain, Exhaust Ancient Skill; when played alone, it triggers all Suit effects twice, and when used in a poker hand it can count as any suit and rank, then draws 1 card.
 - The Flipped Ace: on pickup, enchant basic cards tagged as Strike or Defend with a random Suit and a random rank from 8-13.
 - The Inverted Ace: add 1 Inverted Ace to your deck. It is a 0-cost Retain Ancient Skill; at the end of combat, if it remains in your Hand, choose 2 cards to enchant with a random Suit.

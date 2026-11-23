@@ -22,6 +22,11 @@ public abstract class PlayingCardSuitEnchantment : ModEnchantmentTemplate
     public const int MinTriggersPerCombat = 1;
     public const int MaxTriggersPerCombat = 13;
 
+    internal const int HeartHealing = 2;
+    internal const int DiamondGold = 10;
+    internal const int ClubStrength = 4;
+    internal const int SpadeBlock = 6;
+
     private int _remainingTriggers;
     private bool _triggerBudgetInitialized;
     private bool _triggeredThisCombat;
@@ -226,18 +231,18 @@ public abstract class PlayingCardSuitEnchantment : ModEnchantmentTemplate
     {
         return suit switch
         {
-            PlayingCardSuit.Heart => CreatureCmd.Heal(owner, 1),
-            PlayingCardSuit.Diamond => PlayerCmd.GainGold(5, owner.Player!),
+            PlayingCardSuit.Heart => CreatureCmd.Heal(owner, HeartHealing),
+            PlayingCardSuit.Diamond => PlayerCmd.GainGold(DiamondGold, owner.Player!),
             PlayingCardSuit.Club => PowerCmd.Apply<FlexPotionPower>(
                 choiceContext,
                 owner,
-                2,
+                ClubStrength,
                 owner,
                 cardPlay?.Card,
                 false),
             PlayingCardSuit.Spade => CreatureCmd.GainBlock(
                 owner,
-                3,
+                SpadeBlock,
                 ValueProp.Move,
                 cardPlay),
             _ => Task.CompletedTask
@@ -503,7 +508,7 @@ public sealed class HeartSuitEnchantment : PlayingCardSuitEnchantment
 
     protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay? cardPlay)
     {
-        return CreatureCmd.Heal(owner, 1);
+        return CreatureCmd.Heal(owner, HeartHealing);
     }
 }
 
@@ -519,7 +524,7 @@ public sealed class DiamondSuitEnchantment : PlayingCardSuitEnchantment
 
     protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay? cardPlay)
     {
-        return PlayerCmd.GainGold(5, owner.Player!);
+        return PlayerCmd.GainGold(DiamondGold, owner.Player!);
     }
 }
 
@@ -535,7 +540,7 @@ public sealed class ClubSuitEnchantment : PlayingCardSuitEnchantment
 
     protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay? cardPlay)
     {
-        return PowerCmd.Apply<FlexPotionPower>(choiceContext, owner, 2, owner, Card, false);
+        return PowerCmd.Apply<FlexPotionPower>(choiceContext, owner, ClubStrength, owner, Card, false);
     }
 }
 
@@ -551,6 +556,6 @@ public sealed class SpadeSuitEnchantment : PlayingCardSuitEnchantment
 
     protected override Task TriggerSuitEffect(PlayerChoiceContext choiceContext, Creature owner, CardPlay? cardPlay)
     {
-        return CreatureCmd.GainBlock(owner, 3, ValueProp.Move, cardPlay);
+        return CreatureCmd.GainBlock(owner, SpadeBlock, ValueProp.Move, cardPlay);
     }
 }

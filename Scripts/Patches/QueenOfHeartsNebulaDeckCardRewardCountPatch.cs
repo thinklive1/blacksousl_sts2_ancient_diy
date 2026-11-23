@@ -9,10 +9,10 @@ namespace BlackSouls.Scripts.Patches;
 /// <summary>Adds choices to generated card rewards and suppresses exhausted Nebula Deck rewards.</summary>
 public sealed class QueenOfHeartsNebulaDeckCardRewardCountPatch : IPatchMethod
 {
-    private const int ExtraRewardOptions = 3;
+    private const int ExtraRewardOptions = 2;
 
     public static string PatchId => "queen_of_hearts_nebula_deck_card_reward_count";
-    public static string Description => "Add three card choices to rewards for the Queen of Hearts' Nebula Deck.";
+    public static string Description => "Add two card choices to rewards for the Queen of Hearts' Nebula Deck.";
     public static bool IsCritical => false;
 
     public static ModPatchTarget[] GetTargets() =>

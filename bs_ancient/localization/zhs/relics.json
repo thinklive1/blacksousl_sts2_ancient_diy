@@ -460,7 +460,7 @@
   "BS_ANCIENT_RELIC_REVERSED_ACE_RELIC.description": "拾取时，将一张[gold]倒扣的王牌[/gold]加入牌组。",
   "BS_ANCIENT_RELIC_REVERSED_ACE_RELIC.flavor": "最后一轮, 请下注吧",
   "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_NEBULA_DECK_RELIC.title": "红心女王的星云牌组",
-  "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_NEBULA_DECK_RELIC.description": "卡牌奖励的选项数增加[blue]3[/blue]。卡牌奖励可能出现无色牌。未选择的卡牌不会再出现于卡牌奖励中。",
+  "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_NEBULA_DECK_RELIC.description": "战斗后额外获得[blue]1[/blue]次卡牌奖励。每次卡牌奖励的选项数增加[blue]2[/blue]，且可能出现无色牌。未选择的卡牌不会再出现于卡牌奖励中。",
   "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_NEBULA_DECK_RELIC.flavor": "哪怕将灵魂献给群星中的神明,我也要得到爱",
   "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_JUDGMENT_ORDER_RELIC.title": "红心女王的判决令",
   "BS_ANCIENT_RELIC_QUEEN_OF_HEARTS_JUDGMENT_ORDER_RELIC.description": "战斗开始时获得一个额外回合。你打出的攻击牌将延迟至下回合开始时打出。",
