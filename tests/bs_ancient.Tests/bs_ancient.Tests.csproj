@@ -18,10 +18,10 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="BSchneppe.Sts2.ReferenceAssemblies"
-                      Version="0.107.1"
+                      Version="0.111.0-beta-41cef1ea"
                       PrivateAssets="all"
                       GeneratePathProperty="true" />
-    <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.6.11" />
+    <PackageReference Include="STS2.RitsuLib.Compat.0.111.0" Version="0.6.15" />
     <PackageReference Include="Godot.SourceGenerators" Version="4.5.1" ExcludeAssets="all" PrivateAssets="all" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -43,7 +43,7 @@
 
   <!-- Reference assemblies cannot execute. Runtime tests use the locally
        installed game assembly while the mod itself remains compiled against
-       the stable 0.107.1 reference package. -->
+       the 0.111 API reference package. -->
   <Target Name="CopyInstalledGameRuntimeAssemblies" AfterTargets="Build">
     <Delete Files="$(OutDir)hostfxr.dll;$(OutDir)hostpolicy.dll;$(OutDir)coreclr.dll" />
     <ItemGroup>

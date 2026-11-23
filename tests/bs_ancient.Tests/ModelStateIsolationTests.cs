@@ -11,7 +11,7 @@ public sealed class ModelStateIsolationTests
 {
     [Theory]
     [InlineData(typeof(BrutalityEnchantment), "_damagedTargetsThisPlay")]
-    [InlineData(typeof(ExecutionEnchantment), "_disabledDeathPreventionThisPlay")]
+    [InlineData(typeof(ExecutionEnchantment), "_executionTargetsThisPlay")]
     [InlineData(typeof(FeedingEnchantment), "_damagedTargetsThisPlay")]
     [InlineData(typeof(MercuryCard), "_autoPlayedCopies")]
     [InlineData(typeof(MercuryCard), "_copiedCards")]

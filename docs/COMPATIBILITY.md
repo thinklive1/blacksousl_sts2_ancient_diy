@@ -4,12 +4,11 @@
 
 | Game build | Reference assemblies | RitsuLib package | Implementation |
 | --- | --- | --- | --- |
-| Previous stable `0.107.1` | `BSchneppe.Sts2.ReferenceAssemblies` `0.107.1` | `STS2.RitsuLib.Compat.0.107.1` `0.6.11` | `compat/0.107.1/bs_ancient.impl.dll` |
-| Stable API target `0.111.0` | `BSchneppe.Sts2.ReferenceAssemblies` `0.111.0-beta-41cef1ea` | `STS2.RitsuLib.Compat.0.111.0` `0.6.11` | `compat/0.111.0/bs_ancient.impl.dll` |
-| Beta API target `0.113.0` | Installed game `0.113.0`, commit `16ac0fe3` | `STS2.RitsuLib` `0.6.11` | `compat/0.113.0/bs_ancient.impl.dll` |
+| Stable API target `0.111.0` | `BSchneppe.Sts2.ReferenceAssemblies` `0.111.0-beta-41cef1ea` | `STS2.RitsuLib.Compat.0.111.0` `0.6.15` | `compat/0.111.0/bs_ancient.impl.dll` |
+| Beta API target `0.113.0` | Installed game `0.113.0`, commit `16ac0fe3` | `STS2.RitsuLib` `0.6.15` | `compat/0.113.0/bs_ancient.impl.dll` |
 
-The `bs_ancient.Beta` project name and `BS_BETA_1110` compilation symbol are
-retained for the existing 0.111 API implementation. Version 0.111 has now moved
+The root `bs_ancient.csproj` builds the 0.111 API implementation, retaining the
+`BS_BETA_1110` compilation symbol for shared API guards. Version 0.111 has moved
 to the game's stable branch. Its compilation references are still the publicly
 available 0.111 beta snapshot; this is not a runtime verification of the new
 stable executable.
@@ -20,13 +19,15 @@ implementation's entry point. The PCK, assets, localization, and user config
 are shared, while code compiled against incompatible game APIs remains in
 separate assemblies.
 
-The loader selects the 0.107 implementation for builds below `0.111.0`,
-the 0.111 implementation for builds below `0.113.0`, and the 0.113 implementation
-for `0.113.x`. Builds at `0.114.0` or newer produce an explicit version error.
+The loader selects the 0.111 implementation for `0.111.x` and `0.112.x`, and the
+0.113 implementation for `0.113.x`. Builds below `0.111.0` or at `0.114.0` or newer
+produce an explicit version error. Support for 0.107 was retired on 2026-11-23.
+Deployment removes only its obsolete local implementation DLL, preserving any
+legacy configuration in that directory for configuration migration.
 
 ## 0.113 Implementation
 
-RitsuLib 0.6.11's unqualified `STS2.RitsuLib` package now targets game 0.113.
+RitsuLib 0.6.15's unqualified `STS2.RitsuLib` package targets game 0.113.
 It must not replace the `Compat.0.111.0` package in the existing implementation.
 Game 0.113 changes damage-command signatures, relic eligibility, death callbacks,
 maximum-HP commands, relic rarity rolls, Ancient option creation, and creature UI.
@@ -61,22 +62,20 @@ bs_ancient/
   bs_ancient.pck
   bs_ancient.json
   compat/
-    0.107.1/
-      bs_ancient.impl.dll
     0.111.0/
       bs_ancient.impl.dll
     0.113.0/
       bs_ancient.impl.dll
 ```
 
-RitsuLib `0.6.11` uses a loader plus shared and version-specific modules. Players
+RitsuLib `0.6.15` uses a loader plus shared and version-specific modules. Players
 must install the complete RitsuLib Workshop package, including `shared/`,
 `compat/`, `assets.zip`, and the module manifest. Copying only the root DLL is
 insufficient. Its loader selects the matching API implementation.
 
 ## Build And Verification
 
-Compile all three implementations and the loader without exporting the PCK:
+Compile both implementations and the loader without exporting the PCK:
 
 ```powershell
 dotnet build bs_ancient.csproj --no-restore
@@ -88,16 +87,10 @@ Export the PCK after a successful build:
 dotnet build bs_ancient.csproj --no-restore -t:ExportPck
 ```
 
-Run stable localization and loader tests:
+Run the 0.111 suite with a matching installed runtime:
 
 ```powershell
 dotnet test tests/bs_ancient.Tests/bs_ancient.Tests.csproj --no-restore
-```
-
-Run 0.111 API target-resolution tests with a matching installed runtime:
-
-```powershell
-dotnet test tests/bs_ancient.Beta.Tests/bs_ancient.Beta.Tests.csproj --no-restore
 ```
 
 Run the 0.113 suite while the installed game is 0.113:
@@ -109,7 +102,7 @@ dotnet test tests/bs_ancient.Beta113.Tests/bs_ancient.Beta113.Tests.csproj --no-
 The suites verify Ritsu patch targets, Harmony targets, dynamic target methods,
 model state and localization. The 0.113 suite also checks patch argument names
 and return types, the changed eligibility slot, and death callback signatures.
-Tests must use a matching runtime. For the legacy 0.107 suite, an archived
+Tests must use a matching runtime. For the 0.111 suite, an archived
 runtime can be selected with `-p:Sts2DataDir=<runtime directory>`.
 Do not run old implementation suites against the installed 0.113 runtime and
 interpret resulting missing-method failures as legacy compatibility regressions.

@@ -17,7 +17,7 @@
     <CompilerVisibleProperty Include="GodotProjectDir" />
     <CompilerVisibleProperty Include="GodotSourceGenerators" />
     <Compile Include="..\bs_ancient.Tests\**\*.cs"
-             Exclude="..\bs_ancient.Tests\bin\**\*;..\bs_ancient.Tests\obj\**\*;..\bs_ancient.Tests\StableModTypeDiscoveryPatchTests.cs" />
+             Exclude="..\bs_ancient.Tests\bin\**\*;..\bs_ancient.Tests\obj\**\*" />
     <Compile Include="Compatibility113Tests.cs" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -26,7 +26,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="STS2.RitsuLib" Version="0.6.11" />
+    <PackageReference Include="STS2.RitsuLib" Version="0.6.15" />
     <ProjectReference Include="..\..\compat\bs_ancient.Beta113\bs_ancient.Beta113.csproj" />
     <ProjectReference Include="..\..\compat\bs_ancient.Loader\bs_ancient.Loader.csproj" />
     <Reference Include="sts2" HintPath="$(Sts2DataDir)\sts2.dll" />

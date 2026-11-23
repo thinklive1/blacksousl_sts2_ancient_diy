@@ -19,7 +19,7 @@ public sealed class RitsuCompatibilityTests
     public void SplitModulesAndFacadeResolvePublicTypes(Type publicType, string moduleName)
     {
         Assert.Equal(moduleName, publicType.Assembly.GetName().Name);
-        Assert.Equal(new Version(0, 6, 11, 0), publicType.Assembly.GetName().Version);
+        Assert.Equal(new Version(0, 6, 15, 0), publicType.Assembly.GetName().Version);
         Assembly facade = Assembly.Load("STS2-RitsuLib");
         Assert.Equal(publicType, facade.GetType(publicType.FullName!, throwOnError: true));
     }

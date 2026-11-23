@@ -23,7 +23,7 @@
     <CompilerVisibleProperty Include="GodotSourceGenerators" />
     <Compile Include="..\..\Scripts\**\*.cs" />
     <Compile Include="..\..\Properties\AssemblyInfo.cs" />
-    <PackageReference Include="STS2.RitsuLib" Version="0.6.11" />
+    <PackageReference Include="STS2.RitsuLib" Version="0.6.15" />
     <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
     <Reference Include="sts2" HintPath="$(Sts2Api113DataDir)\sts2.dll" Private="false" />
     <Reference Include="0Harmony" HintPath="$(Sts2Api113DataDir)\0Harmony.dll" Private="false" />

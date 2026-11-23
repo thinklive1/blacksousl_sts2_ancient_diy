@@ -4,11 +4,11 @@ A Slay the Spire 2 Ancient expansion mod. It currently adds 4 map Ancients, repl
 
 ## Requirements
 
-- RitsuLib 0.6.11 or later
+- RitsuLib 0.6.15 or later
 
 ## Game Version Compatibility
 
-One release package contains separate implementations for game APIs `0.107.1`, `0.111.0`, and `0.113.0`. The root loader reads the game's `release_info.json` and selects the corresponding `compat/<game-version>/bs_ancient.impl.dll`; all three share the PCK, assets, localization, and configuration. The `0.113.0` implementation has passed compilation and automated tests against the installed game assembly. Multiplayer and in-game asynchronous flows still require playtesting. Unknown newer API versions produce an explicit compatibility error. See [Compatibility](docs/COMPATIBILITY.md) for the package layout and verification commands.
+One release package contains separate implementations for game APIs `0.111.0` and `0.113.0`; `0.107.1` is no longer supported. The root loader reads the game's `release_info.json` and selects the corresponding `compat/<game-version>/bs_ancient.impl.dll`; both share the PCK, assets, localization, and configuration. The `0.113.0` implementation has passed compilation and automated tests against the installed game assembly. Multiplayer and in-game asynchronous flows still require playtesting. Versions below `0.111.0` and unknown newer APIs produce an explicit compatibility error. See [Compatibility](docs/COMPATIBILITY.md) for the package layout and verification commands.
 
 The Chinese and English game text are maintained together. Reports of awkward wording or terminology that differs from the base game are welcome.
 

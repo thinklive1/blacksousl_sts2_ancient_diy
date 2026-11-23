@@ -115,8 +115,6 @@ public sealed class CompatibilityLoaderTests
     }
 
     [Theory]
-    [InlineData(0, 107, 1, "0.107.1")]
-    [InlineData(0, 107, 9, "0.107.1")]
     [InlineData(0, 111, 0, "0.111.0")]
     [InlineData(0, 111, 1, "0.111.0")]
     [InlineData(0, 112, 0, "0.111.0")]
@@ -130,6 +128,9 @@ public sealed class CompatibilityLoaderTests
     }
 
     [Theory]
+    [InlineData(0, 107, 1)]
+    [InlineData(0, 107, 9)]
+    [InlineData(0, 110, 9)]
     [InlineData(0, 114, 0)]
     [InlineData(0, 115, 0)]
     public void RejectsGameApisWithoutAnImplementation(int major, int minor, int patch)

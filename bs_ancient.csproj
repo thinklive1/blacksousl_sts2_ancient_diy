@@ -9,9 +9,9 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
-    <AssemblyName>bs_ancient.impl.1071</AssemblyName>
+    <AssemblyName>bs_ancient.impl.1110</AssemblyName>
     <RootNamespace>BlackSouls</RootNamespace>
-    <DefineConstants>$(DefineConstants);BS_STABLE_1071</DefineConstants>
+    <DefineConstants>$(DefineConstants);BS_BETA_1110</DefineConstants>
 
     <!-- 改成你的杀戮尖塔2目录 -->
     <Sts2Dir>D:\software\steam\steamapps\common\Slay the Spire 2</Sts2Dir>
@@ -36,14 +36,14 @@
     <Compile Remove="compat\**\*.cs" />
 
   <!-- 固定 RitsuLib 版本，避免 Version="*" 在发布时绑定到玩家未安装的新程序集版本 -->
-  <PackageReference Include="BSchneppe.Sts2.ReferenceAssemblies" Version="0.107.1" PrivateAssets="all" />
-  <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.6.11" />
+  <PackageReference Include="BSchneppe.Sts2.ReferenceAssemblies" Version="0.111.0-beta-41cef1ea" PrivateAssets="all" />
+    <PackageReference Include="STS2.RitsuLib.Compat.0.111.0" Version="0.6.15" />
   <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
   </ItemGroup>
 
   <Target Name="BuildCompatibilityImplementations"
           Condition="'$(SkipCompatibilityBundle)' != 'true'">
-    <MSBuild Projects="$(MSBuildProjectDirectory)\compat\bs_ancient.Beta\bs_ancient.Beta.csproj;$(MSBuildProjectDirectory)\compat\bs_ancient.Beta113\bs_ancient.Beta113.csproj;$(MSBuildProjectDirectory)\compat\bs_ancient.Loader\bs_ancient.Loader.csproj"
+    <MSBuild Projects="$(MSBuildProjectDirectory)\compat\bs_ancient.Beta113\bs_ancient.Beta113.csproj;$(MSBuildProjectDirectory)\compat\bs_ancient.Loader\bs_ancient.Loader.csproj"
              Targets="Build"
              BuildInParallel="true"
              Properties="Configuration=$(Configuration);SkipModDeployment=true;SkipCompatibilityBundle=true" />
@@ -53,13 +53,11 @@
           DependsOnTargets="BuildCompatibilityImplementations"
           Condition="'$(SkipCompatibilityBundle)' != 'true'">
     <RemoveDir Directories="$(CompatibilityBundleDir)" />
-    <MakeDir Directories="$(CompatibilityBundleDir);$(CompatibilityBundleDir)\compat\0.107.1;$(CompatibilityBundleDir)\compat\0.111.0;$(CompatibilityBundleDir)\compat\0.113.0" />
+    <MakeDir Directories="$(CompatibilityBundleDir);$(CompatibilityBundleDir)\compat\0.111.0;$(CompatibilityBundleDir)\compat\0.113.0" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\compat\bs_ancient.Loader\bin\$(Configuration)\net9.0\bs_ancient.dll"
           DestinationFiles="$(CompatibilityBundleDir)\bs_ancient.dll" />
     <Copy SourceFiles="$(TargetPath)"
-          DestinationFiles="$(CompatibilityBundleDir)\compat\0.107.1\$(StableImplementationName)" />
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\compat\bs_ancient.Beta\.godot\mono\temp\bin\$(Configuration)\bs_ancient.impl.1110.dll"
-          DestinationFiles="$(CompatibilityBundleDir)\compat\0.111.0\$(BetaImplementationName)" />
+          DestinationFiles="$(CompatibilityBundleDir)\compat\0.111.0\$(StableImplementationName)" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\compat\bs_ancient.Beta113\.godot\mono\temp\bin\$(Configuration)\bs_ancient.impl.1130.dll"
           DestinationFiles="$(CompatibilityBundleDir)\compat\0.113.0\$(BetaImplementationName)" />
   </Target>
@@ -95,6 +93,7 @@
     <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
     <MakeDir Directories="$(ModInstallDir)" />
     <!-- Preserve legacy configs until the new implementation can migrate them to the mod root. -->
+    <Delete Files="$(ModInstallDir)\compat\0.107.1\bs_ancient.impl.dll" />
     <RemoveDir Directories="$(ModInstallDir)\docs" />
     <Copy SourceFiles="@(_CompatibilityBundleFiles)"
           DestinationFiles="@(_CompatibilityBundleFiles->'$(ModInstallDir)\%(RecursiveDir)%(Filename)%(Extension)')"

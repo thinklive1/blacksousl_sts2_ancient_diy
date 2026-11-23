@@ -16,12 +16,12 @@ namespace BlackSouls.Scripts;
 public sealed class ExecutionEnchantment : ModEnchantmentTemplate
 {
     private bool _returnedThisPlay;
-    private HashSet<Creature> _disabledDeathPreventionThisPlay = [];
+    private HashSet<Creature> _executionTargetsThisPlay = [];
 
     protected override void DeepCloneFields()
     {
         base.DeepCloneFields();
-        _disabledDeathPreventionThisPlay = [];
+        _executionTargetsThisPlay = [];
         _returnedThisPlay = false;
     }
 
@@ -41,7 +41,7 @@ public sealed class ExecutionEnchantment : ModEnchantmentTemplate
         if (IsThisCard(cardPlay.Card))
         {
             _returnedThisPlay = false;
-            _disabledDeathPreventionThisPlay.Clear();
+            _executionTargetsThisPlay.Clear();
         }
 
         return Task.CompletedTask;
@@ -71,7 +71,7 @@ public sealed class ExecutionEnchantment : ModEnchantmentTemplate
         Creature target,
         CardModel? cardSource)
     {
-        if (!IsDamageFromThisCard(dealer, target, cardSource) || (!result.WasTargetKilled && !target.IsDead))
+        if (!IsDamageFromThisCard(target, cardSource) || (!result.WasTargetKilled && !target.IsDead))
         {
             return Task.CompletedTask;
         }
@@ -79,18 +79,15 @@ public sealed class ExecutionEnchantment : ModEnchantmentTemplate
         return HandleSuccessfulKill(choiceContext, target);
     }
 
-    public override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay? cardPlay)
+    public override Task BeforeDeath(Creature creature)
     {
-        if (cardPlay == null
-            || !IsThisCard(cardPlay.Card)
-            || cardPlay.Target == null
-            || cardPlay.Target.Side == Card.Owner?.Creature.Side
-            || !cardPlay.Target.IsDead)
+        if (!creature.IsDead || !_executionTargetsThisPlay.Remove(creature))
         {
             return Task.CompletedTask;
         }
 
-        return HandleSuccessfulKill(choiceContext, cardPlay.Target);
+        // Remove revival before native death snapshots its hooks, never after a revive move is queued.
+        return DisableRevivalPowers(creature);
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -106,48 +103,34 @@ public sealed class ExecutionEnchantment : ModEnchantmentTemplate
         await CardPileCmd.Add(cardPlay.Card, PileType.Hand, CardPilePosition.Top);
     }
 
-    public async Task HandleSuccessfulKill(PlayerChoiceContext choiceContext, Creature target)
+    public Task HandleSuccessfulKill(PlayerChoiceContext choiceContext, Creature target)
     {
-        if (_returnedThisPlay)
+        if (!target.IsDead)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         _returnedThisPlay = true;
-        await DisableRevivalPowers(target);
-
-        if (target.IsAlive)
-        {
-            await CreatureCmd.Kill(target, force: true);
-        }
-
-    }
-
-    public bool HasDisabledDeathPrevention(Creature creature)
-    {
-        return _disabledDeathPreventionThisPlay.Contains(creature);
+        _executionTargetsThisPlay.Add(target);
+        return Task.CompletedTask;
     }
 
     private async Task DisableRevivalPowers(Creature creature)
     {
-        PowerModel? reattach = creature.GetPower<ReattachPower>();
-        PowerModel? adaptable = creature.GetPower<AdaptablePower>();
-        PowerModel? illusion = creature.GetPower<IllusionPower>();
-
-        if (reattach != null || adaptable != null || illusion != null)
+        foreach (PowerModel power in GetRevivalPowers(creature))
         {
-            _disabledDeathPreventionThisPlay.Add(creature);
+            await PowerCmd.Remove(power);
         }
-
-        await PowerCmd.Remove(reattach);
-        await PowerCmd.Remove(adaptable);
-        await PowerCmd.Remove(illusion);
     }
 
-    private bool IsDamageFromThisCard(Creature? dealer, Creature target, CardModel? cardSource)
+    internal static PowerModel[] GetRevivalPowers(Creature creature) =>
+        creature.Powers.Where(power => power is ReattachPower or AdaptablePower or IllusionPower).ToArray();
+
+    private bool IsDamageFromThisCard(Creature target, CardModel? cardSource)
     {
-        return dealer == Card.Owner?.Creature
-            && target.Side != dealer?.Side
+        // Osty attacks retain the played card as their source but use Osty as the damage dealer.
+        return Card.Owner is { } owner
+            && target.Side != owner.Creature.Side
             && IsThisCard(cardSource);
     }
 
