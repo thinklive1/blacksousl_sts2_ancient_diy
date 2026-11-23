@@ -1,0 +1,26 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>12.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <AssemblyName>sts2diy.impl.1110</AssemblyName>
+    <DefineConstants>$(DefineConstants);STS2DIY_STABLE_1110</DefineConstants>
+    <GodotProjectDir>$(MSBuildThisFileDirectory)..\..</GodotProjectDir>
+    <GodotSourceGenerators>disabled</GodotSourceGenerators>
+    <NoWarn>$(NoWarn);RITSU013</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <CompilerVisibleProperty Include="GodotProjectDir" />
+    <CompilerVisibleProperty Include="GodotSourceGenerators" />
+    <Compile Include="..\..\Scripts\**\*.cs" />
+    <PackageReference Include="BSchneppe.Sts2.ReferenceAssemblies" Version="0.111.0-beta-41cef1ea" PrivateAssets="all" />
+    <PackageReference Include="STS2.RitsuLib.Compat.0.111.0" Version="0.6.15" />
+    <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
+  </ItemGroup>
+  <Target Name="ExportPck" />
+</Project>

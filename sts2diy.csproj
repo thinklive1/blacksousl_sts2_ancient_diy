@@ -8,6 +8,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <AssemblyName>sts2diy.impl.1130</AssemblyName>
 
     <!-- Change this only when your local Slay the Spire 2 installation moves. -->
     <Sts2Dir>D:\software\steam\steamapps\common\Slay the Spire 2</Sts2Dir>
@@ -26,7 +27,7 @@
 
   <ItemGroup>
     <Compile Remove="tests\**\*.cs" />
-    <Compile Remove="archive\**\*.cs;docs\**\*.cs;upload\**\*.cs" />
+    <Compile Remove="archive\**\*.cs;docs\**\*.cs;upload\**\*.cs;compat\**\*.cs" />
     <Reference Include="sts2">
       <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
       <Private>false</Private>
@@ -35,14 +36,19 @@
       <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <PackageReference Include="STS2.RitsuLib" Version="0.6.11" />
+    <PackageReference Include="STS2.RitsuLib" Version="0.6.15" />
     <PackageReference Include="Nothing.STS2RitsuLib.ModAnalyzers" Version="0.7.0" PrivateAssets="all" />
   </ItemGroup>
 
   <!-- Match bs_ancient: deploy to the uploader workspace and local game after Build. -->
-  <Target Name="CopyMod" AfterTargets="Build" Condition="'$(SkipModDeployment)' != 'true'">
+  <Target Name="BuildCompatibilityImplementations" Condition="'$(SkipModDeployment)' != 'true'">
+    <MSBuild Projects="compat\sts2diy.Stable111\sts2diy.Stable111.csproj;compat\sts2diy.Loader\sts2diy.Loader.csproj"
+             Targets="Build" BuildInParallel="true" Properties="Configuration=$(Configuration);SkipModDeployment=true" />
+  </Target>
+
+  <Target Name="CopyMod" AfterTargets="Build" DependsOnTargets="BuildCompatibilityImplementations" Condition="'$(SkipModDeployment)' != 'true'">
     <ItemGroup>
-      <_ModFiles Include="$(TargetPath);$(MSBuildProjectDirectory)\sts2diy.json;$(MSBuildProjectDirectory)\README.md;$(MSBuildProjectDirectory)\README_EN.md" />
+      <_ModFiles Include="$(MSBuildProjectDirectory)\compat\sts2diy.Loader\bin\$(Configuration)\net9.0\sts2diy.dll;$(MSBuildProjectDirectory)\sts2diy.json;$(MSBuildProjectDirectory)\README.md;$(MSBuildProjectDirectory)\README_EN.md" />
       <_UploadConfigFiles Include="$(WorkshopUploadContentDir)\**\*.cfg;$(WorkshopUploadContentDir)\**\*_config.json;$(WorkshopUploadContentDir)\**\settings.json" />
     </ItemGroup>
     <Message Text="Copying mod to Steam Workshop uploader workspace..." Importance="high" />
@@ -56,6 +62,15 @@
     <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
     <MakeDir Directories="$(ModInstallDir)" />
     <Copy SourceFiles="@(_ModFiles)" DestinationFolder="$(ModInstallDir)\" ContinueOnError="WarnAndContinue" />
+    <MakeDir Directories="$(ModInstallDir)\compat\0.111.0;$(ModInstallDir)\compat\0.113.0;$(WorkshopUploadContentDir)\compat\0.111.0;$(WorkshopUploadContentDir)\compat\0.113.0" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(ModInstallDir)\compat\0.113.0\sts2diy.impl.dll" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(WorkshopUploadContentDir)\compat\0.113.0\sts2diy.impl.dll" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\compat\sts2diy.Stable111\.godot\mono\temp\bin\$(Configuration)\sts2diy.impl.1110.dll" DestinationFiles="$(ModInstallDir)\compat\0.111.0\sts2diy.impl.dll" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\compat\sts2diy.Stable111\.godot\mono\temp\bin\$(Configuration)\sts2diy.impl.1110.dll" DestinationFiles="$(WorkshopUploadContentDir)\compat\0.111.0\sts2diy.impl.dll" />
+  </Target>
+
+  <Target Name="CreateGodotExportAssemblyAlias" AfterTargets="Publish" Condition="'$(IsInnerGodotExport)' == 'true' and Exists('$(PublishDir)$(AssemblyName).dll')">
+    <Copy SourceFiles="$(PublishDir)$(AssemblyName).dll" DestinationFiles="$(PublishDir)sts2diy.dll" />
   </Target>
 
   <!-- Run: dotnet build -t:ExportPck to export assets into the installed mod. -->

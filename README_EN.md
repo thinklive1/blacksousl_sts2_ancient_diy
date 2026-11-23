@@ -11,13 +11,13 @@ A standalone Slay the Spire 2 mod focused on Doom, self-inflicted Doom, and Osty
 - Together Unto Death costs 0 Energy, has Retain, and does not Exhaust. When upgraded, it also prevents death from Doom for the rest of the turn, without preventing damage or death from other sources.
 - Includes Chinese and English localization.
 
-Requires game version 0.113 and STS2 RitsuLib 0.6.11 or later. It does not require Black Souls Ancients. Some new artwork uses AI-generated assets; review drafts are not included in the release files.
+Supports game versions 0.111.x and 0.113.x, and requires STS2 RitsuLib 0.6.15 or later. The 0.111 implementation is compiled against the public API snapshot and still requires playtesting with a matching game installation. It does not require Black Souls Ancients. Some new artwork uses AI-generated assets; review drafts are not included in the release files.
 
 ## Build
 
 - `dotnet build`: builds the DLL and synchronizes it, the manifest, both READMEs, and any existing local PCK to the game's `mods/sts2diy` directory and this project's `upload/content`. It does not rebuild the PCK.
 - `dotnet build -t:ExportPck`: builds the DLL, exports a new PCK with headless Godot, and synchronizes both destinations. Use this after changing localization or artwork.
-- This project targets the installed 0.113 game API; it does not use the older-version compatibility loader from `bs_ancient`.
+- The root loader automatically selects a separate implementation for game 0.111 or 0.113. Both share the same PCK, assets, and localization.
 - Test builds and Godot's internal publish do not deploy intermediate assemblies. Player configuration, `docs`, and review art are excluded from the upload. Building never publishes to Steam Workshop.
 - PCK export has a 60-second timeout. A failed export does not proceed to copy its output. NuGet must be able to restore the runtime packs required by Godot's internal .NET publish.
 

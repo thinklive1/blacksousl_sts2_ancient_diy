@@ -1,7 +1,10 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -30,6 +33,57 @@ public sealed class DoomReworkTests
     {
         Assert.Equal((decimal)scaled, InvokeRule("Scale", amount));
         Assert.Equal((decimal)backlash, InvokeRule("Backlash", amount));
+    }
+
+    [Theory]
+    [InlineData(10, 10, 3)]
+    [InlineData(10, 60, 3)]
+    [InlineData(10, 110, 3)]
+    [InlineData(15, 15, 5)]
+    [InlineData(15, 65, 5)]
+    [InlineData(15, 115, 5)]
+    public void NoEscapeBacklashAndPreviewUseOnlyTheBaseDoom(int baseDoom, int calculatedDoom, int expected)
+    {
+        var card = (NoEscape)RuntimeHelpers.GetUninitializedObject(typeof(NoEscape));
+        AccessTools.Field(typeof(CardModel), "_dynamicVars").SetValue(card,
+            new DynamicVarSet([new CalculationBaseVar(baseDoom)]));
+        MethodInfo rule = Rules.GetMethod("BacklashForCard", BindingFlags.Static | BindingFlags.NonPublic)!;
+        Assert.Equal((decimal)expected, rule.Invoke(null, [(decimal)calculatedDoom, card]));
+        Assert.Equal(Math.Floor(calculatedDoom * 1.5m), InvokeRule("Scale", calculatedDoom));
+
+        var description = new LocString("cards", "NO_ESCAPE.description");
+        Type patch = Patches.GetNestedType("DoomDescriptionPatch", BindingFlags.NonPublic)!;
+        patch.GetMethod("Postfix", BindingFlags.Static | BindingFlags.NonPublic)!.Invoke(null, [card, description]);
+        Assert.Equal((decimal)expected, description.Variables["DiySelfDoom"]);
+        Assert.Contains(PatchProcessor.GetOriginalInstructions(
+            Rules.GetMethod("ApplyBacklash", BindingFlags.Static | BindingFlags.NonPublic)!),
+            i => Equals(i.operand, rule));
+    }
+
+    [Fact]
+    public void OtherCardsStillUseTheirOriginalAppliedAmountForBacklash()
+    {
+        MethodInfo rule = Rules.GetMethod("BacklashForCard", BindingFlags.Static | BindingFlags.NonPublic)!;
+        var card = (Scourge)RuntimeHelpers.GetUninitializedObject(typeof(Scourge));
+        Assert.Equal(20m, rule.Invoke(null, [60m, card]));
+        Assert.Equal(20m, rule.Invoke(null, [60m, null]));
+    }
+
+    [Theory]
+    [InlineData("zhs")]
+    [InlineData("eng")]
+    public void NoEscapeDescriptionShowsTheBaseBacklashInsteadOfAThirdOfTheResult(string language)
+    {
+        DirectoryInfo? root = new(AppContext.BaseDirectory);
+        while (root != null && !File.Exists(Path.Combine(root.FullName, "sts2diy.csproj"))) root = root.Parent;
+        Assert.NotNull(root);
+        using JsonDocument json = JsonDocument.Parse(File.ReadAllText(Path.Combine(root.FullName,
+            "sts2diy", "localization", language, "cards.json")));
+        string text = json.RootElement.GetProperty("NO_ESCAPE.description").GetString()!;
+        Assert.Contains("{DiySelfDoom}", text);
+        Assert.Contains("{CalculationBase:diff()}", text);
+        Assert.DoesNotContain("结果三分之一", text);
+        Assert.DoesNotContain("one third", text);
     }
 
     [Fact]

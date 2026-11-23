@@ -14,7 +14,7 @@ public sealed class BuildConfigurationTests
         Assert.Contains("SkipModDeployment", (string)deploy.Attribute("Condition")!);
         Assert.Empty(deploy.Elements("Exec"));
         string files = (string)deploy.Descendants("_ModFiles").Single().Attribute("Include")!;
-        Assert.Equal("$(TargetPath);$(MSBuildProjectDirectory)\\sts2diy.json;$(MSBuildProjectDirectory)\\README.md;$(MSBuildProjectDirectory)\\README_EN.md", files);
+        Assert.Equal("$(MSBuildProjectDirectory)\\compat\\sts2diy.Loader\\bin\\$(Configuration)\\net9.0\\sts2diy.dll;$(MSBuildProjectDirectory)\\sts2diy.json;$(MSBuildProjectDirectory)\\README.md;$(MSBuildProjectDirectory)\\README_EN.md", files);
         Assert.Contains(deploy.Elements("Copy"), copy => (string?)copy.Attribute("DestinationFolder") == "$(WorkshopUploadContentDir)\\");
         Assert.Contains(deploy.Elements("Copy"), copy => (string?)copy.Attribute("DestinationFolder") == "$(ModInstallDir)\\");
     }

@@ -234,7 +234,11 @@ public sealed class BitterHatredPower : ModPowerTemplate
         set { AssertMutable(); _active = value; }
     }
 
-    public override Task AfterDeath(PlayerChoiceContext context, Creature creature, CardModel? cardSource, bool wasRemovalPrevented, float deathAnimLength)
+    public override Task AfterDeath(PlayerChoiceContext context, Creature creature,
+#if !STS2DIY_STABLE_1110
+        CardModel? cardSource,
+#endif
+        bool wasRemovalPrevented, float deathAnimLength)
     {
         if (!wasRemovalPrevented && creature == Owner.Player?.Osty)
         {

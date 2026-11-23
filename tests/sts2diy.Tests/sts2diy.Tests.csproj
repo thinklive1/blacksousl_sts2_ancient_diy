@@ -17,6 +17,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" PrivateAssets="all" />
     <PackageReference Include="Godot.SourceGenerators" Version="4.5.1" ExcludeAssets="all" PrivateAssets="all" />
     <ProjectReference Include="..\..\sts2diy.csproj" AdditionalProperties="SkipModDeployment=true" />
+    <ProjectReference Include="..\..\compat\sts2diy.Loader\sts2diy.Loader.csproj" />
     <Reference Include="sts2" HintPath="$(Sts2DataDir)\sts2.dll" />
     <Reference Include="0Harmony" HintPath="$(Sts2DataDir)\0Harmony.dll" />
     <Reference Include="SmartFormat" HintPath="$(Sts2DataDir)\SmartFormat.dll" />

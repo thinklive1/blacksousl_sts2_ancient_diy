@@ -3,12 +3,12 @@
   "name": "亡灵契约师部分重做",
   "author": "thinklive",
   "description": "A partial Necrobinder rework focused on Doom, self-inflicted Doom, and Osty, with four additional cards.",
-  "version": "0.1.0",
-  "min_game_version": "0.113.0",
+  "version": "0.1.2",
+  "min_game_version": "0.111.0",
   "has_pck": true,
   "has_dll": true,
   "affects_gameplay": true,
   "dependencies": [
-    { "id": "STS2-RitsuLib", "min_version": "0.6.11" }
+    { "id": "STS2-RitsuLib", "min_version": "0.6.15" }
   ]
 }

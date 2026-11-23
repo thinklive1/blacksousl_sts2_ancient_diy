@@ -13,6 +13,9 @@ internal static class DoomRework
     internal static decimal Scale(decimal original) => Math.Floor(Math.Max(0m, original) * 1.5m);
     internal static decimal Backlash(decimal original) => Math.Floor(Math.Max(0m, original) / 3m);
 
+    internal static decimal BacklashForCard(decimal original, CardModel? cardSource) =>
+        Backlash(cardSource is NoEscape ? cardSource.DynamicVars.CalculationBase.BaseValue : original);
+
     internal static bool DefersBacklash(CardModel? card) => card is Deathbringer or EndOfDays;
 
     public static async Task<DoomPower?> ApplySingle(PlayerChoiceContext context, Creature target,
@@ -40,7 +43,7 @@ internal static class DoomRework
     internal static Task ApplyBacklash(PlayerChoiceContext context, Creature? applier, decimal original,
         CardModel? cardSource, bool silent = false)
     {
-        decimal amount = Backlash(original);
+        decimal amount = BacklashForCard(original, cardSource);
         return amount > 0m && applier is { IsAlive: true, Player: not null }
             ? PowerCmd.Apply<DoomPower>(context, applier, amount, applier, cardSource, silent)
             : Task.CompletedTask;

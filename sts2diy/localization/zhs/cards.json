@@ -7,7 +7,7 @@
   "DEATHBRINGER.description": "给予所有敌人{DiyDoom}层[gold]灾厄[/gold]和{WeakPower:diff()}层[gold]虚弱[/gold]。自身获得{DiySelfDoom}层[gold]灾厄[/gold]。",
   "END_OF_DAYS.description": "给予所有敌人{DiyDoom}层[gold]灾厄[/gold]。\n杀死所有[gold]灾厄[/gold]大于等于当前生命值的敌人。自身获得{DiySelfDoom}层[gold]灾厄[/gold]。",
   "BLIGHT_STRIKE.description": "造成{Damage:diff()}点伤害。\n给予所造成伤害1.5倍的[gold]灾厄[/gold]，自身获得所造成伤害三分之一的[gold]灾厄[/gold]。均向下取整。",
-  "NO_ESCAPE.description": "以{CalculationBase:diff()}为基础，敌人每有{DoomThreshold:diff()}层[gold]灾厄[/gold]再加{CalculationExtra:diff()}。给予结果1.5倍的[gold]灾厄[/gold]，自身获得结果三分之一的[gold]灾厄[/gold]。均向下取整。",
+  "NO_ESCAPE.description": "以{CalculationBase:diff()}为基础，敌人每有{DoomThreshold:diff()}层[gold]灾厄[/gold]再加{CalculationExtra:diff()}。给予结果1.5倍的[gold]灾厄[/gold]，向下取整。自身获得{DiySelfDoom}层[gold]灾厄[/gold]。",
   "COUNTDOWN.description": "在你的回合开始时，给予随机敌人{DiyDoom}层[gold]灾厄[/gold]，自身获得{DiySelfDoom}层[gold]灾厄[/gold]。",
   "OBLIVION.description": "本回合内，每打出一张牌，给予该敌人{DiyDoom}层[gold]灾厄[/gold]，自身获得{DiySelfDoom}层[gold]灾厄[/gold]。",
   "REAPER_FORM.description": "每当你的攻击造成伤害时，给予所造成伤害1.5倍的[gold]灾厄[/gold]，自身获得所造成伤害三分之一的[gold]灾厄[/gold]。均向下取整。",

@@ -7,7 +7,7 @@
   "DEATHBRINGER.description": "Apply {DiyDoom} [gold]Doom[/gold] and {WeakPower:diff()} [gold]Weak[/gold] to ALL enemies. Apply {DiySelfDoom} [gold]Doom[/gold] to yourself.",
   "END_OF_DAYS.description": "Apply {DiyDoom} [gold]Doom[/gold] to ALL enemies.\nKill enemies with at least as much [gold]Doom[/gold] as HP. Apply {DiySelfDoom} [gold]Doom[/gold] to yourself.",
   "BLIGHT_STRIKE.description": "Deal {Damage:diff()} damage.\nApply [gold]Doom[/gold] equal to 150% of damage dealt to the enemy and one third of damage dealt to yourself. Round down.",
-  "NO_ESCAPE.description": "Start with {CalculationBase:diff()}, plus {CalculationExtra:diff()} for every {DoomThreshold:diff()} [gold]Doom[/gold] on the enemy. Apply 150% of the result as [gold]Doom[/gold] to the enemy and one third to yourself. Round down.",
+  "NO_ESCAPE.description": "Start with {CalculationBase:diff()}, plus {CalculationExtra:diff()} for every {DoomThreshold:diff()} [gold]Doom[/gold] on the enemy. Apply 150% of the result as [gold]Doom[/gold], rounded down. Apply {DiySelfDoom} [gold]Doom[/gold] to yourself.",
   "COUNTDOWN.description": "At the start of your turn, apply {DiyDoom} [gold]Doom[/gold] to a random enemy and {DiySelfDoom} [gold]Doom[/gold] to yourself.",
   "OBLIVION.description": "Whenever you play a card this turn, apply {DiyDoom} [gold]Doom[/gold] to the enemy and {DiySelfDoom} [gold]Doom[/gold] to yourself.",
   "REAPER_FORM.description": "Whenever your Attacks deal damage, apply [gold]Doom[/gold] equal to 150% of damage dealt to the enemy and one third to yourself. Round down.",

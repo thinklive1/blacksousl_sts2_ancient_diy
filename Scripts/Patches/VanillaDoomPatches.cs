@@ -17,7 +17,11 @@ namespace Sts2Diy.Scripts.Patches;
 internal static class VanillaDoomPatches
 {
     internal static readonly Type[] DirectCards =
-        [typeof(Scourge), typeof(Deathbringer), typeof(EndOfDays), typeof(NoEscape), typeof(BlightStrike), typeof(Death)];
+        [typeof(Scourge), typeof(Deathbringer), typeof(EndOfDays), typeof(NoEscape), typeof(BlightStrike)
+#if !STS2DIY_STABLE_1110
+        , typeof(Death)
+#endif
+        ];
     internal static readonly Type[] DelayedPowers =
         [typeof(CountdownPower), typeof(OblivionPower), typeof(ReaperFormPower), typeof(NeurosurgePower), typeof(UnderworldPower)];
 
@@ -88,15 +92,19 @@ internal static class VanillaDoomPatches
         {
             string? key = __instance switch
             {
-                Scourge or Deathbringer or EndOfDays or NegativePulse or Oblivion or Death => "DoomPower",
+                Scourge or Deathbringer or EndOfDays or NegativePulse or Oblivion => "DoomPower",
+#if !STS2DIY_STABLE_1110
+                Death => "DoomPower",
+#endif
                 Countdown => "CountdownPower",
                 Neurosurge => "NeurosurgePower",
+                NoEscape => "CalculationBase",
                 _ => null
             };
             if (key == null) return;
             decimal amount = __instance.DynamicVars[key].BaseValue;
             __result.Add("DiyDoom", DoomRework.Scale(amount));
-            __result.Add("DiySelfDoom", DoomRework.Backlash(amount));
+            __result.Add("DiySelfDoom", DoomRework.BacklashForCard(amount, __instance));
         }
     }
 }
