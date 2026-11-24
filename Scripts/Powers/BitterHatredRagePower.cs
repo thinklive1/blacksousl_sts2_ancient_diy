@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -12,6 +13,19 @@ public sealed class BitterHatredRagePower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override LocString Description
+    {
+        get
+        {
+            LocString description = base.Description;
+            decimal bonus = IsMutable
+                ? Owner.PetOwner?.Creature.GetPower<BitterHatredPower>()?.ActiveBonusPercent ?? Amount
+                : 50m;
+            description.Add("BonusPercent", bonus);
+            return description;
+        }
+    }
 
     public override PowerAssetProfile AssetProfile
     {

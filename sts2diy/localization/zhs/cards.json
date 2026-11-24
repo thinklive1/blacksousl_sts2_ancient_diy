@@ -17,7 +17,7 @@
   "STS2DIY_CARD_SHARED_DOOM_CARD.title": "共赴黄泉",
   "STS2DIY_CARD_SHARED_DOOM_CARD.description": "翻倍自身的[gold]灾厄[/gold]层数。下回合开始时，将自身所有[gold]灾厄[/gold]转移给所有敌人。{IfUpgraded:show:\n本回合不会因[gold]灾厄[/gold]而死亡。}",
   "STS2DIY_CARD_BITTER_HATRED_CARD.title": "此恨绵绵",
-  "STS2DIY_CARD_BITTER_HATRED_CARD.description": "[gold]奥斯提[/gold]死亡后，他在下回合造成的伤害提高{BitterHatredPower:diff()}%。",
+  "STS2DIY_CARD_BITTER_HATRED_CARD.description": "[gold]奥斯提[/gold]死亡后，从下回合起造成的伤害提高{BitterHatredPower:diff()}%。（可叠加）\n若有一回合没有死亡, 重置增伤",
   "STS2DIY_CARD_BLOOD_OATH_CARD.title": "血誓",
   "STS2DIY_CARD_BLOOD_OATH_CARD.description": "临时失去等同于自身[gold]灾厄[/gold]层数的生命，获得等量[gold]格挡[/gold]。\n战斗结束后恢复以此方式失去的生命。",
   "STS2DIY_CARD_DARK_RITUAL_CARD.title": "黑暗仪式",
@@ -28,6 +28,12 @@
   "STS2DIY_CARD_BORROWED_BODY_CARD.description": "仅在自身[gold]灾厄[/gold]层数大于等于当前生命值时可打出。\n将自身所有[gold]灾厄[/gold]转移给所有敌人，获得1层[gold]无实体[/gold]。",
   "STS2DIY_CARD_SHARED_VENGEANCE_CARD.title": "同仇敌忾",
   "STS2DIY_CARD_SHARED_VENGEANCE_CARD.description": "造成{Damage:diff()}点伤害。\n[gold]奥斯提[/gold]造成{OstyDamage:diff()}点伤害。\n本场战斗中，每当[gold]奥斯提[/gold]死亡，这张牌的耗能降低1。",
+  "STS2DIY_CARD_NEGATIVE_ENERGY_INFUSION_CARD.title": "负能量灌注",
+  "STS2DIY_CARD_NEGATIVE_ENERGY_INFUSION_CARD.description": "[gold]奥斯提[/gold]造成{OstyDamage:diff()}点伤害{CalculatedHits:diff()}次。\n每有一个拥有[gold]灾厄[/gold]的生物，额外攻击一次。",
+  "STS2DIY_CARD_VOID_PASSAGE_CARD.title": "虚空引渡",
+  "STS2DIY_CARD_VOID_PASSAGE_CARD.description": "赋予所有手牌[gold]虚无[/gold]。\n每有一张牌因此获得[gold]虚无[/gold]，[gold]召唤[/gold]{Summon:diff()}。",
+  "STS2DIY_CARD_PARTNER_CARD.title": "伙伴",
+  "STS2DIY_CARD_PARTNER_CARD.description": "[gold]奥斯提[/gold]将完全吸收下一次攻击伤害，接下来的{Turns:diff()}个回合无法[gold]召唤[/gold]。\n需要[gold]奥斯提[/gold]存活。",
   "STS2DIY_CARD_SOUL_PHANTOM_CARD.title": "灵魂虚影",
   "STS2DIY_CARD_SOUL_PHANTOM_CARD.description": "{IfUpgraded:show:本场战斗中，升级你的所有[gold]灵魂[/gold]。\n}每当你打出一张[gold]灵魂[/gold]，可以选择抽牌堆中的一张牌，使其获得[gold]虚无[/gold]。"
 }

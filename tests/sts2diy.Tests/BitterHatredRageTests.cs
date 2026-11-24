@@ -8,9 +8,11 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using Sts2Diy.Scripts.Powers;
 using Xunit;
@@ -32,6 +34,8 @@ public sealed class BitterHatredRageTests : IDisposable
             transpiler: new HarmonyMethod(typeof(BitterHatredRageTests), nameof(ReplaceCommands)));
         _harmony.Patch(AccessTools.Method(typeof(BitterHatredPower), "AfterRemoved"),
             transpiler: new HarmonyMethod(typeof(BitterHatredRageTests), nameof(ReplaceCommands)));
+        _harmony.Patch(AccessTools.PropertyGetter(typeof(PowerModel), "Description"),
+            prefix: new HarmonyMethod(typeof(BitterHatredRageTests), nameof(DescribeWithoutModelDb)));
     }
 
     public void Dispose() => _harmony.UnpatchAll(_harmony.Id);
@@ -85,7 +89,7 @@ public sealed class BitterHatredRageTests : IDisposable
     }
 
     [Fact]
-    public async Task MarkerUpdatesWhenTheActiveAbilityStacksAndOnlyExpiresWithItsOwnersTurn()
+    public async Task MarkerUpdatesWhenTheActiveAbilityStacksAndPersistsAcrossTurnEnds()
     {
         var owner = CreatePlayer(50);
         var other = CreatePlayer(50);
@@ -100,8 +104,179 @@ public sealed class BitterHatredRageTests : IDisposable
         Assert.True(owner.Power.Sts2Diy_Active);
         Assert.NotNull(owner.Osty.GetPower<BitterHatredRagePower>());
         await owner.Power.AfterSideTurnEnd(context, CombatSide.Player, [owner.Creature]);
-        Assert.False(owner.Power.Sts2Diy_Active);
+        Assert.True(owner.Power.Sts2Diy_Active);
+        Assert.Equal(125, owner.Osty.GetPower<BitterHatredRagePower>()!.Amount);
+    }
+
+    [Theory]
+    [InlineData(50, 1.5, 2.25, 3.375)]
+    [InlineData(75, 1.75, 3.0625, 5.359375)]
+    public async Task ConsecutiveDeathsMultiplyAndADeathlessTurnResetsToOneStack(
+        int bonus, double first, double second, double third)
+    {
+        var owner = CreatePlayer(bonus);
+        var context = new ThrowingPlayerChoiceContext();
+        decimal previous = 1m;
+        foreach (double expected in new[] { first, second, third })
+        {
+            await owner.Power.AfterDeath(context, owner.Osty, null, false, 0);
+            Assert.Equal(previous, Multiplier(owner.Power, owner.Osty));
+            await owner.Power.AfterSideTurnEnd(context, CombatSide.Player, [owner.Creature]);
+            Assert.Equal(previous, Multiplier(owner.Power, owner.Osty));
+            await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+            previous = (decimal)expected;
+            Assert.Equal(previous, Multiplier(owner.Power, owner.Osty));
+            await owner.Power.AfterSideTurnEnd(context, CombatSide.Player, [owner.Creature]);
+            Assert.Equal(previous, Multiplier(owner.Power, owner.Osty));
+        }
+        Assert.Equal(3, owner.Power.Sts2Diy_ActiveDeaths);
+        Assert.Equal(0, owner.Power.Sts2Diy_PendingDeaths);
+        await owner.Power.AfterPlayerTurnStart(context, CreatePlayer(50).Player);
+        Assert.Equal((decimal)third, Multiplier(owner.Power, owner.Osty));
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        Assert.Equal((decimal)first, Multiplier(owner.Power, owner.Osty));
+        Assert.Equal(1, owner.Power.Sts2Diy_ActiveDeaths);
+        Assert.Equal(bonus, owner.Osty.GetPower<BitterHatredRagePower>()!.Amount);
+        await owner.Power.AfterDeath(context, owner.Osty, null, false, 0);
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        Assert.Equal((decimal)second, Multiplier(owner.Power, owner.Osty));
+    }
+
+    [Fact]
+    public async Task MultipleDeathsInOneTurnCountSeparatelyAndOtherPlayersCannotActivateThem()
+    {
+        var owner = CreatePlayer(50);
+        var other = CreatePlayer(50);
+        var context = new ThrowingPlayerChoiceContext();
+        await owner.Power.AfterDeath(context, other.Osty, null, false, 0);
+        await owner.Power.AfterDeath(context, owner.Osty, null, true, 0);
+        Assert.Equal(0, owner.Power.Sts2Diy_PendingDeaths);
+        await owner.Power.AfterDeath(context, owner.Osty, null, false, 0);
+        await owner.Power.AfterDeath(context, owner.Osty, null, false, 0);
+        Assert.Equal(2, owner.Power.Sts2Diy_PendingDeaths);
+        await owner.Power.AfterPlayerTurnStart(context, other.Player);
+        Assert.Equal(1m, Multiplier(owner.Power, owner.Osty));
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        Assert.Equal(2.25m, Multiplier(owner.Power, owner.Osty));
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        Assert.Equal(1.5m, Multiplier(owner.Power, owner.Osty));
+        Assert.Equal(1m, Multiplier(owner.Power, other.Osty));
+        Assert.Equal(1m, Multiplier(owner.Power, owner.Creature));
+        Assert.Equal(1m, owner.Power.ModifyDamageMultiplicative(null, 10, ValueProp.Unpowered,
+            owner.Osty, null, null));
+    }
+
+    [Fact]
+    public async Task DeathsOnTurnsOneAndTwoButNotThreeGiveOneStackOnTurnFour()
+    {
+        var owner = CreatePlayer(50);
+        var context = new ThrowingPlayerChoiceContext();
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        Assert.Equal(1m, Multiplier(owner.Power, owner.Osty));
+        await owner.Power.AfterDeath(context, owner.Osty, null, false, 0);
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        Assert.Equal(1.5m, Multiplier(owner.Power, owner.Osty));
+        await owner.Power.AfterDeath(context, owner.Osty, null, false, 0);
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        Assert.Equal(2.25m, Multiplier(owner.Power, owner.Osty));
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        Assert.Equal(1.5m, Multiplier(owner.Power, owner.Osty));
+        Assert.Equal(50, owner.Osty.GetPower<BitterHatredRagePower>()!.Amount);
+    }
+
+    [Fact]
+    public async Task DeathlessTurnsGiveNoBonusBeforeTheFirstDeathAndKeepOneStackAfterActivation()
+    {
+        var owner = CreatePlayer(50);
+        var context = new ThrowingPlayerChoiceContext();
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        Assert.Equal(1m, Multiplier(owner.Power, owner.Osty));
         Assert.Null(owner.Osty.GetPower<BitterHatredRagePower>());
+        await owner.Power.AfterDeath(context, owner.Osty, null, false, 0);
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        await owner.Power.AfterPlayerTurnStart(context, owner.Player);
+        Assert.Equal(1.5m, Multiplier(owner.Power, owner.Osty));
+        Assert.Equal(1, owner.Power.Sts2Diy_ActiveDeaths);
+    }
+
+    [Fact]
+    public async Task ActiveAndPendingCountsSurviveNativeSavePropertiesRoundTrip()
+    {
+        var owner = CreatePlayer(50);
+        var restored = CreatePlayer(50);
+        owner.Power.Sts2Diy_ActiveDeaths = 2;
+        owner.Power.Sts2Diy_PendingDeaths = 1;
+        // The game initializes the serialization cache at boot; use the same saved-property payload without booting Godot.
+        SavedProperties saved = new()
+        {
+            ints = [new("Sts2Diy_ActiveDeaths", owner.Power.Sts2Diy_ActiveDeaths),
+                new("Sts2Diy_PendingDeaths", owner.Power.Sts2Diy_PendingDeaths)],
+            bools = [new("Sts2Diy_Active", owner.Power.Sts2Diy_Active),
+                new("Sts2Diy_Pending", owner.Power.Sts2Diy_Pending)]
+        };
+        string json = JsonSerializer.Serialize(saved, new JsonSerializerOptions { IncludeFields = true });
+        JsonSerializer.Deserialize<SavedProperties>(json, new JsonSerializerOptions { IncludeFields = true })!
+            .FillInternal(restored.Power);
+        Assert.Equal(2, restored.Power.Sts2Diy_ActiveDeaths);
+        Assert.Equal(1, restored.Power.Sts2Diy_PendingDeaths);
+        Assert.Equal(2.25m, Multiplier(restored.Power, restored.Osty));
+        await restored.Power.AfterPlayerTurnStart(new ThrowingPlayerChoiceContext(), restored.Player);
+        Assert.Equal(3.375m, Multiplier(restored.Power, restored.Osty));
+        await restored.Power.AfterPlayerTurnStart(new ThrowingPlayerChoiceContext(), restored.Player);
+        Assert.Equal(1.5m, Multiplier(restored.Power, restored.Osty));
+        Assert.Equal(2, owner.Power.Sts2Diy_ActiveDeaths);
+        Assert.Equal(1, owner.Power.Sts2Diy_PendingDeaths);
+    }
+
+    [Fact]
+    public void LegacyBooleanSavesMigrateToOneActiveAndOnePendingTrigger()
+    {
+        var owner = CreatePlayer(50);
+        var saved = new SavedProperties
+        {
+            bools = [new("Sts2Diy_Active", true), new("Sts2Diy_Pending", true)]
+        };
+        saved.FillInternal(owner.Power);
+        Assert.Equal(1, owner.Power.Sts2Diy_ActiveDeaths);
+        Assert.Equal(1, owner.Power.Sts2Diy_PendingDeaths);
+        Assert.Equal(1.5m, Multiplier(owner.Power, owner.Osty));
+    }
+
+    [Fact]
+    public async Task MarkerTooltipRoundsPercentDownWithoutRoundingDamageOrGrantingAnotherStack()
+    {
+        var owner = CreatePlayer(50);
+        owner.Power.Sts2Diy_ActiveDeaths = 3;
+        var context = new ThrowingPlayerChoiceContext();
+        await owner.Power.AfterSummon(context, owner.Player, 8);
+        await owner.Power.AfterSummon(context, owner.Player, 8);
+        BitterHatredRagePower marker = owner.Osty.GetPower<BitterHatredRagePower>()!;
+        Assert.Equal(237, marker.Amount);
+        Assert.Equal(237m, Convert.ToDecimal(marker.Description.Variables["BonusPercent"]));
+        Assert.Equal(237m, Convert.ToDecimal(owner.Power.Description.Variables["BonusPercent"]));
+        Assert.Equal(3.375m, Multiplier(owner.Power, owner.Osty));
+        Assert.Equal(3, owner.Power.Sts2Diy_ActiveDeaths);
+        Assert.Equal(0, CreatePlayer(50).Power.Sts2Diy_ActiveDeaths);
+    }
+
+    [Fact]
+    public void ExtremeDeathCountsDoNotOverflowTheMultiplierOrStatusCounter()
+    {
+        var owner = CreatePlayer(int.MaxValue);
+        owner.Power.Sts2Diy_ActiveDeaths = int.MaxValue;
+        decimal multiplier = Multiplier(owner.Power, owner.Osty);
+        Assert.Equal(int.MaxValue, (multiplier - 1m) * 100m);
+    }
+
+    private static decimal Multiplier(BitterHatredPower power, Creature dealer) =>
+        power.ModifyDamageMultiplicative(null, 10, ValueProp.Move, dealer, null, null);
+
+    private static bool DescribeWithoutModelDb(ref LocString __result)
+    {
+        __result = new LocString("powers", "TEST");
+        return false;
     }
 
     [Fact]
@@ -136,7 +311,7 @@ public sealed class BitterHatredRageTests : IDisposable
             "sts2diy", "localization", language, "powers.json")));
         const string key = "STS2DIY_POWER_BITTER_HATRED_RAGE_POWER";
         Assert.Equal(title, json.RootElement.GetProperty(key + ".title").GetString());
-        Assert.Contains("{Amount}", json.RootElement.GetProperty(key + ".description").GetString());
+        Assert.Contains("{BonusPercent}", json.RootElement.GetProperty(key + ".description").GetString());
     }
 
     private static IEnumerable<CodeInstruction> ReplaceCommands(IEnumerable<CodeInstruction> instructions)
@@ -178,8 +353,10 @@ public sealed class BitterHatredRageTests : IDisposable
         // Minimal managed fixtures avoid Godot and native power VFX; commands are intercepted above.
         var player = (Player)RuntimeHelpers.GetUninitializedObject(typeof(Player));
         Creature creature = CreateCreature();
+        AccessTools.Field(typeof(Player), "<Creature>k__BackingField").SetValue(player, creature);
         AccessTools.Field(typeof(Creature), "<Player>k__BackingField").SetValue(creature, player);
         Creature osty = CreateCreature();
+        osty.PetOwner = player;
         AccessTools.Field(typeof(Creature), "<Monster>k__BackingField").SetValue(osty,
             RuntimeHelpers.GetUninitializedObject(typeof(Osty)));
         var combat = (PlayerCombatState)RuntimeHelpers.GetUninitializedObject(typeof(PlayerCombatState));
@@ -187,6 +364,7 @@ public sealed class BitterHatredRageTests : IDisposable
         AccessTools.Property(typeof(Player), "PlayerCombatState").SetValue(player, combat);
         var power = CreatePower<BitterHatredPower>(creature);
         AccessTools.Field(typeof(PowerModel), "_amount").SetValue(power, bonus);
+        ((List<PowerModel>)creature.Powers).Add(power);
         return (player, creature, osty, power);
     }
 

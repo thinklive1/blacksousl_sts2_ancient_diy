@@ -17,6 +17,9 @@ public sealed class CardArtTests
     [InlineData(typeof(PoisonedDraughtCard))]
     [InlineData(typeof(BorrowedBodyCard))]
     [InlineData(typeof(SharedVengeanceCard))]
+    [InlineData(typeof(PartnerCard))]
+    [InlineData(typeof(VoidPassageCard))]
+    [InlineData(typeof(NegativeEnergyInfusionCard))]
     public void ApprovedArtHasAProductionProfileAndACompactNativeSizeJpeg(Type card)
     {
         MethodInfo getter = card.GetProperty("AssetProfile")!.GetMethod!;

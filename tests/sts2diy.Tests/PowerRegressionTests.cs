@@ -59,7 +59,6 @@ public sealed class PowerRegressionTests
 
     [Theory]
     [InlineData(typeof(DeathLifePactPower), "Remove")]
-    [InlineData(typeof(BitterHatredPower), "set_Sts2Diy_Active")]
     public void EndOfTurnEffectsRequireTheOwnerToBeAParticipant(Type power, string effect)
     {
         MethodInfo hook = power.GetMethod("AfterSideTurnEnd")!;
@@ -144,6 +143,8 @@ public sealed class PowerRegressionTests
         Assert.NotNull(typeof(CalamityRaimentPower).GetProperty("Sts2Diy_DoomApplications")!.GetCustomAttribute<SavedPropertyAttribute>());
         Assert.NotNull(typeof(BitterHatredPower).GetProperty("Sts2Diy_Pending")!.GetCustomAttribute<SavedPropertyAttribute>());
         Assert.NotNull(typeof(BitterHatredPower).GetProperty("Sts2Diy_Active")!.GetCustomAttribute<SavedPropertyAttribute>());
+        Assert.NotNull(typeof(BitterHatredPower).GetProperty("Sts2Diy_PendingDeaths")!.GetCustomAttribute<SavedPropertyAttribute>());
+        Assert.NotNull(typeof(BitterHatredPower).GetProperty("Sts2Diy_ActiveDeaths")!.GetCustomAttribute<SavedPropertyAttribute>());
     }
 
     private static MethodInfo Method(Type type, string name) =>

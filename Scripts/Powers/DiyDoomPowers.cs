@@ -207,12 +207,14 @@ public sealed class SharedDoomTransferPower : ModPowerTemplate
     }
 }
 
-/// <summary>Arms an Osty-only damage boost for the turn after Osty dies.</summary>
+/// <summary>Multiplies consecutive Osty death bonuses, resetting to one stack after a deathless turn.</summary>
 [RegisterPower]
 public sealed class BitterHatredPower : ModPowerTemplate
 {
     private bool _pending;
     private bool _active;
+    private int _pendingDeaths;
+    private int _activeDeaths;
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
@@ -223,15 +225,56 @@ public sealed class BitterHatredPower : ModPowerTemplate
     [SavedProperty]
     public bool Sts2Diy_Pending
     {
-        get => _pending;
+        get => Sts2Diy_PendingDeaths > 0;
         set { AssertMutable(); _pending = value; }
     }
 
     [SavedProperty]
     public bool Sts2Diy_Active
     {
-        get => _active;
+        get => Sts2Diy_ActiveDeaths > 0;
         set { AssertMutable(); _active = value; }
+    }
+
+    [SavedProperty]
+    public int Sts2Diy_PendingDeaths
+    {
+        get => Math.Max(_pendingDeaths, _pending ? 1 : 0);
+        set { AssertMutable(); _pendingDeaths = Math.Max(0, value); _pending = value > 0; }
+    }
+
+    [SavedProperty]
+    public int Sts2Diy_ActiveDeaths
+    {
+        get => Math.Max(_activeDeaths, _active ? 1 : 0);
+        set { AssertMutable(); _activeDeaths = Math.Max(0, value); _active = value > 0; }
+    }
+
+    internal int ActiveBonusPercent => (int)decimal.Floor(
+        (GetDamageMultiplier(Amount, Sts2Diy_ActiveDeaths) - 1m) * 100m);
+
+    public override LocString Description
+    {
+        get
+        {
+            LocString description = base.Description;
+            description.Add("BonusPercent", IsMutable ? ActiveBonusPercent : 0m);
+            return description;
+        }
+    }
+
+    internal static decimal GetDamageMultiplier(int bonus, int deaths)
+    {
+        // Bound extreme stacks to the native integer status-counter range and avoid decimal overflow.
+        const decimal limit = 1m + int.MaxValue / 100m;
+        decimal factor = 1m + Math.Max(0, bonus) / 100m;
+        decimal result = 1m;
+        for (int remaining = Math.Max(0, deaths); remaining > 0; remaining >>= 1)
+        {
+            if ((remaining & 1) != 0) result = Math.Min(limit, result * factor);
+            factor = Math.Min(limit, factor * factor);
+        }
+        return result;
     }
 
     public override Task AfterDeath(PlayerChoiceContext context, Creature creature,
@@ -242,7 +285,7 @@ public sealed class BitterHatredPower : ModPowerTemplate
     {
         if (!wasRemovalPrevented && creature == Owner.Player?.Osty)
         {
-            Sts2Diy_Pending = true;
+            Sts2Diy_PendingDeaths = (int)Math.Min(int.MaxValue, (long)Sts2Diy_PendingDeaths + 1);
         }
 
         return Task.CompletedTask;
@@ -250,11 +293,22 @@ public sealed class BitterHatredPower : ModPowerTemplate
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
     {
-        if (player == Owner.Player && Sts2Diy_Pending)
+        if (player != Owner.Player)
         {
-            Sts2Diy_Pending = false;
-            Sts2Diy_Active = true;
+            return;
+        }
+
+        if (Sts2Diy_Pending)
+        {
+            Sts2Diy_ActiveDeaths = (int)Math.Min(int.MaxValue,
+                (long)Sts2Diy_ActiveDeaths + Sts2Diy_PendingDeaths);
+            Sts2Diy_PendingDeaths = 0;
             Flash();
+            await SyncRageDisplay(context);
+        }
+        else if (Sts2Diy_ActiveDeaths > 1)
+        {
+            Sts2Diy_ActiveDeaths = 1;
             await SyncRageDisplay(context);
         }
     }
@@ -281,7 +335,7 @@ public sealed class BitterHatredPower : ModPowerTemplate
         }
 
         // This marker is visual only; the player's power remains the sole damage modifier.
-        int difference = Amount - (rage?.Amount ?? 0);
+        int difference = ActiveBonusPercent - (rage?.Amount ?? 0);
         if (difference != 0)
         {
             await PowerCmd.Apply<BitterHatredRagePower>(context, osty, difference, Owner, null);
@@ -291,17 +345,8 @@ public sealed class BitterHatredPower : ModPowerTemplate
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         return Sts2Diy_Active && dealer == Owner.Player?.Osty && props.IsPoweredAttack()
-            ? 1m + Amount / 100m
+            ? GetDamageMultiplier(Amount, Sts2Diy_ActiveDeaths)
             : 1m;
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
-    {
-        if (side == Owner.Side && participants.Contains(Owner))
-        {
-            Sts2Diy_Active = false;
-            await SyncRageDisplay(context);
-        }
     }
 
     public override Task AfterRemoved(Creature owner) =>

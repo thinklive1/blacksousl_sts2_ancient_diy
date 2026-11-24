@@ -13,6 +13,8 @@ public sealed class PowerArtTests
     [InlineData(typeof(BitterHatredPower))]
     [InlineData(typeof(BloodOathRecoveryPower))]
     [InlineData(typeof(DarkRitualPower))]
+    [InlineData(typeof(PartnerGuardPower))]
+    [InlineData(typeof(NoSummonPower))]
     public void ApprovedPowerIconsHaveExplicitProfilesAndCompactRgbaPngs(Type power)
     {
         var getter = power.GetProperty("AssetProfile")!.GetMethod!;

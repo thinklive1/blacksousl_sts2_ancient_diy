@@ -151,6 +151,7 @@ public sealed class CardAdjustmentTests
             "sts2diy", "localization", language, "cards.json")));
         string text = json.RootElement.GetProperty("STS2DIY_CARD_BITTER_HATRED_CARD.description").GetString()!;
         Assert.Contains("{BitterHatredPower:diff()}", text);
+        Assert.Contains(language == "zhs" ? "（可叠加）" : "Stacks multiplicatively", text);
         Assert.DoesNotContain("50%", text);
     }
 

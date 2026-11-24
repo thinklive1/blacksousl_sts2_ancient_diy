@@ -1,4 +1,4 @@
-# Necrobinder: Partial Rework
+# Necro-Fantasia
 
 A standalone Slay the Spire 2 mod focused on Doom, self-inflicted Doom, and Osty. Changes to existing cards replace their effects rather than adding duplicate cards.
 
@@ -8,13 +8,19 @@ A standalone Slay the Spire 2 mod focused on Doom, self-inflicted Doom, and Osty
 - Increases Doom applied by vanilla cards and their ongoing effects to 150% of the original amount. The applier also receives one third of the original amount as Doom. Both values are rounded down.
 - Neurosurge, Death, and Underworld, including their ongoing powers, keep their vanilla Doom behavior: no amplification and no additional self-inflicted Doom.
 - Area cards apply this additional self-inflicted Doom once per play, not once per enemy. This additional Doom is not amplified again.
-- Adds ten cards: Death and Life's Pact, Negative Energy Absorption, Together Unto Death, Endless Hatred, Blood Oath, Dark Ritual, Poisoned Draught, Borrowed Body, Soul Phantom, and Shared Vengeance. Soul Phantom replaces Haunt in the normal card pool.
+- Adds thirteen cards: Death and Life's Pact, Negative Energy Absorption, Together Unto Death, Endless Hatred, Blood Oath, Dark Ritual, Poisoned Draught, Borrowed Body, Soul Phantom, Shared Vengeance, Partner, Void Passage, and Negative Energy Infusion. Soul Phantom replaces Haunt in the normal card pool.
 - Together Unto Death costs 0 Energy, has Retain, and does not Exhaust. When upgraded, it also prevents death from Doom for the rest of the turn, without preventing damage or death from other sources.
 - Includes Chinese and English localization.
 
 Supports game versions 0.111.x and 0.113.x, and requires STS2 RitsuLib 0.6.15 or later. The 0.111 implementation is compiled against the public API snapshot and still requires playtesting with a matching game installation. It does not require Black Souls Ancients. Some new artwork uses AI-generated assets; review drafts are not included in the release files.
 
 ## Build
+
+Void Passage is a 1-Energy Rare Skill with Ethereal and Exhaust; upgrading removes Exhaust. Give the current hand Ethereal, then Summon 2 separately for each newly affected card. Already-Ethereal cards do not count, and cards drawn by Summon reactions are not affected by this play. Only combat copies change. Its custom portrait shows void energy flowing into Osty's skeletal hand. The original Call of the Void is unchanged.
+
+Partner is a 1-Energy Uncommon Skill requiring a living Osty: Osty absorbs the full first hit of the next attack against you, including any damage exceeding his HP. Native damage and death reactions are preserved. Summon from all sources is blocked immediately for 2 (1) turns, counting down at the end of each of your turns, including the turn it is played. Additional plays add protection charges and restricted turns. It uses custom card art, a skeletal-hand shield icon, and a crossed-out hand icon.
+
+Negative Energy Infusion is a 1-Energy Common Attack: Osty deals 6 (8) damage to the same enemy once, plus one additional hit for each living creature with Doom. Count yourself, allies, enemies, and pets once each, regardless of Doom stacks. It does not consume Doom. The hit count is fixed before the attack and previewed on the card. No damage is dealt without a living Osty. Its custom portrait shows Osty's short, broken-wrist skeletal hand slamming diagonally, based on his appearance in Flatten.
 
 Shared Vengeance is a 2-Energy Common Attack: deal 6 (8) damage, then Osty deals 9 (12) damage to the same target, using each attacker's own damage modifiers. Your attack still works without Osty. The second attack is skipped if the first kills the target or ends combat. Whenever your Osty dies, copies in your combat piles cost 1 less Energy for this combat, to a minimum of 0. Other players' Osty deaths and prevented deaths do not count. Its custom portrait shows the Necrobinder wielding her scythe alongside Osty's attack.
 
@@ -30,7 +36,7 @@ Shroud is a 1-Energy Uncommon Power: every 4 Doom applications grant 1 Energy, o
 
 Negative Pulse grants 7 (9) Block and applies 16 (22) Doom to all enemies and 3 (5) Doom to yourself. It does not apply Doom to allies or Osty. The self-inflicted Doom occurs once per play, regardless of enemy count.
 
-While Endless Hatred's damage bonus is active, Osty displays the original Rage icon and the current bonus percentage. The indicator is removed at turn end and does not apply the damage bonus a second time.
+Endless Hatred: Osty deaths grant 50% (75%) multiplicative damage from the next turn. Deaths on consecutive turns build the multiplier; multiple deaths in one turn count separately. Normal copies progress through 1.5x, 2.25x, and 3.375x. A turn without a death resets the bonus to one stack next turn: 1.5x, or 1.75x when upgraded. Further deaths build from that stack. There is no bonus before the first death. Active and pending death counts are saved. Osty displays the original Rage icon; the cumulative percentage is displayed rounded down to a whole number, while the damage multiplier retains full precision. This marker is visual only and does not multiply damage again.
 
 Blood Oath is an Uncommon Skill costing 1 (0) Energy: lose HP equal to your Doom and gain that much Block. It neither consumes Doom nor reduces maximum HP. Actual HP lost across multiple plays is repaid at the end of combat, up to maximum HP. The HP loss can still be lethal; this effect does not revive you. A saved status tracks the pending recovery. It has its own card portrait and a heart-and-return-arrow status icon.
 

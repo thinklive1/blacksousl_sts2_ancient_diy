@@ -17,7 +17,7 @@
   "STS2DIY_CARD_SHARED_DOOM_CARD.title": "Together Unto Death",
   "STS2DIY_CARD_SHARED_DOOM_CARD.description": "Double your [gold]Doom[/gold]. At the start of your next turn, transfer all your [gold]Doom[/gold] to all enemies.{IfUpgraded:show:\nYou cannot die to [gold]Doom[/gold] this turn.}",
   "STS2DIY_CARD_BITTER_HATRED_CARD.title": "Endless Hatred",
-  "STS2DIY_CARD_BITTER_HATRED_CARD.description": "After [gold]Osty[/gold] dies, it deals {BitterHatredPower:diff()}% more damage next turn.",
+  "STS2DIY_CARD_BITTER_HATRED_CARD.description": "After [gold]Osty[/gold] dies, it deals {BitterHatredPower:diff()}% more damage starting next turn. (Stacks multiplicatively.)\nIf Osty goes a turn without dying, reset the damage bonus.",
   "STS2DIY_CARD_BLOOD_OATH_CARD.title": "Blood Oath",
   "STS2DIY_CARD_BLOOD_OATH_CARD.description": "Lose HP equal to your [gold]Doom[/gold]. Gain that much [gold]Block[/gold].\nAt the end of combat, recover the HP lost this way.",
   "STS2DIY_CARD_DARK_RITUAL_CARD.title": "Dark Ritual",
@@ -28,6 +28,12 @@
   "STS2DIY_CARD_BORROWED_BODY_CARD.description": "Can only be played if your [gold]Doom[/gold] is at least your current HP.\nTransfer all your [gold]Doom[/gold] to ALL enemies. Gain 1 [gold]Intangible[/gold].",
   "STS2DIY_CARD_SHARED_VENGEANCE_CARD.title": "Shared Vengeance",
   "STS2DIY_CARD_SHARED_VENGEANCE_CARD.description": "Deal {Damage:diff()} damage.\n[gold]Osty[/gold] deals {OstyDamage:diff()} damage.\nWhenever [gold]Osty[/gold] dies, this card costs 1 less [gold]Energy[/gold] this combat.",
+  "STS2DIY_CARD_NEGATIVE_ENERGY_INFUSION_CARD.title": "Negative Energy Infusion",
+  "STS2DIY_CARD_NEGATIVE_ENERGY_INFUSION_CARD.description": "[gold]Osty[/gold] deals {OstyDamage:diff()} damage {CalculatedHits:diff()} {CalculatedHits:plural:time|times}.\nHits an additional time for each creature with [gold]Doom[/gold].",
+  "STS2DIY_CARD_VOID_PASSAGE_CARD.title": "Void Passage",
+  "STS2DIY_CARD_VOID_PASSAGE_CARD.description": "Give all cards in your hand [gold]Ethereal[/gold].\nFor each card that gains [gold]Ethereal[/gold] this way, [gold]Summon[/gold] {Summon:diff()}.",
+  "STS2DIY_CARD_PARTNER_CARD.title": "Partner",
+  "STS2DIY_CARD_PARTNER_CARD.description": "[gold]Osty[/gold] fully absorbs the next attack hit against you. You cannot [gold]Summon[/gold] for the next {Turns:diff()} turns.\nRequires a living [gold]Osty[/gold].",
   "STS2DIY_CARD_SOUL_PHANTOM_CARD.title": "Soul Phantom",
   "STS2DIY_CARD_SOUL_PHANTOM_CARD.description": "{IfUpgraded:show:Upgrade ALL your [gold]Souls[/gold] this combat.\n}Whenever you play a [gold]Soul[/gold], you may choose a card in your draw pile. It gains [gold]Ethereal[/gold]."
 }
