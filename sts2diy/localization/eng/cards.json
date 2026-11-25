@@ -1,4 +1,6 @@
 {
+  "SOUL_STORM.description": "Deal {Damage:diff()} damage.\nFor each [gold]Soul[/gold] in your [gold]Exhaust Pile[/gold], add a [gold]Soul[/gold] to your {IfUpgraded:show:draw|discard} pile.",
+  "DEVOUR_LIFE.description": "At the start of your turn, ALL enemies lose 1 HP. Add a [gold]Soul[/gold] to your {IfUpgraded:show:draw|discard} pile for each enemy.",
   "SHROUD.title": "Raiment of Doom",
   "SHROUD.description": "Every 4 times you apply [gold]Doom[/gold], gain {RaimentEnergy:diff()} [gold]Energy[/gold].",
   "NEGATIVE_PULSE.description": "Gain {Block:diff()} [gold]Block[/gold].\nApply {DiyDoom} [gold]Doom[/gold] to ALL enemies. Apply {DiySelfDoom} [gold]Doom[/gold] to yourself.",

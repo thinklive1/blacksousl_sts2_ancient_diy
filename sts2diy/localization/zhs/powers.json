@@ -1,4 +1,8 @@
 {
+  "STS2DIY_POWER_DEVOUR_LIFE_DISCARD_POWER.title": "吞噬生命",
+  "STS2DIY_POWER_DEVOUR_LIFE_DISCARD_POWER.description": "在你的回合开始时，所有敌人失去[blue]{Amount}[/blue]点生命。每有一名敌人，将[blue]{Amount}[/blue]张[gold]灵魂[/gold]加入弃牌堆。",
+  "STS2DIY_POWER_DEVOUR_LIFE_DRAW_POWER.title": "吞噬生命",
+  "STS2DIY_POWER_DEVOUR_LIFE_DRAW_POWER.description": "在你的回合开始时，所有敌人失去[blue]{Amount}[/blue]点生命。每有一名敌人，将[blue]{Amount}[/blue]张[gold]灵魂[/gold]加入抽牌堆。",
   "COUNTDOWN_POWER.smartDescription": "在你的回合开始时，给予随机敌人原始层数（{Amount}）1.5倍的[gold]灾厄[/gold]，自身获得原始层数三分之一的[gold]灾厄[/gold]。均向下取整。",
   "OBLIVION_POWER.smartDescription": "本回合内，每当施加者打出一张牌，给予此敌人原始层数（{Amount}）1.5倍的[gold]灾厄[/gold]，施加者获得原始层数三分之一的[gold]灾厄[/gold]。均向下取整。",
   "OBLIVION_POWER.remoteDescription": "本回合内，每当[gold]{ApplierName}[/gold]打出一张牌，给予此敌人原始层数（{Amount}）1.5倍的[gold]灾厄[/gold]，施加者获得原始层数三分之一的[gold]灾厄[/gold]。均向下取整。",

@@ -1,4 +1,6 @@
 {
+  "SOUL_STORM.description": "造成{Damage:diff()}点伤害。\n消耗牌堆中每有一张[gold]灵魂[/gold]，将一张[gold]灵魂[/gold]加入{IfUpgraded:show:抽牌堆|弃牌堆}。",
+  "DEVOUR_LIFE.description": "在你的回合开始时，所有敌人失去1点生命。每有一名敌人，将一张[gold]灵魂[/gold]加入{IfUpgraded:show:抽牌堆|弃牌堆}。",
   "SHROUD.title": "灾厄之衣",
   "SHROUD.description": "每给予4次[gold]灾厄[/gold]，获得{RaimentEnergy:diff()}点[gold]能量[/gold]。",
   "NEGATIVE_PULSE.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n给予所有敌人{DiyDoom}层[gold]灾厄[/gold]。自身获得{DiySelfDoom}层[gold]灾厄[/gold]。",

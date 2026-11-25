@@ -3,7 +3,7 @@
   "name": "Necro-Fantasia 亡灵契约师重置",
   "author": "thinklive",
   "description": "A partial Necrobinder rework focused on Doom, self-inflicted Doom, and Osty, with thirteen new cards.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "min_game_version": "0.111.0",
   "has_pck": true,
   "has_dll": true,

@@ -1,4 +1,8 @@
 {
+  "STS2DIY_POWER_DEVOUR_LIFE_DISCARD_POWER.title": "Devour Life",
+  "STS2DIY_POWER_DEVOUR_LIFE_DISCARD_POWER.description": "At the start of your turn, ALL enemies lose [blue]{Amount}[/blue] HP. Add [blue]{Amount}[/blue] [gold]Soul[/gold] cards to your discard pile for each enemy.",
+  "STS2DIY_POWER_DEVOUR_LIFE_DRAW_POWER.title": "Devour Life",
+  "STS2DIY_POWER_DEVOUR_LIFE_DRAW_POWER.description": "At the start of your turn, ALL enemies lose [blue]{Amount}[/blue] HP. Add [blue]{Amount}[/blue] [gold]Soul[/gold] cards to your draw pile for each enemy.",
   "COUNTDOWN_POWER.smartDescription": "At the start of your turn, apply [gold]Doom[/gold] equal to 150% of the original amount ({Amount}) to a random enemy and one third of the original amount to yourself. Round down.",
   "OBLIVION_POWER.smartDescription": "Whenever the applier plays a card this turn, apply [gold]Doom[/gold] equal to 150% of the original amount ({Amount}) to this enemy and one third of the original amount to the applier. Round down.",
   "OBLIVION_POWER.remoteDescription": "Whenever [gold]{ApplierName}[/gold] plays a card this turn, apply [gold]Doom[/gold] equal to 150% of the original amount ({Amount}) to this enemy and one third of the original amount to the applier. Round down.",

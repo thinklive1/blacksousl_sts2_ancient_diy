@@ -2,6 +2,10 @@
 
 A standalone Slay the Spire 2 mod focused on Doom, self-inflicted Doom, and Osty. Changes to existing cards replace their effects rather than adding duplicate cards.
 
+Soul Storm is reworked as a 1-Energy Rare Attack dealing 6 damage. For each Soul in the Exhaust Pile when played, generate a new Soul in the discard pile (random positions in the draw pile when upgraded). Existing exhausted Souls are not moved or cloned.
+
+Devour Life is reworked as a 1-Energy Rare Power: before drawing each turn, ALL enemies lose 1 HP and one Soul per living enemy is added to the discard pile (random positions in the draw pile when upgraded). Enemy count is captured before HP loss. Multiple copies stack; normal and upgraded copies retain their respective destinations. Playing Souls no longer triggers Summon through this Power.
+
 ## Content
 
 - Reworks Shroud and Negative Pulse.
